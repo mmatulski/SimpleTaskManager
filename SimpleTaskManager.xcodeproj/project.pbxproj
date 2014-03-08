@@ -1,0 +1,481 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		EA3D0E0A18CB6B9C00CB333E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA3D0E0918CB6B9C00CB333E /* Foundation.framework */; };
+		EA3D0E0C18CB6B9C00CB333E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA3D0E0B18CB6B9C00CB333E /* CoreGraphics.framework */; };
+		EA3D0E0E18CB6B9C00CB333E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA3D0E0D18CB6B9C00CB333E /* UIKit.framework */; };
+		EA3D0E1018CB6B9C00CB333E /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA3D0E0F18CB6B9C00CB333E /* CoreData.framework */; };
+		EA3D0E1618CB6B9C00CB333E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = EA3D0E1418CB6B9C00CB333E /* InfoPlist.strings */; };
+		EA3D0E1818CB6B9C00CB333E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3D0E1718CB6B9C00CB333E /* main.m */; };
+		EA3D0E1C18CB6B9C00CB333E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3D0E1B18CB6B9C00CB333E /* AppDelegate.m */; };
+		EA3D0E1F18CB6B9C00CB333E /* SimpleTaskManager.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EA3D0E1D18CB6B9C00CB333E /* SimpleTaskManager.xcdatamodeld */; };
+		EA3D0E2118CB6B9C00CB333E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA3D0E2018CB6B9C00CB333E /* Images.xcassets */; };
+		EA3D0E2818CB6B9C00CB333E /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA3D0E2718CB6B9C00CB333E /* XCTest.framework */; };
+		EA3D0E2918CB6B9C00CB333E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA3D0E0918CB6B9C00CB333E /* Foundation.framework */; };
+		EA3D0E2A18CB6B9C00CB333E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA3D0E0D18CB6B9C00CB333E /* UIKit.framework */; };
+		EA3D0E2B18CB6B9C00CB333E /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA3D0E0F18CB6B9C00CB333E /* CoreData.framework */; };
+		EA3D0E3318CB6B9C00CB333E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = EA3D0E3118CB6B9C00CB333E /* InfoPlist.strings */; };
+		EA3D0E3518CB6B9C00CB333E /* SimpleTaskManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3D0E3418CB6B9C00CB333E /* SimpleTaskManagerTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		EA3D0E2C18CB6B9C00CB333E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EA3D0DFE18CB6B9B00CB333E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EA3D0E0518CB6B9C00CB333E;
+			remoteInfo = SimpleTaskManager;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		EA3D0E0618CB6B9C00CB333E /* SimpleTaskManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleTaskManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		EA3D0E0918CB6B9C00CB333E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		EA3D0E0B18CB6B9C00CB333E /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		EA3D0E0D18CB6B9C00CB333E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		EA3D0E0F18CB6B9C00CB333E /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		EA3D0E1318CB6B9C00CB333E /* SimpleTaskManager-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SimpleTaskManager-Info.plist"; sourceTree = "<group>"; };
+		EA3D0E1518CB6B9C00CB333E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		EA3D0E1718CB6B9C00CB333E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		EA3D0E1918CB6B9C00CB333E /* SimpleTaskManager-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SimpleTaskManager-Prefix.pch"; sourceTree = "<group>"; };
+		EA3D0E1A18CB6B9C00CB333E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		EA3D0E1B18CB6B9C00CB333E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		EA3D0E1E18CB6B9C00CB333E /* SimpleTaskManager.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SimpleTaskManager.xcdatamodel; sourceTree = "<group>"; };
+		EA3D0E2018CB6B9C00CB333E /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		EA3D0E2618CB6B9C00CB333E /* SimpleTaskManagerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SimpleTaskManagerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		EA3D0E2718CB6B9C00CB333E /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		EA3D0E3018CB6B9C00CB333E /* SimpleTaskManagerTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SimpleTaskManagerTests-Info.plist"; sourceTree = "<group>"; };
+		EA3D0E3218CB6B9C00CB333E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		EA3D0E3418CB6B9C00CB333E /* SimpleTaskManagerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SimpleTaskManagerTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		EA3D0E0318CB6B9C00CB333E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EA3D0E0C18CB6B9C00CB333E /* CoreGraphics.framework in Frameworks */,
+				EA3D0E1018CB6B9C00CB333E /* CoreData.framework in Frameworks */,
+				EA3D0E0E18CB6B9C00CB333E /* UIKit.framework in Frameworks */,
+				EA3D0E0A18CB6B9C00CB333E /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EA3D0E2318CB6B9C00CB333E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EA3D0E2818CB6B9C00CB333E /* XCTest.framework in Frameworks */,
+				EA3D0E2B18CB6B9C00CB333E /* CoreData.framework in Frameworks */,
+				EA3D0E2A18CB6B9C00CB333E /* UIKit.framework in Frameworks */,
+				EA3D0E2918CB6B9C00CB333E /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		EA3D0DFD18CB6B9B00CB333E = {
+			isa = PBXGroup;
+			children = (
+				EA3D0E1118CB6B9C00CB333E /* SimpleTaskManager */,
+				EA3D0E2E18CB6B9C00CB333E /* SimpleTaskManagerTests */,
+				EA3D0E0818CB6B9C00CB333E /* Frameworks */,
+				EA3D0E0718CB6B9C00CB333E /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		EA3D0E0718CB6B9C00CB333E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				EA3D0E0618CB6B9C00CB333E /* SimpleTaskManager.app */,
+				EA3D0E2618CB6B9C00CB333E /* SimpleTaskManagerTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		EA3D0E0818CB6B9C00CB333E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				EA3D0E0918CB6B9C00CB333E /* Foundation.framework */,
+				EA3D0E0B18CB6B9C00CB333E /* CoreGraphics.framework */,
+				EA3D0E0D18CB6B9C00CB333E /* UIKit.framework */,
+				EA3D0E0F18CB6B9C00CB333E /* CoreData.framework */,
+				EA3D0E2718CB6B9C00CB333E /* XCTest.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		EA3D0E1118CB6B9C00CB333E /* SimpleTaskManager */ = {
+			isa = PBXGroup;
+			children = (
+				EA3D0E1A18CB6B9C00CB333E /* AppDelegate.h */,
+				EA3D0E1B18CB6B9C00CB333E /* AppDelegate.m */,
+				EA3D0E2018CB6B9C00CB333E /* Images.xcassets */,
+				EA3D0E1D18CB6B9C00CB333E /* SimpleTaskManager.xcdatamodeld */,
+				EA3D0E1218CB6B9C00CB333E /* Supporting Files */,
+			);
+			path = SimpleTaskManager;
+			sourceTree = "<group>";
+		};
+		EA3D0E1218CB6B9C00CB333E /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				EA3D0E1318CB6B9C00CB333E /* SimpleTaskManager-Info.plist */,
+				EA3D0E1418CB6B9C00CB333E /* InfoPlist.strings */,
+				EA3D0E1718CB6B9C00CB333E /* main.m */,
+				EA3D0E1918CB6B9C00CB333E /* SimpleTaskManager-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		EA3D0E2E18CB6B9C00CB333E /* SimpleTaskManagerTests */ = {
+			isa = PBXGroup;
+			children = (
+				EA3D0E3418CB6B9C00CB333E /* SimpleTaskManagerTests.m */,
+				EA3D0E2F18CB6B9C00CB333E /* Supporting Files */,
+			);
+			path = SimpleTaskManagerTests;
+			sourceTree = "<group>";
+		};
+		EA3D0E2F18CB6B9C00CB333E /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				EA3D0E3018CB6B9C00CB333E /* SimpleTaskManagerTests-Info.plist */,
+				EA3D0E3118CB6B9C00CB333E /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		EA3D0E0518CB6B9C00CB333E /* SimpleTaskManager */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EA3D0E3818CB6B9C00CB333E /* Build configuration list for PBXNativeTarget "SimpleTaskManager" */;
+			buildPhases = (
+				EA3D0E0218CB6B9C00CB333E /* Sources */,
+				EA3D0E0318CB6B9C00CB333E /* Frameworks */,
+				EA3D0E0418CB6B9C00CB333E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SimpleTaskManager;
+			productName = SimpleTaskManager;
+			productReference = EA3D0E0618CB6B9C00CB333E /* SimpleTaskManager.app */;
+			productType = "com.apple.product-type.application";
+		};
+		EA3D0E2518CB6B9C00CB333E /* SimpleTaskManagerTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EA3D0E3B18CB6B9C00CB333E /* Build configuration list for PBXNativeTarget "SimpleTaskManagerTests" */;
+			buildPhases = (
+				EA3D0E2218CB6B9C00CB333E /* Sources */,
+				EA3D0E2318CB6B9C00CB333E /* Frameworks */,
+				EA3D0E2418CB6B9C00CB333E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				EA3D0E2D18CB6B9C00CB333E /* PBXTargetDependency */,
+			);
+			name = SimpleTaskManagerTests;
+			productName = SimpleTaskManagerTests;
+			productReference = EA3D0E2618CB6B9C00CB333E /* SimpleTaskManagerTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		EA3D0DFE18CB6B9B00CB333E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0500;
+				ORGANIZATIONNAME = Tomato;
+				TargetAttributes = {
+					EA3D0E2518CB6B9C00CB333E = {
+						TestTargetID = EA3D0E0518CB6B9C00CB333E;
+					};
+				};
+			};
+			buildConfigurationList = EA3D0E0118CB6B9B00CB333E /* Build configuration list for PBXProject "SimpleTaskManager" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = EA3D0DFD18CB6B9B00CB333E;
+			productRefGroup = EA3D0E0718CB6B9C00CB333E /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				EA3D0E0518CB6B9C00CB333E /* SimpleTaskManager */,
+				EA3D0E2518CB6B9C00CB333E /* SimpleTaskManagerTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		EA3D0E0418CB6B9C00CB333E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EA3D0E1618CB6B9C00CB333E /* InfoPlist.strings in Resources */,
+				EA3D0E2118CB6B9C00CB333E /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EA3D0E2418CB6B9C00CB333E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EA3D0E3318CB6B9C00CB333E /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		EA3D0E0218CB6B9C00CB333E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EA3D0E1C18CB6B9C00CB333E /* AppDelegate.m in Sources */,
+				EA3D0E1818CB6B9C00CB333E /* main.m in Sources */,
+				EA3D0E1F18CB6B9C00CB333E /* SimpleTaskManager.xcdatamodeld in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EA3D0E2218CB6B9C00CB333E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EA3D0E3518CB6B9C00CB333E /* SimpleTaskManagerTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		EA3D0E2D18CB6B9C00CB333E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EA3D0E0518CB6B9C00CB333E /* SimpleTaskManager */;
+			targetProxy = EA3D0E2C18CB6B9C00CB333E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		EA3D0E1418CB6B9C00CB333E /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				EA3D0E1518CB6B9C00CB333E /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		EA3D0E3118CB6B9C00CB333E /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				EA3D0E3218CB6B9C00CB333E /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		EA3D0E3618CB6B9C00CB333E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		EA3D0E3718CB6B9C00CB333E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		EA3D0E3918CB6B9C00CB333E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "SimpleTaskManager/SimpleTaskManager-Prefix.pch";
+				INFOPLIST_FILE = "SimpleTaskManager/SimpleTaskManager-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		EA3D0E3A18CB6B9C00CB333E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "SimpleTaskManager/SimpleTaskManager-Prefix.pch";
+				INFOPLIST_FILE = "SimpleTaskManager/SimpleTaskManager-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		EA3D0E3C18CB6B9C00CB333E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/SimpleTaskManager.app/SimpleTaskManager";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "SimpleTaskManager/SimpleTaskManager-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "SimpleTaskManagerTests/SimpleTaskManagerTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		EA3D0E3D18CB6B9C00CB333E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/SimpleTaskManager.app/SimpleTaskManager";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "SimpleTaskManager/SimpleTaskManager-Prefix.pch";
+				INFOPLIST_FILE = "SimpleTaskManagerTests/SimpleTaskManagerTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		EA3D0E0118CB6B9B00CB333E /* Build configuration list for PBXProject "SimpleTaskManager" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EA3D0E3618CB6B9C00CB333E /* Debug */,
+				EA3D0E3718CB6B9C00CB333E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EA3D0E3818CB6B9C00CB333E /* Build configuration list for PBXNativeTarget "SimpleTaskManager" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EA3D0E3918CB6B9C00CB333E /* Debug */,
+				EA3D0E3A18CB6B9C00CB333E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		EA3D0E3B18CB6B9C00CB333E /* Build configuration list for PBXNativeTarget "SimpleTaskManagerTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EA3D0E3C18CB6B9C00CB333E /* Debug */,
+				EA3D0E3D18CB6B9C00CB333E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		EA3D0E1D18CB6B9C00CB333E /* SimpleTaskManager.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				EA3D0E1E18CB6B9C00CB333E /* SimpleTaskManager.xcdatamodel */,
+			);
+			currentVersion = EA3D0E1E18CB6B9C00CB333E /* SimpleTaskManager.xcdatamodel */;
+			path = SimpleTaskManager.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = EA3D0DFE18CB6B9B00CB333E /* Project object */;
+}

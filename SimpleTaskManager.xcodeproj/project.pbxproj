@@ -22,6 +22,9 @@
 		EA3D0E2B18CB6B9C00CB333E /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA3D0E0F18CB6B9C00CB333E /* CoreData.framework */; };
 		EA3D0E3318CB6B9C00CB333E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = EA3D0E3118CB6B9C00CB333E /* InfoPlist.strings */; };
 		EA3D0E3518CB6B9C00CB333E /* SimpleTaskManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3D0E3418CB6B9C00CB333E /* SimpleTaskManagerTests.m */; };
+		EA3D0ED918CBBBF100CB333E /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3D0ED818CBBBF100CB333E /* MainViewController.m */; };
+		EA3D0EDB18CBBC6A00CB333E /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA3D0EDA18CBBC6A00CB333E /* Main_iPhone.storyboard */; };
+		EA3D0EDD18CBBC8C00CB333E /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA3D0EDC18CBBC8C00CB333E /* Main_iPad.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +56,10 @@
 		EA3D0E3018CB6B9C00CB333E /* SimpleTaskManagerTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SimpleTaskManagerTests-Info.plist"; sourceTree = "<group>"; };
 		EA3D0E3218CB6B9C00CB333E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		EA3D0E3418CB6B9C00CB333E /* SimpleTaskManagerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SimpleTaskManagerTests.m; sourceTree = "<group>"; };
+		EA3D0ED718CBBBF100CB333E /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
+		EA3D0ED818CBBBF100CB333E /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
+		EA3D0EDA18CBBC6A00CB333E /* Main_iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main_iPhone.storyboard; sourceTree = "<group>"; };
+		EA3D0EDC18CBBC8C00CB333E /* Main_iPad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main_iPad.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +88,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		46AE274E1592D16279894771 /* MainView */ = {
+			isa = PBXGroup;
+			children = (
+				EA3D0ED718CBBBF100CB333E /* MainViewController.h */,
+				EA3D0ED818CBBBF100CB333E /* MainViewController.m */,
+				EA3D0EDA18CBBC6A00CB333E /* Main_iPhone.storyboard */,
+				EA3D0EDC18CBBC8C00CB333E /* Main_iPad.storyboard */,
+			);
+			path = MainView;
+			sourceTree = "<group>";
+		};
 		EA3D0DFD18CB6B9B00CB333E = {
 			isa = PBXGroup;
 			children = (
@@ -120,6 +138,7 @@
 				EA3D0E2018CB6B9C00CB333E /* Images.xcassets */,
 				EA3D0E1D18CB6B9C00CB333E /* SimpleTaskManager.xcdatamodeld */,
 				EA3D0E1218CB6B9C00CB333E /* Supporting Files */,
+				46AE274E1592D16279894771 /* MainView */,
 			);
 			path = SimpleTaskManager;
 			sourceTree = "<group>";
@@ -229,7 +248,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				EA3D0E1618CB6B9C00CB333E /* InfoPlist.strings in Resources */,
+				EA3D0EDD18CBBC8C00CB333E /* Main_iPad.storyboard in Resources */,
 				EA3D0E2118CB6B9C00CB333E /* Images.xcassets in Resources */,
+				EA3D0EDB18CBBC6A00CB333E /* Main_iPhone.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -251,6 +272,7 @@
 				EA3D0E1C18CB6B9C00CB333E /* AppDelegate.m in Sources */,
 				EA3D0E1818CB6B9C00CB333E /* main.m in Sources */,
 				EA3D0E1F18CB6B9C00CB333E /* SimpleTaskManager.xcdatamodeld in Sources */,
+				EA3D0ED918CBBBF100CB333E /* MainViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -453,6 +475,7 @@
 				EA3D0E3A18CB6B9C00CB333E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		EA3D0E3B18CB6B9C00CB333E /* Build configuration list for PBXNativeTarget "SimpleTaskManagerTests" */ = {
 			isa = XCConfigurationList;
@@ -461,6 +484,7 @@
 				EA3D0E3D18CB6B9C00CB333E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

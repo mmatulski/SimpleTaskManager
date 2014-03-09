@@ -12,48 +12,94 @@
                         <viewControllerLayoutGuide type="top" id="z9s-X0-S4p"/>
                         <viewControllerLayoutGuide type="bottom" id="ZIJ-wD-E98"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Km4-kw-UoT">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <view key="view" contentMode="scaleToFill" id="Km4-kw-UoT" userLabel="MainView">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xEb-5J-pZZ">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xEb-5J-pZZ" userLabel="TopPanel">
                                 <rect key="frame" x="10" y="20" width="300" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="TO DO" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d6d-3x-Riq">
-                                        <rect key="frame" x="0.0" y="0.0" width="140" height="44"/>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TO DO" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d6d-3x-Riq" userLabel="TODOLabel">
+                                        <rect key="frame" x="0.0" y="0.0" width="153" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" red="0.31372549020000001" green="0.32156862749999998" blue="0.31764705879999999" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="153" id="8HZ-FR-4g9"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" name="Chalkduster" family="Chalkduster" pointSize="34"/>
                                         <color key="textColor" red="0.96078431369999995" green="0.92156862750000001" blue="0.82352941180000006" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lsr-8c-I29" userLabel="AddTaskButton">
+                                        <rect key="frame" x="263" y="11" width="22" height="22"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="22" id="HxA-Xl-MSr"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                        <state key="normal">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="addTask:" destination="LSY-it-WOv" eventType="touchUpInside" id="T06-qr-us2"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="d6d-3x-Riq" firstAttribute="leading" secondItem="xEb-5J-pZZ" secondAttribute="leading" id="9oe-UQ-2K0"/>
+                                    <constraint firstAttribute="bottom" secondItem="Lsr-8c-I29" secondAttribute="bottom" constant="11" id="TSi-1b-bPZ"/>
+                                    <constraint firstAttribute="trailing" secondItem="Lsr-8c-I29" secondAttribute="trailing" constant="15" id="Zvx-rG-K7o"/>
                                     <constraint firstItem="d6d-3x-Riq" firstAttribute="top" secondItem="xEb-5J-pZZ" secondAttribute="top" id="cOD-dw-smp"/>
                                     <constraint firstAttribute="bottom" secondItem="d6d-3x-Riq" secondAttribute="bottom" id="fhI-WT-M3B"/>
                                     <constraint firstAttribute="height" constant="44" id="mg0-G4-jiq"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IuK-eW-Hmx">
-                                <rect key="frame" x="10" y="72" width="300" height="486"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IuK-eW-Hmx" userLabel="CenterPanel">
+                                <rect key="frame" x="10" y="72" width="300" height="398"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
+                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qTj-DG-p5a" userLabel="AddTaskDialog">
+                                        <rect key="frame" x="0.0" y="0.0" width="300" height="122"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sHC-pg-edQ" userLabel="confirmAddTaskButton">
+                                                <rect key="frame" x="5" y="78" width="290" height="44"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <state key="normal" title="OK">
+                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="confirmAddingTask:" destination="LSY-it-WOv" eventType="touchUpInside" id="kMo-bY-zVH"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" red="1" green="0.89538663321167888" blue="0.23018362226277372" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstItem="sHC-pg-edQ" firstAttribute="leading" secondItem="qTj-DG-p5a" secondAttribute="leading" constant="5" id="2VJ-o7-LdT"/>
+                                            <constraint firstAttribute="bottom" secondItem="sHC-pg-edQ" secondAttribute="bottom" id="83b-hS-3Zx"/>
+                                            <constraint firstAttribute="height" constant="122" id="FKR-ke-WMM"/>
+                                            <constraint firstAttribute="trailing" secondItem="sHC-pg-edQ" secondAttribute="trailing" constant="5" id="SvL-vl-Dir"/>
+                                        </constraints>
+                                    </view>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="khM-Ua-bai">
-                                        <rect key="frame" x="0.0" y="0.0" width="300" height="486"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="300" height="398"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" red="0.72941176470000002" green="0.71764705880000002" blue="0.64313725489999995" alpha="1" colorSpace="calibratedRGB"/>
                                         <color key="sectionIndexTrackingBackgroundColor" red="0.72941176470000002" green="0.71764705880000002" blue="0.64313725489999995" alpha="1" colorSpace="calibratedRGB"/>
                                     </tableView>
                                 </subviews>
-                                <color key="backgroundColor" red="0.72941176470000002" green="0.71764705880000002" blue="0.64313725489999995" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.31372549020000001" green="0.32156862749999998" blue="0.31764705879999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstItem="khM-Ua-bai" firstAttribute="leading" secondItem="IuK-eW-Hmx" secondAttribute="leading" id="8Dg-gW-KlT"/>
-                                    <constraint firstAttribute="bottom" secondItem="khM-Ua-bai" secondAttribute="bottom" id="Fiq-89-NgC"/>
-                                    <constraint firstAttribute="trailing" secondItem="khM-Ua-bai" secondAttribute="trailing" id="OFK-v9-6zZ"/>
-                                    <constraint firstItem="khM-Ua-bai" firstAttribute="top" secondItem="IuK-eW-Hmx" secondAttribute="top" id="hOD-OX-FOw"/>
+                                    <constraint firstAttribute="bottom" secondItem="khM-Ua-bai" secondAttribute="bottom" id="76P-sv-gDt"/>
+                                    <constraint firstItem="khM-Ua-bai" firstAttribute="leading" secondItem="IuK-eW-Hmx" secondAttribute="leading" id="AvY-Hs-pL1"/>
+                                    <constraint firstItem="qTj-DG-p5a" firstAttribute="leading" secondItem="IuK-eW-Hmx" secondAttribute="leading" id="DDd-01-feE"/>
+                                    <constraint firstAttribute="trailing" secondItem="khM-Ua-bai" secondAttribute="trailing" id="W4S-HA-Weu"/>
+                                    <constraint firstAttribute="trailing" secondItem="qTj-DG-p5a" secondAttribute="trailing" id="jnk-dD-A9I"/>
+                                    <constraint firstItem="qTj-DG-p5a" firstAttribute="top" secondItem="IuK-eW-Hmx" secondAttribute="top" id="nTz-j1-d5b"/>
+                                    <constraint firstItem="khM-Ua-bai" firstAttribute="top" secondItem="IuK-eW-Hmx" secondAttribute="top" id="uHk-U6-RHA"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -69,6 +115,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="addTaskDialog" destination="qTj-DG-p5a" id="ntV-zD-P5Y"/>
                         <outlet property="tableView" destination="khM-Ua-bai" id="fQK-bQ-CvO"/>
                     </connections>
                 </viewController>
@@ -80,6 +127,6 @@
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination" type="retina4"/>
+        <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
 </document>

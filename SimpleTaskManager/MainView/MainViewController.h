@@ -11,5 +11,6 @@
 @interface MainViewController : UIViewController
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UIView *addTaskDialog;
 
 @end

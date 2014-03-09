@@ -7,6 +7,7 @@
 //
 
 #import "MainViewController.h"
+#import "AnimationsHelper.h"
 
 @interface MainViewController ()
 
@@ -27,6 +28,23 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    //self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+}
+
+- (IBAction)addTask:(id)sender {
+    [self showAddTaskDialog];
+}
+
+- (void)showAddTaskDialog {
+
+    self.addTaskDialog.hidden = false;
+    [self.addTaskDialog.superview bringSubviewToFront:self.addTaskDialog];
+}
+
+- (IBAction)confirmAddingTask:(id)sender {
+    
+    self.addTaskDialog.hidden = true;
+  [self.tableView.superview bringSubviewToFront:self.tableView];
 }
 
 - (void)didReceiveMemoryWarning
@@ -34,5 +52,6 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 
 @end

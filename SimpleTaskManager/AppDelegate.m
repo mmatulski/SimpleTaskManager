@@ -8,11 +8,18 @@
 
 #import "AppDelegate.h"
 #import "DBAccess.h"
+#import "DDASLLogger.h"
+#import "DDTTYLogger.h"
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [DDLog addLogger:[DDASLLogger sharedInstance]];
+    [DDLog addLogger:[DDTTYLogger sharedInstance]];
+
+    DDLogInfo(@"application didFinishLaunchingWithOptions");
+
     [DBAccess sharedInstance];
 
     return YES;

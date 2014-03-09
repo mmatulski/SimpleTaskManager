@@ -15,5 +15,8 @@
     #import <Foundation/Foundation.h>
     #import <CoreData/CoreData.h>
 
+    #import "DDLog.h"
     #import "AppMacros.h"
+
+    static const int ddLogLevel = LOG_LEVEL_INFO;
 #endif

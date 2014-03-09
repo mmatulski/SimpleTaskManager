@@ -15,5 +15,4 @@
 - (instancetype)initWithParentController:(DBController *)parentController;
 - (instancetype)initWithContext:(NSManagedObjectContext *)context parentController:(DBController *)parentController;
 
-
 @end

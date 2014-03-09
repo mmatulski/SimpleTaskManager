@@ -38,6 +38,7 @@
 		EA3D0ED918CBBBF100CB333E /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3D0ED818CBBBF100CB333E /* MainViewController.m */; };
 		EA3D0EDB18CBBC6A00CB333E /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA3D0EDA18CBBC6A00CB333E /* Main_iPhone.storyboard */; };
 		EA3D0EDD18CBBC8C00CB333E /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA3D0EDC18CBBC8C00CB333E /* Main_iPad.storyboard */; };
+		EA5CE6BB18CD2A2000573CE8 /* STMTask.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5CE6BA18CD2A2000573CE8 /* STMTask.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -97,6 +98,8 @@
 		EA3D0ED818CBBBF100CB333E /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		EA3D0EDA18CBBC6A00CB333E /* Main_iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main_iPhone.storyboard; sourceTree = "<group>"; };
 		EA3D0EDC18CBBC8C00CB333E /* Main_iPad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main_iPad.storyboard; sourceTree = "<group>"; };
+		EA5CE6B918CD2A2000573CE8 /* STMTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STMTask.h; sourceTree = "<group>"; };
+		EA5CE6BA18CD2A2000573CE8 /* STMTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STMTask.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -196,6 +199,8 @@
 		46AE2F76EE2F072DA99C03F9 /* Database */ = {
 			isa = PBXGroup;
 			children = (
+				EA5CE6B918CD2A2000573CE8 /* STMTask.h */,
+				EA5CE6BA18CD2A2000573CE8 /* STMTask.m */,
 				46AE2B47CAFDDCB7D9C12CB7 /* DBController.m */,
 				46AE2B7DDFC69C1956710CB1 /* DBController.h */,
 				46AE2E29179ECFBA021E47AC /* DBAccess.m */,
@@ -391,6 +396,7 @@
 				46AE2ACBDC30AC492BBB68C4 /* DDLog.m in Sources */,
 				46AE2C6E29A61028A98292D6 /* ContextFilterLogFormatter.m in Sources */,
 				46AE22663A7440C2240CFD78 /* DispatchQueueLogFormatter.m in Sources */,
+				EA5CE6BB18CD2A2000573CE8 /* STMTask.m in Sources */,
 				46AE2778B30FF66F82F8BF4E /* DDASLLogger.m in Sources */,
 				46AE2619ABF5A338D4017D5D /* DDTTYLogger.m in Sources */,
 				46AE2531981D3E9147CB01C8 /* DDFileLogger.m in Sources */,

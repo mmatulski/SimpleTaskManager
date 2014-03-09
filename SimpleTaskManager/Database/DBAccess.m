@@ -118,17 +118,17 @@
          Lightweight migration will only work for a limited set of schema changes; consult "Core Data Model Versioning and Data Migration Programming Guide" for details.
          
          */
-        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        DDLogWarn(@"Unresolved error %@, %@", error, [error userInfo]);
 
         NSError *err;
         if([[NSFileManager defaultManager] removeItemAtURL:storeURL error:&err]){
             if(![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error]){
-                NSLog(@"Removing db not resolved the problem - Unresolved error %@, %@", error, [error userInfo]);
+                DDLogError(@"Removing db not resolved the problem - Unresolved error %@, %@", error, [error userInfo]);
                 abort();
             }
 
         } else {
-            NSLog(@"Can not remove old db error %@, %@", error, [error userInfo]);
+            DDLogError(@"Can not remove old db error %@, %@", error, [error userInfo]);
             abort();
         }
     }

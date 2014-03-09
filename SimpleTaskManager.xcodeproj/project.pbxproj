@@ -7,7 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		46AE27B761C563290B969124 /* SimpleTaskManager.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 46AE2DD9AD22C897B3530666 /* SimpleTaskManager.xcdatamodel */; };
+		46AE2928588C378D457A0861 /* DBAccess.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE2E29179ECFBA021E47AC /* DBAccess.m */; };
 		46AE2AB8AD5EA5BBB140E095 /* AnimationsHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE2B4CA278B77E07685AEC /* AnimationsHelper.m */; };
+		46AE2AC529074E58F60813D7 /* DBController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE2B47CAFDDCB7D9C12CB7 /* DBController.m */; };
+		46AE2FFDE8E4408F6147B21C /* AppMacros.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE26BD3C2DAA306AFD90D2 /* AppMacros.m */; };
 		EA3D0E0A18CB6B9C00CB333E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA3D0E0918CB6B9C00CB333E /* Foundation.framework */; };
 		EA3D0E0C18CB6B9C00CB333E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA3D0E0B18CB6B9C00CB333E /* CoreGraphics.framework */; };
 		EA3D0E0E18CB6B9C00CB333E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA3D0E0D18CB6B9C00CB333E /* UIKit.framework */; };
@@ -15,7 +19,6 @@
 		EA3D0E1618CB6B9C00CB333E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = EA3D0E1418CB6B9C00CB333E /* InfoPlist.strings */; };
 		EA3D0E1818CB6B9C00CB333E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3D0E1718CB6B9C00CB333E /* main.m */; };
 		EA3D0E1C18CB6B9C00CB333E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3D0E1B18CB6B9C00CB333E /* AppDelegate.m */; };
-		EA3D0E1F18CB6B9C00CB333E /* SimpleTaskManager.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EA3D0E1D18CB6B9C00CB333E /* SimpleTaskManager.xcdatamodeld */; };
 		EA3D0E2118CB6B9C00CB333E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA3D0E2018CB6B9C00CB333E /* Images.xcassets */; };
 		EA3D0E2818CB6B9C00CB333E /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA3D0E2718CB6B9C00CB333E /* XCTest.framework */; };
 		EA3D0E2918CB6B9C00CB333E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA3D0E0918CB6B9C00CB333E /* Foundation.framework */; };
@@ -40,7 +43,14 @@
 
 /* Begin PBXFileReference section */
 		46AE2542CB1C0925D0807B19 /* AnimationsHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimationsHelper.h; sourceTree = "<group>"; };
+		46AE26BD3C2DAA306AFD90D2 /* AppMacros.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppMacros.m; sourceTree = "<group>"; };
+		46AE2B47CAFDDCB7D9C12CB7 /* DBController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBController.m; sourceTree = "<group>"; };
 		46AE2B4CA278B77E07685AEC /* AnimationsHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimationsHelper.m; sourceTree = "<group>"; };
+		46AE2B7DDFC69C1956710CB1 /* DBController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBController.h; sourceTree = "<group>"; };
+		46AE2CCEA5C2DA274CA74EBD /* DBAccess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBAccess.h; sourceTree = "<group>"; };
+		46AE2DD9AD22C897B3530666 /* SimpleTaskManager.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SimpleTaskManager.xcdatamodel; sourceTree = "<group>"; };
+		46AE2E29179ECFBA021E47AC /* DBAccess.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBAccess.m; sourceTree = "<group>"; };
+		46AE2F793D2FC0CD9E6484DA /* AppMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppMacros.h; sourceTree = "<group>"; };
 		EA3D0E0618CB6B9C00CB333E /* SimpleTaskManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleTaskManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA3D0E0918CB6B9C00CB333E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		EA3D0E0B18CB6B9C00CB333E /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -52,7 +62,6 @@
 		EA3D0E1918CB6B9C00CB333E /* SimpleTaskManager-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SimpleTaskManager-Prefix.pch"; sourceTree = "<group>"; };
 		EA3D0E1A18CB6B9C00CB333E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		EA3D0E1B18CB6B9C00CB333E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		EA3D0E1E18CB6B9C00CB333E /* SimpleTaskManager.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SimpleTaskManager.xcdatamodel; sourceTree = "<group>"; };
 		EA3D0E2018CB6B9C00CB333E /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		EA3D0E2618CB6B9C00CB333E /* SimpleTaskManagerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SimpleTaskManagerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA3D0E2718CB6B9C00CB333E /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -91,6 +100,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		46AE2098E77DB6A31A0F5F68 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		46AE274E1592D16279894771 /* MainView */ = {
 			isa = PBXGroup;
 			children = (
@@ -107,8 +123,30 @@
 			children = (
 				46AE2B4CA278B77E07685AEC /* AnimationsHelper.m */,
 				46AE2542CB1C0925D0807B19 /* AnimationsHelper.h */,
+				46AE26BD3C2DAA306AFD90D2 /* AppMacros.m */,
+				46AE2F793D2FC0CD9E6484DA /* AppMacros.h */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		46AE2D620750E088082C4DFC /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				46AE2DD9AD22C897B3530666 /* SimpleTaskManager.xcdatamodel */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		46AE2F76EE2F072DA99C03F9 /* Database */ = {
+			isa = PBXGroup;
+			children = (
+				46AE2B47CAFDDCB7D9C12CB7 /* DBController.m */,
+				46AE2B7DDFC69C1956710CB1 /* DBController.h */,
+				46AE2E29179ECFBA021E47AC /* DBAccess.m */,
+				46AE2CCEA5C2DA274CA74EBD /* DBAccess.h */,
+				46AE2D620750E088082C4DFC /* Model */,
+			);
+			path = Database;
 			sourceTree = "<group>";
 		};
 		EA3D0DFD18CB6B9B00CB333E = {
@@ -148,10 +186,11 @@
 				EA3D0E1A18CB6B9C00CB333E /* AppDelegate.h */,
 				EA3D0E1B18CB6B9C00CB333E /* AppDelegate.m */,
 				EA3D0E2018CB6B9C00CB333E /* Images.xcassets */,
-				EA3D0E1D18CB6B9C00CB333E /* SimpleTaskManager.xcdatamodeld */,
 				EA3D0E1218CB6B9C00CB333E /* Supporting Files */,
 				46AE274E1592D16279894771 /* MainView */,
 				46AE2ACD875439BC8EC35270 /* Helpers */,
+				46AE2F76EE2F072DA99C03F9 /* Database */,
+				46AE2098E77DB6A31A0F5F68 /* Resources */,
 			);
 			path = SimpleTaskManager;
 			sourceTree = "<group>";
@@ -284,9 +323,12 @@
 			files = (
 				EA3D0E1C18CB6B9C00CB333E /* AppDelegate.m in Sources */,
 				EA3D0E1818CB6B9C00CB333E /* main.m in Sources */,
-				EA3D0E1F18CB6B9C00CB333E /* SimpleTaskManager.xcdatamodeld in Sources */,
 				EA3D0ED918CBBBF100CB333E /* MainViewController.m in Sources */,
 				46AE2AB8AD5EA5BBB140E095 /* AnimationsHelper.m in Sources */,
+				46AE2AC529074E58F60813D7 /* DBController.m in Sources */,
+				46AE2928588C378D457A0861 /* DBAccess.m in Sources */,
+				46AE2FFDE8E4408F6147B21C /* AppMacros.m in Sources */,
+				46AE27B761C563290B969124 /* SimpleTaskManager.xcdatamodel in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -501,19 +543,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		EA3D0E1D18CB6B9C00CB333E /* SimpleTaskManager.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				EA3D0E1E18CB6B9C00CB333E /* SimpleTaskManager.xcdatamodel */,
-			);
-			currentVersion = EA3D0E1E18CB6B9C00CB333E /* SimpleTaskManager.xcdatamodel */;
-			path = SimpleTaskManager.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = EA3D0DFE18CB6B9B00CB333E /* Project object */;
 }

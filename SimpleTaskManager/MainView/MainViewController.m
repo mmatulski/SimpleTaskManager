@@ -10,6 +10,7 @@
 #import "AnimationsHelper.h"
 #import "DBAccess.h"
 #import "DBController.h"
+#import "STMTask.h"
 
 NSString * const kCellIdentifier = @"CellIdentifier";
 
@@ -36,8 +37,8 @@ NSString * const kCellIdentifier = @"CellIdentifier";
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
 
-    //[self prepareDBController];
-    //[self prepareFetchedResultsController];
+    [self prepareDBController];
+    [self prepareFetchedResultsController];
 }
 
 - (void)prepareDBController {
@@ -48,12 +49,15 @@ NSString * const kCellIdentifier = @"CellIdentifier";
 
     NSFetchRequest *fetchRequest = [self.dbController fetchTasksRequestWithBatchSize:20];
 
-    NSFetchedResultsController *theFetchedResultsController =
-            [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
+    self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
                                                 managedObjectContext:self.dbController.context sectionNameKeyPath:nil
                                                            cacheName:@"Root"];
-    self.fetchedResultsController = theFetchedResultsController;
     self.fetchedResultsController.delegate = self;
+
+    NSError *err = nil;
+    if(![self.fetchedResultsController performFetch:&err]){
+        DDLogError(@"prepareFetchedResultsController performFetch failed %@", [err localizedDescription]);
+    }
 }
 
 - (IBAction)addTask:(id)sender {
@@ -85,7 +89,11 @@ NSString * const kCellIdentifier = @"CellIdentifier";
 }
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)path {
-    cell.textLabel.text = [NSString stringWithFormat:@"example text %d", path.row];
+    STMTask * task = [self.fetchedResultsController objectAtIndexPath:path];
+    if(task){
+        cell.textLabel.text = task.name;
+        cell.detailTextLabel.text = task.uid;
+    }
 }
 
 #pragma mark - UITableViewDelegate methods
@@ -93,14 +101,15 @@ NSString * const kCellIdentifier = @"CellIdentifier";
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 10;
+    id  sectionInfo = [[_fetchedResultsController sections] objectAtIndex:section];
+    return [sectionInfo numberOfObjects];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier];
 
     if(!cell){
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kCellIdentifier];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:kCellIdentifier];
     }
 
     [self configureCell:cell atIndexPath:indexPath];

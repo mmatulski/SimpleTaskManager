@@ -6,6 +6,7 @@
 #import "DBController.h"
 #import "STMTask.h"
 
+NSString * const kSTMTaskEntityName = @"STMTask";
 
 @implementation DBController {
     int _numberOfAllTasks;
@@ -68,7 +69,7 @@
 }
 
 - (void)addTaskWithName:(NSString *)name successFullBlock:(void (^)(STMTask *))successFullBlock failureBlock:(void (^)(NSError *err))failureBlock {
-    STMTask *task = (STMTask *)[NSEntityDescription insertNewObjectForEntityForName:@"STMTask" inManagedObjectContext:self.context];
+    STMTask *task = (STMTask *)[NSEntityDescription insertNewObjectForEntityForName:kSTMTaskEntityName inManagedObjectContext:self.context];
     task.name = [name copy];
     task.uid = [[NSUUID UUID] UUIDString];
 
@@ -105,4 +106,18 @@
 }
 
 
+- (NSFetchRequest *)fetchTasksRequestWithBatchSize:(unsigned int) batchSize {
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription
+            entityForName:kSTMTaskEntityName inManagedObjectContext:self.context];
+    [fetchRequest setEntity:entity];
+
+    NSSortDescriptor *sort = [[NSSortDescriptor alloc]
+            initWithKey:@"index" ascending:NO];
+    [fetchRequest setSortDescriptors:[NSArray arrayWithObject:sort]];
+
+    [fetchRequest setFetchBatchSize:batchSize];
+
+    return fetchRequest;
+}
 @end

@@ -7,6 +7,7 @@
 
 @class STMTask;
 
+extern NSString * const kSTMTaskEntityName;
 
 @interface DBController : NSObject
 
@@ -21,5 +22,6 @@
 
 - (void)addTaskWithName:(NSString *)name successFullBlock:(void (^)(STMTask *))successFullBlock failureBlock:(void (^)(NSError *err))failureBlock;
 
+- (NSFetchRequest *)fetchTasksRequestWithBatchSize:(unsigned int) batchSize;
 
 @end

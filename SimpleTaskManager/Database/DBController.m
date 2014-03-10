@@ -69,11 +69,11 @@ NSString * const kSTMTaskEntityName = @"STMTask";
 }
 
 - (void)addTaskWithName:(NSString *)name successFullBlock:(void (^)(STMTask *))successFullBlock failureBlock:(void (^)(NSError *err))failureBlock {
+    [self loadNumberOfAllTasksIfNotLoaded];
+
     STMTask *task = (STMTask *)[NSEntityDescription insertNewObjectForEntityForName:kSTMTaskEntityName inManagedObjectContext:self.context];
     task.name = [name copy];
     task.uid = [[NSUUID UUID] UUIDString];
-
-    [self loadNumberOfAllTasksIfNotLoaded];
 
     //order is inversely proportional to index value
     task.index = [NSNumber numberWithInt:++_numberOfAllTasks];

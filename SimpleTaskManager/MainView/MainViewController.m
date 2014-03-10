@@ -91,7 +91,7 @@ NSString * const kCellIdentifier = @"CellIdentifier";
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)path {
     STMTask * task = [self.fetchedResultsController objectAtIndexPath:path];
     if(task){
-        cell.textLabel.text = task.name;
+        cell.textLabel.text = [NSString stringWithFormat:@"[%d] %@", [[task index] integerValue] , task.name];
         cell.detailTextLabel.text = task.uid;
     }
 }

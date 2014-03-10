@@ -99,6 +99,8 @@ NSString * const kSTMTaskEntityName = @"STMTask";
             if(count == NSNotFound) {
                 DDLogError(@"There was problem with loading number of all tasks %@", [err localizedDescription]);
             } else {
+                _numberOfAllTasks = count;
+
                 DDLogInfo(@"number of all Tasks is %d", count);
             }
         }];

@@ -47,7 +47,7 @@ NSString * const kCellIdentifier = @"CellIdentifier";
 
 - (void)prepareFetchedResultsController {
 
-    NSFetchRequest *fetchRequest = [self.dbController fetchTasksRequestWithBatchSize:20];
+    NSFetchRequest *fetchRequest = [self.dbController createFetchingTasksRequestWithBatchSize:20];
 
     self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
                                                 managedObjectContext:self.dbController.context sectionNameKeyPath:nil
@@ -91,7 +91,7 @@ NSString * const kCellIdentifier = @"CellIdentifier";
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)path {
     STMTask * task = [self.fetchedResultsController objectAtIndexPath:path];
     if(task){
-        cell.textLabel.text = [NSString stringWithFormat:@"[%d] %@", [[task index] integerValue] , task.name];
+        cell.textLabel.text = [NSString stringWithFormat:@"[%d] %@", [[task index] intValue] , task.name];
         cell.detailTextLabel.text = task.uid;
     }
 }

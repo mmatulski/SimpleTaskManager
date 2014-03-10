@@ -9,14 +9,15 @@
 NSString * const kSTMTaskEntityName = @"STMTask";
 
 @implementation DBController {
-    int _numberOfAllTasks;
+    unsigned long _numberOfAllTasks;
+    bool _numberOfAllTasksEstimated;
 }
 
 - (instancetype)initWithContext:(NSManagedObjectContext *)context {
     self = [super init];
     if (self) {
         _context = context;
-        _numberOfAllTasks = -1;
+        _numberOfAllTasks = 0;
     }
 
     return self;
@@ -26,7 +27,7 @@ NSString * const kSTMTaskEntityName = @"STMTask";
     self = [super init];
     if (self) {
         _parentController = parentController;
-         _numberOfAllTasks = -1;
+        _numberOfAllTasks = 0;
 
         NSManagedObjectContext* parentContext = parentController.context;
         if(parentContext){
@@ -43,6 +44,7 @@ NSString * const kSTMTaskEntityName = @"STMTask";
     if (self) {
         _context = context;
         _parentController = parentController;
+        _numberOfAllTasks = 0;
     }
 
     return self;
@@ -86,8 +88,7 @@ NSString * const kSTMTaskEntityName = @"STMTask";
 }
 
 - (void) loadNumberOfAllTasksIfNotLoaded {
-    if(_numberOfAllTasks < 0){
-
+    if(!_numberOfAllTasksEstimated){
         BlockWeakSelf selfWeak = self;
         [self.context performBlockAndWait:^{
             NSFetchRequest *request = [[NSFetchRequest alloc] init];
@@ -100,15 +101,16 @@ NSString * const kSTMTaskEntityName = @"STMTask";
                 DDLogError(@"There was problem with loading number of all tasks %@", [err localizedDescription]);
             } else {
                 _numberOfAllTasks = count;
+                _numberOfAllTasksEstimated = true;
 
-                DDLogInfo(@"number of all Tasks is %d", count);
+                DDLogInfo(@"number of all Tasks is %lu", _numberOfAllTasks);
             }
         }];
     }
 }
 
 
-- (NSFetchRequest *)fetchTasksRequestWithBatchSize:(unsigned int) batchSize {
+- (NSFetchRequest *)createFetchingTasksRequestWithBatchSize:(unsigned int) batchSize {
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription
             entityForName:kSTMTaskEntityName inManagedObjectContext:self.context];

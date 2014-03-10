@@ -22,6 +22,6 @@ extern NSString * const kSTMTaskEntityName;
 
 - (void)addTaskWithName:(NSString *)name successFullBlock:(void (^)(STMTask *))successFullBlock failureBlock:(void (^)(NSError *err))failureBlock;
 
-- (NSFetchRequest *)fetchTasksRequestWithBatchSize:(unsigned int) batchSize;
+- (NSFetchRequest *)createFetchingTasksRequestWithBatchSize:(unsigned int) batchSize;
 
 @end

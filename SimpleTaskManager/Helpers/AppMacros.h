@@ -8,4 +8,7 @@
 #define runOnBackgroundThread( ... ) dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ##__VA_ARGS__)
 #define runOnMainThread( ... )  dispatch_async(dispatch_get_main_queue(), ##__VA_ARGS__)
 
+#define BlockWeakObject(o) __typeof(o) __weak
+#define BlockWeakSelf BlockWeakObject(self)
+
 extern id MakeSafeCast(id object, Class targetClass);

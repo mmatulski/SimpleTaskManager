@@ -5,6 +5,8 @@
 
 #import <Foundation/Foundation.h>
 
+@class STMTask;
+
 
 @interface DBController : NSObject
 
@@ -14,5 +16,10 @@
 - (instancetype)initWithContext:(NSManagedObjectContext *)context;
 - (instancetype)initWithParentController:(DBController *)parentController;
 - (instancetype)initWithContext:(NSManagedObjectContext *)context parentController:(DBController *)parentController;
+
+- (void)saveWithSuccessFullBlock:(void (^)())successFullBlock andFailureBlock:(void (^)(NSError *))block;
+
+- (void)addTaskWithName:(NSString *)name successFullBlock:(void (^)(STMTask *))successFullBlock failureBlock:(void (^)(NSError *err))failureBlock;
+
 
 @end

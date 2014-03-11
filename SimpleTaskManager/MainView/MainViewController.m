@@ -11,6 +11,7 @@
 #import "DBAccess.h"
 #import "DBController.h"
 #import "STMTask.h"
+#import "STMColors.h"
 
 NSString * const kCellIdentifier = @"CellIdentifier";
 
@@ -91,6 +92,8 @@ NSString * const kCellIdentifier = @"CellIdentifier";
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)path {
     STMTask * task = [self.fetchedResultsController objectAtIndexPath:path];
     if(task){
+        cell.backgroundColor = [STMColors cellBackgroundColor];
+        cell.textLabel.textColor = [STMColors cellTextColor];
         cell.textLabel.text = [NSString stringWithFormat:@"[%d] %@", [[task index] intValue] , task.name];
         cell.detailTextLabel.text = task.uid;
     }

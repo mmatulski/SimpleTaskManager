@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="LSY-it-WOv">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5053" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="LSY-it-WOv">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <scenes>
         <!--Main View Controller-->
@@ -12,7 +12,7 @@
                         <viewControllerLayoutGuide type="top" id="z9s-X0-S4p"/>
                         <viewControllerLayoutGuide type="bottom" id="ZIJ-wD-E98"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Km4-kw-UoT" userLabel="MainView">
+                    <view key="view" contentMode="scaleToFill" id="Km4-kw-UoT" userLabel="MainView" customClass="MainView">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
@@ -42,9 +42,6 @@
                                         <state key="normal">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
-                                        <connections>
-                                            <action selector="addTask:" destination="LSY-it-WOv" eventType="touchUpInside" id="T06-qr-us2"/>
-                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -57,36 +54,10 @@
                                     <constraint firstAttribute="height" constant="44" id="mg0-G4-jiq"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IuK-eW-Hmx" userLabel="CenterPanel">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IuK-eW-Hmx" userLabel="CentralPanel">
                                 <rect key="frame" x="10" y="72" width="300" height="398"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qTj-DG-p5a" userLabel="AddTaskDialog">
-                                        <rect key="frame" x="0.0" y="0.0" width="300" height="122"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sHC-pg-edQ" userLabel="confirmAddTaskButton">
-                                                <rect key="frame" x="5" y="78" width="290" height="44"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="44" id="TAo-0l-sdW"/>
-                                                </constraints>
-                                                <state key="normal" title="OK">
-                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="confirmAddingTask:" destination="LSY-it-WOv" eventType="touchUpInside" id="kMo-bY-zVH"/>
-                                                </connections>
-                                            </button>
-                                        </subviews>
-                                        <color key="backgroundColor" red="1" green="0.89538663321167888" blue="0.23018362226277372" alpha="1" colorSpace="calibratedRGB"/>
-                                        <constraints>
-                                            <constraint firstItem="sHC-pg-edQ" firstAttribute="leading" secondItem="qTj-DG-p5a" secondAttribute="leading" constant="5" id="2VJ-o7-LdT"/>
-                                            <constraint firstAttribute="bottom" secondItem="sHC-pg-edQ" secondAttribute="bottom" id="83b-hS-3Zx"/>
-                                            <constraint firstAttribute="height" constant="122" id="FKR-ke-WMM"/>
-                                            <constraint firstAttribute="trailing" secondItem="sHC-pg-edQ" secondAttribute="trailing" constant="5" id="SvL-vl-Dir"/>
-                                        </constraints>
-                                    </view>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="khM-Ua-bai">
                                         <rect key="frame" x="0.0" y="0.0" width="300" height="398"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -99,10 +70,7 @@
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="khM-Ua-bai" secondAttribute="bottom" id="76P-sv-gDt"/>
                                     <constraint firstItem="khM-Ua-bai" firstAttribute="leading" secondItem="IuK-eW-Hmx" secondAttribute="leading" id="AvY-Hs-pL1"/>
-                                    <constraint firstItem="qTj-DG-p5a" firstAttribute="leading" secondItem="IuK-eW-Hmx" secondAttribute="leading" id="DDd-01-feE"/>
                                     <constraint firstAttribute="trailing" secondItem="khM-Ua-bai" secondAttribute="trailing" id="W4S-HA-Weu"/>
-                                    <constraint firstAttribute="trailing" secondItem="qTj-DG-p5a" secondAttribute="trailing" id="jnk-dD-A9I"/>
-                                    <constraint firstItem="qTj-DG-p5a" firstAttribute="top" secondItem="IuK-eW-Hmx" secondAttribute="top" id="nTz-j1-d5b"/>
                                     <constraint firstItem="khM-Ua-bai" firstAttribute="top" secondItem="IuK-eW-Hmx" secondAttribute="top" id="uHk-U6-RHA"/>
                                 </constraints>
                             </view>
@@ -117,11 +85,12 @@
                             <constraint firstAttribute="trailing" secondItem="xEb-5J-pZZ" secondAttribute="trailing" constant="10" id="cy5-xs-aFu"/>
                             <constraint firstItem="IuK-eW-Hmx" firstAttribute="top" secondItem="xEb-5J-pZZ" secondAttribute="bottom" constant="8" id="zkL-dP-AhU"/>
                         </constraints>
+                        <connections>
+                            <outlet property="centralPanel" destination="IuK-eW-Hmx" id="5S7-zD-RYc"/>
+                            <outlet property="tableView" destination="khM-Ua-bai" id="JEC-nB-fTw"/>
+                            <outlet property="topView" destination="xEb-5J-pZZ" id="bYg-w3-JNM"/>
+                        </connections>
                     </view>
-                    <connections>
-                        <outlet property="addTaskDialog" destination="qTj-DG-p5a" id="ntV-zD-P5Y"/>
-                        <outlet property="tableView" destination="khM-Ua-bai" id="fQK-bQ-CvO"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zba-Ui-Gap" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

@@ -8,14 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-@class DBController;
+@class MainView;
+@class MainTableController;
 
-@interface MainViewController : UIViewController <NSFetchedResultsControllerDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface MainViewController : UIViewController
 
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (weak, nonatomic) IBOutlet UIView *addTaskDialog;
+@property(nonatomic, strong) MainTableController * tableController;
 
-@property (nonatomic, strong) DBController *dbController;
-@property(nonatomic, strong) NSFetchedResultsController* fetchedResultsController;
+-(MainView*) mainView;
 
 @end

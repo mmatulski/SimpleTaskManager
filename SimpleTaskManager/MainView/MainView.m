@@ -7,6 +7,7 @@
 //
 
 #import "MainView.h"
+#import "WrapperForAddingTaskView.h"
 
 @implementation MainView
 
@@ -15,8 +16,37 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
+        [self prepareWrapperViewForAddingTasks];
     }
     return self;
+}
+
+- (id)initWithCoder:(NSCoder *)coder {
+    self = [super initWithCoder:coder];
+    if (self) {
+        [self prepareWrapperViewForAddingTasks];
+    }
+
+    return self;
+}
+
+- (id)init {
+    self = [super init];
+    if (self) {
+
+    }
+
+    return self;
+}
+
+
+
+
+- (void)prepareWrapperViewForAddingTasks {
+    self.addTaskWrapperView = [[WrapperForAddingTaskView alloc] initWithDefaultFrame];
+
+    [self addSubview:self.addTaskWrapperView];
+    [self addConstraints:self.addTaskWrapperView.layoutConstraintsForHiddenMode];
 }
 
 /*

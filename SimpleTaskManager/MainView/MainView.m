@@ -43,10 +43,13 @@
 
 
 - (void)prepareWrapperViewForAddingTasks {
-    self.addTaskWrapperView = [[DialogsPresentationView alloc] initWithDefaultFrame];
+    self.dialogsPresentationView = [[DialogsPresentationView alloc] initWithDefaultFrame];
 
-    [self addSubview:self.addTaskWrapperView];
-    [self addConstraints:self.addTaskWrapperView.layoutConstraints];
+    [self addSubview:self.dialogsPresentationView];
+
+    [self.dialogsPresentationView setTranslatesAutoresizingMaskIntoConstraints:NO];
+    //[self setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [self addConstraints:self.dialogsPresentationView.layoutConstraints];
 }
 
 /*

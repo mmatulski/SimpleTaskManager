@@ -16,6 +16,6 @@
 @property (weak, nonatomic) IBOutlet UIView *centralPanel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
-@property(nonatomic, strong) DialogsPresentationView * addTaskWrapperView;
+@property(nonatomic, strong) DialogsPresentationView *dialogsPresentationView;
 
 @end

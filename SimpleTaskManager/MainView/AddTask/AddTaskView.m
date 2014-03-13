@@ -6,6 +6,7 @@
 #import "AddTaskView.h"
 
 
+
 @implementation AddTaskView {
 
 }
@@ -13,19 +14,28 @@
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        self.backgroundColor = [UIColor redColor];
+        //self.backgroundColor = [UIColor redColor];
 
         [self createGradientLayer];
+
+       // [self setTranslatesAutoresizingMaskIntoConstraints:NO];
     }
 
     return self;
 }
 
+
+
 - (void)layoutSublayersOfLayer:(CALayer *)layer {
     [super layoutSublayersOfLayer:layer];
 
-    [self.bgLayer removeFromSuperlayer];
-    [self createGradientLayer];
+    if(!self.bgLayer){
+        [self.bgLayer removeFromSuperlayer];
+        [self createGradientLayer];
+    }
+
+
+    self.bgLayer.frame = self.bounds;
 }
 
 - (void)createGradientLayer {

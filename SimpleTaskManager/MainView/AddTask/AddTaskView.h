@@ -10,4 +10,7 @@
 
 
 @property(nonatomic, strong) CAGradientLayer *bgLayer;
+
+@property(nonatomic, strong) NSArray *layoutConstraintsWhenShown;
+@property(nonatomic, strong) NSArray *layoutConstraintsWhenHidden;
 @end

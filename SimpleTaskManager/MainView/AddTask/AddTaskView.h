@@ -9,5 +9,5 @@
 @interface AddTaskView : UIView
 
 
-
+@property(nonatomic, strong) CAGradientLayer *bgLayer;
 @end

@@ -4,12 +4,14 @@
 //
 
 #import "DialogsPresentationView.h"
+#import "AddTaskView.h"
 
 unsigned int const kRightMarginForHandlingPanGesture = 10.0;
 
 @implementation DialogsPresentationView {
 
     CGRect _rectangleSensitiveForAddingTask;
+    CGPoint _originalPositionBeforeMoving;
 }
 
 - (id)initWithFrame:(CGRect)frame {
@@ -50,9 +52,43 @@ unsigned int const kRightMarginForHandlingPanGesture = 10.0;
 
 - (void)handlePan:(UIPanGestureRecognizer *)recognizer {
     CGPoint translation = [recognizer translationInView:recognizer.view];
-    NSLog(@"handlePan %@", NSStringFromCGPoint(translation));
+    [self moveAddTaskViewByX:translation.x andByY:translation.y];
+}
 
+- (void)moveAddTaskViewByX:(CGFloat)x andByY:(CGFloat)y {
+    if(![self isAddTaskViewAlreadyAdded]){
+        [self showTaskView];
+        _originalPositionBeforeMoving = self.addTaskView.center;
+    }
 
+    CGPoint changedPosition = _originalPositionBeforeMoving;
+    changedPosition.x += x;
+    changedPosition.y += y;
+
+    NSLog(@"moveAddTaskViewToByX %@ -> %@", NSStringFromCGPoint(_originalPositionBeforeMoving)
+    , NSStringFromCGPoint(changedPosition));
+
+    self.addTaskView.center = changedPosition;
+}
+
+- (BOOL)isAddTaskViewAlreadyAdded {
+    return self.addTaskView && self.addTaskView.superview;
+}
+
+- (void)showTaskView {
+    [self.addTaskView removeFromSuperview];
+    self.addTaskView = nil;
+    
+    self.addTaskView = [[AddTaskView alloc] initWithFrame:CGRectMake(0, 20, 400, 300)];
+    [self moveAddTaskViewOutOfTheRightEdge];
+    [self addSubview:self.addTaskView];
+}
+
+- (void)moveAddTaskViewOutOfTheRightEdge {
+    CGRect currentFrame =  self.addTaskView.frame;
+    CGRect changedFrame = currentFrame;
+    changedFrame.origin.x = self.bounds.size.width;
+    self.addTaskView.frame = changedFrame;
 }
 
 - (NSArray *)layoutConstraints {
@@ -122,7 +158,6 @@ unsigned int const kRightMarginForHandlingPanGesture = 10.0;
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
 
     CGPoint point = [touch locationInView:self];
-    NSLog(@"point %f %f", point.x, point.y);
     CGRect rectangleForDetectingAddingTask = [self rectangleForDetectingAddingTask];
     if(CGRectContainsPoint(rectangleForDetectingAddingTask, point)){
         return true;
@@ -159,6 +194,10 @@ unsigned int const kRightMarginForHandlingPanGesture = 10.0;
     }
     
     return nil;
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 

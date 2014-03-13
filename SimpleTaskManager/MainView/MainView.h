@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@class WrapperForAddingTaskView;
+@class DialogsPresentationView;
 
 @interface MainView : UIView
 
@@ -16,6 +16,6 @@
 @property (weak, nonatomic) IBOutlet UIView *centralPanel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
-@property(nonatomic, strong) WrapperForAddingTaskView* addTaskWrapperView;
+@property(nonatomic, strong) DialogsPresentationView * addTaskWrapperView;
 
 @end

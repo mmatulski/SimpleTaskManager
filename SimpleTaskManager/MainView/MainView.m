@@ -7,7 +7,7 @@
 //
 
 #import "MainView.h"
-#import "WrapperForAddingTaskView.h"
+#import "DialogsPresentationView.h"
 
 @implementation MainView
 
@@ -43,10 +43,10 @@
 
 
 - (void)prepareWrapperViewForAddingTasks {
-    self.addTaskWrapperView = [[WrapperForAddingTaskView alloc] initWithDefaultFrame];
+    self.addTaskWrapperView = [[DialogsPresentationView alloc] initWithDefaultFrame];
 
     [self addSubview:self.addTaskWrapperView];
-    [self addConstraints:self.addTaskWrapperView.layoutConstraintsForHiddenMode];
+    [self addConstraints:self.addTaskWrapperView.layoutConstraints];
 }
 
 /*

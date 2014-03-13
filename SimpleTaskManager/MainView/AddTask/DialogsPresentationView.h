@@ -6,15 +6,14 @@
 #import <Foundation/Foundation.h>
 
 /*
-This view is just wrapper for final AddTaskView.
+This view is parent for Dialogs like AddTaskView or Checking Task View.
 It contains "Add" button and handler pan gesture which allows to pill AdTaskView from the right edge.
 
  */
-@interface WrapperForAddingTaskView : UIView
+@interface DialogsPresentationView : UIView <UIGestureRecognizerDelegate>
 
 @property(nonatomic, strong) UIPanGestureRecognizer *panGestureRecognizer;
-@property(nonatomic, strong) NSArray * layoutConstraintsForHiddenMode;
-@property(nonatomic, strong) NSArray * layoutConstraintsForShownMode;
+@property(nonatomic, strong) NSArray *layoutConstraints;
 
 - (id)initWithDefaultFrame;
 

@@ -17,8 +17,6 @@
         self.backgroundColor = [UIColor redColor];
 
         [self createGradientLayer];
-
-       // [self setTranslatesAutoresizingMaskIntoConstraints:NO];
     }
 
     return self;

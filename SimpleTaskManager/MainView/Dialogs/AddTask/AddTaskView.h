@@ -11,7 +11,4 @@
 @property(nonatomic, strong) UITextView *textView;;
 @property(nonatomic, strong) CAGradientLayer *bgLayer;
 
-@property(nonatomic, strong) NSArray *theNewTaskDialogLayoutConstraints;
-@property(nonatomic, strong) NSArray *theNewTaskDialogLayoutConstraintsForViewBehindTheRightEdge;
-
 @end

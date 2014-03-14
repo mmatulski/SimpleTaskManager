@@ -4,19 +4,12 @@
 //
 
 #import "DialogsPresentationView.h"
-#import "AddTaskView.h"
 #import "DialogsPresentationView+Constraints.h"
-#import "AddTaskView+Constraints.h"
-#import "UIView+LayoutConstraints.h"
-#import "CGEstimations.h"
+#import "DialogsPresentationView+TheNewTaskDialogHandling.h"
 
 CGFloat const kRightMarginForHandlingPanGesture = 10.0;
 
-@implementation DialogsPresentationView {
-
-    CGRect _rectangleSensitiveForAddingTask;
-    CGPoint _originalPositionOfTheNewTaskDialogBeforeMoving;
-}
+@implementation DialogsPresentationView
 
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
@@ -58,99 +51,22 @@ CGFloat const kRightMarginForHandlingPanGesture = 10.0;
     CGPoint translation = [recognizer translationInView:recognizer.view];
 
     if(recognizer.state == UIGestureRecognizerStateBegan){
-        [self prepareTheNewTaskDialog];
-        [self moveTheNewTaskDialogBehindTheRightEdge];
-       // [self removeLayoutConstraintsForTheNewTaskDialog];
-
-        _originalPositionOfTheNewTaskDialogBeforeMoving = self.theNewTaskDialog.center;
-
+        [self userStartsOpeningTheNewTaskDialog];
     } else if(recognizer.state == UIGestureRecognizerStateChanged){
-        [self moveTheNewTaskDialogByX:translation.x];
+        [self userMovesTheNewTaskDialogByX:translation.x];
     } else if(recognizer.state == UIGestureRecognizerStateEnded){
 
         CGPoint velocity = [recognizer velocityInView:self];
 
-        if([self shouldOpenTheNewTaskDialogForTranslation:translation andVelocity:velocity]){
-            CGFloat vectorLength = [CGEstimations pointDistanceToCenterOfAxis:velocity];
-            [self animatedMovingTheNewTaskDialogToOpenedStatePosition:vectorLength];
-
-        } else {
-            [self animatedClosingTheNewTaskDialog];
-        }
+        [self userEndsMovingDialogWithTranslation:translation velocity:velocity];
 
     } else if(recognizer.state == UIGestureRecognizerStateCancelled || recognizer.state == UIGestureRecognizerStateFailed) {
-        [self animatedClosingTheNewTaskDialog];
+        [self userCancelsMovingTheNewTaskDialog];
     }
 }
 
-- (void)prepareTheNewTaskDialog {
-    [self.theNewTaskDialog removeFromSuperview];
-    self.theNewTaskDialog = nil;
 
-    self.theNewTaskDialog = [[AddTaskView alloc] initWithFrame:CGRectMake(0, 44, 100, 100)];
-    [self addSubview:self.theNewTaskDialog];
-    [self.theNewTaskDialog prepareLayoutConstraints];
-}
 
-- (void)moveTheNewTaskDialogBehindTheRightEdge {
-    [self removeConstraints:self.theNewTaskDialog.theNewTaskDialogLayoutConstraints];
-    [self addConstraints:self.theNewTaskDialog.theNewTaskDialogLayoutConstraintsForViewBehindTheRightEdge];
-    [self layoutSubviews];
-}
-
-- (void)moveTheNewTaskDialogByX:(CGFloat)x{
-    CGPoint changedPosition = _originalPositionOfTheNewTaskDialogBeforeMoving;
-    changedPosition.x += x;
-
-    self.theNewTaskDialog.center = changedPosition;
-}
-
-- (BOOL)shouldOpenTheNewTaskDialogForTranslation:(CGPoint)translation andVelocity:(CGPoint)velocity {
-
-    //if velocity is greater than zero it means the direction in to right edge
-    // 10.0 is the value which is safe to eliminate the case when User stops moving his finger
-    if(velocity.x > 10.0){
-        return false;
-    }
-
-    //if User will not
-    if(translation.x > -40.0){
-        return false;
-    }
-
-    return true;
-}
-
-- (void)animatedMovingTheNewTaskDialogToOpenedStatePosition:(CGFloat)strength {
-
-    CGFloat animationDuration = 1.0f *  500.0 / (strength>0?strength:500.0);
-
-    if(animationDuration > 0.7){
-        animationDuration = 0.7;
-    }
-
-    [UIView animateWithDuration:animationDuration animations:^{
-        [self removeConstraints:self.theNewTaskDialog.theNewTaskDialogLayoutConstraintsForViewBehindTheRightEdge];
-        [self addConstraints:self.theNewTaskDialog.theNewTaskDialogLayoutConstraints];
-        [self layoutSubviews];
-    } completion:^(BOOL finished) {
-    }];
-}
-
-- (void)animatedClosingTheNewTaskDialog {
-    [UIView animateWithDuration:0.7 animations:^{
-        [self removeConstraints:self.theNewTaskDialog.theNewTaskDialogLayoutConstraints];
-        [self addConstraints:self.theNewTaskDialog.theNewTaskDialogLayoutConstraintsForViewBehindTheRightEdge];
-        [self layoutSubviews];
-    } completion:^(BOOL finished) {
-        [self removeTheNewTaskView];
-    }];
-}
-
-- (void)removeTheNewTaskView {
-    [self.theNewTaskDialog removeFromSuperview];
-    self.theNewTaskDialog = nil;
-}
 
 - (NSArray *)cachedLayoutConstraints {
     if(!_cachedLayoutConstraints){

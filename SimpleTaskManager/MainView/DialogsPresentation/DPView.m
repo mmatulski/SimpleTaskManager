@@ -53,7 +53,7 @@ CGFloat const kRightMarginForHandlingPanGesture = 20.0;
         return;
     }
 
-    DDLogInfo(@"handlePan");
+    DDLogTrace(@"handlePan");
 
     CGPoint translation = [recognizer translationInView:recognizer.view];
 
@@ -144,7 +144,7 @@ CGFloat const kRightMarginForHandlingPanGesture = 20.0;
 #pragma mark - UIGestrureRecognizer methods
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
-    DDLogInfo(@"gestureRecognizer");
+    DDLogTrace(@"gestureRecognizer");
 
     if([self isAnyDialogAnimatedNow]){
         return false;

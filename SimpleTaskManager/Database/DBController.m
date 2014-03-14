@@ -78,7 +78,7 @@ NSString * const kSTMTaskEntityName = @"STMTask";
     task.uid = [[NSUUID UUID] UUIDString];
 
     //order is inversely proportional to index value
-    task.index = [NSNumber numberWithInt:++_numberOfAllTasks];
+    task.index = [NSNumber numberWithUnsignedLong:++_numberOfAllTasks];
 
     [self saveWithSuccessFullBlock:^{
         if(successFullBlock){

@@ -188,7 +188,7 @@
 
 - (void)handlePanOnTheNewTaskDialog:(UIPanGestureRecognizer *)recognizer {
     CGPoint translation = [recognizer translationInView:recognizer.view];
-    DDLogInfo(@"handlePanOnTheNewTaskDialog %@", NSStringFromCGPoint(translation));
+    DDLogTrace(@"handlePanOnTheNewTaskDialog %@", NSStringFromCGPoint(translation));
 
     if(recognizer.state == UIGestureRecognizerStateBegan){
         [self userStartsClosingTheNewTaskDialog];

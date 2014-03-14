@@ -9,6 +9,5 @@
 @interface TheNewTaskDialog : UIView
 
 @property(nonatomic, strong) UITextView *textView;;
-@property(nonatomic, strong) CAGradientLayer *bgLayer;
 
 @end

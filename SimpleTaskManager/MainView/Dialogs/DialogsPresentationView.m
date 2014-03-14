@@ -16,8 +16,6 @@ CGFloat const kRightMarginForHandlingPanGesture = 10.0;
 
     CGRect _rectangleSensitiveForAddingTask;
     CGPoint _originalPositionOfTheNewTaskDialogBeforeMoving;
-    CGRect _lastAddTaskViewFrameWhenHidden;
-    CGRect _lastAddTaskViewFrameWhenShown;
 }
 
 - (id)initWithFrame:(CGRect)frame {
@@ -62,7 +60,7 @@ CGFloat const kRightMarginForHandlingPanGesture = 10.0;
     if(recognizer.state == UIGestureRecognizerStateBegan){
         [self prepareTheNewTaskDialog];
         [self moveTheNewTaskDialogBehindTheRightEdge];
-        [self removeLayoutConstraintsForTheNewTaskDialog];
+       // [self removeLayoutConstraintsForTheNewTaskDialog];
 
         _originalPositionOfTheNewTaskDialogBeforeMoving = self.theNewTaskDialog.center;
 
@@ -92,25 +90,13 @@ CGFloat const kRightMarginForHandlingPanGesture = 10.0;
     self.theNewTaskDialog = [[AddTaskView alloc] initWithFrame:CGRectMake(0, 44, 100, 100)];
     [self addSubview:self.theNewTaskDialog];
     [self.theNewTaskDialog prepareLayoutConstraints];
-
-    _lastAddTaskViewFrameWhenHidden = [self.theNewTaskDialog estimateFrameWithConstraints:self.theNewTaskDialog.theNewTaskDialogLayoutConstraintsForViewBehindTheRightEdge];
-    _lastAddTaskViewFrameWhenShown = [self.theNewTaskDialog estimateFrameWithConstraints:self.theNewTaskDialog.theNewTaskDialogLayoutConstraints];
-
 }
 
 - (void)moveTheNewTaskDialogBehindTheRightEdge {
-//    [self removeConstraints:self.theNewTaskDialog.theNewTaskDialogLayoutConstraints];
-//    [self addConstraints:self.theNewTaskDialog.theNewTaskDialogLayoutConstraintsForViewBehindTheRightEdge];
-//    [self layoutSubviews];
-
-    self.theNewTaskDialog.frame = _lastAddTaskViewFrameWhenHidden;
-}
-
-- (void)removeLayoutConstraintsForTheNewTaskDialog {
     [self removeConstraints:self.theNewTaskDialog.theNewTaskDialogLayoutConstraints];
-    [self removeConstraints:self.theNewTaskDialog.theNewTaskDialogLayoutConstraintsForViewBehindTheRightEdge];
+    [self addConstraints:self.theNewTaskDialog.theNewTaskDialogLayoutConstraintsForViewBehindTheRightEdge];
+    [self layoutSubviews];
 }
-
 
 - (void)moveTheNewTaskDialogByX:(CGFloat)x{
     CGPoint changedPosition = _originalPositionOfTheNewTaskDialogBeforeMoving;
@@ -144,18 +130,18 @@ CGFloat const kRightMarginForHandlingPanGesture = 10.0;
     }
 
     [UIView animateWithDuration:animationDuration animations:^{
-        self.theNewTaskDialog.frame = _lastAddTaskViewFrameWhenShown;
-        //[self addConstraints:self.theNewTaskDialog.theNewTaskDialogLayoutConstraints];
+        [self removeConstraints:self.theNewTaskDialog.theNewTaskDialogLayoutConstraintsForViewBehindTheRightEdge];
+        [self addConstraints:self.theNewTaskDialog.theNewTaskDialogLayoutConstraints];
+        [self layoutSubviews];
     } completion:^(BOOL finished) {
-        [self showTheNewTaskViewInFinalPosition];
     }];
 }
 
 - (void)animatedClosingTheNewTaskDialog {
     [UIView animateWithDuration:0.7 animations:^{
-        self.theNewTaskDialog.frame = _lastAddTaskViewFrameWhenHidden;
-        //[self removeConstraints:self.theNewTaskDialog.theNewTaskDialogLayoutConstraints];
-        //[self addConstraints:self.theNewTaskDialog.theNewTaskDialogLayoutConstraintsForViewBehindTheRightEdge];
+        [self removeConstraints:self.theNewTaskDialog.theNewTaskDialogLayoutConstraints];
+        [self addConstraints:self.theNewTaskDialog.theNewTaskDialogLayoutConstraintsForViewBehindTheRightEdge];
+        [self layoutSubviews];
     } completion:^(BOOL finished) {
         [self removeTheNewTaskView];
     }];
@@ -166,39 +152,12 @@ CGFloat const kRightMarginForHandlingPanGesture = 10.0;
     self.theNewTaskDialog = nil;
 }
 
-
-- (void)showTheNewTaskViewInFinalPosition {
-    self.theNewTaskDialog.frame = _lastAddTaskViewFrameWhenShown;
-
-    if(self.theNewTaskDialog.theNewTaskDialogLayoutConstraints){
-        [self addConstraints:self.theNewTaskDialog.theNewTaskDialogLayoutConstraints];
-    } else {
-        DDLogWarn(@"showTheNewTaskViewInFinalPosition theNewTaskDialogLayoutConstraints are nil");
-    }
-
-
-    //[self layoutSubviews];
-}
-
 - (NSArray *)cachedLayoutConstraints {
     if(!_cachedLayoutConstraints){
         [self prepareLayoutConstraints];
     }
 
     return _cachedLayoutConstraints;
-}
-
-#pragma mark - UIGestrureRecognizer methods
-
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
-
-    CGPoint point = [touch locationInView:self];
-    CGRect rectangleForDetectingAddingTask = [self rectangleForDetectingAddingTask];
-    if(CGRectContainsPoint(rectangleForDetectingAddingTask, point)){
-        return true;
-    }
-
-    return NO;
 }
 
 - (CGRect)rectangleForDetectingAddingTask {
@@ -208,7 +167,7 @@ CGFloat const kRightMarginForHandlingPanGesture = 10.0;
         CGRectDivide(result, &result, &temp, kRightMarginForHandlingPanGesture, CGRectMaxXEdge);
         _rectangleSensitiveForAddingTask = result;
     }
-    
+
     return _rectangleSensitiveForAddingTask;
 }
 
@@ -228,6 +187,19 @@ CGFloat const kRightMarginForHandlingPanGesture = 10.0;
     }
     
     return nil;
+}
+
+#pragma mark - UIGestrureRecognizer methods
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+
+    CGPoint point = [touch locationInView:self];
+    CGRect rectangleForDetectingAddingTask = [self rectangleForDetectingAddingTask];
+    if(CGRectContainsPoint(rectangleForDetectingAddingTask, point)){
+        return true;
+    }
+
+    return NO;
 }
 
 - (void)dealloc {

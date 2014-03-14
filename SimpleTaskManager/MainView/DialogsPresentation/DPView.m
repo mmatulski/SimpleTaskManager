@@ -40,7 +40,6 @@ CGFloat const kRightMarginForHandlingPanGesture = 10.0;
     self.panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
     self.panGestureRecognizer.delegate = self;
     [self addGestureRecognizer:self.panGestureRecognizer];
-
 }
 
 - (void)didRotate {
@@ -49,6 +48,13 @@ CGFloat const kRightMarginForHandlingPanGesture = 10.0;
 
 - (void)handlePan:(UIPanGestureRecognizer *)recognizer {
     DDLogInfo(@"handlePan");
+
+    if([self isAnyDialogOpened]){
+        if([recognizer.view isEqual:self.theNewTaskDialog]){
+            [self handlePanOnTheNewTaskDialog:recognizer];
+            return;
+        }
+    }
 
     CGPoint translation = [recognizer translationInView:recognizer.view];
 
@@ -66,9 +72,6 @@ CGFloat const kRightMarginForHandlingPanGesture = 10.0;
         [self userCancelsMovingTheNewTaskDialog];
     }
 }
-
-
-
 
 - (NSArray *)cachedLayoutConstraints {
     if(!_cachedLayoutConstraints){
@@ -145,8 +148,14 @@ CGFloat const kRightMarginForHandlingPanGesture = 10.0;
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
     DDLogInfo(@"gestureRecognizer");
 
-    if([self isAnyDialogOpened] || [self isAnyDialogAnimatedNow]){
+    if([self isAnyDialogAnimatedNow]){
         return false;
+    }
+
+    if([self isAnyDialogOpened]){
+        if([gestureRecognizer.view isEqual:self.theNewTaskDialog]){
+            return true;
+        }
     }
 
     CGPoint point = [touch locationInView:self];

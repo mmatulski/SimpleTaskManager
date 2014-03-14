@@ -137,6 +137,7 @@
     } completion:^(BOOL finished) {
         self.state = DPStateNewTaskDialogOpened;
         [self.theNewTaskDialog setEditing];
+        [self moveGestureRecognizerToThewNewTaskDialog];
     }];
 }
 
@@ -157,6 +158,24 @@
     [self.theNewTaskDialog removeFromSuperview];
     self.theNewTaskDialog = nil;
     self.state = DPStateNoOpenedDialogs;
+
+    [self returnGestureRecognizerFromThewNewTaskDialog];
 }
+
+- (void)returnGestureRecognizerFromThewNewTaskDialog {
+    [self.theNewTaskDialog removeGestureRecognizer:self.panGestureRecognizer];
+    [self addGestureRecognizer:self.panGestureRecognizer];
+}
+
+-(void) moveGestureRecognizerToThewNewTaskDialog{
+    [self removeGestureRecognizer:self.panGestureRecognizer];
+    [self.theNewTaskDialog addGestureRecognizer:self.panGestureRecognizer];
+}
+
+- (void)handlePanOnTheNewTaskDialog:(UIPanGestureRecognizer *)recognizer {
+    CGPoint translation = [recognizer translationInView:recognizer.view];
+    DDLogInfo(@"handlePanOnTheNewTaskDialog %@", NSStringFromCGPoint(translation));
+}
+
 
 @end

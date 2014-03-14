@@ -15,4 +15,6 @@
 - (void)userEndsMovingDialogWithTranslation:(CGPoint)translation velocity:(CGPoint)velocity;
 
 - (void)userCancelsMovingTheNewTaskDialog;
+
+- (void)handlePanOnTheNewTaskDialog:(UIPanGestureRecognizer *)recognizer;
 @end

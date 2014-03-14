@@ -3,9 +3,9 @@
 // Copyright (c) 2014 Tomato. All rights reserved.
 //
 
-#import "DialogsPresentationView+Constraints.h"
+#import "DPView+Constraints.h"
 
-@implementation DialogsPresentationView (Constraints)
+@implementation DPView (Constraints)
 
 - (void)prepareLayoutConstraints {
 

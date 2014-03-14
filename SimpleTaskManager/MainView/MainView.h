@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@class DialogsPresentationView;
+@class DPView;
 
 @interface MainView : UIView
 
@@ -16,6 +16,6 @@
 @property (weak, nonatomic) IBOutlet UIView *centralPanel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
-@property(nonatomic, strong) DialogsPresentationView *dialogsPresentationView;
+@property(nonatomic, strong) DPView *dialogsPresentationView;
 
 @end

@@ -3,13 +3,13 @@
 // Copyright (c) 2014 Tomato. All rights reserved.
 //
 
-#import "DialogsPresentationView.h"
-#import "DialogsPresentationView+Constraints.h"
-#import "DialogsPresentationView+TheNewTaskDialogHandling.h"
+#import "DPView.h"
+#import "DPView+Constraints.h"
+#import "DPView+TheNewTaskDialogHandling.h"
 
 CGFloat const kRightMarginForHandlingPanGesture = 10.0;
 
-@implementation DialogsPresentationView
+@implementation DPView
 
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];

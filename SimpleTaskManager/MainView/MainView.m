@@ -7,7 +7,7 @@
 //
 
 #import "MainView.h"
-#import "DialogsPresentationView.h"
+#import "DPView.h"
 
 @implementation MainView
 
@@ -44,7 +44,7 @@
 
 
 - (void)prepareWrapperViewForAddingTasks {
-    self.dialogsPresentationView = [[DialogsPresentationView alloc] initWithDefaultFrame];
+    self.dialogsPresentationView = [[DPView alloc] initWithDefaultFrame];
 
     [self addSubview:self.dialogsPresentationView];
 

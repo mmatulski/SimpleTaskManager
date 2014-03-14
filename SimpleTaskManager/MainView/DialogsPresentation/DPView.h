@@ -12,7 +12,7 @@ This view is parent for Dialogs like AddTaskView or Checking Task View.
 It contains "Add" button and handler pan gesture which allows to pill AdTaskView from the right edge.
 
  */
-@interface DialogsPresentationView : UIView <UIGestureRecognizerDelegate> {
+@interface DPView : UIView <UIGestureRecognizerDelegate> {
 
     CGRect _rectangleSensitiveForAddingTask;
     CGPoint _originalPositionOfTheNewTaskDialogBeforeMoving;

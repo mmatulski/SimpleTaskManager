@@ -4,9 +4,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "DialogsPresentationView.h"
+#import "DPView.h"
 
-@interface DialogsPresentationView (Constraints)
+@interface DPView (Constraints)
 
 
 - (void)prepareLayoutConstraints;

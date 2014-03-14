@@ -3,13 +3,13 @@
 // Copyright (c) 2014 Tomato. All rights reserved.
 //
 
-#import "DialogsPresentationView+TheNewTaskDialogHandling.h"
+#import "DPView+TheNewTaskDialogHandling.h"
 #import "MainViewConsts.h"
 #import "AddTaskView.h"
 #import "CGEstimations.h"
 
 
-@implementation DialogsPresentationView (TheNewTaskDialogHandling)
+@implementation DPView (TheNewTaskDialogHandling)
 
 - (void)prepareTheNewTaskDialogLayoutConstraints {
 

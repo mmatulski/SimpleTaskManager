@@ -62,6 +62,7 @@ unsigned int const kDefaultBatchSize = 20;
         cell.textLabel.textColor = [STMColors cellTextColor];
         cell.textLabel.text = [NSString stringWithFormat:@"[%d] %@", [[task index] intValue] , task.name];
         cell.detailTextLabel.text = task.uid;
+        cell.textLabel.backgroundColor = [STMColors cellBackgroundColor];
     }
 }
 

@@ -14,9 +14,10 @@ It contains "Add" button and handler pan gesture which allows to pill AdTaskView
  */
 @interface DialogsPresentationView : UIView <UIGestureRecognizerDelegate>
 
+@property(nonatomic, strong) AddTaskView *theNewTaskDialog;
+
 @property(nonatomic, strong) UIPanGestureRecognizer *panGestureRecognizer;
-@property(nonatomic, strong) NSArray *layoutConstraints;
-@property(nonatomic, strong) AddTaskView *addTaskView;
+@property(nonatomic, strong) NSArray *cachedLayoutConstraints;
 
 - (id)initWithDefaultFrame;
 

@@ -15,8 +15,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        // Initialization code
-        [self prepareWrapperViewForAddingTasks];
+        [self commonInit];
     }
     return self;
 }
@@ -24,7 +23,7 @@
 - (id)initWithCoder:(NSCoder *)coder {
     self = [super initWithCoder:coder];
     if (self) {
-        [self prepareWrapperViewForAddingTasks];
+        [self commonInit];
     }
 
     return self;
@@ -33,13 +32,15 @@
 - (id)init {
     self = [super init];
     if (self) {
-
+        [self commonInit];
     }
 
     return self;
 }
 
-
+- (void)commonInit {
+    [self prepareWrapperViewForAddingTasks];
+}
 
 
 - (void)prepareWrapperViewForAddingTasks {
@@ -48,8 +49,7 @@
     [self addSubview:self.dialogsPresentationView];
 
     [self.dialogsPresentationView setTranslatesAutoresizingMaskIntoConstraints:NO];
-    //[self setTranslatesAutoresizingMaskIntoConstraints:NO];
-    [self addConstraints:self.dialogsPresentationView.layoutConstraints];
+    [self addConstraints:self.dialogsPresentationView.cachedLayoutConstraints];
 }
 
 /*

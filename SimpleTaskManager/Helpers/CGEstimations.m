@@ -14,7 +14,7 @@
     return CGPointMake(rect.origin.x + rect.size.width / 2, rect.origin.y + rect.size.height / 2);
 }
 
-+ (CGFloat)pointDistanceCenterOfAxis:(CGPoint)point {
++ (CGFloat)pointDistanceToCenterOfAxis:(CGPoint)point {
     return sqrtf(point.x * point.x + point.y * point.y);
 }
 

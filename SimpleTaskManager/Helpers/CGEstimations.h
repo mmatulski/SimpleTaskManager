@@ -10,6 +10,6 @@
 
 + (CGPoint)centerOfRect:(CGRect)rect;
 
-+(CGFloat) pointDistanceCenterOfAxis:(CGPoint) point;
++(CGFloat)pointDistanceToCenterOfAxis:(CGPoint) point;
 
 @end

@@ -11,6 +11,8 @@
 
 - (void)prepareLayoutConstraints {
 
+    [self setTranslatesAutoresizingMaskIntoConstraints:NO];
+
     NSLayoutConstraint * H1WhenShown = [NSLayoutConstraint constraintWithItem:self
                                                            attribute:NSLayoutAttributeCenterX
                                                            relatedBy:NSLayoutRelationEqual
@@ -51,8 +53,8 @@
                                                           multiplier:kAddTaskViewHeightFactor
                                                             constant:0.0];
 
-    self.layoutConstraintsWhenShown = @[H1WhenShown, H2, V1, V2];
-    self.layoutConstraintsWhenHidden = @[H1WhenHidden, H2, V1, V2];
+    self.theNewTaskDialogLayoutConstraints = @[H1WhenShown, H2, V1, V2];
+    self.theNewTaskDialogLayoutConstraintsForViewBehindTheRightEdge = @[H1WhenHidden, H2, V1, V2];
 }
 
 @end

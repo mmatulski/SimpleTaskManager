@@ -6,6 +6,9 @@
 #import "DPView.h"
 #import "DPView+Constraints.h"
 #import "DPView+TheNewTaskDialogHandling.h"
+#import "MiniHintView.h"
+#import "DPView+Hints.h"
+#import "TheNewTaskHintView.h"
 
 CGFloat const kRightMarginForHandlingPanGesture = 20.0;
 
@@ -40,6 +43,8 @@ CGFloat const kRightMarginForHandlingPanGesture = 20.0;
     self.panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
     self.panGestureRecognizer.delegate = self;
     [self addGestureRecognizer:self.panGestureRecognizer];
+
+    [self showOpeningTheNewTaskViewHint];
 }
 
 - (void)didRotate {
@@ -167,6 +172,12 @@ CGFloat const kRightMarginForHandlingPanGesture = 20.0;
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)viewDidAppear {
+    [self animatedHintViewForTheNewTaskView:^{
+
+    }];
 }
 
 @end

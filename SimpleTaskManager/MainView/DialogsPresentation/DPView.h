@@ -7,6 +7,8 @@
 #import "DPState.h"
 
 @class TheNewTaskDialog;
+@class MiniHintView;
+@class TheNewTaskHintView;
 
 /*
 This view is parent for Dialogs like TheNewTaskDialog or Checking Task View.
@@ -17,6 +19,10 @@ It contains "Add" button and handler pan gesture which allows to pill AdTaskView
 
     CGRect _rectangleSensitiveForAddingTask;
     CGPoint _originalPositionOfTheNewTaskDialogBeforeMoving;
+
+    NSLayoutConstraint *_trailingConstraintForNewTaskHintView;
+    NSLayoutConstraint *_widthConstraintForNewTaskHintView;
+    NSArray *_hintViewForTheNewTaskLayoutConstraints;
 
 }
 
@@ -32,6 +38,9 @@ It contains "Add" button and handler pan gesture which allows to pill AdTaskView
 
 @property(nonatomic) enum DPState state;
 
+@property(nonatomic, strong) TheNewTaskHintView *hintViewForTheNewTask;
+
 - (id)initWithDefaultFrame;
 
+- (void)viewDidAppear;
 @end

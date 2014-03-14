@@ -31,24 +31,10 @@
                                         <color key="textColor" red="0.96078431369999995" green="0.92156862750000001" blue="0.82352941180000006" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lsr-8c-I29" userLabel="AddTaskButton">
-                                        <rect key="frame" x="263" y="11" width="22" height="22"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="22" id="HxA-Xl-MSr"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                                        <state key="normal">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="d6d-3x-Riq" firstAttribute="leading" secondItem="xEb-5J-pZZ" secondAttribute="leading" id="9oe-UQ-2K0"/>
-                                    <constraint firstAttribute="bottom" secondItem="Lsr-8c-I29" secondAttribute="bottom" constant="11" id="TSi-1b-bPZ"/>
-                                    <constraint firstAttribute="trailing" secondItem="Lsr-8c-I29" secondAttribute="trailing" constant="15" id="Zvx-rG-K7o"/>
                                     <constraint firstItem="d6d-3x-Riq" firstAttribute="top" secondItem="xEb-5J-pZZ" secondAttribute="top" id="cOD-dw-smp"/>
                                     <constraint firstAttribute="bottom" secondItem="d6d-3x-Riq" secondAttribute="bottom" id="fhI-WT-M3B"/>
                                     <constraint firstAttribute="height" constant="44" id="mg0-G4-jiq"/>

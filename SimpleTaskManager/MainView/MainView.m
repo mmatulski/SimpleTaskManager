@@ -61,4 +61,8 @@
 }
 */
 
+- (void)viewDidAppear {
+    [self.dialogsPresentationView viewDidAppear];
+}
+
 @end

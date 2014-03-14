@@ -68,6 +68,8 @@ unsigned int const kDefaultBatchSize = 20;
 
 #pragma mark - UITableViewDelegate methods
 
+
+
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

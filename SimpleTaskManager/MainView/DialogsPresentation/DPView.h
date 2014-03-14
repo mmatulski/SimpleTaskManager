@@ -28,6 +28,7 @@ It contains "Add" button and handler pan gesture which allows to pill AdTaskView
 
 @property(nonatomic, strong) NSArray *theNewTaskDialogLayoutConstraintsWhenOpened;
 @property(nonatomic, strong) NSArray *theNewTaskDialogLayoutConstraintsWhenBehindTheRightEdge;
+@property(nonatomic, strong) NSArray *theNewTaskDialogLayoutConstraintsWhenBehindTheLeftEdge;
 
 @property(nonatomic) enum DPState state;
 

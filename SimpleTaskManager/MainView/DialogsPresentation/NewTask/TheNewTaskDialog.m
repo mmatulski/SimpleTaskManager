@@ -101,4 +101,11 @@
     [self.textView becomeFirstResponder];
 }
 
+- (BOOL)isNameValid {
+    return [[self taskName]length] > 0;
+}
+
+- (NSString *)taskName {
+    return self.textView.text;
+}
 @end

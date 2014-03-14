@@ -7,8 +7,9 @@
 #import "MainViewConsts.h"
 #import "TheNewTaskDialog.h"
 #import "CGEstimations.h"
-#import "DPState.h"
-
+#import "STMTask.h"
+#import "DBAccess.h"
+#import "DBController.h"
 
 @implementation DPView (TheNewTaskDialogHandling)
 
@@ -24,13 +25,21 @@
                                                                    multiplier:1.0
                                                                      constant:0.0];
 
-    NSLayoutConstraint * H1WhenHidden = [NSLayoutConstraint constraintWithItem:self.theNewTaskDialog
+    NSLayoutConstraint *H1WhenHiddenBehindRightEdge = [NSLayoutConstraint constraintWithItem:self.theNewTaskDialog
                                                                      attribute:NSLayoutAttributeLeading
                                                                      relatedBy:NSLayoutRelationEqual
                                                                         toItem:self
                                                                      attribute:NSLayoutAttributeTrailing
                                                                     multiplier:1.0
                                                                       constant:0.0];
+
+    NSLayoutConstraint *H1WhenHiddenBehindLeftEdge = [NSLayoutConstraint constraintWithItem:self.theNewTaskDialog
+                                                                                   attribute:NSLayoutAttributeTrailing
+                                                                                   relatedBy:NSLayoutRelationEqual
+                                                                                      toItem:self
+                                                                                   attribute:NSLayoutAttributeLeading
+                                                                                  multiplier:1.0
+                                                                                    constant:0.0];
 
     NSLayoutConstraint * H2 = [NSLayoutConstraint constraintWithItem:self.theNewTaskDialog
                                                            attribute:NSLayoutAttributeWidth
@@ -57,7 +66,8 @@
                                                             constant:0.0];
 
     self.theNewTaskDialogLayoutConstraintsWhenOpened = @[H1WhenShown, H2, V1, V2];
-    self.theNewTaskDialogLayoutConstraintsWhenBehindTheRightEdge = @[H1WhenHidden, H2, V1, V2];
+    self.theNewTaskDialogLayoutConstraintsWhenBehindTheRightEdge = @[H1WhenHiddenBehindRightEdge, H2, V1, V2];
+    self.theNewTaskDialogLayoutConstraintsWhenBehindTheLeftEdge = @[H1WhenHiddenBehindLeftEdge, H2, V1, V2];
 }
 
 - (void)userStartsOpeningTheNewTaskDialog {
@@ -93,7 +103,7 @@
 - (void)userFinishesOpeningTheNewTaskDialogWithTranslation:(CGPoint)translation velocity:(CGPoint)velocity {
     if([self shouldOpenTheNewTaskDialogForTranslation:translation andVelocity:velocity]){
         CGFloat vectorLength = [CGEstimations pointDistanceToCenterOfAxis:velocity];
-        [self animatedMovingTheNewTaskDialogToOpenedStatePosition:vectorLength];
+        [self animatedMovingTheNewTaskDialogToOpenedStatePosition:vectorLength completion:NULL];
 
     } else {
         [self animateClosingTheNewTaskDialogToTheRightEdge];
@@ -120,7 +130,7 @@
     return true;
 }
 
-- (void)animatedMovingTheNewTaskDialogToOpenedStatePosition:(CGFloat)strength {
+- (void)animatedMovingTheNewTaskDialogToOpenedStatePosition:(CGFloat)strength completion:(void (^)(void)) completion {
 
     self.state = DPStateNewTaskDialogOpeningAnimating;
 
@@ -138,6 +148,10 @@
         self.state = DPStateNewTaskDialogOpened;
         [self.theNewTaskDialog setEditing];
         [self moveGestureRecognizerToThewNewTaskDialog];
+
+        if(completion){
+            completion();
+        }
     }];
 }
 
@@ -197,20 +211,59 @@
 
 - (void)userFinishesClosingTheNewTaskDialogWithTranslation:(CGPoint)translation velocity:(CGPoint)velocity {
     if([self shouldCloseAndSaveTheNewTaskDialogForTranslation:translation andVelocity:velocity]){
-        CGFloat vectorLength = [CGEstimations pointDistanceToCenterOfAxis:velocity];
+        [self saveTheNeTask];
         [self animateClosingTheNewTaskDialogToTheLeftEdge];
 
     } else if([self shouldCloseAndCancelTheNewTaskDialogForTranslation:translation andVelocity:velocity]){
-        CGFloat vectorLength = [CGEstimations pointDistanceToCenterOfAxis:velocity];
         [self animateClosingTheNewTaskDialogToTheRightEdge];
 
     } else {
-        [self animatedMovingTheNewTaskDialogToOpenedStatePosition:0.0];
+        NSString *warningMessage = nil;
+        if(![self.theNewTaskDialog isNameValid]){
+            warningMessage = @"The task can not be empty";
+        }
+
+        [self animatedMovingTheNewTaskDialogToOpenedStatePosition:0.0 completion:^{
+            [self showWarning:warningMessage];
+        }];
     }
 }
 
-- (void)animateClosingTheNewTaskDialogToTheLeftEdge {
+- (void)showWarning:(NSString *)message {
+    UILabel *warningLabel = [[UILabel alloc] initWithFrame:self.theNewTaskDialog.frame];
+    warningLabel.text = message;
+    warningLabel.textColor = [UIColor redColor];
+    warningLabel.textAlignment = NSTextAlignmentCenter;
+    warningLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:30.0];
+    warningLabel.numberOfLines = 0;
+    [self addSubview:warningLabel];
+    [UIView animateWithDuration:3.0 animations:^{
+        warningLabel.alpha = 0.0;
+    } completion:^(BOOL finished) {
+        [warningLabel removeFromSuperview];
+    }];
+}
 
+- (void)saveTheNeTask {
+    DBController *dbController = [DBAccess createBackgroundController];
+    [dbController addTaskWithName:[self.theNewTaskDialog taskName] successFullBlock:^(STMTask *task) {
+        DDLogInfo(@"SUCCESS");
+    } failureBlock:^(NSError *err) {
+        DDLogError(@"FAILED");
+    }];
+
+}
+
+- (void)animateClosingTheNewTaskDialogToTheLeftEdge {
+    self.state = DPStateNewTaskDialogClosingAnimating;
+
+    [UIView animateWithDuration:0.7 animations:^{
+        [self removeConstraints:self.theNewTaskDialogLayoutConstraintsWhenOpened];
+        [self addConstraints:self.theNewTaskDialogLayoutConstraintsWhenBehindTheLeftEdge];
+        [self layoutSubviews];
+    } completion:^(BOOL finished) {
+        [self removeTheNewTaskView];
+    }];
 }
 
 - (BOOL)shouldCloseAndCancelTheNewTaskDialogForTranslation:(CGPoint)point andVelocity:(CGPoint)velocity {
@@ -227,6 +280,19 @@
 }
 
 - (BOOL)shouldCloseAndSaveTheNewTaskDialogForTranslation:(CGPoint)point andVelocity:(CGPoint)velocity {
+    if(![self.theNewTaskDialog isNameValid]){
+        return false;
+    }
+
+    CGPoint currentTheNewTaskDialogPosition = self.theNewTaskDialog.center;
+    CGFloat currentViewWidth = self.frame.size.width;
+    if(currentViewWidth > 0){
+        CGFloat positionFactor = currentTheNewTaskDialogPosition.x / currentViewWidth;
+        if(positionFactor < 0.25 && velocity.x < 0.0){
+            return true;
+        }
+    }
+
     return NO;
 }
 

@@ -12,4 +12,7 @@
 
 - (void)setEditing;
 
+- (BOOL)isNameValid;
+
+- (NSString *)taskName;
 @end

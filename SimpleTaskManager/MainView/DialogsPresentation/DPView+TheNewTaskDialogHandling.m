@@ -12,6 +12,7 @@
 #import "DBController.h"
 #import "DPView+Hints.h"
 #import "ConfirmationHintView.h"
+#import "CancelHintView.h"
 
 @implementation DPView (TheNewTaskDialogHandling)
 
@@ -143,11 +144,17 @@
         animationDuration = 0.7;
     }
 
+    self.confirmationHintView.alpha = 0.0;
+    self.cancelHintView.alpha = 0.0;
+
     [UIView animateWithDuration:animationDuration animations:^{
         [self removeConstraints:self.theNewTaskDialogLayoutConstraintsWhenBehindTheRightEdge];
         [self addConstraints:self.theNewTaskDialogLayoutConstraintsWhenOpened];
         [self layoutSubviews];
-        self.confirmationHintView.alpha = 0.0;
+
+        self.confirmationHintView.alpha = 1.0;
+        self.cancelHintView.alpha = 1.0;
+
     } completion:^(BOOL finished) {
         [self theNewTaskViewNowIsOpenedAndReady];
 
@@ -163,6 +170,7 @@
     [self moveGestureRecognizerToThewNewTaskDialog];
 
     [self showConfirmationHint];
+    [self showCancelHint];
 }
 
 - (void)animateClosingTheNewTaskDialogToTheRightEdge {
@@ -172,6 +180,9 @@
     [UIView animateWithDuration:0.7 animations:^{
         [self removeConstraints:self.theNewTaskDialogLayoutConstraintsWhenOpened];
         [self addConstraints:self.theNewTaskDialogLayoutConstraintsWhenBehindTheRightEdge];
+        self.confirmationHintView.alpha = 0.0;
+        self.cancelHintView.alpha = 0.0;
+
         [self layoutSubviews];
     } completion:^(BOOL finished) {
         [self removeTheNewTaskView];
@@ -186,6 +197,7 @@
     [self returnGestureRecognizerFromThewNewTaskDialog];
 
     [self removeConfirmationHintView];
+    [self removeCancelHintView];
 }
 
 - (void)returnGestureRecognizerFromThewNewTaskDialog {
@@ -276,6 +288,9 @@
     [UIView animateWithDuration:0.7 animations:^{
         [self removeConstraints:self.theNewTaskDialogLayoutConstraintsWhenOpened];
         [self addConstraints:self.theNewTaskDialogLayoutConstraintsWhenBehindTheLeftEdge];
+        self.confirmationHintView.alpha = 0.0;
+        self.cancelHintView.alpha = 0.0;
+
         [self layoutSubviews];
     } completion:^(BOOL finished) {
         [self removeTheNewTaskView];

@@ -18,6 +18,8 @@
 
 - (void)animatedMovingTheNewTaskDialogToOpenedStatePosition:(CGFloat)strength completion:(void (^)(void))completion;
 
+- (void)animateClosingTheNewTaskDialogToTheRightEdge;
+
 - (void)handlePanOnTheNewTaskDialog:(UIPanGestureRecognizer *)recognizer;
 
 - (void)addingTaskComfirmed;

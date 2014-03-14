@@ -10,6 +10,7 @@
 #import "DPView+Hints.h"
 #import "TheNewTaskHintView.h"
 #import "ConfirmationHintView.h"
+#import "CancelHintView.h"
 
 CGFloat const kRightMarginForHandlingPanGesture = 20.0;
 

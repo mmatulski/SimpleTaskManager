@@ -10,6 +10,7 @@
 #import "DPView+TheNewTaskDialogHandling.h"
 #import "ConfirmationHintView.h"
 #import "TheNewTaskDialog.h"
+#import "CancelHintView.h"
 
 
 @implementation DPView (Hints)
@@ -35,9 +36,26 @@
     [self addSubview:self.confirmationHintView];
 
     [self prepareHintViewLayoutsConstraintsForConfirmHint];
+    [self addConstraints:_confirmationHintViewLayoutConstraints];
 
     [self.confirmationHintView setTarget:self];
     [self.confirmationHintView setAction:@selector(userDidTapOnTheConfirmHintView)];
+}
+
+- (void)showCancelHint {
+    if(self.cancelHintView){
+        [self removeCancelHintView];
+    }
+
+    self.cancelHintView = [[CancelHintView alloc] initWithFrame:CGRectMake(0, 0, 70.0, 30.0)];
+    [self.cancelHintView setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [self addSubview:self.cancelHintView];
+
+    [self prepareHintViewLayoutsConstraintsForCancelHint];
+    [self addConstraints:_cancelHintViewLayoutConstraints];
+
+    [self.cancelHintView setTarget:self];
+    [self.cancelHintView setAction:@selector(userDidTapOnTheCancelHintView)];
 }
 
 - (void)userDidTapOnTheNewTaskHintView {
@@ -45,6 +63,10 @@
         [self userStartsOpeningTheNewTaskDialog];
         [self animatedMovingTheNewTaskDialogToOpenedStatePosition:0.0 completion:NULL];
     }
+}
+
+- (void)userDidTapOnTheCancelHintView {
+    [self animateClosingTheNewTaskDialogToTheRightEdge];
 }
 
 - (void)userDidTapOnTheConfirmHintView {
@@ -174,13 +196,56 @@
                                                           multiplier:1.0
                                                             constant:40.0];
     _confirmationHintViewLayoutConstraints = @[H1, H2, V1, V2];
-    [self addConstraints:_confirmationHintViewLayoutConstraints];
+}
+
+- (void)prepareHintViewLayoutsConstraintsForCancelHint {
+    NSLayoutConstraint *H1 = [NSLayoutConstraint constraintWithItem:self.cancelHintView
+                                                          attribute:NSLayoutAttributeTrailing
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self
+                                                          attribute:NSLayoutAttributeTrailing
+                                                         multiplier:1.0
+                                                           constant:0.0];
+
+    NSLayoutConstraint * H2 = [NSLayoutConstraint constraintWithItem:self.cancelHintView
+                                                           attribute:NSLayoutAttributeWidth
+                                                           relatedBy:NSLayoutRelationEqual
+                                                              toItem:nil
+                                                           attribute:NSLayoutAttributeWidth
+                                                          multiplier:1.0
+                                                            constant:70.0];
+
+    _trailingConstraintForCancelHintView = H1;
+    _widthConstraintForCancelHintView = H2;
+
+    NSLayoutConstraint * V1 = [NSLayoutConstraint constraintWithItem:self.cancelHintView
+                                                           attribute:NSLayoutAttributeTop
+                                                           relatedBy:NSLayoutRelationEqual
+                                                              toItem:self
+                                                           attribute:NSLayoutAttributeTop
+                                                          multiplier:1.0
+                                                            constant:20.0];
+
+    NSLayoutConstraint * V2 = [NSLayoutConstraint constraintWithItem:self.cancelHintView
+                                                           attribute:NSLayoutAttributeHeight
+                                                           relatedBy:NSLayoutRelationEqual
+                                                              toItem:nil
+                                                           attribute:NSLayoutAttributeHeight
+                                                          multiplier:1.0
+                                                            constant:40.0];
+    _cancelHintViewLayoutConstraints = @[H1, H2, V1, V2];
 }
 
 - (void)removeConfirmationHintView {
     [self.confirmationHintView removeFromSuperview];
     [self removeConstraints:_confirmationHintViewLayoutConstraints];
     self.confirmationHintView = nil;
+}
+
+- (void)removeCancelHintView {
+    [self.cancelHintView removeFromSuperview];
+    [self removeConstraints:_cancelHintViewLayoutConstraints];
+    self.cancelHintView = nil;
 }
 
 @end

@@ -14,6 +14,9 @@
 
 - (void)removeConfirmationHintView;
 
+- (void)removeCancelHintView;
+
 - (void)showConfirmationHint;
 
+- (void)showCancelHint;
 @end

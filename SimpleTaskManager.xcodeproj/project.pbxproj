@@ -30,6 +30,7 @@
 		46AE2B7D8691D0A4684BD40E /* DPView+Constraints.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE284979FE2B2F8F8123B1 /* DPView+Constraints.m */; };
 		46AE2C6E29A61028A98292D6 /* ContextFilterLogFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE22ECD2D1C47A1FD3CD1E /* ContextFilterLogFormatter.m */; };
 		46AE2CD0DE25667724420D3F /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 46AE2EAA806AAC6671007634 /* LICENSE.txt */; };
+		46AE2E2FE04ABACAA58299E1 /* CancelHintView.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE2C403E6D89A4165E701F /* CancelHintView.m */; };
 		46AE2E87F6B586A6BE33DF6B /* DPView+Hints.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE29031105D8F21C6F56F2 /* DPView+Hints.m */; };
 		46AE2F8FDA8D1EF8A2CD84F8 /* ConfirmationHintView.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE28FED8EA33D60051F43E /* ConfirmationHintView.m */; };
 		46AE2FFDE8E4408F6147B21C /* AppMacros.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE26BD3C2DAA306AFD90D2 /* AppMacros.m */; };
@@ -66,6 +67,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		46AE2008D42D5B9787292648 /* CancelHintView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CancelHintView.h; sourceTree = "<group>"; };
 		46AE200C40F76326A469B578 /* DDFileLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDFileLogger.m; sourceTree = "<group>"; };
 		46AE203BCD21F982E498C3DD /* DPView+TheNewTaskDialogHandling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DPView+TheNewTaskDialogHandling.h"; sourceTree = "<group>"; };
 		46AE20A9055962495CAAC61F /* CGEstimations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGEstimations.h; sourceTree = "<group>"; };
@@ -101,6 +103,7 @@
 		46AE2BA23DB7E200723369EA /* DPView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPView.h; sourceTree = "<group>"; };
 		46AE2C0708E235E321ADBF85 /* TheNewTaskHintView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TheNewTaskHintView.h; sourceTree = "<group>"; };
 		46AE2C2642592B73EDA41CA8 /* MiniHintView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MiniHintView.h; sourceTree = "<group>"; };
+		46AE2C403E6D89A4165E701F /* CancelHintView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CancelHintView.m; sourceTree = "<group>"; };
 		46AE2C5102BC649B877682E5 /* DDFileLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDFileLogger.h; sourceTree = "<group>"; };
 		46AE2C76FD9F949669985F67 /* DDTTYLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDTTYLogger.m; sourceTree = "<group>"; };
 		46AE2C92747F36475A9CAC8F /* DDAbstractDatabaseLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDAbstractDatabaseLogger.h; sourceTree = "<group>"; };
@@ -215,6 +218,8 @@
 				46AE2C0708E235E321ADBF85 /* TheNewTaskHintView.h */,
 				46AE28FED8EA33D60051F43E /* ConfirmationHintView.m */,
 				46AE21E4F59D094774F37063 /* ConfirmationHintView.h */,
+				46AE2C403E6D89A4165E701F /* CancelHintView.m */,
+				46AE2008D42D5B9787292648 /* CancelHintView.h */,
 			);
 			path = HintViews;
 			sourceTree = "<group>";
@@ -535,6 +540,7 @@
 				46AE2779E9F67C39EB00C38B /* MiniHintView.m in Sources */,
 				46AE26B884A65DA4052B6763 /* TheNewTaskHintView.m in Sources */,
 				46AE2F8FDA8D1EF8A2CD84F8 /* ConfirmationHintView.m in Sources */,
+				46AE2E2FE04ABACAA58299E1 /* CancelHintView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

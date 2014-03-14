@@ -12,4 +12,8 @@
 
 - (void)animatedHintViewForTheNewTaskView:(void (^)(void))completion;
 
+- (void)removeConfirmationHintView;
+
+- (void)showConfirmationHint;
+
 @end

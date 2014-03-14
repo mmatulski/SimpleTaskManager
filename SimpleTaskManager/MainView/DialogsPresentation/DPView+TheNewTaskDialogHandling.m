@@ -10,6 +10,8 @@
 #import "STMTask.h"
 #import "DBAccess.h"
 #import "DBController.h"
+#import "DPView+Hints.h"
+#import "ConfirmationHintView.h"
 
 @implementation DPView (TheNewTaskDialogHandling)
 
@@ -145,15 +147,22 @@
         [self removeConstraints:self.theNewTaskDialogLayoutConstraintsWhenBehindTheRightEdge];
         [self addConstraints:self.theNewTaskDialogLayoutConstraintsWhenOpened];
         [self layoutSubviews];
+        self.confirmationHintView.alpha = 0.0;
     } completion:^(BOOL finished) {
-        self.state = DPStateNewTaskDialogOpened;
-        [self.theNewTaskDialog setEditing];
-        [self moveGestureRecognizerToThewNewTaskDialog];
+        [self theNewTaskViewNowIsOpenedAndReady];
 
         if(completion){
             completion();
         }
     }];
+}
+
+- (void)theNewTaskViewNowIsOpenedAndReady {
+    self.state = DPStateNewTaskDialogOpened;
+    [self.theNewTaskDialog setEditing];
+    [self moveGestureRecognizerToThewNewTaskDialog];
+
+    [self showConfirmationHint];
 }
 
 - (void)animateClosingTheNewTaskDialogToTheRightEdge {
@@ -175,6 +184,8 @@
     self.state = DPStateNoOpenedDialogs;
 
     [self returnGestureRecognizerFromThewNewTaskDialog];
+
+    [self removeConfirmationHintView];
 }
 
 - (void)returnGestureRecognizerFromThewNewTaskDialog {
@@ -201,7 +212,7 @@
 
 
     } else if(recognizer.state == UIGestureRecognizerStateCancelled || recognizer.state == UIGestureRecognizerStateFailed) {
-
+        [self animatedMovingTheNewTaskDialogToOpenedStatePosition:0.0 completion:NULL];
     }
 }
 
@@ -212,8 +223,7 @@
 
 - (void)userFinishesClosingTheNewTaskDialogWithTranslation:(CGPoint)translation velocity:(CGPoint)velocity {
     if([self shouldCloseAndSaveTheNewTaskDialogForTranslation:translation andVelocity:velocity]){
-        [self saveTheNeTask];
-        [self animateClosingTheNewTaskDialogToTheLeftEdge];
+        [self addingTaskComfirmed];
 
     } else if([self shouldCloseAndCancelTheNewTaskDialogForTranslation:translation andVelocity:velocity]){
         [self animateClosingTheNewTaskDialogToTheRightEdge];
@@ -225,12 +235,17 @@
         }
 
         [self animatedMovingTheNewTaskDialogToOpenedStatePosition:0.0 completion:^{
-            [self showWarning:warningMessage];
+            [self showWarningForTheNewTask:warningMessage];
         }];
     }
 }
 
-- (void)showWarning:(NSString *)message {
+- (void)addingTaskComfirmed {
+    [self saveTheNeTask];
+    [self animateClosingTheNewTaskDialogToTheLeftEdge];
+}
+
+- (void)showWarningForTheNewTask:(NSString *)message {
     UILabel *warningLabel = [[UILabel alloc] initWithFrame:self.theNewTaskDialog.frame];
     warningLabel.text = message;
     warningLabel.textColor = [UIColor redColor];

@@ -9,6 +9,7 @@
 @class TheNewTaskDialog;
 @class MiniHintView;
 @class TheNewTaskHintView;
+@class ConfirmationHintView;
 
 /*
 This view is parent for Dialogs like TheNewTaskDialog or Checking Task View.
@@ -23,6 +24,10 @@ It contains "Add" button and handler pan gesture which allows to pill AdTaskView
     NSLayoutConstraint *_trailingConstraintForNewTaskHintView;
     NSLayoutConstraint *_widthConstraintForNewTaskHintView;
     NSArray *_hintViewForTheNewTaskLayoutConstraints;
+
+    NSLayoutConstraint *_leadingConstraintForConfirmationHintView;
+    NSLayoutConstraint *_widthConstraintForConfirmationHintView;
+    NSArray *_confirmationHintViewLayoutConstraints;
 
 }
 
@@ -39,6 +44,8 @@ It contains "Add" button and handler pan gesture which allows to pill AdTaskView
 @property(nonatomic) enum DPState state;
 
 @property(nonatomic, strong) TheNewTaskHintView *hintViewForTheNewTask;
+
+@property(nonatomic, strong) ConfirmationHintView *confirmationHintView;
 
 - (id)initWithDefaultFrame;
 

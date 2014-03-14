@@ -20,5 +20,9 @@
 
 - (void)handlePanOnTheNewTaskDialog:(UIPanGestureRecognizer *)recognizer;
 
+- (void)addingTaskComfirmed;
+
+- (void)showWarningForTheNewTask:(NSString *)message;
+
 - (BOOL)canShowTheNewTaskDialog;
 @end

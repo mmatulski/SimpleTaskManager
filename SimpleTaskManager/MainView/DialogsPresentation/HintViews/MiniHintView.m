@@ -19,5 +19,12 @@
     return self;
 }
 
+- (void) buttonSelected {
+    if(self.target && self.action){
+        if([self.target respondsToSelector:self.action]){
+            [self.target performSelector:self.action];
+        }
+    }
+}
 
 @end

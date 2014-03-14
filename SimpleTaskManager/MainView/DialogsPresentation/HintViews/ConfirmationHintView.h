@@ -4,11 +4,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "MiniHintView.h"
 
-@interface MiniHintView : UIView
 
-@property (nonatomic, weak) id target;
-@property (nonatomic) SEL action;
-
-- (void)buttonSelected;
+@interface ConfirmationHintView : MiniHintView
+@property(nonatomic, strong) UIButton *okButton;
 @end

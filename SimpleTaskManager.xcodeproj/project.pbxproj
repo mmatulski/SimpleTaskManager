@@ -31,6 +31,7 @@
 		46AE2C6E29A61028A98292D6 /* ContextFilterLogFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE22ECD2D1C47A1FD3CD1E /* ContextFilterLogFormatter.m */; };
 		46AE2CD0DE25667724420D3F /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 46AE2EAA806AAC6671007634 /* LICENSE.txt */; };
 		46AE2E87F6B586A6BE33DF6B /* DPView+Hints.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE29031105D8F21C6F56F2 /* DPView+Hints.m */; };
+		46AE2F8FDA8D1EF8A2CD84F8 /* ConfirmationHintView.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE28FED8EA33D60051F43E /* ConfirmationHintView.m */; };
 		46AE2FFDE8E4408F6147B21C /* AppMacros.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE26BD3C2DAA306AFD90D2 /* AppMacros.m */; };
 		EA34DA5318CD493B0042CDA9 /* SimpleTaskManager.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EA34DA5118CD493B0042CDA9 /* SimpleTaskManager.xcdatamodeld */; };
 		EA3D0E0A18CB6B9C00CB333E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA3D0E0918CB6B9C00CB333E /* Foundation.framework */; };
@@ -70,6 +71,7 @@
 		46AE20A9055962495CAAC61F /* CGEstimations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGEstimations.h; sourceTree = "<group>"; };
 		46AE213846FBC49661E8DD72 /* DDTTYLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDTTYLogger.h; sourceTree = "<group>"; };
 		46AE217E90C20F3DA7E93EE5 /* TheNewTaskDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TheNewTaskDialog.h; sourceTree = "<group>"; };
+		46AE21E4F59D094774F37063 /* ConfirmationHintView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfirmationHintView.h; sourceTree = "<group>"; };
 		46AE21E6788FAE78CD97C37B /* TheNewTaskDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TheNewTaskDialog.m; sourceTree = "<group>"; };
 		46AE22CB58FB49DD429B1816 /* DDLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDLog.h; sourceTree = "<group>"; };
 		46AE22ECD2D1C47A1FD3CD1E /* ContextFilterLogFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContextFilterLogFormatter.m; sourceTree = "<group>"; };
@@ -89,6 +91,7 @@
 		46AE284979FE2B2F8F8123B1 /* DPView+Constraints.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DPView+Constraints.m"; sourceTree = "<group>"; };
 		46AE2878C7906F215C11B341 /* UIView+LayoutConstraints.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+LayoutConstraints.m"; sourceTree = "<group>"; };
 		46AE28DFB223931A9B603FFC /* DPView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPView.m; sourceTree = "<group>"; };
+		46AE28FED8EA33D60051F43E /* ConfirmationHintView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfirmationHintView.m; sourceTree = "<group>"; };
 		46AE29031105D8F21C6F56F2 /* DPView+Hints.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DPView+Hints.m"; sourceTree = "<group>"; };
 		46AE298FA231D06116CA1F3B /* MiniHintView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MiniHintView.m; sourceTree = "<group>"; };
 		46AE29A9D7AC1F8AAD4FBA14 /* DPView+TheNewTaskDialogHandling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DPView+TheNewTaskDialogHandling.m"; sourceTree = "<group>"; };
@@ -210,6 +213,8 @@
 				46AE2C2642592B73EDA41CA8 /* MiniHintView.h */,
 				46AE24F43840AEE4A8574C3F /* TheNewTaskHintView.m */,
 				46AE2C0708E235E321ADBF85 /* TheNewTaskHintView.h */,
+				46AE28FED8EA33D60051F43E /* ConfirmationHintView.m */,
+				46AE21E4F59D094774F37063 /* ConfirmationHintView.h */,
 			);
 			path = HintViews;
 			sourceTree = "<group>";
@@ -529,6 +534,7 @@
 				46AE2E87F6B586A6BE33DF6B /* DPView+Hints.m in Sources */,
 				46AE2779E9F67C39EB00C38B /* MiniHintView.m in Sources */,
 				46AE26B884A65DA4052B6763 /* TheNewTaskHintView.m in Sources */,
+				46AE2F8FDA8D1EF8A2CD84F8 /* ConfirmationHintView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

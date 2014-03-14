@@ -48,6 +48,8 @@ CGFloat const kRightMarginForHandlingPanGesture = 10.0;
 }
 
 - (void)handlePan:(UIPanGestureRecognizer *)recognizer {
+    DDLogInfo(@"handlePan");
+
     CGPoint translation = [recognizer translationInView:recognizer.view];
 
     if(recognizer.state == UIGestureRecognizerStateBegan){
@@ -97,17 +99,55 @@ CGFloat const kRightMarginForHandlingPanGesture = 10.0;
 }
 
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
+
+    DDLogInfo(@"hitTest");
+
+    if([self isAnyDialogOpened]){
+        return [super hitTest:point withEvent:event];
+    }
+
+    if([self isAnyDialogAnimatedNow]){
+        return nil;
+    }
+
     CGRect rectangleForDetectingAddingTask = [self rectangleForDetectingAddingTask];
+
     if(CGRectContainsPoint(rectangleForDetectingAddingTask, point)){
         return [super hitTest:point withEvent:event];
     }
-    
+
     return nil;
+}
+
+- (BOOL)isAnyDialogOpened {
+    switch (self.state) {
+        case DPStateNewTaskDialogOpened:
+            return true;
+        default:
+            return false;
+
+    };
+}
+
+- (BOOL)isAnyDialogAnimatedNow {
+    switch (self.state) {
+        case DPStateNewTaskDialogOpeningAnimating:
+        case DPStateNewTaskDialogClosingAnimating:
+            return true;
+        default:
+            return false;
+
+    };
 }
 
 #pragma mark - UIGestrureRecognizer methods
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+    DDLogInfo(@"gestureRecognizer");
+
+    if([self isAnyDialogOpened] || [self isAnyDialogAnimatedNow]){
+        return false;
+    }
 
     CGPoint point = [touch locationInView:self];
     CGRect rectangleForDetectingAddingTask = [self rectangleForDetectingAddingTask];

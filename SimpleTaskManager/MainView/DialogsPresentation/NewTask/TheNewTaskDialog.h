@@ -10,4 +10,6 @@
 
 @property(nonatomic, strong) UITextView *textView;;
 
+- (void)setEditing;
+
 @end

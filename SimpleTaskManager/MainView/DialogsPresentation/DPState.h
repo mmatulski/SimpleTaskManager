@@ -10,7 +10,7 @@
 #define SimpleTaskManager_DialogsPresentationState____FILEEXTENSION___
 
 typedef NS_ENUM(NSInteger , DPState) {
-    DPStateNormal,
+    DPStateNoOpenedDialogs,
     DPStateNewTaskDialogOpened,
     DPStateNewTaskDialogOpeningStarted, //user can open it finally or resign
     DPStateNewTaskDialogOpeningAnimating,

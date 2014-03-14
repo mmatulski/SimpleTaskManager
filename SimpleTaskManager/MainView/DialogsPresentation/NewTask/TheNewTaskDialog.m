@@ -15,6 +15,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         [self updateLayer];
+        [self prepareTextView];
     }
 
     return self;
@@ -42,6 +43,7 @@
 
     gradientLayer.colors = colors;
     gradientLayer.locations = locations;
+    gradientLayer.cornerRadius = 4.0;
 }
 
 -(void) updateLayer{
@@ -50,6 +52,53 @@
 
 -(CAGradientLayer *) gradientLayer{
     return MakeSafeCast(self.layer, [CAGradientLayer class]);
+}
+
+- (void)prepareTextView {
+    self.textView = [[UITextView alloc] initWithFrame:CGRectMake(10.0, 10.0, 100.0, 80.0)];
+    self.textView.font = [UIFont fontWithName:@"HelveticaNeue" size:26.0];
+    self.textView.backgroundColor = [UIColor clearColor];
+    self.textView.textAlignment = NSTextAlignmentLeft;
+    [self.textView setTranslatesAutoresizingMaskIntoConstraints:false];
+    [self addSubview:self.textView];
+
+    NSLayoutConstraint * H1 = [NSLayoutConstraint constraintWithItem:self.textView
+                                                           attribute:NSLayoutAttributeLeading
+                                                           relatedBy:NSLayoutRelationEqual
+                                                              toItem:self
+                                                           attribute:NSLayoutAttributeLeading
+                                                          multiplier:1.0
+                                                            constant:10.0];
+
+    NSLayoutConstraint * H2 = [NSLayoutConstraint constraintWithItem:self.textView
+                                                           attribute:NSLayoutAttributeTrailing
+                                                           relatedBy:NSLayoutRelationEqual
+                                                              toItem:self
+                                                           attribute:NSLayoutAttributeTrailing
+                                                          multiplier:1.0
+                                                            constant:-10.0];
+
+    NSLayoutConstraint * V1 = [NSLayoutConstraint constraintWithItem:self.textView
+                                                           attribute:NSLayoutAttributeTop
+                                                           relatedBy:NSLayoutRelationEqual
+                                                              toItem:self
+                                                           attribute:NSLayoutAttributeTop
+                                                          multiplier:1.0
+                                                            constant:15.0];
+
+    NSLayoutConstraint * V2 = [NSLayoutConstraint constraintWithItem:self.textView
+                                                           attribute:NSLayoutAttributeHeight
+                                                           relatedBy:NSLayoutRelationEqual
+                                                              toItem:self
+                                                           attribute:NSLayoutAttributeHeight
+                                                          multiplier:1.0
+                                                            constant:-30.0];
+
+    [self addConstraints:@[H1,H2,V1,V2]];
+}
+
+- (void)setEditing {
+    [self.textView becomeFirstResponder];
 }
 
 @end

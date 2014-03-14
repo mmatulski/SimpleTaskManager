@@ -7,4 +7,3 @@
 
 extern CGFloat const kAddTaskViewTopMargin;
 extern CGFloat const kAddTaskViewHorizontalMargin;
-extern CGFloat const kAddTaskViewHeightFactor;

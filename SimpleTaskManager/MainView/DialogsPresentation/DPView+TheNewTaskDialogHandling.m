@@ -7,6 +7,7 @@
 #import "MainViewConsts.h"
 #import "TheNewTaskDialog.h"
 #import "CGEstimations.h"
+#import "DPState.h"
 
 
 @implementation DPView (TheNewTaskDialogHandling)
@@ -48,11 +49,11 @@
                                                             constant:kAddTaskViewTopMargin];
 
     NSLayoutConstraint * V2 = [NSLayoutConstraint constraintWithItem:self.theNewTaskDialog
-                                                           attribute:NSLayoutAttributeHeight
+                                                           attribute:NSLayoutAttributeBottom
                                                            relatedBy:NSLayoutRelationEqual
                                                               toItem:self
-                                                           attribute:NSLayoutAttributeHeight
-                                                          multiplier:kAddTaskViewHeightFactor
+                                                           attribute:NSLayoutAttributeCenterY
+                                                          multiplier:1.0
                                                             constant:0.0];
 
     self.theNewTaskDialogLayoutConstraintsWhenOpened = @[H1WhenShown, H2, V1, V2];
@@ -64,6 +65,7 @@
     [self moveTheNewTaskDialogBehindTheRightEdge];
 
     _originalPositionOfTheNewTaskDialogBeforeMoving = self.theNewTaskDialog.center;
+    self.state = DPStateNewTaskDialogOpeningStarted;
 }
 
 - (void)prepareTheNewTaskDialog {
@@ -120,6 +122,8 @@
 
 - (void)animatedMovingTheNewTaskDialogToOpenedStatePosition:(CGFloat)strength {
 
+    self.state = DPStateNewTaskDialogOpeningAnimating;
+
     CGFloat animationDuration = 1.0f *  500.0 / (strength>0?strength:500.0);
 
     if(animationDuration > 0.7){
@@ -131,10 +135,15 @@
         [self addConstraints:self.theNewTaskDialogLayoutConstraintsWhenOpened];
         [self layoutSubviews];
     } completion:^(BOOL finished) {
+        self.state = DPStateNewTaskDialogOpened;
+        [self.theNewTaskDialog setEditing];
     }];
 }
 
 - (void)animatedClosingTheNewTaskDialog {
+
+    self.state = DPStateNewTaskDialogClosingAnimating;
+
     [UIView animateWithDuration:0.7 animations:^{
         [self removeConstraints:self.theNewTaskDialogLayoutConstraintsWhenOpened];
         [self addConstraints:self.theNewTaskDialogLayoutConstraintsWhenBehindTheRightEdge];
@@ -147,6 +156,7 @@
 - (void)removeTheNewTaskView {
     [self.theNewTaskDialog removeFromSuperview];
     self.theNewTaskDialog = nil;
+    self.state = DPStateNoOpenedDialogs;
 }
 
 @end

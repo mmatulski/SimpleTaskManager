@@ -5,6 +5,5 @@
 
 #import "MainViewConsts.h"
 
-CGFloat const kAddTaskViewTopMargin = 60.0;
-CGFloat const kAddTaskViewHorizontalMargin = 30.0;
-CGFloat const kAddTaskViewHeightFactor = 0.4;
+CGFloat const kAddTaskViewTopMargin = 40.0;
+CGFloat const kAddTaskViewHorizontalMargin = 26.0;

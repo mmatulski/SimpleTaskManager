@@ -10,5 +10,6 @@
 @interface TheNewTaskHintView : MiniHintView
 
 
+@property(nonatomic, strong) UIButton *addButton;
 
 @end

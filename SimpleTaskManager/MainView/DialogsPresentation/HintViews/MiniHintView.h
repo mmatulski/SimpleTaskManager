@@ -4,8 +4,10 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "RoundedCornersView.h"
 
+@interface MiniHintView : UIView
 
-@interface MiniHintView : RoundedCornersView
+@property (nonatomic, weak) id target;
+@property (nonatomic) SEL action;
+
 @end

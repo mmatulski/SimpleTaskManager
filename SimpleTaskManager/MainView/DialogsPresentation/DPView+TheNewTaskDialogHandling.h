@@ -16,5 +16,9 @@
 
 - (void)userCancelsMovingTheNewTaskDialog;
 
+- (void)animatedMovingTheNewTaskDialogToOpenedStatePosition:(CGFloat)strength completion:(void (^)(void))completion;
+
 - (void)handlePanOnTheNewTaskDialog:(UIPanGestureRecognizer *)recognizer;
+
+- (BOOL)canShowTheNewTaskDialog;
 @end

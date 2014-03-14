@@ -130,6 +130,7 @@
     return true;
 }
 
+//TODO replace strength with time
 - (void)animatedMovingTheNewTaskDialogToOpenedStatePosition:(CGFloat)strength completion:(void (^)(void)) completion {
 
     self.state = DPStateNewTaskDialogOpeningAnimating;
@@ -295,5 +296,10 @@
 
     return NO;
 }
+
+- (BOOL)canShowTheNewTaskDialog {
+    return self.state == DPStateNoOpenedDialogs;
+}
+
 
 @end

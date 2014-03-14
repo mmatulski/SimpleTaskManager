@@ -106,6 +106,7 @@ CGFloat const kRightMarginForHandlingPanGesture = 20.0;
 }
 
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
+    DDLogVerbose(@"hitTest");
 
     if([self isAnyDialogOpenedOrBegunClosing]){
         return [super hitTest:point withEvent:event];
@@ -118,6 +119,11 @@ CGFloat const kRightMarginForHandlingPanGesture = 20.0;
     CGRect rectangleForDetectingAddingTask = [self rectangleForDetectingAddingTask];
 
     if(CGRectContainsPoint(rectangleForDetectingAddingTask, point)){
+        return [super hitTest:point withEvent:event];
+    }
+
+    CGRect rectangleForTheNewTaskHintView = self.hintViewForTheNewTask.frame;
+    if(CGRectContainsPoint(rectangleForTheNewTaskHintView, point)){
         return [super hitTest:point withEvent:event];
     }
 

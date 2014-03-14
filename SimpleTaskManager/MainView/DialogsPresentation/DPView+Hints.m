@@ -7,6 +7,7 @@
 #import "MiniHintView.h"
 #import "DPView+Constraints.h"
 #import "TheNewTaskHintView.h"
+#import "DPView+TheNewTaskDialogHandling.h"
 
 
 @implementation DPView (Hints)
@@ -17,7 +18,18 @@
     [self addSubview:self.hintViewForTheNewTask];
 
     [self prepareHintViewLayoutsConstraintsForNewTask];
+
+    [self.hintViewForTheNewTask setTarget:self];
+    [self.hintViewForTheNewTask setAction:@selector(userDidTapOnTheNewTaskHintView)];
 }
+
+- (void)userDidTapOnTheNewTaskHintView {
+    if([self canShowTheNewTaskDialog]){
+        [self userStartsOpeningTheNewTaskDialog];
+        [self animatedMovingTheNewTaskDialogToOpenedStatePosition:0.0 completion:NULL];
+    }
+}
+
 
 -(void) animatedHintViewForTheNewTaskView:(void (^)(void)) completion{
     if(!self.hintViewForTheNewTask){

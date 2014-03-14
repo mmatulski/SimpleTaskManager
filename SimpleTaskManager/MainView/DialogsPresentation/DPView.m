@@ -7,7 +7,7 @@
 #import "DPView+Constraints.h"
 #import "DPView+TheNewTaskDialogHandling.h"
 
-CGFloat const kRightMarginForHandlingPanGesture = 10.0;
+CGFloat const kRightMarginForHandlingPanGesture = 20.0;
 
 @implementation DPView
 
@@ -47,14 +47,13 @@ CGFloat const kRightMarginForHandlingPanGesture = 10.0;
 }
 
 - (void)handlePan:(UIPanGestureRecognizer *)recognizer {
-    DDLogInfo(@"handlePan");
 
-    if([self isAnyDialogOpened]){
-        if([recognizer.view isEqual:self.theNewTaskDialog]){
-            [self handlePanOnTheNewTaskDialog:recognizer];
-            return;
-        }
+    if([recognizer.view isEqual:self.theNewTaskDialog]){
+        [self handlePanOnTheNewTaskDialog:recognizer];
+        return;
     }
+
+    DDLogInfo(@"handlePan");
 
     CGPoint translation = [recognizer translationInView:recognizer.view];
 
@@ -66,7 +65,7 @@ CGFloat const kRightMarginForHandlingPanGesture = 10.0;
 
         CGPoint velocity = [recognizer velocityInView:self];
 
-        [self userEndsMovingDialogWithTranslation:translation velocity:velocity];
+        [self userFinishesOpeningTheNewTaskDialogWithTranslation:translation velocity:velocity];
 
     } else if(recognizer.state == UIGestureRecognizerStateCancelled || recognizer.state == UIGestureRecognizerStateFailed) {
         [self userCancelsMovingTheNewTaskDialog];
@@ -103,9 +102,7 @@ CGFloat const kRightMarginForHandlingPanGesture = 10.0;
 
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
 
-    DDLogInfo(@"hitTest");
-
-    if([self isAnyDialogOpened]){
+    if([self isAnyDialogOpenedOrBegunClosing]){
         return [super hitTest:point withEvent:event];
     }
 
@@ -122,9 +119,10 @@ CGFloat const kRightMarginForHandlingPanGesture = 10.0;
     return nil;
 }
 
-- (BOOL)isAnyDialogOpened {
+- (BOOL)isAnyDialogOpenedOrBegunClosing {
     switch (self.state) {
         case DPStateNewTaskDialogOpened:
+        case DPStateNewTaskDialogClosingBegun:
             return true;
         default:
             return false;
@@ -152,7 +150,7 @@ CGFloat const kRightMarginForHandlingPanGesture = 10.0;
         return false;
     }
 
-    if([self isAnyDialogOpened]){
+    if([self isAnyDialogOpenedOrBegunClosing]){
         if([gestureRecognizer.view isEqual:self.theNewTaskDialog]){
             return true;
         }

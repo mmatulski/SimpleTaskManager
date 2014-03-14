@@ -90,18 +90,18 @@
     self.theNewTaskDialog.center = changedPosition;
 }
 
-- (void)userEndsMovingDialogWithTranslation:(CGPoint)translation velocity:(CGPoint)velocity {
+- (void)userFinishesOpeningTheNewTaskDialogWithTranslation:(CGPoint)translation velocity:(CGPoint)velocity {
     if([self shouldOpenTheNewTaskDialogForTranslation:translation andVelocity:velocity]){
         CGFloat vectorLength = [CGEstimations pointDistanceToCenterOfAxis:velocity];
         [self animatedMovingTheNewTaskDialogToOpenedStatePosition:vectorLength];
 
     } else {
-        [self animatedClosingTheNewTaskDialog];
+        [self animateClosingTheNewTaskDialogToTheRightEdge];
     }
 }
 
 - (void)userCancelsMovingTheNewTaskDialog {
-    [self animatedClosingTheNewTaskDialog];
+    [self animateClosingTheNewTaskDialogToTheRightEdge];
 }
 
 - (BOOL)shouldOpenTheNewTaskDialogForTranslation:(CGPoint)translation andVelocity:(CGPoint)velocity {
@@ -141,7 +141,7 @@
     }];
 }
 
-- (void)animatedClosingTheNewTaskDialog {
+- (void)animateClosingTheNewTaskDialogToTheRightEdge {
 
     self.state = DPStateNewTaskDialogClosingAnimating;
 
@@ -175,7 +175,59 @@
 - (void)handlePanOnTheNewTaskDialog:(UIPanGestureRecognizer *)recognizer {
     CGPoint translation = [recognizer translationInView:recognizer.view];
     DDLogInfo(@"handlePanOnTheNewTaskDialog %@", NSStringFromCGPoint(translation));
+
+    if(recognizer.state == UIGestureRecognizerStateBegan){
+        [self userStartsClosingTheNewTaskDialog];
+    } else if(recognizer.state == UIGestureRecognizerStateChanged){
+        [self userMovesTheNewTaskDialogByX:translation.x];
+    } else if(recognizer.state == UIGestureRecognizerStateEnded){
+        CGPoint velocity = [recognizer velocityInView:self];
+        [self userFinishesClosingTheNewTaskDialogWithTranslation:translation velocity:velocity];
+
+
+    } else if(recognizer.state == UIGestureRecognizerStateCancelled || recognizer.state == UIGestureRecognizerStateFailed) {
+
+    }
 }
 
+- (void)userStartsClosingTheNewTaskDialog {
+    _originalPositionOfTheNewTaskDialogBeforeMoving = self.theNewTaskDialog.center;
+    self.state = DPStateNewTaskDialogClosingBegun;
+}
+
+- (void)userFinishesClosingTheNewTaskDialogWithTranslation:(CGPoint)translation velocity:(CGPoint)velocity {
+    if([self shouldCloseAndSaveTheNewTaskDialogForTranslation:translation andVelocity:velocity]){
+        CGFloat vectorLength = [CGEstimations pointDistanceToCenterOfAxis:velocity];
+        [self animateClosingTheNewTaskDialogToTheLeftEdge];
+
+    } else if([self shouldCloseAndCancelTheNewTaskDialogForTranslation:translation andVelocity:velocity]){
+        CGFloat vectorLength = [CGEstimations pointDistanceToCenterOfAxis:velocity];
+        [self animateClosingTheNewTaskDialogToTheRightEdge];
+
+    } else {
+        [self animatedMovingTheNewTaskDialogToOpenedStatePosition:0.0];
+    }
+}
+
+- (void)animateClosingTheNewTaskDialogToTheLeftEdge {
+
+}
+
+- (BOOL)shouldCloseAndCancelTheNewTaskDialogForTranslation:(CGPoint)point andVelocity:(CGPoint)velocity {
+    CGPoint currentTheNewTaskDialogPosition = self.theNewTaskDialog.center;
+    CGFloat currentViewWidth = self.frame.size.width;
+    if(currentViewWidth > 0){
+        CGFloat positionFactor = currentTheNewTaskDialogPosition.x / currentViewWidth;
+        if(positionFactor > 0.75 && velocity.x > 0.0){
+            return true;
+        }
+    }
+
+    return NO;
+}
+
+- (BOOL)shouldCloseAndSaveTheNewTaskDialogForTranslation:(CGPoint)point andVelocity:(CGPoint)velocity {
+    return NO;
+}
 
 @end

@@ -12,7 +12,7 @@
 
 - (void)userMovesTheNewTaskDialogByX:(CGFloat)x;
 
-- (void)userEndsMovingDialogWithTranslation:(CGPoint)translation velocity:(CGPoint)velocity;
+- (void)userFinishesOpeningTheNewTaskDialogWithTranslation:(CGPoint)translation velocity:(CGPoint)velocity;
 
 - (void)userCancelsMovingTheNewTaskDialog;
 

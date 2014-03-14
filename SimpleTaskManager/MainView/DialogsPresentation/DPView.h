@@ -5,10 +5,10 @@
 
 #import <Foundation/Foundation.h>
 
-@class AddTaskView;
+@class TheNewTaskDialog;
 
 /*
-This view is parent for Dialogs like AddTaskView or Checking Task View.
+This view is parent for Dialogs like TheNewTaskDialog or Checking Task View.
 It contains "Add" button and handler pan gesture which allows to pill AdTaskView from the right edge.
 
  */
@@ -19,7 +19,7 @@ It contains "Add" button and handler pan gesture which allows to pill AdTaskView
 
 }
 
-@property(nonatomic, strong) AddTaskView *theNewTaskDialog;
+@property(nonatomic, strong) TheNewTaskDialog *theNewTaskDialog;
 
 @property(nonatomic, strong) UIPanGestureRecognizer *panGestureRecognizer;
 

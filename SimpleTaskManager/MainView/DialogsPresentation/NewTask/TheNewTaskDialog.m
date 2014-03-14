@@ -3,11 +3,11 @@
 // Copyright (c) 2014 Tomato. All rights reserved.
 //
 
-#import "AddTaskView.h"
+#import "TheNewTaskDialog.h"
 
 
 
-@implementation AddTaskView {
+@implementation TheNewTaskDialog {
 
 }
 

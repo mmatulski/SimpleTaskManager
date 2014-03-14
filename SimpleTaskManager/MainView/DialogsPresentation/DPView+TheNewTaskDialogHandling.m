@@ -5,7 +5,7 @@
 
 #import "DPView+TheNewTaskDialogHandling.h"
 #import "MainViewConsts.h"
-#import "AddTaskView.h"
+#import "TheNewTaskDialog.h"
 #import "CGEstimations.h"
 
 
@@ -70,7 +70,7 @@
     [self.theNewTaskDialog removeFromSuperview];
     self.theNewTaskDialog = nil;
 
-    self.theNewTaskDialog = [[AddTaskView alloc] initWithFrame:CGRectMake(0, 44, 100, 100)];
+    self.theNewTaskDialog = [[TheNewTaskDialog alloc] initWithFrame:CGRectMake(0, 44, 100, 100)];
     [self addSubview:self.theNewTaskDialog];
     [self prepareTheNewTaskDialogLayoutConstraints];
 }

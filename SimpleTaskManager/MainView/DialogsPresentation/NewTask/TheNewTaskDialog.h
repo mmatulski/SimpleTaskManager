@@ -6,7 +6,7 @@
 #import <Foundation/Foundation.h>
 
 
-@interface AddTaskView : UIView
+@interface TheNewTaskDialog : UIView
 
 @property(nonatomic, strong) UITextView *textView;;
 @property(nonatomic, strong) CAGradientLayer *bgLayer;

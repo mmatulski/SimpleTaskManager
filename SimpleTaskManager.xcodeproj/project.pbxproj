@@ -19,7 +19,7 @@
 		46AE2778B30FF66F82F8BF4E /* DDASLLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE2FE512E06F60583C608B /* DDASLLogger.m */; };
 		46AE27C7FA2936DF1ECA27B2 /* MainTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE2E0685B7ADA22AC3BF2B /* MainTableController.m */; };
 		46AE2928588C378D457A0861 /* DBAccess.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE2E29179ECFBA021E47AC /* DBAccess.m */; };
-		46AE2A3C25C84309996F6356 /* AddTaskView.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE21E6788FAE78CD97C37B /* AddTaskView.m */; };
+		46AE2A3C25C84309996F6356 /* TheNewTaskDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE21E6788FAE78CD97C37B /* TheNewTaskDialog.m */; };
 		46AE2A596EEDD69DE676B581 /* DPView+TheNewTaskDialogHandling.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE29A9D7AC1F8AAD4FBA14 /* DPView+TheNewTaskDialogHandling.m */; };
 		46AE2AB8AD5EA5BBB140E095 /* AnimationsHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE2B4CA278B77E07685AEC /* AnimationsHelper.m */; };
 		46AE2AC529074E58F60813D7 /* DBController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE2B47CAFDDCB7D9C12CB7 /* DBController.m */; };
@@ -66,8 +66,8 @@
 		46AE203BCD21F982E498C3DD /* DPView+TheNewTaskDialogHandling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DPView+TheNewTaskDialogHandling.h"; sourceTree = "<group>"; };
 		46AE20A9055962495CAAC61F /* CGEstimations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGEstimations.h; sourceTree = "<group>"; };
 		46AE213846FBC49661E8DD72 /* DDTTYLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDTTYLogger.h; sourceTree = "<group>"; };
-		46AE217E90C20F3DA7E93EE5 /* AddTaskView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddTaskView.h; sourceTree = "<group>"; };
-		46AE21E6788FAE78CD97C37B /* AddTaskView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddTaskView.m; sourceTree = "<group>"; };
+		46AE217E90C20F3DA7E93EE5 /* TheNewTaskDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TheNewTaskDialog.h; sourceTree = "<group>"; };
+		46AE21E6788FAE78CD97C37B /* TheNewTaskDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TheNewTaskDialog.m; sourceTree = "<group>"; };
 		46AE22CB58FB49DD429B1816 /* DDLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDLog.h; sourceTree = "<group>"; };
 		46AE22ECD2D1C47A1FD3CD1E /* ContextFilterLogFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContextFilterLogFormatter.m; sourceTree = "<group>"; };
 		46AE231FF5EEB3D62D70E034 /* MainTableController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainTableController.h; sourceTree = "<group>"; };
@@ -217,7 +217,7 @@
 		46AE284DB9830DC1AC8345C5 /* DialogsPresentation */ = {
 			isa = PBXGroup;
 			children = (
-				46AE2AB744F3D90A6B0C8D20 /* AddTask */,
+				46AE2AB744F3D90A6B0C8D20 /* NewTask */,
 				46AE28DFB223931A9B603FFC /* DPView.m */,
 				46AE2DB7E7B1A5094795041B /* DPView+Constraints.h */,
 				46AE2BA23DB7E200723369EA /* DPView.h */,
@@ -229,13 +229,13 @@
 			path = DialogsPresentation;
 			sourceTree = "<group>";
 		};
-		46AE2AB744F3D90A6B0C8D20 /* AddTask */ = {
+		46AE2AB744F3D90A6B0C8D20 /* NewTask */ = {
 			isa = PBXGroup;
 			children = (
-				46AE21E6788FAE78CD97C37B /* AddTaskView.m */,
-				46AE217E90C20F3DA7E93EE5 /* AddTaskView.h */,
+				46AE21E6788FAE78CD97C37B /* TheNewTaskDialog.m */,
+				46AE217E90C20F3DA7E93EE5 /* TheNewTaskDialog.h */,
 			);
-			path = AddTask;
+			path = NewTask;
 			sourceTree = "<group>";
 		};
 		46AE2ACD875439BC8EC35270 /* Helpers */ = {
@@ -491,7 +491,7 @@
 				46AE210F07A69C6B77D7D4A2 /* MainViewConsts.m in Sources */,
 				46AE2728683C82118BF8233D /* UIView+LayoutConstraints.m in Sources */,
 				46AE212FD05EAEE66E043BF6 /* CGEstimations.m in Sources */,
-				46AE2A3C25C84309996F6356 /* AddTaskView.m in Sources */,
+				46AE2A3C25C84309996F6356 /* TheNewTaskDialog.m in Sources */,
 				46AE235C088774BA4A5C68CD /* DPView.m in Sources */,
 				46AE2B7D8691D0A4684BD40E /* DPView+Constraints.m in Sources */,
 				46AE2A596EEDD69DE676B581 /* DPView+TheNewTaskDialogHandling.m in Sources */,

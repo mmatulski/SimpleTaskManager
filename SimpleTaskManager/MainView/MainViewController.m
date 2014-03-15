@@ -9,6 +9,7 @@
 #import "MainViewController.h"
 #import "MainView.h"
 #import "MainTableController.h"
+#import "DPView.h"
 
 @interface MainViewController ()
 
@@ -30,7 +31,6 @@
     [super viewDidLoad];
 
     // Do any additional setup after loading the view.
-
     [self prepareTableController];
 }
 
@@ -38,11 +38,13 @@
     [super viewDidAppear:animated];
 
     [self.mainView viewDidAppear];
-}
 
+
+}
 
 - (void)prepareTableController {
     self.tableController = [[MainTableController alloc] initWithTableView:self.mainView.tableView];
+    self.tableController.delegate = self;
 }
 
 - (MainView *)mainView {
@@ -57,7 +59,11 @@
     [self.tableController handleMemoryWarning];
 }
 
+#pragma mark MainTableControllerDelegate methods
 
+- (UIView *)viewForDragAndDropPresentation {
+    return self.mainView.dialogsPresentationView;
+}
 
 
 @end

@@ -27,7 +27,7 @@
                                         <constraints>
                                             <constraint firstAttribute="width" constant="153" id="8HZ-FR-4g9"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="Chalkduster" family="Chalkduster" pointSize="34"/>
+                                        <fontDescription key="fontDescription" name="Arial-BoldMT" family="Arial" pointSize="34"/>
                                         <color key="textColor" red="0.96078431369999995" green="0.92156862750000001" blue="0.82352941180000006" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>

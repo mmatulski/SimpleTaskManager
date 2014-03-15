@@ -5,17 +5,22 @@
 
 #import <Foundation/Foundation.h>
 
+#import "MainTableControllerDelegate.h"
+
 @class DBController;
+@class DragAndDropHandler;
 
 
 @interface MainTableController : NSObject <UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate, UIGestureRecognizerDelegate>
 
+@property(nonatomic, weak) id <MainTableControllerDelegate> delegate;
 @property(nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) DBController *dbController;
 @property(nonatomic, strong) NSFetchedResultsController* fetchedResultsController;
 
 @property(nonatomic, strong) UILongPressGestureRecognizer *longPressRecognizer;
 @property(nonatomic) int draggedRow;
+@property(nonatomic, strong) DragAndDropHandler *dragAndDropHandler;
 
 - (instancetype)initWithTableView:(UITableView *)tableView;
 

@@ -7,11 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MainTableControllerDelegate.h"
 
 @class MainView;
 @class MainTableController;
+@class DragAndDropHandler;
 
-@interface MainViewController : UIViewController
+@interface MainViewController : UIViewController <MainTableControllerDelegate>
 
 @property(nonatomic, strong) MainTableController * tableController;
 

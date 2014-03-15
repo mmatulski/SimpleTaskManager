@@ -108,34 +108,38 @@ CGFloat const kRightMarginForHandlingPanGesture = 20.0;
 }
 
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
-    DDLogVerbose(@"hitTest");
 
-    if([self isAnyDialogOpenedOrBegunClosing]){
+    if([self isAnyDialogOpenedOrBeganClosing]){
+        DDLogInfo(@"hitTest HANDLED1");
         return [super hitTest:point withEvent:event];
     }
 
     if([self isAnyDialogAnimatedNow]){
+        DDLogInfo(@"hitTest transparent1");
         return nil;
     }
 
     CGRect rectangleForDetectingAddingTask = [self rectangleForDetectingAddingTask];
 
     if(CGRectContainsPoint(rectangleForDetectingAddingTask, point)){
+        DDLogInfo(@"hitTest HANDLED2");
         return [super hitTest:point withEvent:event];
     }
 
     CGRect rectangleForTheNewTaskHintView = self.hintViewForTheNewTask.frame;
     if(CGRectContainsPoint(rectangleForTheNewTaskHintView, point)){
+        DDLogInfo(@"hitTest HANDLED3");
         return [super hitTest:point withEvent:event];
     }
 
+    DDLogInfo(@"hitTest transparent2");
     return nil;
 }
 
-- (BOOL)isAnyDialogOpenedOrBegunClosing {
+- (BOOL)isAnyDialogOpenedOrBeganClosing {
     switch (self.state) {
         case DPStateNewTaskDialogOpened:
-        case DPStateNewTaskDialogClosingBegun:
+        case DPStateNewTaskDialogClosingBegan:
             return true;
         default:
             return false;
@@ -163,13 +167,28 @@ CGFloat const kRightMarginForHandlingPanGesture = 20.0;
         return false;
     }
 
-    if([self isAnyDialogOpenedOrBegunClosing]){
+    CGPoint point = [touch locationInView:self];
+
+    if([self isAnyDialogOpenedOrBeganClosing]){
+        if(self.confirmationHintView && self.confirmationHintView.superview){
+            CGRect rectangleForConfirmHintView = self.confirmationHintView.frame;
+            if(CGRectContainsPoint(rectangleForConfirmHintView, point)){
+                return false;
+            }
+        }
+
+        if(self.cancelHintView && self.cancelHintView.superview){
+            CGRect rectangleForCancelHintView = self.cancelHintView.frame;
+            if(CGRectContainsPoint(rectangleForCancelHintView, point)){
+                return false;
+            }
+        }
+
         if([gestureRecognizer.view isEqual:self.theNewTaskDialog]){
             return true;
         }
     }
 
-    CGPoint point = [touch locationInView:self];
     CGRect rectangleForDetectingAddingTask = [self rectangleForDetectingAddingTask];
     if(CGRectContainsPoint(rectangleForDetectingAddingTask, point)){
         return true;

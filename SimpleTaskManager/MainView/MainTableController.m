@@ -8,6 +8,9 @@
 #import "DBAccess.h"
 #import "STMColors.h"
 #import "STMTask.h"
+#import "UIView+ScreenshootExtension.h"
+#import "DragAndDropHandler.h"
+#import "MainTableControllerDelegate.h"
 
 NSString * const kCellIdentifier = @"CellIdentifier";
 unsigned int const kDefaultBatchSize = 20;
@@ -35,6 +38,14 @@ unsigned int const kDefaultBatchSize = 20;
     return self;
 }
 
+- (DragAndDropHandler *)dragAndDropHandler {
+    if(!_dragAndDropHandler){
+        [self prepareDragAndDropHelper];
+    }
+
+    return _dragAndDropHandler;
+}
+
 - (void)prepareDBController {
     self.dbController = [[DBAccess sharedInstance] mainQueueController];
 }
@@ -52,6 +63,10 @@ unsigned int const kDefaultBatchSize = 20;
     if(![self.fetchedResultsController performFetch:&err]){
         DDLogError(@"prepareFetchedResultsController performFetch failed %@", [err localizedDescription]);
     }
+}
+
+- (void)prepareDragAndDropHelper {
+    self.dragAndDropHandler = [[DragAndDropHandler alloc] initWithDraggingSpace:[self.delegate viewForDragAndDropPresentation]];
 }
 
 - (void)handleMemoryWarning {
@@ -73,6 +88,9 @@ unsigned int const kDefaultBatchSize = 20;
     if(task){
         cell.backgroundColor = [STMColors cellBackgroundColor];
         cell.textLabel.textColor = [STMColors cellTextColor];
+        cell.textLabel.numberOfLines = 0;
+        cell.textLabel.lineBreakMode = NSLineBreakByWordWrapping;
+        cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:20.0];
         cell.textLabel.text = [NSString stringWithFormat:@"[%d] %@", [[task index] intValue] , task.name];
         cell.detailTextLabel.text = task.uid;
         cell.textLabel.backgroundColor = [STMColors cellBackgroundColor];
@@ -97,13 +115,13 @@ unsigned int const kDefaultBatchSize = 20;
     return YES;
 }
 
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRequireFailureOfGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
-    return NO;
-}
-
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
-    return NO;
-}
+//- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRequireFailureOfGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+//    return NO;
+//}
+//
+//- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+//    return NO;
+//}
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
     return YES;
@@ -118,44 +136,65 @@ unsigned int const kDefaultBatchSize = 20;
         NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:point];
         STMTask * task = [self.fetchedResultsController objectAtIndexPath:indexPath];
         if(task){
-            //UITableViewCell *cell = [self tableView:self.tableView cellForRowAtIndexPath:indexPath];
-            //[cell setSelected:TRUE];
+            UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
 
-            //[self.tableView beginUpdates];
-
-            //int row = ;
             self.draggedRow = [indexPath row];
 
             DDLogInfo(@"-- row %d", self.draggedRow);
 
+            [self disableTableGestureRecognizerForScrolling];
 
-            [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            CGPoint pointRelatedToWindow = [gestureRecognizer locationInView:nil];
+            [self.dragAndDropHandler dragView:cell fromPoint:pointRelatedToWindow];
 
-            //[self.tableView endUpdates];
-
+           [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
 
         }
     } else if(gestureRecognizer.state == UIGestureRecognizerStateFailed || gestureRecognizer.state == UIGestureRecognizerStateCancelled){
         DDLogInfo(@"Failed | Cancelled");
+
+        [self.dragAndDropHandler stopDragging];
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.draggedRow inSection:0];
         self.draggedRow = -1;
         [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+
+
+        [self enableTableGestureRecognizerForScrolling];
     } else if(gestureRecognizer.state == UIGestureRecognizerStateChanged){
         DDLogInfo(@"Long chagned");
+        CGPoint pointRelatedToWindow = [gestureRecognizer locationInView:nil];
+        [self.dragAndDropHandler moveDraggedViewToPoint:pointRelatedToWindow];
+
     } else if(gestureRecognizer.state == UIGestureRecognizerStateEnded){
         DDLogInfo(@"Ended");
 
+        [self.dragAndDropHandler stopDragging];
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.draggedRow inSection:0];
         self.draggedRow = -1;
         [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+
+        [self enableTableGestureRecognizerForScrolling];
     }
+}
+
+- (void)enableTableGestureRecognizerForScrolling {
+   [self.tableView panGestureRecognizer].enabled = true;
+}
+
+- (void)disableTableGestureRecognizerForScrolling {
+   [self.tableView panGestureRecognizer].enabled = false;
 }
 
 #pragma mark - UITableViewDelegate methods
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [tableView deselectRowAtIndexPath:indexPath animated:false];
+    //[tableView deselectRowAtIndexPath:indexPath animated:false];
 }
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 54.0;
+}
+
 
 #pragma mark - UITableViewDataSource
 

@@ -230,7 +230,7 @@
 
 - (void)userStartsClosingTheNewTaskDialog {
     _originalPositionOfTheNewTaskDialogBeforeMoving = self.theNewTaskDialog.center;
-    self.state = DPStateNewTaskDialogClosingBegun;
+    self.state = DPStateNewTaskDialogClosingBegan;
 }
 
 - (void)userFinishesClosingTheNewTaskDialogWithTranslation:(CGPoint)translation velocity:(CGPoint)velocity {

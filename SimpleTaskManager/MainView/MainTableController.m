@@ -19,6 +19,7 @@ unsigned int const kDefaultBatchSize = 20;
 - (instancetype)initWithTableView:(UITableView *)tableView {
     self = [super init];
     if (self) {
+        self.draggedRow = -1;
         self.tableView = tableView;
 
         [self prepareDBController];
@@ -27,6 +28,8 @@ unsigned int const kDefaultBatchSize = 20;
         [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kCellIdentifier];
         self.tableView.dataSource = self;
         self.tableView.delegate = self;
+
+        [self addLongPressRecognizer];
     }
 
     return self;
@@ -56,7 +59,17 @@ unsigned int const kDefaultBatchSize = 20;
 }
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)path {
-    STMTask * task = [self.fetchedResultsController objectAtIndexPath:path];
+
+    NSIndexPath *pathToRequest = path;
+    if(self.draggedRow >= 0){
+        if(self.draggedRow >= [path row]){
+            pathToRequest = [NSIndexPath indexPathForRow:(path.row + 1) inSection:path.section];
+        }
+
+        NSLog(@"configureCell zmniejszona %d %d", [path row], [pathToRequest row]);
+    }
+
+    STMTask * task = [self.fetchedResultsController objectAtIndexPath:pathToRequest];
     if(task){
         cell.backgroundColor = [STMColors cellBackgroundColor];
         cell.textLabel.textColor = [STMColors cellTextColor];
@@ -66,15 +79,95 @@ unsigned int const kDefaultBatchSize = 20;
     }
 }
 
+- (void)addLongPressRecognizer {
+    self.longPressRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPress:)];
+    self.longPressRecognizer.minimumPressDuration = 0.8; //seconds
+    self.longPressRecognizer.delegate = self;
+
+    [self.tableView addGestureRecognizer:self.longPressRecognizer];
+}
+
+#pragma mark UILongPressGestureRecognizer
+
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
+    return YES;
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+    return YES;
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRequireFailureOfGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+    return NO;
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+    return NO;
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+    return YES;
+}
+
+
+- (void)handleLongPress:(UIGestureRecognizer *)gestureRecognizer {
+    if(gestureRecognizer.state == UIGestureRecognizerStateBegan){
+        DDLogInfo(@"Began");
+
+        CGPoint point = [gestureRecognizer locationInView: gestureRecognizer.view];
+        NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:point];
+        STMTask * task = [self.fetchedResultsController objectAtIndexPath:indexPath];
+        if(task){
+            //UITableViewCell *cell = [self tableView:self.tableView cellForRowAtIndexPath:indexPath];
+            //[cell setSelected:TRUE];
+
+            //[self.tableView beginUpdates];
+
+            //int row = ;
+            self.draggedRow = [indexPath row];
+
+            DDLogInfo(@"-- row %d", self.draggedRow);
+
+
+            [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+
+            //[self.tableView endUpdates];
+
+
+        }
+    } else if(gestureRecognizer.state == UIGestureRecognizerStateFailed || gestureRecognizer.state == UIGestureRecognizerStateCancelled){
+        DDLogInfo(@"Failed | Cancelled");
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.draggedRow inSection:0];
+        self.draggedRow = -1;
+        [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    } else if(gestureRecognizer.state == UIGestureRecognizerStateChanged){
+        DDLogInfo(@"Long chagned");
+    } else if(gestureRecognizer.state == UIGestureRecognizerStateEnded){
+        DDLogInfo(@"Ended");
+
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.draggedRow inSection:0];
+        self.draggedRow = -1;
+        [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    }
+}
+
 #pragma mark - UITableViewDelegate methods
 
-
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:false];
+}
 
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     id  sectionInfo = [[_fetchedResultsController sections] objectAtIndex:section];
-    return [sectionInfo numberOfObjects];
+    int result = [sectionInfo numberOfObjects];
+    if(self.draggedRow >= 0){
+        result--;
+        DDLogInfo(@"result zmniejszony %d", result);
+    }
+
+    return result;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

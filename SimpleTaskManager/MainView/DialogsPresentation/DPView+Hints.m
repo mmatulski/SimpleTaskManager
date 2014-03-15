@@ -238,13 +238,17 @@
 
 - (void)removeConfirmationHintView {
     [self.confirmationHintView removeFromSuperview];
-    [self removeConstraints:_confirmationHintViewLayoutConstraints];
+    if(_confirmationHintViewLayoutConstraints){
+        [self removeConstraints:_confirmationHintViewLayoutConstraints];
+    }
     self.confirmationHintView = nil;
 }
 
 - (void)removeCancelHintView {
     [self.cancelHintView removeFromSuperview];
-    [self removeConstraints:_cancelHintViewLayoutConstraints];
+    if(_cancelHintViewLayoutConstraints){
+        [self removeConstraints:_cancelHintViewLayoutConstraints];
+    }
     self.cancelHintView = nil;
 }
 

@@ -8,11 +8,14 @@
 @class DBController;
 
 
-@interface MainTableController : NSObject <UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate>
+@interface MainTableController : NSObject <UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate, UIGestureRecognizerDelegate>
 
 @property(nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) DBController *dbController;
 @property(nonatomic, strong) NSFetchedResultsController* fetchedResultsController;
+
+@property(nonatomic, strong) UILongPressGestureRecognizer *longPressRecognizer;
+@property(nonatomic) int draggedRow;
 
 - (instancetype)initWithTableView:(UITableView *)tableView;
 

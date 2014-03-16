@@ -46,7 +46,7 @@
 
     NSLayoutConstraint * H2 = [NSLayoutConstraint constraintWithItem:self.theNewTaskDialog
                                                            attribute:NSLayoutAttributeWidth
-                                                           relatedBy:NSLayoutRelationGreaterThanOrEqual
+                                                           relatedBy:NSLayoutRelationEqual
                                                               toItem:self
                                                            attribute:NSLayoutAttributeWidth
                                                           multiplier:1.0

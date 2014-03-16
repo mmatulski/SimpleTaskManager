@@ -3,27 +3,28 @@
 // Copyright (c) 2014 Tomato. All rights reserved.
 //
 
-#import "TaskCompleteButton.h"
+#import "DeselectTaskButton.h"
+#import "STMColors.h"
 
 
-@implementation TaskCompleteButton {
+@implementation DeselectTaskButton {
 
 }
 
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        self.backgroundColor = [UIColor greenColor];
+        self.backgroundColor = [STMColors stillToDoButtonColor];
         self.alpha = 0.85;
-        [self prepareOkButton];
+        [self prepareButton];
     }
 
     return self;
 }
 
-- (void)prepareOkButton {
+- (void)prepareButton {
     self.button = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.button setTitle:@"Complete" forState:UIControlStateNormal];
+    [self.button setTitle:@"Still to do" forState:UIControlStateNormal];
     [self.button addTarget:self action:@selector(buttonSelected) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:self.button];
 

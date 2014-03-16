@@ -4,6 +4,8 @@
 //
 
 #import "TaskOptionsView.h"
+#import "TaskCompleteButton.h"
+#import "DeselectTaskButton.h"
 
 
 @implementation TaskOptionsView {
@@ -13,10 +15,101 @@
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        self.backgroundColor = [UIColor yellowColor];
+        self.backgroundColor = [UIColor clearColor];
+
+        [self prepareTaskCompleteButton];
+        [self prepareDeselectTaskButton];
     }
 
     return self;
+}
+
+- (void)prepareDeselectTaskButton {
+    self.deselectTaskButton = [[DeselectTaskButton alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
+    [self addSubview:self.deselectTaskButton];
+    [self prepareAndAddDeselectButtonConstraints];
+}
+
+- (void)prepareAndAddDeselectButtonConstraints {
+    [self.deselectTaskButton setTranslatesAutoresizingMaskIntoConstraints:NO];
+
+    NSLayoutConstraint *H1 = [NSLayoutConstraint constraintWithItem:self.deselectTaskButton
+                                                          attribute:NSLayoutAttributeCenterX
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self
+                                                          attribute:NSLayoutAttributeCenterX
+                                                         multiplier:1.5
+                                                           constant:0.0];
+
+    NSLayoutConstraint * H2 = [NSLayoutConstraint constraintWithItem:self.deselectTaskButton
+                                                           attribute:NSLayoutAttributeWidth
+                                                           relatedBy:NSLayoutRelationEqual
+                                                              toItem:self
+                                                           attribute:NSLayoutAttributeWidth
+                                                          multiplier:0.3
+                                                            constant:0.0];
+
+    NSLayoutConstraint * V1 = [NSLayoutConstraint constraintWithItem:self.deselectTaskButton
+                                                           attribute:NSLayoutAttributeBottom
+                                                           relatedBy:NSLayoutRelationEqual
+                                                              toItem:self
+                                                           attribute:NSLayoutAttributeBottom
+                                                          multiplier:1.0
+                                                            constant:0.0];
+
+    NSLayoutConstraint * V2 = [NSLayoutConstraint constraintWithItem:self.deselectTaskButton
+                                                           attribute:NSLayoutAttributeHeight
+                                                           relatedBy:NSLayoutRelationEqual
+                                                              toItem:self
+                                                           attribute:NSLayoutAttributeHeight
+                                                          multiplier:1.0
+                                                            constant:0.0];
+
+    [self addConstraints:@[H1, H2, V1, V2]];
+}
+
+- (void)prepareTaskCompleteButton {
+    self.completeButton = [[TaskCompleteButton alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
+    [self addSubview:self.completeButton];
+    [self prepareAndAddCompleteButtonConstraints];
+}
+
+- (void)prepareAndAddCompleteButtonConstraints {
+    [self.completeButton setTranslatesAutoresizingMaskIntoConstraints:NO];
+
+    NSLayoutConstraint *H1 = [NSLayoutConstraint constraintWithItem:self.completeButton
+                                                          attribute:NSLayoutAttributeCenterX
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self
+                                                          attribute:NSLayoutAttributeCenterX
+                                                         multiplier:0.5
+                                                           constant:0.0];
+
+    NSLayoutConstraint * H2 = [NSLayoutConstraint constraintWithItem:self.completeButton
+                                                           attribute:NSLayoutAttributeWidth
+                                                           relatedBy:NSLayoutRelationEqual
+                                                              toItem:self
+                                                           attribute:NSLayoutAttributeWidth
+                                                          multiplier:0.3
+                                                            constant:0.0];
+
+    NSLayoutConstraint * V1 = [NSLayoutConstraint constraintWithItem:self.completeButton
+                                                           attribute:NSLayoutAttributeBottom
+                                                           relatedBy:NSLayoutRelationEqual
+                                                              toItem:self
+                                                           attribute:NSLayoutAttributeBottom
+                                                          multiplier:1.0
+                                                            constant:0.0];
+
+    NSLayoutConstraint * V2 = [NSLayoutConstraint constraintWithItem:self.completeButton
+                                                           attribute:NSLayoutAttributeHeight
+                                                           relatedBy:NSLayoutRelationEqual
+                                                              toItem:self
+                                                           attribute:NSLayoutAttributeHeight
+                                                          multiplier:1.0
+                                                            constant:0.0];
+
+    [self addConstraints:@[H1, H2, V1, V2]];
 }
 
 

@@ -19,4 +19,8 @@
     return [UIColor whiteColor];
 }
 
++ (UIColor *) stillToDoButtonColor {
+    return RGB(239, 119, 119);
+}
+
 @end

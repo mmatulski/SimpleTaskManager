@@ -226,6 +226,7 @@ unsigned int const kDefaultBatchSize = 20;
 }
 
 
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 54.0;
 }

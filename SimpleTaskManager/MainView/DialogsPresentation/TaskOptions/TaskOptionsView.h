@@ -5,6 +5,13 @@
 
 #import <Foundation/Foundation.h>
 
+@class TaskCompleteButton;
+@class DeselectTaskButton;
+
 
 @interface TaskOptionsView : UIView
+
+@property(nonatomic, strong) TaskCompleteButton *completeButton;
+@property(nonatomic, strong) DeselectTaskButton *deselectTaskButton;
+
 @end

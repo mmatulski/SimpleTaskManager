@@ -6,6 +6,7 @@
 #import "DPView+TaskOptions.h"
 #import "STMTask.h"
 #import "TaskOptionsView.h"
+#import "MainViewConsts.h"
 
 
 @implementation DPView (TaskOptions)
@@ -51,7 +52,7 @@
 }
 
 - (void)closeTaskOptions {
-    [UIView animateWithDuration:0.4 animations:^{
+    [UIView animateWithDuration:0.4 delay:0 options:UIViewAnimationOptionLayoutSubviews animations:^{
         [_taskOptionsHeightLayoutConstraint setConstant:0.0];
         [self layoutSubviews];
     } completion:^(BOOL finished) {
@@ -71,10 +72,11 @@
 }
 
 - (void)animateShowingOptionsView {
-    [self layoutSubviews];
-    [UIView animateWithDuration:0.4 animations:^{
+    [self layoutIfNeeded];
+
+    [UIView animateWithDuration:0.4 delay:0 options:UIViewAnimationOptionLayoutSubviews animations:^{
         [_taskOptionsHeightLayoutConstraint setConstant:60.0];
-        [self layoutSubviews];
+        [self layoutIfNeeded];
     } completion:^(BOOL finished) {
 
     }];
@@ -126,7 +128,7 @@
                                                               toItem:self
                                                            attribute:NSLayoutAttributeWidth
                                                           multiplier:1.0
-                                                            constant:0.0];
+                                                            constant:-20];
 
     NSLayoutConstraint * V1 = [NSLayoutConstraint constraintWithItem:self.taskOptionsView
                                                            attribute:NSLayoutAttributeTop

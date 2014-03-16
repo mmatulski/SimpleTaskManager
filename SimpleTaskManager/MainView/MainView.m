@@ -7,7 +7,7 @@
 //
 
 #import "MainView.h"
-#import "DPView.h"
+#import "UserActionsHelperView.h"
 
 @implementation MainView
 
@@ -44,7 +44,7 @@
 
 
 - (void)prepareDialogsPresentationView {
-    self.dialogsPresentationView = [[DPView alloc] initWithDefaultFrame];
+    self.dialogsPresentationView = [[UserActionsHelperView alloc] initWithDefaultFrame];
 
     [self addSubview:self.dialogsPresentationView];
 

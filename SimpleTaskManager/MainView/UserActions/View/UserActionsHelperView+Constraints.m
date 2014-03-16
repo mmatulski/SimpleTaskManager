@@ -3,9 +3,9 @@
 // Copyright (c) 2014 Tomato. All rights reserved.
 //
 
-#import "DPView+Constraints.h"
+#import "UserActionsHelperView+Constraints.h"
 
-@implementation DPView (Constraints)
+@implementation UserActionsHelperView (Constraints)
 
 - (void)prepareLayoutConstraints {
 

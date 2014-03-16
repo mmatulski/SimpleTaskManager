@@ -4,9 +4,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "DPView.h"
+#import "UserActionsHelperView.h"
 
-@interface DPView (TheNewTaskDialogHandling)
+@interface UserActionsHelperView (TheNewTaskDialogHandling)
 
 - (void)userStartsOpeningTheNewTaskDialog;
 

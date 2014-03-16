@@ -4,9 +4,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "DPView.h"
+#import "UserActionsHelperView.h"
 
-@interface DPView (Constraints)
+@interface UserActionsHelperView (Constraints)
 
 
 - (void)prepareLayoutConstraints;

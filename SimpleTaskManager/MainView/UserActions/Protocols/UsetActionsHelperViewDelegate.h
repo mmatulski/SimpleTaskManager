@@ -5,6 +5,6 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol DialogsPresentationViewDelegate <NSObject>
+@protocol UsetActionsHelperViewDelegate <NSObject>
 
 @end

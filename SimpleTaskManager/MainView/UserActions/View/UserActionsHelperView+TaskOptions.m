@@ -3,13 +3,13 @@
 // Copyright (c) 2014 Tomato. All rights reserved.
 //
 
-#import "DPView+TaskOptions.h"
+#import "UserActionsHelperView+TaskOptions.h"
 #import "STMTask.h"
 #import "TaskOptionsView.h"
 #import "MainViewConsts.h"
 
 
-@implementation DPView (TaskOptions)
+@implementation UserActionsHelperView (TaskOptions)
 
 - (void)showTaskOptionsViewForTask:(STMTask *)task representedByCell:(UITableViewCell *)cell {
     BOOL alreadyShowing = false;

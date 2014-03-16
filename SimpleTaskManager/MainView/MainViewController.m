@@ -9,9 +9,9 @@
 #import "MainViewController.h"
 #import "MainView.h"
 #import "MainTableController.h"
-#import "DPView.h"
+#import "UserActionsHelperView.h"
 #import "STMTask.h"
-#import "DialogPresentationController.h"
+#import "UserActionsController.h"
 
 @interface MainViewController ()
 
@@ -51,7 +51,7 @@
 }
 
 - (void)prepareDialogsPresentationController {
-    self.dialogsPresentationController = [[DialogPresentationController alloc] initWithView:self.mainView.dialogsPresentationView];
+    self.dialogsPresentationController = [[UserActionsController alloc] initWithView:self.mainView.dialogsPresentationView];
 }
 
 - (MainView *)mainView {

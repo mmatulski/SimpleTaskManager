@@ -5,7 +5,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class DPView;
+@class UserActionsHelperView;
 
 
 @interface DragAndDropHandler : NSObject

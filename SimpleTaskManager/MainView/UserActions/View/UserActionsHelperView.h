@@ -14,11 +14,11 @@
 @class TaskOptionsView;
 
 /*
-This view is parent for Dialogs like TheNewTaskDialog or Checking Task View.
+This helperView is parent for Dialogs like TheNewTaskDialog or Checking Task View.
 It contains "Add" button and handler pan gesture which allows to pill AdTaskView from the right edge.
 
  */
-@interface DPView : UIView <UIGestureRecognizerDelegate> {
+@interface UserActionsHelperView : UIView <UIGestureRecognizerDelegate> {
 
     CGRect _rectangleSensitiveForAddingTask;
     CGPoint _originalPositionOfTheNewTaskDialogBeforeMoving;

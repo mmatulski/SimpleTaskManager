@@ -6,16 +6,16 @@
 #import <Foundation/Foundation.h>
 #import "TaskOptionsDelegate.h"
 
-@class DPView;
+@class UserActionsHelperView;
 @class STMTask;
 
-@interface DialogPresentationController : NSObject <TaskOptionsDelegate>
+@interface UserActionsController : NSObject <TaskOptionsDelegate>
 
-@property(nonatomic, strong) DPView* view;
+@property(nonatomic, strong) UserActionsHelperView *helperView;
 
 @property(nonatomic, strong) STMTask *currentTaskWithOptionsShown;
 
-- (instancetype)initWithView:(DPView *)view;
+- (instancetype)initWithView:(UserActionsHelperView *)view;
 
 
 - (void)showOptionsForTask:(STMTask *)task representedByCell:(UITableViewCell *)cell;

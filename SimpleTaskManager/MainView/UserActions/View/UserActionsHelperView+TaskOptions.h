@@ -4,11 +4,11 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "DPView.h"
+#import "UserActionsHelperView.h"
 
 @class STMTask;
 
-@interface DPView (TaskOptions)
+@interface UserActionsHelperView (TaskOptions)
 
 - (void)showTaskOptionsViewForTask:(STMTask *)task representedByCell:(UITableViewCell *)cell;
 

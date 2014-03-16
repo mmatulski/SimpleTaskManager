@@ -3,17 +3,17 @@
 // Copyright (c) 2014 Tomato. All rights reserved.
 //
 
-#import "DPView+Hints.h"
+#import "UserActionsHelperView+Hints.h"
 #import "MiniHintView.h"
-#import "DPView+Constraints.h"
+#import "UserActionsHelperView+Constraints.h"
 #import "TheNewTaskHintView.h"
-#import "DPView+TheNewTaskDialogHandling.h"
+#import "UserActionsHelperView+TheNewTaskDialogHandling.h"
 #import "ConfirmationHintView.h"
 #import "TheNewTaskDialog.h"
 #import "CancelHintView.h"
 
 
-@implementation DPView (Hints)
+@implementation UserActionsHelperView (Hints)
 
 -(void) showOpeningTheNewTaskViewHint{
     self.hintViewForTheNewTask = [[TheNewTaskHintView alloc] initWithFrame:CGRectMake(0, 0, 70.0, 30.0)];

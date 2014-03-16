@@ -11,12 +11,12 @@
 
 @class MainView;
 @class MainTableController;
-@class DialogPresentationController;
+@class UserActionsController;
 
 @interface MainViewController : UIViewController <MainTableControllerDelegate>
 
 @property(nonatomic, strong) MainTableController * tableController;
-@property(nonatomic, strong) DialogPresentationController *dialogsPresentationController;
+@property(nonatomic, strong) UserActionsController *dialogsPresentationController;
 
 -(MainView*) mainView;
 

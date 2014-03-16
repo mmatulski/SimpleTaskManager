@@ -3,20 +3,20 @@
 // Copyright (c) 2014 Tomato. All rights reserved.
 //
 
-#import "DPView.h"
-#import "DPView+Constraints.h"
-#import "DPView+TheNewTaskDialogHandling.h"
+#import "UserActionsHelperView.h"
+#import "UserActionsHelperView+Constraints.h"
+#import "UserActionsHelperView+TheNewTaskDialogHandling.h"
 #import "MiniHintView.h"
-#import "DPView+Hints.h"
+#import "UserActionsHelperView+Hints.h"
 #import "TheNewTaskHintView.h"
 #import "ConfirmationHintView.h"
 #import "CancelHintView.h"
 #import "TaskOptionsView.h"
-#import "DPView+TaskOptions.h"
+#import "UserActionsHelperView+TaskOptions.h"
 
 CGFloat const kRightMarginForHandlingPanGesture = 20.0;
 
-@implementation DPView
+@implementation UserActionsHelperView
 
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];

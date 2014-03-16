@@ -5,9 +5,5 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol TaskOptionsDelegate <NSObject>
-
--(void) userHasCompletedTask;
--(void) taskWantsDeselectTask;
-
+@protocol UserActionHelperControllerDelegagate <NSObject>
 @end

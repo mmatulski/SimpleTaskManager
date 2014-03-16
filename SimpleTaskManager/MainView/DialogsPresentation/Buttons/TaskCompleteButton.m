@@ -15,7 +15,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         self.backgroundColor = [UIColor greenColor];
-        self.alpha = 0.85;
+        self.alpha = 0.95;
         [self prepareOkButton];
     }
 

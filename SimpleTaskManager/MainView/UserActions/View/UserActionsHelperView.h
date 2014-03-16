@@ -12,13 +12,14 @@
 @class ConfirmationHintView;
 @class CancelHintView;
 @class TaskOptionsView;
+@protocol UserActionsHelperViewDelegate;
 
 /*
 This helperView is parent for Dialogs like TheNewTaskDialog or Checking Task View.
 It contains "Add" button and handler pan gesture which allows to pill AdTaskView from the right edge.
 
  */
-@interface UserActionsHelperView : UIView <UIGestureRecognizerDelegate> {
+@interface UserActionsHelperView : UIView <UIGestureRecognizerDelegate>{
 
     CGRect _rectangleSensitiveForAddingTask;
     CGPoint _originalPositionOfTheNewTaskDialogBeforeMoving;
@@ -42,24 +43,22 @@ It contains "Add" button and handler pan gesture which allows to pill AdTaskView
     CGFloat _taskOptionsViewFirstTopY;
 }
 
-@property(nonatomic, strong) TheNewTaskDialog *theNewTaskDialog;
+@property(nonatomic, weak) id <UserActionsHelperViewDelegate> delegate;
 
 @property(nonatomic, strong) UIPanGestureRecognizer *panGestureRecognizer;
 
-@property(nonatomic, strong) NSArray *cachedLayoutConstraints;
+@property(nonatomic, strong) TheNewTaskDialog *theNewTaskDialog;
+@property(nonatomic, strong) TheNewTaskHintView *hintViewForTheNewTask;
+@property(nonatomic, strong) ConfirmationHintView *confirmationHintView;
+@property(nonatomic, strong) CancelHintView *cancelHintView;
+@property(nonatomic, strong) TaskOptionsView *taskOptionsView;
 
+@property(nonatomic, strong) NSArray *cachedLayoutConstraints;
 @property(nonatomic, strong) NSArray *theNewTaskDialogLayoutConstraintsWhenOpened;
 @property(nonatomic, strong) NSArray *theNewTaskDialogLayoutConstraintsWhenBehindTheRightEdge;
 @property(nonatomic, strong) NSArray *theNewTaskDialogLayoutConstraintsWhenBehindTheLeftEdge;
 
 @property(nonatomic) enum DPState state;
-
-@property(nonatomic, strong) TheNewTaskHintView *hintViewForTheNewTask;
-
-@property(nonatomic, strong) ConfirmationHintView *confirmationHintView;
-@property(nonatomic, strong) CancelHintView *cancelHintView;
-
-@property(nonatomic, strong) TaskOptionsView *taskOptionsView;
 
 - (id)initWithDefaultFrame;
 

@@ -5,6 +5,6 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol UsetActionsHelperViewDelegate <NSObject>
+@protocol UserActionsHelperViewDelegate <NSObject>
 
 @end

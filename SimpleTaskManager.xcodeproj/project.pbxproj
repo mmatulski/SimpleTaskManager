@@ -97,7 +97,7 @@
 		46AE22ECD2D1C47A1FD3CD1E /* ContextFilterLogFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContextFilterLogFormatter.m; sourceTree = "<group>"; };
 		46AE238BC367720B85805C4B /* TheNewTaskHintView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TheNewTaskHintView.m; sourceTree = "<group>"; };
 		46AE238C6900BF71DD5CC7F6 /* MainTableController+TaskOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MainTableController+TaskOptions.h"; sourceTree = "<group>"; };
-		46AE2396E58522E173A1EAD0 /* UsetActionsHelperViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UsetActionsHelperViewDelegate.h; sourceTree = "<group>"; };
+		46AE2396E58522E173A1EAD0 /* UserActionsHelperViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserActionsHelperViewDelegate.h; sourceTree = "<group>"; };
 		46AE23E48B4C3C44ED3CB6AD /* UserActionsHelperView+TaskOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UserActionsHelperView+TaskOptions.m"; sourceTree = "<group>"; };
 		46AE24C6C10CFAEB63306270 /* TheNewTaskHintView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TheNewTaskHintView.h; sourceTree = "<group>"; };
 		46AE24F296E848925495A6A2 /* MainViewConsts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewConsts.h; sourceTree = "<group>"; };
@@ -258,7 +258,7 @@
 		46AE24976387D84990ED76CA /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				46AE2396E58522E173A1EAD0 /* UsetActionsHelperViewDelegate.h */,
+				46AE2396E58522E173A1EAD0 /* UserActionsHelperViewDelegate.h */,
 				46AE2064A6AF77809CBDA055 /* UserActionHelperControllerDelegagate.h */,
 			);
 			path = Protocols;

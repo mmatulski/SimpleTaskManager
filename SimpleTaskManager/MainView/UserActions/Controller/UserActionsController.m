@@ -17,6 +17,7 @@
     self = [super init];
     if (self) {
         self.helperView = view;
+        self.helperView.delegate = self;
     }
 
     return self;

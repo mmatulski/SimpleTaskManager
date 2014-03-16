@@ -8,5 +8,5 @@
 
 
 @interface ConfirmationHintView : MiniHintView
-@property(nonatomic, strong) UIButton *okButton;
+
 @end

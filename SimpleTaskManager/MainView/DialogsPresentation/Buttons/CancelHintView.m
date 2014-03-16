@@ -22,19 +22,19 @@
 }
 
 - (void)prepareCancelButton {
-    self.cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.cancelButton setTitle:@"Cancel" forState:UIControlStateNormal];
-    [self.cancelButton addTarget:self action:@selector(buttonSelected) forControlEvents:UIControlEventTouchUpInside];
-    [self addSubview:self.cancelButton];
+    self.button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.button setTitle:@"Cancel" forState:UIControlStateNormal];
+    [self.button addTarget:self action:@selector(buttonSelected) forControlEvents:UIControlEventTouchUpInside];
+    [self addSubview:self.button];
 
     [self addLayoutConstraintsForButton];
 }
 
 - (void)addLayoutConstraintsForButton {
 
-    [self.cancelButton setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [self.button setTranslatesAutoresizingMaskIntoConstraints:NO];
 
-    NSLayoutConstraint *H1 = [NSLayoutConstraint constraintWithItem:self.cancelButton
+    NSLayoutConstraint *H1 = [NSLayoutConstraint constraintWithItem:self.button
                                                           attribute:NSLayoutAttributeLeading
                                                           relatedBy:NSLayoutRelationEqual
                                                              toItem:self
@@ -42,7 +42,7 @@
                                                          multiplier:1.0
                                                            constant:0.0];
 
-    NSLayoutConstraint * H2 = [NSLayoutConstraint constraintWithItem:self.cancelButton
+    NSLayoutConstraint * H2 = [NSLayoutConstraint constraintWithItem:self.button
                                                            attribute:NSLayoutAttributeWidth
                                                            relatedBy:NSLayoutRelationEqual
                                                               toItem:self
@@ -50,7 +50,7 @@
                                                           multiplier:1.0
                                                             constant:0.0];
 
-    NSLayoutConstraint * V1 = [NSLayoutConstraint constraintWithItem:self.cancelButton
+    NSLayoutConstraint * V1 = [NSLayoutConstraint constraintWithItem:self.button
                                                            attribute:NSLayoutAttributeCenterY
                                                            relatedBy:NSLayoutRelationEqual
                                                               toItem:self
@@ -58,7 +58,7 @@
                                                           multiplier:1.0
                                                             constant:0.0];
 
-    NSLayoutConstraint * V2 = [NSLayoutConstraint constraintWithItem:self.cancelButton
+    NSLayoutConstraint * V2 = [NSLayoutConstraint constraintWithItem:self.button
                                                            attribute:NSLayoutAttributeHeight
                                                            relatedBy:NSLayoutRelationEqual
                                                               toItem:self

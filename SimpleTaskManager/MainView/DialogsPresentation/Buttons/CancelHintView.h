@@ -9,6 +9,4 @@
 
 @interface CancelHintView : MiniHintView
 
-@property(nonatomic, strong) UIButton *cancelButton;
-
 @end

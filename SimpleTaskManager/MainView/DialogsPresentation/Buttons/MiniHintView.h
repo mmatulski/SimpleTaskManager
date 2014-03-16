@@ -7,8 +7,10 @@
 
 @interface MiniHintView : UIView
 
+@property(nonatomic, strong) UIButton *button;
 @property (nonatomic, weak) id target;
 @property (nonatomic) SEL action;
 
 - (void)buttonSelected;
+
 @end

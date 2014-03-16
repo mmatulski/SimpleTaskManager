@@ -19,18 +19,18 @@
 }
 
 - (void)prepareAddButton {
-    self.addButton = [UIButton buttonWithType:UIButtonTypeContactAdd];
-    [self.addButton addTarget:self action:@selector(buttonSelected) forControlEvents:UIControlEventTouchUpInside];
-    [self addSubview:self.addButton];
+    self.button = [UIButton buttonWithType:UIButtonTypeContactAdd];
+    [self.button addTarget:self action:@selector(buttonSelected) forControlEvents:UIControlEventTouchUpInside];
+    [self addSubview:self.button];
 
     [self addLayoutConstraintsForAddButton];
 }
 
 - (void)addLayoutConstraintsForAddButton {
 
-    [self.addButton setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [self.button setTranslatesAutoresizingMaskIntoConstraints:NO];
 
-    NSLayoutConstraint *H1 = [NSLayoutConstraint constraintWithItem:self.addButton
+    NSLayoutConstraint *H1 = [NSLayoutConstraint constraintWithItem:self.button
                                                           attribute:NSLayoutAttributeLeading
                                                           relatedBy:NSLayoutRelationEqual
                                                              toItem:self
@@ -38,7 +38,7 @@
                                                          multiplier:1.0
                                                            constant:4.0];
 
-    NSLayoutConstraint * H2 = [NSLayoutConstraint constraintWithItem:self.addButton
+    NSLayoutConstraint * H2 = [NSLayoutConstraint constraintWithItem:self.button
                                                            attribute:NSLayoutAttributeWidth
                                                            relatedBy:NSLayoutRelationEqual
                                                               toItem:nil
@@ -46,7 +46,7 @@
                                                           multiplier:1.0
                                                             constant:40.0];
 
-    NSLayoutConstraint * V1 = [NSLayoutConstraint constraintWithItem:self.addButton
+    NSLayoutConstraint * V1 = [NSLayoutConstraint constraintWithItem:self.button
                                                            attribute:NSLayoutAttributeCenterY
                                                            relatedBy:NSLayoutRelationEqual
                                                               toItem:self
@@ -54,7 +54,7 @@
                                                           multiplier:1.0
                                                             constant:0.0];
 
-    NSLayoutConstraint * V2 = [NSLayoutConstraint constraintWithItem:self.addButton
+    NSLayoutConstraint * V2 = [NSLayoutConstraint constraintWithItem:self.button
                                                            attribute:NSLayoutAttributeHeight
                                                            relatedBy:NSLayoutRelationEqual
                                                               toItem:self

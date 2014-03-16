@@ -7,11 +7,15 @@
 
 @class TaskCompleteButton;
 @class DeselectTaskButton;
+@protocol TaskOptionsDelegate;
 
 
 @interface TaskOptionsView : UIView
 
+@property(nonatomic, weak) id <TaskOptionsDelegate> delegate;
 @property(nonatomic, strong) TaskCompleteButton *completeButton;
 @property(nonatomic, strong) DeselectTaskButton *deselectTaskButton;
+
+- (BOOL) shouldHandleTouchPoint:(CGPoint)point;
 
 @end

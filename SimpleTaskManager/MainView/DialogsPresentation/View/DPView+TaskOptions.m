@@ -152,4 +152,8 @@
     _taskOptionsLayoutConstraints = @[H1, H2, V1, V2];
 }
 
+- (BOOL)isShowingTaskOptionsView {
+    return self.taskOptionsView.superview != nil;
+}
+
 @end

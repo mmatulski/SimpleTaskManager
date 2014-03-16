@@ -12,6 +12,7 @@
 #import "ConfirmationHintView.h"
 #import "CancelHintView.h"
 #import "TaskOptionsView.h"
+#import "DPView+TaskOptions.h"
 
 CGFloat const kRightMarginForHandlingPanGesture = 20.0;
 
@@ -118,6 +119,14 @@ CGFloat const kRightMarginForHandlingPanGesture = 20.0;
     if([self isAnyDialogAnimatedNow]){
         DDLogInfo(@"hitTest transparent1");
         return nil;
+    }
+
+    if([self isShowingTaskOptionsView]){
+        CGPoint pointGlobal = [self convertPoint:point toView:nil];
+        if([self.taskOptionsView shouldHandleTouchPoint:pointGlobal]){
+            DDLogInfo(@"hitTest HANDLED3");
+            return [super hitTest:point withEvent:event];
+        }
     }
 
     CGRect rectangleForDetectingAddingTask = [self rectangleForDetectingAddingTask];

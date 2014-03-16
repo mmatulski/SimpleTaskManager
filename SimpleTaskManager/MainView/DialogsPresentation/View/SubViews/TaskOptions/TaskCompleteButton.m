@@ -4,8 +4,6 @@
 //
 
 #import "TaskCompleteButton.h"
-#import "ResourcesHelper.h"
-
 
 @implementation TaskCompleteButton {
 

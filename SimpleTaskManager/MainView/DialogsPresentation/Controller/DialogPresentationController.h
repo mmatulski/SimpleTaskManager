@@ -4,11 +4,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "TaskOptionsDelegate.h"
 
 @class DPView;
 @class STMTask;
 
-@interface DialogPresentationController : NSObject
+@interface DialogPresentationController : NSObject <TaskOptionsDelegate>
 
 @property(nonatomic, strong) DPView* view;
 

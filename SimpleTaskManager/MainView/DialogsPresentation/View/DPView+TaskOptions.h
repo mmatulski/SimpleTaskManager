@@ -16,4 +16,5 @@
 
 - (void)updateTaskOptionsForTaskBecauseItWasScrolledBy:(CGFloat)change;
 
+- (BOOL)isShowingTaskOptionsView;
 @end

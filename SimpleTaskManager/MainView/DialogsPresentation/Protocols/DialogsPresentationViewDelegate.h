@@ -6,4 +6,5 @@
 #import <Foundation/Foundation.h>
 
 @protocol DialogsPresentationViewDelegate <NSObject>
+
 @end

@@ -12,3 +12,8 @@
 #define BlockWeakSelf BlockWeakObject(self)
 
 extern id MakeSafeCast(id object, Class targetClass);
+
+extern void forwardError(NSError *err, NSError **error);
+
+#define __(locale) NSLocalizedString(locale, nil)
+

@@ -17,6 +17,7 @@
 
     #import "DDLog.h"
     #import "AppMacros.h"
+    #import "AppErrors.h"
 
     static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 #endif

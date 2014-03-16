@@ -5,19 +5,20 @@
 
 #import "DBController.h"
 #import "STMTask.h"
+#import "DBController+Internal.h"
+#import "DBController+Undo.h"
 
 NSString * const kSTMTaskEntityName = @"STMTask";
 
-@implementation DBController {
-    unsigned long _numberOfAllTasks;
-    bool _numberOfAllTasksEstimated;
-}
+@implementation DBController
 
 - (instancetype)initWithContext:(NSManagedObjectContext *)context {
     self = [super init];
     if (self) {
         _context = context;
         _numberOfAllTasks = 0;
+
+        [self addUndoManager];
     }
 
     return self;
@@ -33,6 +34,8 @@ NSString * const kSTMTaskEntityName = @"STMTask";
         if(parentContext){
             _context = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
             [_context setParentContext:parentContext];
+
+            [self addUndoManager];
         }
     }
 
@@ -45,6 +48,8 @@ NSString * const kSTMTaskEntityName = @"STMTask";
         _context = context;
         _parentController = parentController;
         _numberOfAllTasks = 0;
+
+        [self addUndoManager];
     }
 
     return self;
@@ -73,6 +78,8 @@ NSString * const kSTMTaskEntityName = @"STMTask";
 - (void)addTaskWithName:(NSString *)name successFullBlock:(void (^)(STMTask *))successFullBlock failureBlock:(void (^)(NSError *err))failureBlock {
     [self loadNumberOfAllTasksIfNotLoaded];
 
+    [self beginUndo];
+
     STMTask *task = (STMTask *)[NSEntityDescription insertNewObjectForEntityForName:kSTMTaskEntityName inManagedObjectContext:self.context];
     task.name = [name copy];
     task.uid = [[NSUUID UUID] UUIDString];
@@ -81,11 +88,59 @@ NSString * const kSTMTaskEntityName = @"STMTask";
     task.index = [NSNumber numberWithUnsignedLong:++_numberOfAllTasks];
 
     [self saveWithSuccessFullBlock:^{
+        [self endUndo];
         if(successFullBlock){
             successFullBlock(task);
         }
-    } andFailureBlock:failureBlock];
+    } andFailureBlock:^(NSError *error){
+        [self undo];
+       if(failureBlock){
+           failureBlock(error);
+       }
+    }];
+
 }
+
+- (void)markAsCompletedTaskWithId:(NSString *)uid successFullBlock:(void (^)())successBlock failureBlock:(void (^)(NSError *))failureBlock {
+    [self loadNumberOfAllTasksIfNotLoaded];
+
+    NSError *err = nil;
+    STMTask *task = [self findTaskWithId:uid error:&err];
+    if (!task) {
+        if (failureBlock) {
+            failureBlock(err);
+        }
+        return;
+    }
+
+    [self beginUndo];
+
+    if([self removeTask:task error:&err]){
+        [self saveWithSuccessFullBlock:^{
+            DDLogInfo(@"Task set as completed  successfully %@", uid);
+            [self endUndo];
+            if(successBlock){
+                successBlock();
+            }
+        } andFailureBlock:^(NSError *error) {
+            DDLogWarn(@"Problem with marking task (Saving) as completed %@ %@", uid, [err localizedDescription]);
+            [self undo];
+            if(failureBlock){
+                failureBlock(error);
+            }
+        }];
+    } else {
+        DDLogWarn(@"Problem with marking task as completed %@ %@", uid, [err localizedDescription]);
+        [self undo];
+        if(failureBlock){
+            failureBlock(err);
+        }
+    }
+}
+
+//- (void) findTaskWithId:(NSString *)uid successFullBlock:(void (^)(STMTask *))successBlock failureBlock:(void (^)(NSError *))failureBlock{
+//
+//}
 
 - (void) loadNumberOfAllTasksIfNotLoaded {
     if(!_numberOfAllTasksEstimated){
@@ -111,10 +166,7 @@ NSString * const kSTMTaskEntityName = @"STMTask";
 
 
 - (NSFetchRequest *)createFetchingTasksRequestWithBatchSize:(unsigned int) batchSize {
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription
-            entityForName:kSTMTaskEntityName inManagedObjectContext:self.context];
-    [fetchRequest setEntity:entity];
+    NSFetchRequest *fetchRequest= [self prepareTaskFetchRequest];
 
     NSSortDescriptor *sort = [[NSSortDescriptor alloc]
             initWithKey:@"index" ascending:NO];
@@ -124,4 +176,8 @@ NSString * const kSTMTaskEntityName = @"STMTask";
 
     return fetchRequest;
 }
+
+
+
+
 @end

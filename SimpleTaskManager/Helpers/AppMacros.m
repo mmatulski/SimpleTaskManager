@@ -12,3 +12,9 @@ inline id MakeSafeCast(id object, Class targetClass) {
 
     return nil;
 }
+
+void forwardError(NSError *err, NSError **error) {
+    if(error != NULL){
+        *error = err;
+    }
+}

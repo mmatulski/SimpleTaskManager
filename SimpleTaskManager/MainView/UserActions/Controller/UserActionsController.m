@@ -37,6 +37,7 @@
 - (void)closeTaskOptionsForTask:(STMTask *)task {
     if(self.currentTaskWithOptionsShown && [self.currentTaskWithOptionsShown isEqual:task]){
         [self.helperView closeTaskOptions];
+        self.currentTaskWithOptionsShown = nil;
     }
 }
 
@@ -50,15 +51,22 @@
 #pragma mark - TaskOptionsViewDelegate methods
 
 - (void)userHasCompletedTask {
-//    DBController *dbController = [DBAccess createBackgroundController];
-//    [dbController addTaskWithName:taskName successFullBlock:^(STMTask *task) {
-//        DDLogInfo(@"SUCCESS");
-//        runOnMainThread(^{
-//            [self.helperView theNewTaskSaved];
-//        });
-//    }                failureBlock:^(NSError *err) {
-//        DDLogError(@"FAILED");
-//    }];
+    STMTask * task =  self.currentTaskWithOptionsShown;
+
+    if(task){
+        DBController *dbController = [DBAccess createBackgroundController];
+        [dbController markAsCompletedTaskWithId:task.uid successFullBlock:^() {
+            DDLogInfo(@"SUCCESS");
+            runOnMainThread(^{
+                [self closeTaskOptionsForTask:task];
+            }
+            );
+
+        } failureBlock:^(NSError *err) {
+            DDLogError(@"FAILED");
+        }];
+    }
+
 }
 
 - (void)userWantsDeselectTask {

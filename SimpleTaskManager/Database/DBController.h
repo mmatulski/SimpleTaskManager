@@ -9,7 +9,11 @@
 
 extern NSString * const kSTMTaskEntityName;
 
-@interface DBController : NSObject
+@interface DBController : NSObject {
+    unsigned long _numberOfAllTasks;
+    unsigned long _numberOfAllTasksForUndo;
+    bool _numberOfAllTasksEstimated;
+}
 
 @property(readonly, nonatomic, strong) NSManagedObjectContext *context;
 @property(readonly, nonatomic, strong) DBController *parentController;
@@ -24,4 +28,5 @@ extern NSString * const kSTMTaskEntityName;
 
 - (NSFetchRequest *)createFetchingTasksRequestWithBatchSize:(unsigned int) batchSize;
 
+- (void)markAsCompletedTaskWithId:(NSString *)uid successFullBlock:(void (^)())block failureBlock:(void (^)(NSError *))block1;
 @end

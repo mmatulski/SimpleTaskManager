@@ -40,6 +40,7 @@
 		46AE2E87F6B586A6BE33DF6B /* DPView+Hints.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE29031105D8F21C6F56F2 /* DPView+Hints.m */; };
 		46AE2F68CB07A3B2DF9EEB75 /* MainTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE27A699D0B2CF2234060A /* MainTableController.m */; };
 		46AE2F8FDA8D1EF8A2CD84F8 /* ConfirmationHintView.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE28FED8EA33D60051F43E /* ConfirmationHintView.m */; };
+		46AE2FA965190AA9A5325179 /* TaskCompleteButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE200F67605A091FA19D80 /* TaskCompleteButton.m */; };
 		46AE2FFDE8E4408F6147B21C /* AppMacros.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE26BD3C2DAA306AFD90D2 /* AppMacros.m */; };
 		EA34DA5318CD493B0042CDA9 /* SimpleTaskManager.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EA34DA5118CD493B0042CDA9 /* SimpleTaskManager.xcdatamodeld */; };
 		EA3D0E0A18CB6B9C00CB333E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA3D0E0918CB6B9C00CB333E /* Foundation.framework */; };
@@ -76,6 +77,7 @@
 /* Begin PBXFileReference section */
 		46AE2008D42D5B9787292648 /* CancelHintView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CancelHintView.h; sourceTree = "<group>"; };
 		46AE200C40F76326A469B578 /* DDFileLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDFileLogger.m; sourceTree = "<group>"; };
+		46AE200F67605A091FA19D80 /* TaskCompleteButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaskCompleteButton.m; sourceTree = "<group>"; };
 		46AE203BCD21F982E498C3DD /* DPView+TheNewTaskDialogHandling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DPView+TheNewTaskDialogHandling.h"; sourceTree = "<group>"; };
 		46AE2056FE4232163EB25DD5 /* DragAndDropHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DragAndDropHandler.m; sourceTree = "<group>"; };
 		46AE209242ED6749464AA6AF /* MainTableController+TaskOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MainTableController+TaskOptions.m"; sourceTree = "<group>"; };
@@ -132,6 +134,7 @@
 		46AE2C92747F36475A9CAC8F /* DDAbstractDatabaseLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDAbstractDatabaseLogger.h; sourceTree = "<group>"; };
 		46AE2CCEA5C2DA274CA74EBD /* DBAccess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBAccess.h; sourceTree = "<group>"; };
 		46AE2D72188505ABE135A015 /* STMColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STMColors.m; sourceTree = "<group>"; };
+		46AE2D7EDD1BE0B49F9E46EB /* TaskCompleteButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskCompleteButton.h; sourceTree = "<group>"; };
 		46AE2DB7E7B1A5094795041B /* DPView+Constraints.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DPView+Constraints.h"; sourceTree = "<group>"; };
 		46AE2DDC84F3D49BDF480F09 /* DispatchQueueLogFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DispatchQueueLogFormatter.m; sourceTree = "<group>"; };
 		46AE2E29179ECFBA021E47AC /* DBAccess.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBAccess.m; sourceTree = "<group>"; };
@@ -232,7 +235,7 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
-		46AE25C10F98C54B63000D60 /* HintViews */ = {
+		46AE25C10F98C54B63000D60 /* Buttons */ = {
 			isa = PBXGroup;
 			children = (
 				46AE298FA231D06116CA1F3B /* MiniHintView.m */,
@@ -243,8 +246,10 @@
 				46AE21E4F59D094774F37063 /* ConfirmationHintView.h */,
 				46AE2C403E6D89A4165E701F /* CancelHintView.m */,
 				46AE2008D42D5B9787292648 /* CancelHintView.h */,
+				46AE200F67605A091FA19D80 /* TaskCompleteButton.m */,
+				46AE2D7EDD1BE0B49F9E46EB /* TaskCompleteButton.h */,
 			);
-			path = HintViews;
+			path = Buttons;
 			sourceTree = "<group>";
 		};
 		46AE26526DD261DC853DC386 /* Categories */ = {
@@ -290,7 +295,7 @@
 				46AE2EAFE9FB149868713A48 /* DPState.h */,
 				46AE29031105D8F21C6F56F2 /* DPView+Hints.m */,
 				46AE2F29A0ECCC56CE7F046A /* DPView+Hints.h */,
-				46AE25C10F98C54B63000D60 /* HintViews */,
+				46AE25C10F98C54B63000D60 /* Buttons */,
 				46AE2B76AADC60A853BB146E /* TaskOptions */,
 				46AE29911F75124A180E16A3 /* DialogPresentationController.m */,
 				46AE2EE95283756AA49993F7 /* DialogPresentationController.h */,
@@ -619,6 +624,7 @@
 				46AE236845DB8105C7C663A1 /* DialogPresentationController.m in Sources */,
 				46AE2AB7931B7520E2842FE5 /* TaskOptionsView.m in Sources */,
 				46AE2513F11815D1F6754965 /* DPView+TaskOptions.m in Sources */,
+				46AE2FA965190AA9A5325179 /* TaskCompleteButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

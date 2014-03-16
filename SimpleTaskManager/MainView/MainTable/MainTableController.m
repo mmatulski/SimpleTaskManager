@@ -180,11 +180,11 @@ unsigned int const kDefaultBatchSize = 20;
 
         [self enableTableGestureRecognizerForScrolling];
     } else if(gestureRecognizer.state == UIGestureRecognizerStateChanged){
-        DDLogInfo(@"Long chagned");
+        DDLogTrace(@"Long changed");
         CGPoint pointRelatedToWindow = [gestureRecognizer locationInView:nil];
         [self.dragAndDropHandler moveDraggedViewToPoint:pointRelatedToWindow];
 
-        [self dropOrHideDraggedCellForPoint:point];
+        [self dropOrHideDraggedCellForPoint:point globalPoint:pointRelatedToWindow];
 
     } else if(gestureRecognizer.state == UIGestureRecognizerStateEnded){
         DDLogInfo(@"Ended");

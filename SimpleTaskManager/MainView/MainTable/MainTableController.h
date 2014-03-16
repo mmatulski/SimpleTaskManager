@@ -20,6 +20,7 @@
 
 @property(nonatomic, strong) UILongPressGestureRecognizer *longPressRecognizer;
 @property(nonatomic, strong) NSIndexPath * draggedIndexPath;
+@property(nonatomic, strong) NSIndexPath * temporaryTargetForDraggedIndexPath;
 @property(nonatomic, strong) DragAndDropHandler *dragAndDropHandler;
 
 @property(nonatomic, strong) NSIndexPath *selectedIndexPath;

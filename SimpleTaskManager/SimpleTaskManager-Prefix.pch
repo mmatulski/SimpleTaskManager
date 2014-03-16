@@ -19,5 +19,5 @@
     #import "AppMacros.h"
     #import "AppErrors.h"
 
-    static const int ddLogLevel = LOG_LEVEL_VERBOSE;
+    static const int ddLogLevel = LOG_LEVEL_INFO;
 #endif

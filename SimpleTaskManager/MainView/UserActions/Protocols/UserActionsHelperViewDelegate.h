@@ -7,4 +7,6 @@
 
 @protocol UserActionsHelperViewDelegate <NSObject>
 
+-(void) userWantsToSaveTheNewTask:(NSString *) taskName;
+
 @end

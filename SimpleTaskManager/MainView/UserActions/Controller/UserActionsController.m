@@ -7,6 +7,9 @@
 #import "STMTask.h"
 #import "TaskOptionsView.h"
 #import "UserActionsHelperView+TaskOptions.h"
+#import "DBController.h"
+#import "DBAccess.h"
+#import "UserActionsHelperView+TheNewTaskDialogHandling.h"
 
 
 @implementation UserActionsController {
@@ -43,7 +46,7 @@
     }
 }
 
-#pragma mark TaskOptionsViewDelegate methods
+#pragma mark - TaskOptionsViewDelegate methods
 
 - (void)userHasCompletedTask {
 
@@ -51,6 +54,20 @@
 
 - (void)userWantsDeselectTask {
 
+}
+
+#pragma mark - UserActionsHelperViewDelegate methods
+
+-(void)userWantsToSaveTheNewTask:(NSString *) taskName {
+    DBController *dbController = [DBAccess createBackgroundController];
+    [dbController addTaskWithName:taskName successFullBlock:^(STMTask *task) {
+        DDLogInfo(@"SUCCESS");
+        runOnMainThread(^{
+            [self.helperView theNewTaskSaved];
+        });
+    }                failureBlock:^(NSError *err) {
+        DDLogError(@"FAILED");
+    }];
 }
 
 

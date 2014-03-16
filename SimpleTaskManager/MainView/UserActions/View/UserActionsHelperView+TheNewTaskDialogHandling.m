@@ -13,6 +13,7 @@
 #import "UserActionsHelperView+Hints.h"
 #import "ConfirmationHintView.h"
 #import "CancelHintView.h"
+#import "UserActionsHelperViewDelegate.h"
 
 @implementation UserActionsHelperView (TheNewTaskDialogHandling)
 
@@ -235,8 +236,7 @@
 
 - (void)userFinishesClosingTheNewTaskDialogWithTranslation:(CGPoint)translation velocity:(CGPoint)velocity {
     if([self shouldCloseAndSaveTheNewTaskDialogForTranslation:translation andVelocity:velocity]){
-        [self addingTaskComfirmed];
-
+        [self.delegate userWantsToSaveTheNewTask:[self.theNewTaskDialog taskName]];
     } else if([self shouldCloseAndCancelTheNewTaskDialogForTranslation:translation andVelocity:velocity]){
         [self animateClosingTheNewTaskDialogToTheRightEdge];
 
@@ -252,8 +252,7 @@
     }
 }
 
-- (void)addingTaskComfirmed {
-    [self saveTheNeTask];
+- (void) theNewTaskSaved {
     [self animateClosingTheNewTaskDialogToTheLeftEdge];
 }
 
@@ -270,16 +269,6 @@
     } completion:^(BOOL finished) {
         [warningLabel removeFromSuperview];
     }];
-}
-
-- (void)saveTheNeTask {
-    DBController *dbController = [DBAccess createBackgroundController];
-    [dbController addTaskWithName:[self.theNewTaskDialog taskName] successFullBlock:^(STMTask *task) {
-        DDLogInfo(@"SUCCESS");
-    } failureBlock:^(NSError *err) {
-        DDLogError(@"FAILED");
-    }];
-
 }
 
 - (void)animateClosingTheNewTaskDialogToTheLeftEdge {

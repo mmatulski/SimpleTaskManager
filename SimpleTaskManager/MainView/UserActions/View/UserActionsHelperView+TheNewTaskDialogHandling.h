@@ -22,7 +22,7 @@
 
 - (void)handlePanOnTheNewTaskDialog:(UIPanGestureRecognizer *)recognizer;
 
-- (void)addingTaskComfirmed;
+- (void)theNewTaskSaved;
 
 - (void)showWarningForTheNewTask:(NSString *)message;
 

@@ -11,6 +11,7 @@
 #import "ConfirmationHintView.h"
 #import "TheNewTaskDialog.h"
 #import "CancelHintView.h"
+#import "UserActionsHelperViewDelegate.h"
 
 
 @implementation UserActionsHelperView (Hints)
@@ -71,7 +72,7 @@
 
 - (void)userDidTapOnTheConfirmHintView {
     if([self.theNewTaskDialog isNameValid]){
-        [self addingTaskComfirmed];
+        [self.delegate userWantsToSaveTheNewTask:[self.theNewTaskDialog taskName]];
     } else {
         NSString *warningMessage = nil;
         if(![self.theNewTaskDialog isNameValid]){

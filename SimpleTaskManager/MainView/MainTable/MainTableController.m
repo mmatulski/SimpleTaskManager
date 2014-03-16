@@ -11,6 +11,7 @@
 #import "DragAndDropHandler.h"
 #import "MainTableController+TaskOptions.h"
 #import "MainTableController+DragAndDrop.h"
+#import "TaskTableViewCell.h"
 
 NSString * const kCellIdentifier = @"CellIdentifier";
 unsigned int const kDefaultBatchSize = 20;
@@ -28,7 +29,7 @@ unsigned int const kDefaultBatchSize = 20;
         [self prepareDBController];
         [self prepareFetchedResultsController];
 
-        [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kCellIdentifier];
+        [self.tableView registerClass:[TaskTableViewCell class] forCellReuseIdentifier:kCellIdentifier];
         self.tableView.dataSource = self;
         self.tableView.delegate = self;
 
@@ -116,14 +117,13 @@ unsigned int const kDefaultBatchSize = 20;
 
     STMTask * task = [self.fetchedResultsController objectAtIndexPath:pathToRequest];
     if(task){
-        cell.backgroundColor = [STMColors cellBackgroundColor];
-        cell.textLabel.textColor = [STMColors cellTextColor];
-        cell.textLabel.numberOfLines = 0;
-        cell.textLabel.lineBreakMode = NSLineBreakByWordWrapping;
-        cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:20.0];
         cell.textLabel.text = [NSString stringWithFormat:@"[%d] %@", [[task index] intValue] , task.name];
-        cell.detailTextLabel.text = task.uid;
-        cell.textLabel.backgroundColor = [STMColors cellBackgroundColor];
+        if(self.temporaryTargetForDraggedIndexPath){
+            if([self.temporaryTargetForDraggedIndexPath isEqual:path]){
+                TaskTableViewCell *taskCell = MakeSafeCast(cell, [TaskTableViewCell class]);
+                taskCell.dropped = true;
+            }
+        }
     }
 }
 

@@ -40,6 +40,8 @@
 
     if(self.temporaryTargetForDraggedIndexPath){
         [self.tableView insertRowsAtIndexPaths:@[self.temporaryTargetForDraggedIndexPath]  withRowAnimation:UITableViewRowAnimationFade];
+        //[self.tableView scrollRectToVisible:<#(CGRect)rect#> animated:<#(BOOL)animated#>];
+        [self.tableView scrollToRowAtIndexPath:self.temporaryTargetForDraggedIndexPath atScrollPosition:UITableViewScrollPositionNone animated:true];
     }
 
     [self.tableView endUpdates];
@@ -52,6 +54,11 @@
     STMTask * task = [self.fetchedResultsController objectAtIndexPath:indexPathUnderTheFinger];
     UITableViewCell *cellUnderTheFinger = [self.tableView cellForRowAtIndexPath:indexPathUnderTheFinger];
 
+    if(self.temporaryTargetForDraggedIndexPath){
+        if([self.temporaryTargetForDraggedIndexPath isEqual:indexPathUnderTheFinger]){
+            return self.temporaryTargetForDraggedIndexPath;
+        }
+    }
 
     CGPoint pointOnCell = [cellUnderTheFinger convertPoint:globalPoint fromView:nil];
     CGRect cellBounds = cellUnderTheFinger.bounds;
@@ -59,11 +66,12 @@
         CGFloat cellFactor = pointOnCell.y / cellBounds.size.height;
         //DDLogInfo(@"cF %f %d",  cellFactor, [indexPathUnderTheFinger row]);
 
+
         BOOL show = false;
         BOOL showOnBottom = false;
-        if(cellFactor < 0.25){
+        if(cellFactor < 0.5){
             show = true;
-        } else if(cellFactor > 0.75){
+        } else if(cellFactor > 0.5){
             show = true;
             showOnBottom = true;
         } else {

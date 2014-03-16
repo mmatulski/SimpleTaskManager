@@ -4,6 +4,7 @@
 //
 
 #import "TaskCompleteButton.h"
+#import "ResourcesHelper.h"
 
 
 @implementation TaskCompleteButton {
@@ -24,6 +25,7 @@
 - (void)prepareOkButton {
     self.button = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.button setTitle:@"Complete" forState:UIControlStateNormal];
+    //[self.button setImage:[ResourcesHelper image:@"image_checked_checkbox_64x64"] forState:UIControlStateNormal];
     [self.button addTarget:self action:@selector(buttonSelected) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:self.button];
 

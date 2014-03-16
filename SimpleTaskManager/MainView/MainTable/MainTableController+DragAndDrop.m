@@ -14,20 +14,35 @@
     BOOL noCellFound = false;
     NSIndexPath *suggestedIndexPath = [self getPath:point globalPoint:globalPoint noCell:&noCellFound];
 
-
-    if(suggestedIndexPath){
-        DDLogInfo(@"----- show %d", [suggestedIndexPath row]);
+   if(self.temporaryTargetForDraggedIndexPath){
+        if(suggestedIndexPath){
+            if(![self.temporaryTargetForDraggedIndexPath isEqual:suggestedIndexPath]){
+                [self changeTargetTo:suggestedIndexPath];
+            }
+        } else if(!noCellFound){
+            [self changeTargetTo:nil];
+        }
     } else {
-        DDLogInfo(@"------ %@", (noCellFound ? @"NO CELL": @""));
+        if(suggestedIndexPath){
+            [self changeTargetTo:suggestedIndexPath];
+        }
     }
+}
 
+- (void)changeTargetTo:(NSIndexPath *) indexPath {
+    [self.tableView beginUpdates];
 
     if(self.temporaryTargetForDraggedIndexPath){
-
-    } else {
-
+        [self.tableView deleteRowsAtIndexPaths:@[self.temporaryTargetForDraggedIndexPath] withRowAnimation:UITableViewRowAnimationFade];
     }
 
+    self.temporaryTargetForDraggedIndexPath = indexPath;
+
+    if(self.temporaryTargetForDraggedIndexPath){
+        [self.tableView insertRowsAtIndexPaths:@[self.temporaryTargetForDraggedIndexPath]  withRowAnimation:UITableViewRowAnimationFade];
+    }
+
+    [self.tableView endUpdates];
 }
 
 - (NSIndexPath *)getPath:(CGPoint)point globalPoint:(CGPoint)globalPoint noCell:(BOOL *)noCellFound {
@@ -67,7 +82,6 @@
 
 
     } else {
-        DDLogInfo(@"no cell");
         if(noCellFound){
             *noCellFound = true;
         }

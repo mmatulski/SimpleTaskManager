@@ -97,9 +97,21 @@ unsigned int const kDefaultBatchSize = 20;
     if(self.draggedIndexPath){
         if([self.draggedIndexPath row] >= [path row]){
             pathToRequest = [NSIndexPath indexPathForRow:(path.row + 1) inSection:path.section];
+            DDLogInfo(@"configureCell increased %d %d", [path row], [pathToRequest row]);
         }
 
-        NSLog(@"configureCell zmniejszona %d %d", [path row], [pathToRequest row]);
+
+        if(self.temporaryTargetForDraggedIndexPath){
+            if([self.temporaryTargetForDraggedIndexPath row] < [path row]){
+                pathToRequest = [NSIndexPath indexPathForRow:(pathToRequest.row - 1) inSection:path.section];
+                DDLogInfo(@"configureCell decreased %d %d", [path row], [pathToRequest row]);
+            }
+
+            if([self.temporaryTargetForDraggedIndexPath isEqual:path]){
+                pathToRequest = self.draggedIndexPath;
+            }
+        }
+
     }
 
     STMTask * task = [self.fetchedResultsController objectAtIndexPath:pathToRequest];
@@ -175,8 +187,15 @@ unsigned int const kDefaultBatchSize = 20;
         [self.dragAndDropHandler stopDragging];
         NSIndexPath *indexPath = self.draggedIndexPath;
         self.draggedIndexPath = nil;
+
+        [self.tableView beginUpdates];
         [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
 
+        if(self.temporaryTargetForDraggedIndexPath){
+            [self.tableView deleteRowsAtIndexPaths:@[self.temporaryTargetForDraggedIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            self.temporaryTargetForDraggedIndexPath = nil;
+        }
+        [self.tableView endUpdates];
 
         [self enableTableGestureRecognizerForScrolling];
     } else if(gestureRecognizer.state == UIGestureRecognizerStateChanged){
@@ -192,7 +211,15 @@ unsigned int const kDefaultBatchSize = 20;
         [self.dragAndDropHandler stopDragging];
         NSIndexPath *indexPath = self.draggedIndexPath;
         self.draggedIndexPath = nil;
+
+        [self.tableView beginUpdates];
         [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+
+        if(self.temporaryTargetForDraggedIndexPath){
+            [self.tableView deleteRowsAtIndexPaths:@[self.temporaryTargetForDraggedIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            self.temporaryTargetForDraggedIndexPath = nil;
+        }
+        [self.tableView endUpdates];
 
         [self enableTableGestureRecognizerForScrolling];
     }
@@ -248,7 +275,7 @@ unsigned int const kDefaultBatchSize = 20;
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     id  sectionInfo = [[_fetchedResultsController sections] objectAtIndex:section];
     int result = [sectionInfo numberOfObjects];
-    if(self.draggedIndexPath){
+    if(self.draggedIndexPath && !self.temporaryTargetForDraggedIndexPath){
         result--;
         DDLogInfo(@"result zmniejszony %d", result);
     }

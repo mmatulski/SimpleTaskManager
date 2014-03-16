@@ -5,8 +5,15 @@
 
 #import <Foundation/Foundation.h>
 
+@class STMTask;
+
 @protocol MainTableControllerDelegate <NSObject>
 
--(UIView *) viewForDragAndDropPresentation;
+-(UIView *) viewForTemporaryViewsPresentation;
 
+- (void)showOptionsForTask:(STMTask *)task representedByCell:(UITableViewCell *)cell;
+
+- (void)closeTaskOptionsForTask:(STMTask *)task;
+
+- (void)updatePositionOfOptionsForTask:(STMTask *)task becauseItWasScrolledBy:(CGFloat)by;
 @end

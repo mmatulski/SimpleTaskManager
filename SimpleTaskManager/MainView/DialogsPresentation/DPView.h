@@ -11,6 +11,7 @@
 @class TheNewTaskHintView;
 @class ConfirmationHintView;
 @class CancelHintView;
+@class TaskOptionsView;
 
 /*
 This view is parent for Dialogs like TheNewTaskDialog or Checking Task View.
@@ -34,6 +35,11 @@ It contains "Add" button and handler pan gesture which allows to pill AdTaskView
     NSLayoutConstraint *_widthConstraintForCancelHintView;
     NSArray *_cancelHintViewLayoutConstraints;
 
+    NSLayoutConstraint *_taskOptionsTopLayoutConstraint;
+    NSLayoutConstraint *_taskOptionsHeightLayoutConstraint;
+    NSArray *_taskOptionsLayoutConstraints;
+
+    CGFloat _taskOptionsViewFirstTopY;
 }
 
 @property(nonatomic, strong) TheNewTaskDialog *theNewTaskDialog;
@@ -53,7 +59,10 @@ It contains "Add" button and handler pan gesture which allows to pill AdTaskView
 @property(nonatomic, strong) ConfirmationHintView *confirmationHintView;
 @property(nonatomic, strong) CancelHintView *cancelHintView;
 
+@property(nonatomic, strong) TaskOptionsView *taskOptionsView;
+
 - (id)initWithDefaultFrame;
 
 - (void)viewDidAppear;
+
 @end

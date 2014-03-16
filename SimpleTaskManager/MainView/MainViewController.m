@@ -10,6 +10,8 @@
 #import "MainView.h"
 #import "MainTableController.h"
 #import "DPView.h"
+#import "STMTask.h"
+#import "DialogPresentationController.h"
 
 @interface MainViewController ()
 
@@ -32,6 +34,7 @@
 
     // Do any additional setup after loading the view.
     [self prepareTableController];
+    [self prepareDialogsPresentationController];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -45,6 +48,10 @@
 - (void)prepareTableController {
     self.tableController = [[MainTableController alloc] initWithTableView:self.mainView.tableView];
     self.tableController.delegate = self;
+}
+
+- (void)prepareDialogsPresentationController {
+    self.dialogsPresentationController = [[DialogPresentationController alloc] initWithView:self.mainView.dialogsPresentationView];
 }
 
 - (MainView *)mainView {
@@ -61,8 +68,20 @@
 
 #pragma mark MainTableControllerDelegate methods
 
-- (UIView *)viewForDragAndDropPresentation {
+- (UIView *)viewForTemporaryViewsPresentation {
     return self.mainView.dialogsPresentationView;
+}
+
+- (void)showOptionsForTask:(STMTask *)task representedByCell:(UITableViewCell *)cell {
+    [self.dialogsPresentationController showOptionsForTask:task representedByCell:cell];
+}
+
+- (void)closeTaskOptionsForTask:(STMTask *)task {
+    [self.dialogsPresentationController closeTaskOptionsForTask:task ];
+}
+
+- (void)updatePositionOfOptionsForTask:(STMTask *)task becauseItWasScrolledBy:(CGFloat)offsetChange {
+    [self.dialogsPresentationController updateTaskOptionsForTask:task becauseItWasScrolledBy: offsetChange];
 }
 
 

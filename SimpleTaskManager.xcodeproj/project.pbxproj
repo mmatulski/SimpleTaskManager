@@ -11,20 +11,24 @@
 		46AE212FD05EAEE66E043BF6 /* CGEstimations.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE28169C473584C7C5B45F /* CGEstimations.m */; };
 		46AE22663A7440C2240CFD78 /* DispatchQueueLogFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE2DDC84F3D49BDF480F09 /* DispatchQueueLogFormatter.m */; };
 		46AE235C088774BA4A5C68CD /* DPView.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE28DFB223931A9B603FFC /* DPView.m */; };
+		46AE236845DB8105C7C663A1 /* DialogPresentationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE29911F75124A180E16A3 /* DialogPresentationController.m */; };
+		46AE241970CAC024B90B630A /* DragAndDropHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE2056FE4232163EB25DD5 /* DragAndDropHandler.m */; };
 		46AE24F2049689BF0F3D3346 /* STMColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE2D72188505ABE135A015 /* STMColors.m */; };
 		46AE24F4BC01F9E8A9901AEB /* DDAbstractDatabaseLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE265CA4766B920707FCCC /* DDAbstractDatabaseLogger.m */; };
+		46AE2513F11815D1F6754965 /* DPView+TaskOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE249D9B9EBD8D64AFB629 /* DPView+TaskOptions.m */; };
 		46AE2531981D3E9147CB01C8 /* DDFileLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE200C40F76326A469B578 /* DDFileLogger.m */; };
 		46AE2562AA9F4FC145D9444B /* UIView+ScreenshootExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE2BE7D371E23F667CDF8B /* UIView+ScreenshootExtension.m */; };
-		46AE25D24A8AB21860167F79 /* DragAndDropHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE28E0318499512C402D54 /* DragAndDropHandler.m */; };
 		46AE2619ABF5A338D4017D5D /* DDTTYLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE2C76FD9F949669985F67 /* DDTTYLogger.m */; };
 		46AE26B884A65DA4052B6763 /* TheNewTaskHintView.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE24F43840AEE4A8574C3F /* TheNewTaskHintView.m */; };
 		46AE2728683C82118BF8233D /* UIView+LayoutConstraints.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE2878C7906F215C11B341 /* UIView+LayoutConstraints.m */; };
 		46AE2778B30FF66F82F8BF4E /* DDASLLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE2FE512E06F60583C608B /* DDASLLogger.m */; };
 		46AE2779E9F67C39EB00C38B /* MiniHintView.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE298FA231D06116CA1F3B /* MiniHintView.m */; };
-		46AE27C7FA2936DF1ECA27B2 /* MainTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE2E0685B7ADA22AC3BF2B /* MainTableController.m */; };
+		46AE282EFABFD1D9C5C8C72E /* MainTableController+DragAndDrop.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE294F76D24668D4CF4E2C /* MainTableController+DragAndDrop.m */; };
 		46AE2928588C378D457A0861 /* DBAccess.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE2E29179ECFBA021E47AC /* DBAccess.m */; };
+		46AE29F9B6C5C6A1D7C66BA5 /* MainTableController+TaskOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE209242ED6749464AA6AF /* MainTableController+TaskOptions.m */; };
 		46AE2A3C25C84309996F6356 /* TheNewTaskDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE21E6788FAE78CD97C37B /* TheNewTaskDialog.m */; };
 		46AE2A596EEDD69DE676B581 /* DPView+TheNewTaskDialogHandling.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE29A9D7AC1F8AAD4FBA14 /* DPView+TheNewTaskDialogHandling.m */; };
+		46AE2AB7931B7520E2842FE5 /* TaskOptionsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE22DF066E0CFE9FE21621 /* TaskOptionsView.m */; };
 		46AE2AB8AD5EA5BBB140E095 /* AnimationsHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE2B4CA278B77E07685AEC /* AnimationsHelper.m */; };
 		46AE2AC529074E58F60813D7 /* DBController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE2B47CAFDDCB7D9C12CB7 /* DBController.m */; };
 		46AE2ACBDC30AC492BBB68C4 /* DDLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE2E631B2AA753182DD123 /* DDLog.m */; };
@@ -34,6 +38,7 @@
 		46AE2CD0DE25667724420D3F /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 46AE2EAA806AAC6671007634 /* LICENSE.txt */; };
 		46AE2E2FE04ABACAA58299E1 /* CancelHintView.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE2C403E6D89A4165E701F /* CancelHintView.m */; };
 		46AE2E87F6B586A6BE33DF6B /* DPView+Hints.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE29031105D8F21C6F56F2 /* DPView+Hints.m */; };
+		46AE2F68CB07A3B2DF9EEB75 /* MainTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE27A699D0B2CF2234060A /* MainTableController.m */; };
 		46AE2F8FDA8D1EF8A2CD84F8 /* ConfirmationHintView.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE28FED8EA33D60051F43E /* ConfirmationHintView.m */; };
 		46AE2FFDE8E4408F6147B21C /* AppMacros.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE26BD3C2DAA306AFD90D2 /* AppMacros.m */; };
 		EA34DA5318CD493B0042CDA9 /* SimpleTaskManager.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EA34DA5118CD493B0042CDA9 /* SimpleTaskManager.xcdatamodeld */; };
@@ -72,6 +77,8 @@
 		46AE2008D42D5B9787292648 /* CancelHintView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CancelHintView.h; sourceTree = "<group>"; };
 		46AE200C40F76326A469B578 /* DDFileLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDFileLogger.m; sourceTree = "<group>"; };
 		46AE203BCD21F982E498C3DD /* DPView+TheNewTaskDialogHandling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DPView+TheNewTaskDialogHandling.h"; sourceTree = "<group>"; };
+		46AE2056FE4232163EB25DD5 /* DragAndDropHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DragAndDropHandler.m; sourceTree = "<group>"; };
+		46AE209242ED6749464AA6AF /* MainTableController+TaskOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MainTableController+TaskOptions.m"; sourceTree = "<group>"; };
 		46AE20A9055962495CAAC61F /* CGEstimations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGEstimations.h; sourceTree = "<group>"; };
 		46AE213846FBC49661E8DD72 /* DDTTYLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDTTYLogger.h; sourceTree = "<group>"; };
 		46AE217E90C20F3DA7E93EE5 /* TheNewTaskDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TheNewTaskDialog.h; sourceTree = "<group>"; };
@@ -79,8 +86,10 @@
 		46AE21E6788FAE78CD97C37B /* TheNewTaskDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TheNewTaskDialog.m; sourceTree = "<group>"; };
 		46AE222B601D6276546DD898 /* MainTableControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainTableControllerDelegate.h; sourceTree = "<group>"; };
 		46AE22CB58FB49DD429B1816 /* DDLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDLog.h; sourceTree = "<group>"; };
+		46AE22DF066E0CFE9FE21621 /* TaskOptionsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaskOptionsView.m; sourceTree = "<group>"; };
 		46AE22ECD2D1C47A1FD3CD1E /* ContextFilterLogFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContextFilterLogFormatter.m; sourceTree = "<group>"; };
-		46AE231FF5EEB3D62D70E034 /* MainTableController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainTableController.h; sourceTree = "<group>"; };
+		46AE238C6900BF71DD5CC7F6 /* MainTableController+TaskOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MainTableController+TaskOptions.h"; sourceTree = "<group>"; };
+		46AE249D9B9EBD8D64AFB629 /* DPView+TaskOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DPView+TaskOptions.m"; sourceTree = "<group>"; };
 		46AE24F296E848925495A6A2 /* MainViewConsts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewConsts.h; sourceTree = "<group>"; };
 		46AE24F43840AEE4A8574C3F /* TheNewTaskHintView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TheNewTaskHintView.m; sourceTree = "<group>"; };
 		46AE2542CB1C0925D0807B19 /* AnimationsHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimationsHelper.h; sourceTree = "<group>"; };
@@ -91,21 +100,28 @@
 		46AE26BD3C2DAA306AFD90D2 /* AppMacros.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppMacros.m; sourceTree = "<group>"; };
 		46AE26E61D5922E9660495D7 /* DispatchQueueLogFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DispatchQueueLogFormatter.h; sourceTree = "<group>"; };
 		46AE27941F8AC26351712371 /* UIView+LayoutConstraints.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+LayoutConstraints.h"; sourceTree = "<group>"; };
+		46AE27A699D0B2CF2234060A /* MainTableController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainTableController.m; sourceTree = "<group>"; };
+		46AE27C45CCB70E7B2A50D75 /* MainTableController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainTableController.h; sourceTree = "<group>"; };
 		46AE27C81E94D75901538190 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
 		46AE27E1E53770C50885AE60 /* UIView+ScreenshootExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+ScreenshootExtension.h"; sourceTree = "<group>"; };
+		46AE27EA53CF49F61BF5ADFF /* DPView+TaskOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DPView+TaskOptions.h"; sourceTree = "<group>"; };
+		46AE28055BB6DF50A314AFDE /* TaskOptionsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskOptionsView.h; sourceTree = "<group>"; };
 		46AE28169C473584C7C5B45F /* CGEstimations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CGEstimations.m; sourceTree = "<group>"; };
 		46AE284979FE2B2F8F8123B1 /* DPView+Constraints.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DPView+Constraints.m"; sourceTree = "<group>"; };
 		46AE2878C7906F215C11B341 /* UIView+LayoutConstraints.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+LayoutConstraints.m"; sourceTree = "<group>"; };
 		46AE28DFB223931A9B603FFC /* DPView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPView.m; sourceTree = "<group>"; };
-		46AE28E0318499512C402D54 /* DragAndDropHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DragAndDropHandler.m; sourceTree = "<group>"; };
 		46AE28FED8EA33D60051F43E /* ConfirmationHintView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfirmationHintView.m; sourceTree = "<group>"; };
 		46AE29031105D8F21C6F56F2 /* DPView+Hints.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DPView+Hints.m"; sourceTree = "<group>"; };
+		46AE294F76D24668D4CF4E2C /* MainTableController+DragAndDrop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MainTableController+DragAndDrop.m"; sourceTree = "<group>"; };
 		46AE298FA231D06116CA1F3B /* MiniHintView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MiniHintView.m; sourceTree = "<group>"; };
+		46AE29911F75124A180E16A3 /* DialogPresentationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DialogPresentationController.m; sourceTree = "<group>"; };
 		46AE29A9D7AC1F8AAD4FBA14 /* DPView+TheNewTaskDialogHandling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DPView+TheNewTaskDialogHandling.m"; sourceTree = "<group>"; };
-		46AE29FD1C0D8EEE40FDEB69 /* DragAndDropHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DragAndDropHandler.h; sourceTree = "<group>"; };
+		46AE2A6891C3A8A887D5A3B2 /* DialogsPresentationViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DialogsPresentationViewDelegate.h; sourceTree = "<group>"; };
 		46AE2B47CAFDDCB7D9C12CB7 /* DBController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBController.m; sourceTree = "<group>"; };
 		46AE2B4CA278B77E07685AEC /* AnimationsHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimationsHelper.m; sourceTree = "<group>"; };
 		46AE2B7DDFC69C1956710CB1 /* DBController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBController.h; sourceTree = "<group>"; };
+		46AE2B9773476AAB7478F227 /* MainTableController+DragAndDrop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MainTableController+DragAndDrop.h"; sourceTree = "<group>"; };
+		46AE2B9D7DD77C680CA21590 /* DragAndDropHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DragAndDropHandler.h; sourceTree = "<group>"; };
 		46AE2BA23DB7E200723369EA /* DPView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPView.h; sourceTree = "<group>"; };
 		46AE2BE7D371E23F667CDF8B /* UIView+ScreenshootExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+ScreenshootExtension.m"; sourceTree = "<group>"; };
 		46AE2C0708E235E321ADBF85 /* TheNewTaskHintView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TheNewTaskHintView.h; sourceTree = "<group>"; };
@@ -118,11 +134,11 @@
 		46AE2D72188505ABE135A015 /* STMColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STMColors.m; sourceTree = "<group>"; };
 		46AE2DB7E7B1A5094795041B /* DPView+Constraints.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DPView+Constraints.h"; sourceTree = "<group>"; };
 		46AE2DDC84F3D49BDF480F09 /* DispatchQueueLogFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DispatchQueueLogFormatter.m; sourceTree = "<group>"; };
-		46AE2E0685B7ADA22AC3BF2B /* MainTableController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainTableController.m; sourceTree = "<group>"; };
 		46AE2E29179ECFBA021E47AC /* DBAccess.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBAccess.m; sourceTree = "<group>"; };
 		46AE2E631B2AA753182DD123 /* DDLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDLog.m; sourceTree = "<group>"; };
 		46AE2EAA806AAC6671007634 /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		46AE2EAFE9FB149868713A48 /* DPState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPState.h; sourceTree = "<group>"; };
+		46AE2EE95283756AA49993F7 /* DialogPresentationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DialogPresentationController.h; sourceTree = "<group>"; };
 		46AE2F29A0ECCC56CE7F046A /* DPView+Hints.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DPView+Hints.h"; sourceTree = "<group>"; };
 		46AE2F6D810EECB17E24B67E /* DDASLLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDASLLogger.h; sourceTree = "<group>"; };
 		46AE2F793D2FC0CD9E6484DA /* AppMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppMacros.h; sourceTree = "<group>"; };
@@ -251,14 +267,12 @@
 				EA3D0EDC18CBBC8C00CB333E /* Main_iPad.storyboard */,
 				EA675FFE18D1109700E24C49 /* MainView.h */,
 				EA675FFF18D1109700E24C49 /* MainView.m */,
-				46AE2E0685B7ADA22AC3BF2B /* MainTableController.m */,
-				46AE231FF5EEB3D62D70E034 /* MainTableController.h */,
 				46AE266CD5324BFDE33D4FC3 /* MainViewConsts.m */,
 				46AE24F296E848925495A6A2 /* MainViewConsts.h */,
 				46AE284DB9830DC1AC8345C5 /* DialogsPresentation */,
-				46AE29FD1C0D8EEE40FDEB69 /* DragAndDropHandler.h */,
-				46AE28E0318499512C402D54 /* DragAndDropHandler.m */,
 				46AE2C88549F0FE9D940BC38 /* Protocols */,
+				46AE2E2179B9AC5CCA66CCFE /* MainViewTable */,
+				46AE2C484822486DED97332C /* D&D */,
 			);
 			path = MainView;
 			sourceTree = "<group>";
@@ -277,6 +291,12 @@
 				46AE29031105D8F21C6F56F2 /* DPView+Hints.m */,
 				46AE2F29A0ECCC56CE7F046A /* DPView+Hints.h */,
 				46AE25C10F98C54B63000D60 /* HintViews */,
+				46AE2B76AADC60A853BB146E /* TaskOptions */,
+				46AE29911F75124A180E16A3 /* DialogPresentationController.m */,
+				46AE2EE95283756AA49993F7 /* DialogPresentationController.h */,
+				46AE249D9B9EBD8D64AFB629 /* DPView+TaskOptions.m */,
+				46AE27EA53CF49F61BF5ADFF /* DPView+TaskOptions.h */,
+				46AE2A6891C3A8A887D5A3B2 /* DialogsPresentationViewDelegate.h */,
 			);
 			path = DialogsPresentation;
 			sourceTree = "<group>";
@@ -303,6 +323,15 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
+		46AE2B76AADC60A853BB146E /* TaskOptions */ = {
+			isa = PBXGroup;
+			children = (
+				46AE22DF066E0CFE9FE21621 /* TaskOptionsView.m */,
+				46AE28055BB6DF50A314AFDE /* TaskOptionsView.h */,
+			);
+			path = TaskOptions;
+			sourceTree = "<group>";
+		};
 		46AE2C43A3EEE0C556F8C552 /* Lumberjack */ = {
 			isa = PBXGroup;
 			children = (
@@ -322,6 +351,15 @@
 			path = Lumberjack;
 			sourceTree = "<group>";
 		};
+		46AE2C484822486DED97332C /* D&D */ = {
+			isa = PBXGroup;
+			children = (
+				46AE2B9D7DD77C680CA21590 /* DragAndDropHandler.h */,
+				46AE2056FE4232163EB25DD5 /* DragAndDropHandler.m */,
+			);
+			path = "D&D";
+			sourceTree = "<group>";
+		};
 		46AE2C88549F0FE9D940BC38 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
@@ -336,6 +374,19 @@
 				EA34DA5118CD493B0042CDA9 /* SimpleTaskManager.xcdatamodeld */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		46AE2E2179B9AC5CCA66CCFE /* MainViewTable */ = {
+			isa = PBXGroup;
+			children = (
+				46AE27A699D0B2CF2234060A /* MainTableController.m */,
+				46AE27C45CCB70E7B2A50D75 /* MainTableController.h */,
+				46AE209242ED6749464AA6AF /* MainTableController+TaskOptions.m */,
+				46AE238C6900BF71DD5CC7F6 /* MainTableController+TaskOptions.h */,
+				46AE294F76D24668D4CF4E2C /* MainTableController+DragAndDrop.m */,
+				46AE2B9773476AAB7478F227 /* MainTableController+DragAndDrop.h */,
+			);
+			path = MainViewTable;
 			sourceTree = "<group>";
 		};
 		46AE2F76EE2F072DA99C03F9 /* Database */ = {
@@ -548,7 +599,6 @@
 				EA34DA5318CD493B0042CDA9 /* SimpleTaskManager.xcdatamodeld in Sources */,
 				46AE24F4BC01F9E8A9901AEB /* DDAbstractDatabaseLogger.m in Sources */,
 				46AE24F2049689BF0F3D3346 /* STMColors.m in Sources */,
-				46AE27C7FA2936DF1ECA27B2 /* MainTableController.m in Sources */,
 				46AE210F07A69C6B77D7D4A2 /* MainViewConsts.m in Sources */,
 				46AE2728683C82118BF8233D /* UIView+LayoutConstraints.m in Sources */,
 				46AE212FD05EAEE66E043BF6 /* CGEstimations.m in Sources */,
@@ -562,7 +612,13 @@
 				46AE2F8FDA8D1EF8A2CD84F8 /* ConfirmationHintView.m in Sources */,
 				46AE2E2FE04ABACAA58299E1 /* CancelHintView.m in Sources */,
 				46AE2562AA9F4FC145D9444B /* UIView+ScreenshootExtension.m in Sources */,
-				46AE25D24A8AB21860167F79 /* DragAndDropHandler.m in Sources */,
+				46AE2F68CB07A3B2DF9EEB75 /* MainTableController.m in Sources */,
+				46AE241970CAC024B90B630A /* DragAndDropHandler.m in Sources */,
+				46AE29F9B6C5C6A1D7C66BA5 /* MainTableController+TaskOptions.m in Sources */,
+				46AE282EFABFD1D9C5C8C72E /* MainTableController+DragAndDrop.m in Sources */,
+				46AE236845DB8105C7C663A1 /* DialogPresentationController.m in Sources */,
+				46AE2AB7931B7520E2842FE5 /* TaskOptionsView.m in Sources */,
+				46AE2513F11815D1F6754965 /* DPView+TaskOptions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

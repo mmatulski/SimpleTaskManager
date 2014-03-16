@@ -8,9 +8,8 @@
 #import "DBAccess.h"
 #import "STMColors.h"
 #import "STMTask.h"
-#import "UIView+ScreenshootExtension.h"
 #import "DragAndDropHandler.h"
-#import "MainTableControllerDelegate.h"
+#import "MainTableController+TaskOptions.h"
 
 NSString * const kCellIdentifier = @"CellIdentifier";
 unsigned int const kDefaultBatchSize = 20;
@@ -66,7 +65,25 @@ unsigned int const kDefaultBatchSize = 20;
 }
 
 - (void)prepareDragAndDropHelper {
-    self.dragAndDropHandler = [[DragAndDropHandler alloc] initWithDraggingSpace:[self.delegate viewForDragAndDropPresentation]];
+    self.dragAndDropHandler = [[DragAndDropHandler alloc] initWithDraggingSpace:[self.delegate viewForTemporaryViewsPresentation]];
+}
+
+- (void)setSelectedIndexPath:(NSIndexPath *)selectedIndexPath {
+    if(![_selectedIndexPath isEqual:selectedIndexPath]){
+        if(selectedIndexPath){
+            [self showOptionsForItemAtIndexPath:selectedIndexPath];
+        }
+
+        if(_selectedIndexPath){
+            [self hideOptionsForItemAtIndexPath:_selectedIndexPath];
+        }
+
+        self.scrollOffsetWhenItemWasSelected = self.tableView.contentOffset.y;
+
+        _selectedIndexPath = selectedIndexPath;
+
+
+    }
 }
 
 - (void)handleMemoryWarning {
@@ -185,11 +202,29 @@ unsigned int const kDefaultBatchSize = 20;
    [self.tableView panGestureRecognizer].enabled = false;
 }
 
+
 #pragma mark - UITableViewDelegate methods
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    //[tableView deselectRowAtIndexPath:indexPath animated:false];
+
+    if(self.selectedIndexPath && [self.selectedIndexPath isEqual:indexPath]){
+        [tableView deselectRowAtIndexPath:indexPath animated:true];
+        self.selectedIndexPath = nil;
+    } else {
+        self.selectedIndexPath = indexPath;
+    }
 }
+
+- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset {
+
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    if(self.selectedIndexPath){
+        [self updateOptionsPositionForItemAtIndexPath:self.selectedIndexPath];
+    }
+}
+
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 54.0;

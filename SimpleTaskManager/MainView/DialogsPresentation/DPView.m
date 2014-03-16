@@ -11,6 +11,7 @@
 #import "TheNewTaskHintView.h"
 #import "ConfirmationHintView.h"
 #import "CancelHintView.h"
+#import "TaskOptionsView.h"
 
 CGFloat const kRightMarginForHandlingPanGesture = 20.0;
 
@@ -206,5 +207,7 @@ CGFloat const kRightMarginForHandlingPanGesture = 20.0;
 
     }];
 }
+
+
 
 @end

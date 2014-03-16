@@ -39,11 +39,11 @@
 }
 
 - (void)commonInit {
-    [self prepareWrapperViewForAddingTasks];
+    [self prepareDialogsPresentationView];
 }
 
 
-- (void)prepareWrapperViewForAddingTasks {
+- (void)prepareDialogsPresentationView {
     self.dialogsPresentationView = [[DPView alloc] initWithDefaultFrame];
 
     [self addSubview:self.dialogsPresentationView];

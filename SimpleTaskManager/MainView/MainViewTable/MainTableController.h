@@ -22,6 +22,10 @@
 @property(nonatomic) int draggedRow;
 @property(nonatomic, strong) DragAndDropHandler *dragAndDropHandler;
 
+@property(nonatomic, strong) NSIndexPath *selectedIndexPath;
+
+@property(nonatomic) CGFloat scrollOffsetWhenItemWasSelected;
+
 - (instancetype)initWithTableView:(UITableView *)tableView;
 
 - (void)handleMemoryWarning;

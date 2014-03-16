@@ -6,6 +6,7 @@
 #import "DragAndDropHandler.h"
 #import "UIView+ScreenshootExtension.h"
 #import "CGEstimations.h"
+#import "TaskTableViewCell.h"
 
 @implementation DragAndDropHandler {
 

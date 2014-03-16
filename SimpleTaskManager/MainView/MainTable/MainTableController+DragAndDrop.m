@@ -40,8 +40,7 @@
 
     if(self.temporaryTargetForDraggedIndexPath){
         [self.tableView insertRowsAtIndexPaths:@[self.temporaryTargetForDraggedIndexPath]  withRowAnimation:UITableViewRowAnimationFade];
-        //[self.tableView scrollRectToVisible:<#(CGRect)rect#> animated:<#(BOOL)animated#>];
-        [self.tableView scrollToRowAtIndexPath:self.temporaryTargetForDraggedIndexPath atScrollPosition:UITableViewScrollPositionNone animated:true];
+        [self.tableView scrollToRowAtIndexPath:self.temporaryTargetForDraggedIndexPath atScrollPosition:UITableViewScrollPositionMiddle animated:true];
     }
 
     [self.tableView endUpdates];

@@ -52,6 +52,7 @@
 
 - (void)prepareDialogsPresentationController {
     self.dialogsPresentationController = [[UserActionsController alloc] initWithView:self.mainView.dialogsPresentationView];
+    self.dialogsPresentationController.delegate = self;
 }
 
 - (MainView *)mainView {
@@ -82,6 +83,12 @@
 
 - (void)updatePositionOfOptionsForTask:(STMTask *)task becauseItWasScrolledBy:(CGFloat)offsetChange {
     [self.dialogsPresentationController updateTaskOptionsForTask:task becauseItWasScrolledBy: offsetChange];
+}
+
+#pragma mark - UserActionsControllerDelegate methods
+
+- (void)userWantsToDeselectTask:(STMTask *)task {
+    [self.tableController deselectTask:task];
 }
 
 

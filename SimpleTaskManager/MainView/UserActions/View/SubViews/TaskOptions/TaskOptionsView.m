@@ -46,11 +46,11 @@
 #pragma mark - actions
 
 - (void)complete {
-
+    [self.delegate userHasCompletedTask];
 }
 
 - (void)deselect {
-
+    [self.delegate userWantsDeselectTask];
 }
 
 #pragma mark constraints

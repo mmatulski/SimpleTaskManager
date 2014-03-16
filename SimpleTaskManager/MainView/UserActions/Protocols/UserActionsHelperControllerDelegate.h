@@ -5,5 +5,10 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol UserActionHelperControllerDelegagate <NSObject>
+@class STMTask;
+
+@protocol UserActionsHelperControllerDelegate <NSObject>
+
+-(void) userWantsToDeselectTask:(STMTask *) task;
+
 @end

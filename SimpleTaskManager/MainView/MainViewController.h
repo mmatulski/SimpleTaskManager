@@ -8,12 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "MainTableControllerDelegate.h"
+#import "UserActionsHelperControllerDelegate.h"
 
 @class MainView;
 @class MainTableController;
 @class UserActionsController;
 
-@interface MainViewController : UIViewController <MainTableControllerDelegate>
+@interface MainViewController : UIViewController <MainTableControllerDelegate, UserActionsHelperControllerDelegate>
 
 @property(nonatomic, strong) MainTableController * tableController;
 @property(nonatomic, strong) UserActionsController *dialogsPresentationController;

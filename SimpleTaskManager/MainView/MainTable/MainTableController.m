@@ -202,6 +202,13 @@ unsigned int const kDefaultBatchSize = 20;
    [self.tableView panGestureRecognizer].enabled = false;
 }
 
+- (void)deselectTask:(STMTask *)task {
+    if(self.selectedIndexPath){
+        [self.tableView deselectRowAtIndexPath:self.selectedIndexPath animated:true];
+    }
+
+    self.selectedIndexPath = nil;
+}
 
 #pragma mark - UITableViewDelegate methods
 

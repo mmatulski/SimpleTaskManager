@@ -9,9 +9,11 @@
 
 @class UserActionsHelperView;
 @class STMTask;
+@protocol UserActionsHelperControllerDelegate;
 
 @interface UserActionsController : NSObject <TaskOptionsDelegate, UserActionsHelperViewDelegate>
 
+@property(nonatomic, weak) id <UserActionsHelperControllerDelegate> delegate;
 @property(nonatomic, strong) UserActionsHelperView *helperView;
 @property(nonatomic, strong) STMTask *currentTaskWithOptionsShown;
 

@@ -29,4 +29,6 @@
 - (instancetype)initWithTableView:(UITableView *)tableView;
 
 - (void)handleMemoryWarning;
+
+- (void)deselectTask:(STMTask *)task;
 @end

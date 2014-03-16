@@ -7,4 +7,17 @@
 
 
 @implementation MainTableController (DragAndDrop)
+
+- (void)dropOrHideDraggedCellForPoint:(CGPoint)point {
+
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:point];
+    STMTask * task = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+
+    if(self.draggedIndexPath){
+
+    }
+
+}
+
 @end

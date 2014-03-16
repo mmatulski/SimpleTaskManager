@@ -7,4 +7,5 @@
 #import "MainTableController.h"
 
 @interface MainTableController (DragAndDrop)
+- (void)dropOrHideDraggedCellForPoint:(CGPoint)point;
 @end

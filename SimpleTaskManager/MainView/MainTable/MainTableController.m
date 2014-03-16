@@ -10,6 +10,7 @@
 #import "STMTask.h"
 #import "DragAndDropHandler.h"
 #import "MainTableController+TaskOptions.h"
+#import "MainTableController+DragAndDrop.h"
 
 NSString * const kCellIdentifier = @"CellIdentifier";
 unsigned int const kDefaultBatchSize = 20;
@@ -21,7 +22,7 @@ unsigned int const kDefaultBatchSize = 20;
 - (instancetype)initWithTableView:(UITableView *)tableView {
     self = [super init];
     if (self) {
-        self.draggedRow = -1;
+        self.draggedIndexPath = nil;
         self.tableView = tableView;
 
         [self prepareDBController];
@@ -93,8 +94,8 @@ unsigned int const kDefaultBatchSize = 20;
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)path {
 
     NSIndexPath *pathToRequest = path;
-    if(self.draggedRow >= 0){
-        if(self.draggedRow >= [path row]){
+    if(self.draggedIndexPath){
+        if([self.draggedIndexPath row] >= [path row]){
             pathToRequest = [NSIndexPath indexPathForRow:(path.row + 1) inSection:path.section];
         }
 
@@ -146,18 +147,19 @@ unsigned int const kDefaultBatchSize = 20;
 
 
 - (void)handleLongPress:(UIGestureRecognizer *)gestureRecognizer {
+    CGPoint point = [gestureRecognizer locationInView: gestureRecognizer.view];
+
     if(gestureRecognizer.state == UIGestureRecognizerStateBegan){
         DDLogInfo(@"Began");
 
-        CGPoint point = [gestureRecognizer locationInView: gestureRecognizer.view];
         NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:point];
         STMTask * task = [self.fetchedResultsController objectAtIndexPath:indexPath];
         if(task){
             UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
 
-            self.draggedRow = [indexPath row];
+            self.draggedIndexPath = indexPath;
 
-            DDLogInfo(@"-- row %d", self.draggedRow);
+            DDLogInfo(@"-- row %d", [self.draggedIndexPath row]);
 
             [self disableTableGestureRecognizerForScrolling];
 
@@ -171,8 +173,8 @@ unsigned int const kDefaultBatchSize = 20;
         DDLogInfo(@"Failed | Cancelled");
 
         [self.dragAndDropHandler stopDragging];
-        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.draggedRow inSection:0];
-        self.draggedRow = -1;
+        NSIndexPath *indexPath = self.draggedIndexPath;
+        self.draggedIndexPath = nil;
         [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
 
 
@@ -182,12 +184,14 @@ unsigned int const kDefaultBatchSize = 20;
         CGPoint pointRelatedToWindow = [gestureRecognizer locationInView:nil];
         [self.dragAndDropHandler moveDraggedViewToPoint:pointRelatedToWindow];
 
+        [self dropOrHideDraggedCellForPoint:point];
+
     } else if(gestureRecognizer.state == UIGestureRecognizerStateEnded){
         DDLogInfo(@"Ended");
 
         [self.dragAndDropHandler stopDragging];
-        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.draggedRow inSection:0];
-        self.draggedRow = -1;
+        NSIndexPath *indexPath = self.draggedIndexPath;
+        self.draggedIndexPath = nil;
         [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
 
         [self enableTableGestureRecognizerForScrolling];
@@ -244,7 +248,7 @@ unsigned int const kDefaultBatchSize = 20;
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     id  sectionInfo = [[_fetchedResultsController sections] objectAtIndex:section];
     int result = [sectionInfo numberOfObjects];
-    if(self.draggedRow >= 0){
+    if(self.draggedIndexPath){
         result--;
         DDLogInfo(@"result zmniejszony %d", result);
     }

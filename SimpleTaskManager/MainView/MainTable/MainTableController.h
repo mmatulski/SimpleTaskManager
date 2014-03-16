@@ -19,7 +19,7 @@
 @property(nonatomic, strong) NSFetchedResultsController* fetchedResultsController;
 
 @property(nonatomic, strong) UILongPressGestureRecognizer *longPressRecognizer;
-@property(nonatomic) int draggedRow;
+@property(nonatomic, strong) NSIndexPath * draggedIndexPath;
 @property(nonatomic, strong) DragAndDropHandler *dragAndDropHandler;
 
 @property(nonatomic, strong) NSIndexPath *selectedIndexPath;

@@ -29,4 +29,6 @@ extern NSString * const kSTMTaskEntityName;
 - (NSFetchRequest *)createFetchingTasksRequestWithBatchSize:(unsigned int) batchSize;
 
 - (void)markAsCompletedTaskWithId:(NSString *)uid successFullBlock:(void (^)())block failureBlock:(void (^)(NSError *))block1;
+
+- (void)reorderTaskWithId:(NSString *)uid toIndex:(int)index successFullBlock:(void (^)())block failureBlock:(void (^)(NSError *))block1;
 @end

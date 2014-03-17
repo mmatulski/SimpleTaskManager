@@ -178,6 +178,41 @@ NSString * const kSTMTaskEntityName = @"STMTask";
 }
 
 
+- (void)reorderTaskWithId:(NSString *)uid toIndex:(int)index successFullBlock:(void (^)())successBlock failureBlock:(void (^)(NSError *))failureBlock {
+    [self loadNumberOfAllTasksIfNotLoaded];
 
+    NSError *err = nil;
+    STMTask *task = [self findTaskWithId:uid error:&err];
+    if (!task) {
+        if (failureBlock) {
+            failureBlock(err);
+        }
+        return;
+    }
+
+    [self beginUndo];
+
+    if([self reorderTask:task withIndex:index error:&err]){
+        [self saveWithSuccessFullBlock:^{
+            DDLogInfo(@"Reorder of task performed successfully %@", uid);
+            [self endUndo];
+            if(successBlock){
+                successBlock();
+            }
+        } andFailureBlock:^(NSError *error) {
+            DDLogWarn(@"Problem with reordering task (Saving) %@ %@", uid, [err localizedDescription]);
+            [self undo];
+            if(failureBlock){
+                failureBlock(error);
+            }
+        }];
+    } else {
+        DDLogWarn(@"Problem with reordering task %@ %@", uid, [err localizedDescription]);
+        [self undo];
+        if(failureBlock){
+            failureBlock(err);
+        }
+    }
+}
 
 @end

@@ -14,4 +14,6 @@
 - (NSFetchRequest *)prepareTaskFetchRequest;
 
 - (BOOL)removeTask:(STMTask *)task error:(NSError **)error;
+
+- (BOOL)reorderTask:(STMTask *)task withIndex:(int)index error:(NSError **)error;
 @end

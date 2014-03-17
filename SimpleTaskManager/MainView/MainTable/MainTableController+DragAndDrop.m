@@ -40,10 +40,13 @@
 
     if(self.temporaryTargetForDraggedIndexPath){
         [self.tableView insertRowsAtIndexPaths:@[self.temporaryTargetForDraggedIndexPath]  withRowAnimation:UITableViewRowAnimationFade];
-        [self.tableView scrollToRowAtIndexPath:self.temporaryTargetForDraggedIndexPath atScrollPosition:UITableViewScrollPositionMiddle animated:true];
     }
 
     [self.tableView endUpdates];
+
+    if(self.temporaryTargetForDraggedIndexPath){
+        [self.tableView scrollToRowAtIndexPath:self.temporaryTargetForDraggedIndexPath atScrollPosition:UITableViewScrollPositionMiddle animated:true];
+    }
 }
 
 - (NSIndexPath *)getPath:(CGPoint)point globalPoint:(CGPoint)globalPoint noCell:(BOOL *)noCellFound {

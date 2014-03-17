@@ -6,7 +6,6 @@
 #import "MainTableController.h"
 #import "DBController.h"
 #import "DBAccess.h"
-#import "STMColors.h"
 #import "STMTask.h"
 #import "DragAndDropHandler.h"
 #import "MainTableController+TaskOptions.h"
@@ -98,14 +97,14 @@ unsigned int const kDefaultBatchSize = 20;
     if(self.draggedIndexPath){
         if([self.draggedIndexPath row] >= [path row]){
             pathToRequest = [NSIndexPath indexPathForRow:(path.row + 1) inSection:path.section];
-            DDLogInfo(@"configureCell increased %d %d", [path row], [pathToRequest row]);
+            DDLogTrace(@"configureCell increased %d %d", [path row], [pathToRequest row]);
         }
 
 
         if(self.temporaryTargetForDraggedIndexPath){
             if([self.temporaryTargetForDraggedIndexPath row] < [path row]){
                 pathToRequest = [NSIndexPath indexPathForRow:(pathToRequest.row - 1) inSection:path.section];
-                DDLogInfo(@"configureCell decreased %d %d", [path row], [pathToRequest row]);
+                DDLogTrace(@"configureCell decreased %d %d", [path row], [pathToRequest row]);
             }
 
             if([self.temporaryTargetForDraggedIndexPath isEqual:path]){
@@ -208,20 +207,50 @@ unsigned int const kDefaultBatchSize = 20;
     } else if(gestureRecognizer.state == UIGestureRecognizerStateEnded){
         DDLogInfo(@"Ended");
 
-        [self.dragAndDropHandler stopDragging];
-        NSIndexPath *indexPath = self.draggedIndexPath;
+        NSIndexPath *indexPathSource = self.draggedIndexPath;
+        NSIndexPath *indexPathTarget = self.temporaryTargetForDraggedIndexPath;
+
         self.draggedIndexPath = nil;
+        self.temporaryTargetForDraggedIndexPath = nil;
 
-        [self.tableView beginUpdates];
-        [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        [self changeOrderForTaskFromIndexPath:indexPathSource toIndexPath:indexPathTarget];
 
-        if(self.temporaryTargetForDraggedIndexPath){
-            [self.tableView deleteRowsAtIndexPaths:@[self.temporaryTargetForDraggedIndexPath] withRowAnimation:UITableViewRowAnimationFade];
-            self.temporaryTargetForDraggedIndexPath = nil;
-        }
-        [self.tableView endUpdates];
+        [self.dragAndDropHandler stopDragging];
+//        NSIndexPath *indexPath = self.draggedIndexPath;
+
+
+//        [self.tableView beginUpdates];
+//        [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+//
+//        if(self.temporaryTargetForDraggedIndexPath){
+//            [self.tableView deleteRowsAtIndexPaths:@[self.temporaryTargetForDraggedIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+//            self.temporaryTargetForDraggedIndexPath = nil;
+//        }
+//        [self.tableView endUpdates];
 
         [self enableTableGestureRecognizerForScrolling];
+    }
+}
+
+- (void)changeOrderForTaskFromIndexPath:(NSIndexPath *)sourcePath toIndexPath:(NSIndexPath *)targetPath {
+    STMTask *task = [self.fetchedResultsController objectAtIndexPath:sourcePath];
+
+    int change = sourcePath.row - targetPath.row;
+    int theNewOrder = [task.index intValue] + change;
+
+    if(task){
+        DBController *dbController = [DBAccess createBackgroundController];
+        [dbController reorderTaskWithId:task.uid toIndex:theNewOrder successFullBlock:^() {
+            DDLogInfo(@"SUCCESS");
+            runOnMainThread(^{
+
+            }
+            );
+
+        }                  failureBlock:^(NSError *err) {
+            DDLogError(@"FAILED");
+            [self.tableView reloadData];
+        }];
     }
 }
 
@@ -277,7 +306,7 @@ unsigned int const kDefaultBatchSize = 20;
     int result = [sectionInfo numberOfObjects];
     if(self.draggedIndexPath && !self.temporaryTargetForDraggedIndexPath){
         result--;
-        DDLogInfo(@"result zmniejszony %d", result);
+        DDLogTrace(@"result zmniejszony %d", result);
     }
 
     return result;
@@ -318,6 +347,9 @@ unsigned int const kDefaultBatchSize = 20;
                     arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
             break;
     }
+
+    //there is need to update selectedIndexPath
+    self.selectedIndexPath = self.tableView.indexPathForSelectedRow;
 }
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {

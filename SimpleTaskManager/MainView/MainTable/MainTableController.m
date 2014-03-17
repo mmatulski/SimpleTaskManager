@@ -347,9 +347,6 @@ unsigned int const kDefaultBatchSize = 20;
                     arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
             break;
     }
-
-    //there is need to update selectedIndexPath
-    self.selectedIndexPath = self.tableView.indexPathForSelectedRow;
 }
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {
@@ -373,6 +370,9 @@ unsigned int const kDefaultBatchSize = 20;
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
     [self.tableView endUpdates];
+
+    //there is need to update selectedIndexPath
+    self.selectedIndexPath = self.tableView.indexPathForSelectedRow;
 }
 
 @end

@@ -5,6 +5,10 @@
 
 #import <Foundation/Foundation.h>
 
+#import "SingleOperation.h"
 
-@interface Server : NSObject
+@protocol SingleOperationDelegate <NSObject>
+
+-(void) operationFinished:(SingleOperation *) operation;
+
 @end

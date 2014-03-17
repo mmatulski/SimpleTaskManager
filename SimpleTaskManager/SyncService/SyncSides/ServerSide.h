@@ -4,12 +4,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "SyncSide.h"
 
-@class Server;
 
+@interface ServerSide : SyncSide
 
-@interface User : NSObject
-
-@property(nonatomic, strong) Server* server;
+- (void) connect;
 
 @end

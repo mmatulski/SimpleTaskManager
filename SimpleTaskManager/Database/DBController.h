@@ -25,10 +25,9 @@ extern NSString * const kSTMTaskEntityName;
 - (void)saveWithSuccessFullBlock:(void (^)())successFullBlock andFailureBlock:(void (^)(NSError *))block;
 
 - (void)addTaskWithName:(NSString *)name successFullBlock:(void (^)(STMTask *))successFullBlock failureBlock:(void (^)(NSError *err))failureBlock;
+- (void)markAsCompletedTaskWithId:(NSString *)uid successFullBlock:(void (^)())block failureBlock:(void (^)(NSError *))block1;
+- (void)reorderTaskWithId:(NSString *)uid toIndex:(int)index successFullBlock:(void (^)())block failureBlock:(void (^)(NSError *))block1;
 
 - (NSFetchRequest *)createFetchingTasksRequestWithBatchSize:(unsigned int) batchSize;
 
-- (void)markAsCompletedTaskWithId:(NSString *)uid successFullBlock:(void (^)())block failureBlock:(void (^)(NSError *))block1;
-
-- (void)reorderTaskWithId:(NSString *)uid toIndex:(int)index successFullBlock:(void (^)())block failureBlock:(void (^)(NSError *))block1;
 @end

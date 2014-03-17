@@ -3,10 +3,12 @@
 // Copyright (c) 2014 Tomato. All rights reserved.
 //
 
-#import "Server.h"
+#import "UserSide.h"
+#import "ServerSide.h"
 
 
-@implementation Server {
+@implementation UserSide {
 
 }
+
 @end

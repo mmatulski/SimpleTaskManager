@@ -138,9 +138,38 @@ NSString * const kSTMTaskEntityName = @"STMTask";
     }
 }
 
-//- (void) findTaskWithId:(NSString *)uid successFullBlock:(void (^)(STMTask *))successBlock failureBlock:(void (^)(NSError *))failureBlock{
-//
-//}
+- (void)renameTaskWithId:(NSString *)uid
+                  toName:(NSString *)theNewName
+        successFullBlock:(void (^)(id))successFullBlock
+            failureBlock:(void (^)(NSError *))failureBlock{
+
+}
+
+- (void)syncAddedTasks:(NSArray *)addedTasks
+          removedTasks:(NSArray *)removedTasks
+          renamedTasks:(NSArray *)renamedTasks
+        reorderedTasks:(NSArray *)reorderedTasks
+      successFullBlock:(void (^)(id))successFullBlock
+          failureBlock:(void (^)(NSError *))failureBlock{
+
+}
+
+- (void)fetchAllTasks:(void (^)(NSArray *tasks))successFullBlock failureBlock:(void (^)(NSError *))failureBlock {
+    NSError *err = nil;
+    NSArray *result = [self fetchAllTasks:&err];
+
+    if(result){
+        if(successFullBlock){
+            successFullBlock(result);
+        }
+    } else {
+        DDLogWarn(@"Problem with fetchAllTasks %@", [err localizedDescription]);
+        if(failureBlock){
+            failureBlock(err);
+        }
+    }
+}
+
 
 - (void) loadNumberOfAllTasksIfNotLoaded {
     if(!_numberOfAllTasksEstimated){

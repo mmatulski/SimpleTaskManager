@@ -50,7 +50,7 @@ unsigned int const kDefaultBatchSize = 20;
 }
 
 - (void)prepareDBController {
-    self.dbController = [[DBAccess sharedInstance] mainQueueController];
+    self.dbController = [[DBAccess sharedInstance] controllerOnMainQueue];
 }
 
 - (void)prepareFetchedResultsController {

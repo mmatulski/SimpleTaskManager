@@ -22,11 +22,35 @@ extern NSString * const kSTMTaskEntityName;
 - (instancetype)initWithParentController:(DBController *)parentController;
 - (instancetype)initWithContext:(NSManagedObjectContext *)context parentController:(DBController *)parentController;
 
-- (void)saveWithSuccessFullBlock:(void (^)())successFullBlock andFailureBlock:(void (^)(NSError *))block;
+- (void)saveWithSuccessFullBlock:(void (^)())successFullBlock
+                 andFailureBlock:(void (^)(NSError *))block;
 
-- (void)addTaskWithName:(NSString *)name successFullBlock:(void (^)(STMTask *))successFullBlock failureBlock:(void (^)(NSError *err))failureBlock;
-- (void)markAsCompletedTaskWithId:(NSString *)uid successFullBlock:(void (^)())block failureBlock:(void (^)(NSError *))block1;
-- (void)reorderTaskWithId:(NSString *)uid toIndex:(int)index successFullBlock:(void (^)())block failureBlock:(void (^)(NSError *))block1;
+- (void)addTaskWithName:(NSString *)name
+       successFullBlock:(void (^)(STMTask *))successFullBlock
+           failureBlock:(void (^)(NSError *err))failureBlock;
+
+- (void)markAsCompletedTaskWithId:(NSString *)uid
+                 successFullBlock:(void (^)())block
+                     failureBlock:(void (^)(NSError *))block1;
+
+- (void)reorderTaskWithId:(NSString *)uid
+                  toIndex:(int)index successFullBlock:(void (^)())successFullBlock
+             failureBlock:(void (^)(NSError *))failureBlock;
+
+- (void)renameTaskWithId:(NSString *)uid
+                  toName:(NSString *)theNewName
+        successFullBlock:(void (^)(id))successFullBlock
+            failureBlock:(void (^)(NSError *))failureBlock;
+
+- (void)syncAddedTasks:(NSArray *)addedTasks
+          removedTasks:(NSArray *)removedTasks
+          renamedTasks:(NSArray *)renamedTasks
+        reorderedTasks:(NSArray *)reorderedTasks
+      successFullBlock:(void (^)(id))successFullBlock
+          failureBlock:(void (^)(NSError *))failureBlock;
+
+- (void)fetchAllTasks:(void (^)(NSArray *tasks))successFullBlock
+         failureBlock:(void (^)(NSError *))failureBlock;
 
 - (NSFetchRequest *)createFetchingTasksRequestWithBatchSize:(unsigned int) batchSize;
 

@@ -5,7 +5,6 @@
 
 #import "SingleOperation.h"
 #import "LocalUserLeg.h"
-#import "SyncingLeg.h"
 #import "STMTask.h"
 #import "SyncGuardService.h"
 #import "AddTaskOperation.h"
@@ -26,27 +25,57 @@
     return self;
 }
 
-- (void)addTaskWithName:(NSString *)name successFullBlock:(void (^)(id))successFullBlock failureBlock:(void (^)(NSError *err))failureBlock {
+- (void)addTaskWithName:(NSString *)name
+       successFullBlock:(void (^)(id))successFullBlock
+           failureBlock:(void (^)(NSError *err))failureBlock {
+
     AddTaskOperation *operation = [[AddTaskOperation alloc] initWithTaskName:name];
-    [self assignCommonOperationOperation:operation successFullBlock:successFullBlock failureBlock:failureBlock];
+    [self assignCommonOperationOperation:operation
+                        successFullBlock:successFullBlock
+                            failureBlock:failureBlock];
 }
 
-- (void)markAsCompletedTaskWithId:(NSString *)uid successFullBlock:(void (^)(id))successFullBlock failureBlock:(void (^)(NSError *))failureBlock {
+- (void)markAsCompletedTaskWithId:(NSString *)uid
+                 successFullBlock:(void (^)(id))successFullBlock
+                     failureBlock:(void (^)(NSError *))failureBlock {
     CompleteTaskOperation *operation = [[CompleteTaskOperation alloc] initWithTaskUid:uid];
-    [self assignCommonOperationOperation:operation successFullBlock:successFullBlock failureBlock:failureBlock];
+    [self assignCommonOperationOperation:operation
+                        successFullBlock:successFullBlock
+                            failureBlock:failureBlock];
 }
 
-- (void)reorderTaskWithId:(NSString *)uid toIndex:(int)targetIndex successFullBlock:(void (^)(id))successFullBlock failureBlock:(void (^)(NSError *))failureBlock {
-    ReorderTaskOperation *operation = [[ReorderTaskOperation alloc] initWithTaskUid:uid targetIndex:targetIndex];
-    [self assignCommonOperationOperation:operation successFullBlock:successFullBlock failureBlock:failureBlock];
+- (void)reorderTaskWithId:(NSString *)uid
+                  toIndex:(int)targetIndex
+         successFullBlock:(void (^)(id))successFullBlock
+             failureBlock:(void (^)(NSError *))failureBlock {
+    ReorderTaskOperation *operation = [[ReorderTaskOperation alloc]
+            initWithTaskUid:uid targetIndex:targetIndex];
+
+    [self assignCommonOperationOperation:operation
+                        successFullBlock:successFullBlock
+                            failureBlock:failureBlock];
 }
 
-- (void)allTasksOnTheOtherSide:(void (^)(id))successFullBlock failureBlock:(void (^)(NSError *err))failureBlock {
-    //TODO for user - get all tasks from server
-    // for server - get all tasks in localdb
+- (void)renameTaskWithId:(NSString *)uid
+                  toName:(NSString *)theNewName
+        successFullBlock:(void (^)(id))successFullBlock
+            failureBlock:(void (^)(NSError *))failureBlock {
+
 }
 
-- (void)assignCommonOperationOperation:(SingleOperation *)operation successFullBlock:(void (^)(id))successFullBlock failureBlock:(void (^)(NSError *))failureBlock {
+- (void)syncAddedTasks:(NSArray *)addedTasks
+          removedTasks:(NSArray *)removedTasks
+          renamedTasks:(NSArray *)renamedTasks
+        reorderedTasks:(NSArray *)reorderedTasks
+      successFullBlock:(void (^)(id))successFullBlock
+          failureBlock:(void (^)(NSError *))failureBlock {
+
+}
+
+
+- (void)assignCommonOperationOperation:(SingleOperation *)operation
+                      successFullBlock:(void (^)(id))successFullBlock
+                          failureBlock:(void (^)(NSError *))failureBlock {
     operation.delegate = self;
     operation.successFullBlock = successFullBlock;
     operation.failureBlock = failureBlock;

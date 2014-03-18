@@ -149,6 +149,20 @@
     return fetchResults;
 }
 
+- (NSArray *) fetchAllTasks:(NSError **) error {
+    NSFetchRequest *request = [self prepareTaskFetchRequest];
+
+    NSError *err = nil;
+    NSArray *fetchResults = [self.context executeFetchRequest:request error:&err];
+    if (fetchResults == nil) {
+        DDLogError(@"DBController err when fetchAllTasks %@", [err localizedDescription]);
+        forwardError(err, error);
+        return nil;
+    }
+
+    return fetchResults;
+}
+
 - (BOOL)reorderTask:(STMTask *)task withIndex:(int)index error:(NSError **)error {
     int currentIndex = [[task index] intValue];
     int change = index - currentIndex;

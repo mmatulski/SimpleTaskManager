@@ -12,7 +12,7 @@
 
 @property(readonly, nonatomic, strong) DBController* masterController;
 
-@property(readonly, nonatomic, strong) DBController* mainQueueController;
+@property(readonly, nonatomic, strong) DBController*controllerOnMainQueue;
 
 + (instancetype) sharedInstance;
 

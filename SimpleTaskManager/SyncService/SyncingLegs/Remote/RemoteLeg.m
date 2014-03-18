@@ -6,6 +6,7 @@
 #import "RemoteLeg.h"
 #import "SingleOperation.h"
 #import "RemoteActionsHandler.h"
+#import "VirtualRemoteActionsHandler.h"
 
 
 @implementation RemoteLeg {
@@ -13,7 +14,7 @@
 }
 
 - (void)connect {
-    self.remoteActionsHandler = [[RemoteActionsHandler alloc] init];
+    self.remoteActionsHandler = [[VirtualRemoteActionsHandler alloc] init];
     self.remoteActionsHandler.remoteLeg = self;
     [self.remoteActionsHandler connect];
 }

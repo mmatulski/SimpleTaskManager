@@ -6,12 +6,12 @@
 #import "RemoteActionsHandler.h"
 #import "RemoteConnection.h"
 
-
 @implementation RemoteActionsHandler {
 
 }
 - (void)connect {
     [self prepareConnection];
+    [self.connection connect];
 }
 
 - (void)prepareConnection {

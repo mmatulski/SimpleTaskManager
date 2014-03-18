@@ -13,4 +13,5 @@
 
 @property(nonatomic, weak) id<SyncingLegProtocol> localSync;
 
+- (void)connect;
 @end

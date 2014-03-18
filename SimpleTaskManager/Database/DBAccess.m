@@ -50,13 +50,13 @@
         NSManagedObjectContext* mainQueueContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
         [mainQueueContext setPersistentStoreCoordinator:coordinator];
 
-        _mainQueueController = [[DBController alloc] initWithContext:mainQueueContext parentController:self.masterController];
+        _controllerOnMainQueue = [[DBController alloc] initWithContext:mainQueueContext parentController:self.masterController];
     }
 }
 
 + (DBController *) createBackgroundController {
 
-    DBController *mainController = [[DBAccess sharedInstance] mainQueueController];
+    DBController *mainController = [[DBAccess sharedInstance] controllerOnMainQueue];
     DBController *backgroundController = [[DBController alloc] initWithParentController:mainController];
 
     return backgroundController;

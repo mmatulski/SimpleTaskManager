@@ -15,5 +15,7 @@
 
 - (BOOL)removeTask:(STMTask *)task error:(NSError **)error;
 
+- (NSArray *)fetchAllTasks:(NSError **)error;
+
 - (BOOL)reorderTask:(STMTask *)task withIndex:(int)index error:(NSError **)error;
 @end

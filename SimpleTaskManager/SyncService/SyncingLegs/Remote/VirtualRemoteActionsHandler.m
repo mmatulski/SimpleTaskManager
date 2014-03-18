@@ -49,13 +49,31 @@
 
     static int counter = 0;
 
+    int numberOfTasks = [tasks count];
+
+    int numberOfItemsToChange = (int) ceil((float) numberOfTasks * 0.25);
+    if(numberOfItemsToChange > numberOfTasks){
+        numberOfItemsToChange = numberOfTasks;
+    }
+    int numberOfTasksToRename = (int) ceil(0.33 * (float) numberOfItemsToChange);
+    int numberOfTasksToReorder = (int) ceil(0.33 * (float) numberOfItemsToChange);
+    int numberOfTasksToRemove = (int) ceil(0.33 * (float) numberOfItemsToChange);
+    int increase = (int) ceil(0.05 * (float) numberOfItemsToChange);
+    if(increase == 0){
+        increase = 1;
+    }
+    int numberOfTasksToAdd = numberOfTasksToRemove + increase;
+
+
     NSMutableArray *array = [[NSMutableArray alloc] init];
 
+    for(int i = 0; i < numberOfTasksToAdd; i++){
+        STMTaskModel *add1 = [[STMTaskModel alloc] initWithName:[NSString stringWithFormat:@"task %d_%d", counter++, i]
+                                                            uid:nil index:nil];
+        [array addObject:add1];
+    }
 
-    STMTaskModel *add1 = [[STMTaskModel alloc] initWithName:[NSString stringWithFormat:@"task %d", counter++]
-     uid:nil index:nil];
 
-    [array addObject:add1];
 
     [self.remoteLeg syncAddedTasks:[NSArray arrayWithArray:array]
                       removedTasks:nil

@@ -26,13 +26,13 @@
 
     DBController *dbController = [DBAccess createBackgroundController];
     [dbController addTaskWithName:self.taskName successFullBlock:^(STMTask *task) {
-        DDLogInfo(@"SUCCESS");
+        DDLogInfo(@"AddTaskOperation END SUCCESS");
+        self.createdTask = task;
         [self finishedSuccessFully];
     } failureBlock:^(NSError *err) {
-        DDLogError(@"FAILED");
+        DDLogError(@"AddTaskOperation END FAILED");
         [self failedWithError:err];
     }];
 }
-
 
 @end

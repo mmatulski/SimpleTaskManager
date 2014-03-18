@@ -11,6 +11,9 @@
 #define BlockWeakObject(o) __typeof(o) __weak
 #define BlockWeakSelf BlockWeakObject(self)
 
+#define BlockStrongSelf BlockStrongObject(self)
+#define BlockStrongObject(o) __typeof(o) __strong
+
 extern id MakeSafeCast(id object, Class targetClass);
 
 extern void forwardError(NSError *err, NSError **error);

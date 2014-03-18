@@ -11,6 +11,9 @@
 #import "MainTableController+TaskOptions.h"
 #import "MainTableController+DragAndDrop.h"
 #import "TaskTableViewCell.h"
+#import "SyncGuardService.h"
+#import "SyncSide.h"
+#import "UserSide.h"
 
 NSString * const kCellIdentifier = @"CellIdentifier";
 unsigned int const kDefaultBatchSize = 20;
@@ -239,17 +242,12 @@ unsigned int const kDefaultBatchSize = 20;
     int theNewOrder = [task.index intValue] + change;
 
     if(task){
-        DBController *dbController = [DBAccess createBackgroundController];
-        [dbController reorderTaskWithId:task.uid toIndex:theNewOrder successFullBlock:^() {
-            DDLogInfo(@"SUCCESS");
+        [[SyncGuardService singleUser] reorderTaskWithId:task.uid toIndex:theNewOrder successFullBlock:^(id o) {
+
+        } failureBlock:^(NSError *error) {
             runOnMainThread(^{
-
-            }
-            );
-
-        }                  failureBlock:^(NSError *err) {
-            DDLogError(@"FAILED");
-            [self.tableView reloadData];
+                [self.tableView reloadData];
+            });
         }];
     }
 }

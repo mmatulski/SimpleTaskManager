@@ -4,6 +4,8 @@
 //
 
 #import "CompleteTaskOperation.h"
+#import "DBController.h"
+#import "DBAccess.h"
 
 
 @implementation CompleteTaskOperation {
@@ -18,5 +20,20 @@
 
     return self;
 }
+
+- (void)main {
+    DDLogInfo(@"CompleteTaskOperation BEGIN %@", self.taskUid);
+
+    DBController *dbController = [DBAccess createBackgroundController];
+    [dbController markAsCompletedTaskWithId:self.taskUid successFullBlock:^() {
+        DDLogInfo(@"CompleteTaskOperation END S %@ END", self.taskUid);
+        [self finishedSuccessFully];
+    } failureBlock:^(NSError *err) {
+        DDLogError(@"FAILED");
+        [self failedWithError:err];
+    }];
+}
+
+
 
 @end

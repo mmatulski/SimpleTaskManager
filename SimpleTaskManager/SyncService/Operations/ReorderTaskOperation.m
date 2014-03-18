@@ -4,6 +4,8 @@
 //
 
 #import "ReorderTaskOperation.h"
+#import "DBAccess.h"
+#import "DBController.h"
 
 
 @implementation ReorderTaskOperation {
@@ -18,6 +20,19 @@
     }
 
     return self;
+}
+
+- (void)main {
+    DDLogInfo(@"ReorderTaskOperation BEGIN %@ %d", self.taskUid, self.targetIndex);
+
+    DBController *dbController = [DBAccess createBackgroundController];
+    [dbController reorderTaskWithId:self.taskUid toIndex:self.targetIndex successFullBlock:^() {
+        DDLogInfo(@"ReorderTaskOperation END S %@ END", self.taskUid);
+        [self finishedSuccessFully];
+    } failureBlock:^(NSError *err) {
+        DDLogError(@"ReorderTaskOperation END FAILED");
+        [self failedWithError:err];
+    }];
 }
 
 @end

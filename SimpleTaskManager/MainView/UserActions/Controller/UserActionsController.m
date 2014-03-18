@@ -7,10 +7,11 @@
 #import "STMTask.h"
 #import "TaskOptionsView.h"
 #import "UserActionsHelperView+TaskOptions.h"
-#import "DBController.h"
-#import "DBAccess.h"
 #import "UserActionsHelperView+TheNewTaskDialogHandling.h"
 #import "UserActionsHelperControllerDelegate.h"
+#import "SyncGuardService.h"
+#import "SyncSide.h"
+#import "UserSide.h"
 
 
 @implementation UserActionsController {
@@ -54,15 +55,12 @@
     STMTask * task =  self.currentTaskWithOptionsShown;
 
     if(task){
-        DBController *dbController = [DBAccess createBackgroundController];
-        [dbController markAsCompletedTaskWithId:task.uid successFullBlock:^() {
+        [[SyncGuardService singleUser] markAsCompletedTaskWithId:task.uid successFullBlock:^(id o) {
             DDLogInfo(@"SUCCESS");
             runOnMainThread(^{
                 [self closeTaskOptionsForTask:task];
-            }
-            );
-
-        } failureBlock:^(NSError *err) {
+            });
+        } failureBlock:^(NSError *error) {
             DDLogError(@"FAILED");
         }];
     }
@@ -76,13 +74,13 @@
 #pragma mark - UserActionsHelperViewDelegate methods
 
 -(void)userWantsToSaveTheNewTask:(NSString *) taskName {
-    DBController *dbController = [DBAccess createBackgroundController];
-    [dbController addTaskWithName:taskName successFullBlock:^(STMTask *task) {
+
+    [[SyncGuardService singleUser] addTaskWithName:taskName successFullBlock:^(id o) {
         DDLogInfo(@"SUCCESS");
         runOnMainThread(^{
             [self.helperView theNewTaskSaved];
         });
-    }                failureBlock:^(NSError *err) {
+    } failureBlock:^(NSError *err) {
         DDLogError(@"FAILED");
     }];
 }

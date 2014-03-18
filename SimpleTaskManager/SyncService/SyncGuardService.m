@@ -26,7 +26,7 @@
 }
 
 + (RemoteLeg *)singleServer {
-    return [[SyncGuardService sharedInstance] server];
+    return [[SyncGuardService sharedInstance] remoteSide];
 }
 
 + (LocalUserLeg *)singleUser {
@@ -40,22 +40,22 @@
         self.operationsQueue.maxConcurrentOperationCount = 1;
         self.user = [[LocalUserLeg alloc] init];
         self.user.syncGuardService = self;
-        self.server = [[RemoteLeg alloc] init];
-        self.server.syncGuardService = self;
+        self.remoteSide = [[RemoteLeg alloc] init];
+        self.remoteSide.syncGuardService = self;
     }
 
     return self;
 }
 
 - (void)connectToServer {
-    [self.server connect];
+    [self.remoteSide connect];
 }
 
 - (void)operationIsWaitingForExecutionOnSide:(SyncingLeg *)side {
     if([side isKindOfClass:[LocalUserLeg class]]){
         [self userOperationIsWaitingForExecution];
     } else if([side isKindOfClass:[RemoteLeg class]]){
-        [self serverOperationIsWaitingForExecution];
+        [self remoteSideOperationIsWaitingForExecution];
     }
 }
 
@@ -64,8 +64,9 @@
     [self.operationsQueue addOperation:operation];
 }
 
-- (void)serverOperationIsWaitingForExecution {
-
+- (void)remoteSideOperationIsWaitingForExecution {
+    SingleOperation *operation = [self.remoteSide nextOperation];
+    [self.operationsQueue addOperation:operation];
 }
 
 

@@ -17,7 +17,7 @@
 + (LocalUserLeg *) singleUser;
 
 @property(nonatomic, strong) NSOperationQueue *operationsQueue;
-@property(nonatomic, strong) RemoteLeg *server;
+@property(nonatomic, strong) RemoteLeg *remoteSide;
 @property(nonatomic, strong) LocalUserLeg *user;
 
 -(void) connectToServer;

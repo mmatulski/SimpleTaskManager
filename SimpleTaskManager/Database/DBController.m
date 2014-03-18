@@ -7,6 +7,7 @@
 #import "STMTask.h"
 #import "DBController+Internal.h"
 #import "DBController+Undo.h"
+#import "STMTaskModel.h"
 
 NSString * const kSTMTaskEntityName = @"STMTask";
 
@@ -194,6 +195,64 @@ NSString * const kSTMTaskEntityName = @"STMTask";
       successFullBlock:(void (^)(id))successFullBlock
           failureBlock:(void (^)(NSError *))failureBlock{
 
+    [self beginUndo];
+
+    NSError *err = nil;
+
+    for(STMTaskModel *taskModel in addedTasks){
+        if(![self addTaskWithName:taskModel.name withUid:taskModel.uid withIndex:taskModel.index]){
+            [self undo];
+
+            if(failureBlock){
+                failureBlock(nil);
+            }
+            return;
+        }
+    }
+
+    for(STMTaskModel *taskModel in removedTasks){
+        if(![self markAsCompletedTaskWithId:taskModel.uid error:&err]){
+            [self undo];
+
+            if(failureBlock){
+                failureBlock(err);
+            }
+            return;
+        }
+    }
+
+    for(STMTaskModel *taskModel in renamedTasks){
+        if(![self renameTaskWithId:taskModel.uid withName:taskModel.name error:&err]){
+            [self undo];
+
+            if(failureBlock){
+                failureBlock(err);
+            }
+            return;
+        }
+    }
+
+    for(STMTaskModel *taskModel in reorderedTasks){
+        if(![self reorderTaskWithId:taskModel.uid toIndex:[taskModel.index intValue] error:&err]){
+            [self undo];
+            if(failureBlock){
+                failureBlock(err);
+            }
+            return;
+        }
+    }
+
+    [self saveWithSuccessFullBlock:^{
+        [self endUndo];
+        if(successFullBlock){
+            successFullBlock(nil);
+        }
+    } andFailureBlock:^(NSError *error){
+        [self undo];
+        if(failureBlock){
+            failureBlock(error);
+        }
+    }];
 }
 
 - (void)fetchAllTasks:(void (^)(NSArray *tasks))successFullBlock failureBlock:(void (^)(NSError *))failureBlock {

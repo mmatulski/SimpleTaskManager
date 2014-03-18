@@ -7,6 +7,7 @@
 #import "SingleOperation.h"
 #import "RemoteActionsHandler.h"
 #import "VirtualRemoteActionsHandler.h"
+#import "SyncGuardService.h"
 
 
 @implementation RemoteLeg {
@@ -18,10 +19,5 @@
     self.remoteActionsHandler.remoteLeg = self;
     [self.remoteActionsHandler connect];
 }
-
-- (void)operationFinished:(SingleOperation *)operation {
-
-}
-
 
 @end

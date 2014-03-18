@@ -10,6 +10,8 @@
 #import "AddTaskOperation.h"
 #import "CompleteTaskOperation.h"
 #import "ReorderTaskOperation.h"
+#import "RenameOperation.h"
+#import "SyncOperation.h"
 
 
 @implementation SyncingLeg {
@@ -60,7 +62,12 @@
                   toName:(NSString *)theNewName
         successFullBlock:(void (^)(id))successFullBlock
             failureBlock:(void (^)(NSError *))failureBlock {
+    RenameOperation *operation = [[RenameOperation alloc]
+            initWithTaskUid:uid theNewName:theNewName];
 
+    [self assignCommonOperationOperation:operation
+                        successFullBlock:successFullBlock
+                            failureBlock:failureBlock];
 }
 
 - (void)syncAddedTasks:(NSArray *)addedTasks
@@ -70,6 +77,16 @@
       successFullBlock:(void (^)(id))successFullBlock
           failureBlock:(void (^)(NSError *))failureBlock {
 
+    SyncOperation *operation = [[SyncOperation alloc] init];
+
+    operation.addedTasks = addedTasks;
+    operation.removedTasks = removedTasks;
+    operation.renamedTasks = renamedTasks;
+    operation.reorderedTasks = reorderedTasks;
+
+    [self assignCommonOperationOperation:operation
+                        successFullBlock:successFullBlock
+                            failureBlock:failureBlock];
 }
 
 

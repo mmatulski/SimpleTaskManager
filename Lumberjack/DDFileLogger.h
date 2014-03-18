@@ -38,7 +38,7 @@
 // 
 // The primary purpose of this is to allow you to do something with the log files after they have been rolled.
 // Perhaps you want to compress them to save disk space.
-// Perhaps you want to upload them to an FTP server.
+// Perhaps you want to upload them to an FTP remoteSide.
 // Perhaps you want to run some analytics on the file.
 // 
 // A default LogFileManager is, of course, provided.

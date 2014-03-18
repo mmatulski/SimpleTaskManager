@@ -7,6 +7,8 @@
 #import "DBAccess.h"
 #import "DBController.h"
 #import "STMTask.h"
+#import "RemoteLeg.h"
+#import "STMTaskModel.h"
 
 @implementation VirtualRemoteActionsHandler {
 
@@ -15,7 +17,7 @@
 - (id)init {
     self = [super init];
     if (self) {
-        _timerInterval = 2.0;
+        _timerInterval = 10.0;
     }
 
     return self;
@@ -45,12 +47,31 @@
 
 - (void)generateActionsForTasks:(NSArray *)tasks {
 
-    long value = random();
-    for(STMTask *task in tasks){
+    static int counter = 0;
 
-    }
+    NSMutableArray *array = [[NSMutableArray alloc] init];
 
 
+    STMTaskModel *add1 = [[STMTaskModel alloc] initWithName:[NSString stringWithFormat:@"task %d", counter++]
+     uid:nil index:nil];
+
+    [array addObject:add1];
+
+    [self.remoteLeg syncAddedTasks:[NSArray arrayWithArray:array]
+                      removedTasks:nil
+                      renamedTasks:nil
+                    reorderedTasks:nil
+                  successFullBlock:^(id o) {
+                      DDLogInfo(@"generateActionsForTasks SUCCESS");
+                  } failureBlock:^(NSError *error) {
+        DDLogInfo(@"generateActionsForTasks FAILURE %@", [error localizedDescription]);
+    }];
+
+//    for(STMTask *task in tasks){
+//
+//    }
+
+    //self.remoteLeg
 
 
 }

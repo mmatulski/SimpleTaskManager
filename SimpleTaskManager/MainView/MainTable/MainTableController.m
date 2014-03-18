@@ -186,18 +186,15 @@ unsigned int const kDefaultBatchSize = 20;
     } else if(gestureRecognizer.state == UIGestureRecognizerStateFailed || gestureRecognizer.state == UIGestureRecognizerStateCancelled){
         DDLogInfo(@"Failed | Cancelled");
 
-        [self.dragAndDropHandler stopDragging];
-        NSIndexPath *indexPath = self.draggedIndexPath;
+        [self.tableView insertRowsAtIndexPaths:@[self.draggedIndexPath] withRowAnimation:UITableViewRowAnimationFade];
         self.draggedIndexPath = nil;
-
-        [self.tableView beginUpdates];
-        [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
 
         if(self.temporaryTargetForDraggedIndexPath){
             [self.tableView deleteRowsAtIndexPaths:@[self.temporaryTargetForDraggedIndexPath] withRowAnimation:UITableViewRowAnimationFade];
             self.temporaryTargetForDraggedIndexPath = nil;
         }
-        [self.tableView endUpdates];
+
+        [self.dragAndDropHandler stopDragging];
 
         [self enableTableGestureRecognizerForScrolling];
     } else if(gestureRecognizer.state == UIGestureRecognizerStateChanged){
@@ -216,21 +213,13 @@ unsigned int const kDefaultBatchSize = 20;
         self.draggedIndexPath = nil;
         self.temporaryTargetForDraggedIndexPath = nil;
 
-        [self changeOrderForTaskFromIndexPath:indexPathSource toIndexPath:indexPathTarget];
+        if(indexPathTarget){
+            [self changeOrderForTaskFromIndexPath:indexPathSource toIndexPath:indexPathTarget];
+        } else {
+            [self.tableView insertRowsAtIndexPaths:@[indexPathSource] withRowAnimation:UITableViewRowAnimationFade];
+        }
 
         [self.dragAndDropHandler stopDragging];
-//        NSIndexPath *indexPath = self.draggedIndexPath;
-
-
-//        [self.tableView beginUpdates];
-//        [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-//
-//        if(self.temporaryTargetForDraggedIndexPath){
-//            [self.tableView deleteRowsAtIndexPaths:@[self.temporaryTargetForDraggedIndexPath] withRowAnimation:UITableViewRowAnimationFade];
-//            self.temporaryTargetForDraggedIndexPath = nil;
-//        }
-//        [self.tableView endUpdates];
-
         [self enableTableGestureRecognizerForScrolling];
     }
 }

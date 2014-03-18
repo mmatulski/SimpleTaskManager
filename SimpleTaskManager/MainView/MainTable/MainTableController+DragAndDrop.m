@@ -73,7 +73,7 @@
         BOOL showOnBottom = false;
         if(cellFactor < 0.5){
             show = true;
-        } else if(cellFactor > 0.5){
+        } else if(cellFactor >= 0.5){
             show = true;
             showOnBottom = true;
         } else {

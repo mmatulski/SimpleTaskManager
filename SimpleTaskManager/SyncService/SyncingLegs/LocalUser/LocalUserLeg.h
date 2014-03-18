@@ -4,12 +4,12 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "SyncSide.h"
+#import "SyncingLeg.h"
 
-@class ServerSide;
+@class RemoteLeg;
 
 
-@interface UserSide : SyncSide
+@interface LocalUserLeg : SyncingLeg
 
 @property(nonatomic, strong) NSMutableArray * operationsWaitingForSyncWithServer;
 

@@ -12,8 +12,8 @@
 #import "MainTableController+DragAndDrop.h"
 #import "TaskTableViewCell.h"
 #import "SyncGuardService.h"
-#import "SyncSide.h"
-#import "UserSide.h"
+#import "SyncingLeg.h"
+#import "LocalUserLeg.h"
 
 NSString * const kCellIdentifier = @"CellIdentifier";
 unsigned int const kDefaultBatchSize = 20;

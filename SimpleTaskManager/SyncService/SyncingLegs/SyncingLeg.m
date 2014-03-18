@@ -4,8 +4,8 @@
 //
 
 #import "SingleOperation.h"
-#import "UserSide.h"
-#import "SyncSide.h"
+#import "LocalUserLeg.h"
+#import "SyncingLeg.h"
 #import "STMTask.h"
 #import "SyncGuardService.h"
 #import "AddTaskOperation.h"
@@ -13,7 +13,7 @@
 #import "ReorderTaskOperation.h"
 
 
-@implementation SyncSide {
+@implementation SyncingLeg {
 
 }
 

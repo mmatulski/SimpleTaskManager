@@ -10,8 +10,8 @@
 #import "UserActionsHelperView+TheNewTaskDialogHandling.h"
 #import "UserActionsHelperControllerDelegate.h"
 #import "SyncGuardService.h"
-#import "SyncSide.h"
-#import "UserSide.h"
+#import "SyncingLeg.h"
+#import "LocalUserLeg.h"
 
 
 @implementation UserActionsController {

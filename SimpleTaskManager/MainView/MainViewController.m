@@ -12,6 +12,8 @@
 #import "UserActionsHelperView.h"
 #import "STMTask.h"
 #import "UserActionsController.h"
+#import "SyncGuardService.h"
+#import "RemoteLeg.h"
 
 @interface MainViewController ()
 
@@ -35,6 +37,8 @@
     // Do any additional setup after loading the view.
     [self prepareTableController];
     [self prepareDialogsPresentationController];
+
+    [[SyncGuardService sharedInstance] connectToServer];
 }
 
 - (void)viewDidAppear:(BOOL)animated {

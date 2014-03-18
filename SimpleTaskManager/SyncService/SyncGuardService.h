@@ -6,22 +6,22 @@
 #import <Foundation/Foundation.h>
 
 @class STMTask;
-@class ServerSide;
-@class UserSide;
-@class SyncSide;
+@class RemoteLeg;
+@class LocalUserLeg;
+@class SyncingLeg;
 
 @interface SyncGuardService : NSObject
 
 + (instancetype) sharedInstance;
-+ (ServerSide*) singleServer;
-+ (UserSide *) singleUser;
++ (RemoteLeg *) singleServer;
++ (LocalUserLeg *) singleUser;
 
 @property(nonatomic, strong) NSOperationQueue *operationsQueue;
-@property(nonatomic, strong) ServerSide *server;
-@property(nonatomic, strong) UserSide *user;
+@property(nonatomic, strong) RemoteLeg *server;
+@property(nonatomic, strong) LocalUserLeg *user;
 
 -(void) connectToServer;
 
--(void) operationIsWaitingForExecutionOnSide:(SyncSide *) side;
+-(void) operationIsWaitingForExecutionOnSide:(SyncingLeg *) side;
 
 @end

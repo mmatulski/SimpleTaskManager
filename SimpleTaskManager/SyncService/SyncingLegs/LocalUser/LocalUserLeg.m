@@ -3,11 +3,11 @@
 // Copyright (c) 2014 Tomato. All rights reserved.
 //
 
-#import "UserSide.h"
-#import "ServerSide.h"
+#import "LocalUserLeg.h"
+#import "RemoteLeg.h"
 
 
-@implementation UserSide {
+@implementation LocalUserLeg {
 
 }
 

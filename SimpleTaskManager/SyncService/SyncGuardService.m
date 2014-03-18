@@ -5,9 +5,9 @@
 
 #import "SyncGuardService.h"
 #import "STMTask.h"
-#import "ServerSide.h"
-#import "UserSide.h"
-#import "SyncSide.h"
+#import "RemoteLeg.h"
+#import "LocalUserLeg.h"
+#import "SyncingLeg.h"
 #import "SingleOperation.h"
 
 
@@ -25,11 +25,11 @@
     return sharedInstance;
 }
 
-+ (ServerSide *)singleServer {
++ (RemoteLeg *)singleServer {
     return [[SyncGuardService sharedInstance] server];
 }
 
-+ (UserSide *)singleUser {
++ (LocalUserLeg *)singleUser {
     return [[SyncGuardService sharedInstance] user];
 }
 
@@ -38,9 +38,9 @@
     if (self) {
         self.operationsQueue = [[NSOperationQueue alloc] init];
         self.operationsQueue.maxConcurrentOperationCount = 1;
-        self.user = [[UserSide alloc] init];
+        self.user = [[LocalUserLeg alloc] init];
         self.user.syncGuardService = self;
-        self.server = [[ServerSide alloc] init];
+        self.server = [[RemoteLeg alloc] init];
         self.server.syncGuardService = self;
     }
 
@@ -51,19 +51,13 @@
     [self.server connect];
 }
 
-- (void)operationIsWaitingForExecutionOnSide:(SyncSide *)side {
-    if([side isKindOfClass:[UserSide class]]){
+- (void)operationIsWaitingForExecutionOnSide:(SyncingLeg *)side {
+    if([side isKindOfClass:[LocalUserLeg class]]){
         [self userOperationIsWaitingForExecution];
-    } else if([side isKindOfClass:[ServerSide class]]){
+    } else if([side isKindOfClass:[RemoteLeg class]]){
         [self serverOperationIsWaitingForExecution];
     }
 }
-
-
-- (void)operationIsWaitingForExecution {
-
-}
-
 
 - (void)userOperationIsWaitingForExecution {
     SingleOperation *operation = [self.user nextOperation];

@@ -121,12 +121,12 @@
 - (BOOL)shouldOpenTheNewTaskDialogForTranslation:(CGPoint)translation andVelocity:(CGPoint)velocity {
 
     //if velocity is greater than zero it means the direction in to right edge
-    // 10.0 is the value which is safe to eliminate the case when UserSide stops moving his finger
+    // 10.0 is the value which is safe to eliminate the case when LocalUserLeg stops moving his finger
     if(velocity.x > 10.0){
         return false;
     }
 
-    //if UserSide will not
+    //if LocalUserLeg will not
     if(translation.x > -40.0){
         return false;
     }

@@ -25,6 +25,7 @@ extern NSString * const kSTMTaskEntityName;
 - (void)saveWithSuccessFullBlock:(void (^)())successFullBlock
                  andFailureBlock:(void (^)(NSError *))block;
 
+#pragma mar -
 - (void)addTaskWithName:(NSString *)name
        successFullBlock:(void (^)(STMTask *))successFullBlock
            failureBlock:(void (^)(NSError *err))failureBlock;
@@ -33,14 +34,14 @@ extern NSString * const kSTMTaskEntityName;
                  successFullBlock:(void (^)())block
                      failureBlock:(void (^)(NSError *))block1;
 
-- (void)reorderTaskWithId:(NSString *)uid
-                  toIndex:(int)index successFullBlock:(void (^)())successFullBlock
-             failureBlock:(void (^)(NSError *))failureBlock;
-
 - (void)renameTaskWithId:(NSString *)uid
                   toName:(NSString *)theNewName
-        successFullBlock:(void (^)(id))successFullBlock
+        successFullBlock:(void (^)(STMTask*))successFullBlock
             failureBlock:(void (^)(NSError *))failureBlock;
+
+- (void)reorderTaskWithId:(NSString *)uid
+                  toIndex:(int)index successFullBlock:(void (^)())successFullBlock
+        failureBlock:(void (^)(NSError *))failureBlock;
 
 - (void)syncAddedTasks:(NSArray *)addedTasks
           removedTasks:(NSArray *)removedTasks
@@ -49,8 +50,12 @@ extern NSString * const kSTMTaskEntityName;
       successFullBlock:(void (^)(id))successFullBlock
           failureBlock:(void (^)(NSError *))failureBlock;
 
+#pragma mark -
+
 - (void)fetchAllTasks:(void (^)(NSArray *tasks))successFullBlock
          failureBlock:(void (^)(NSError *))failureBlock;
+
+#pragma mark -
 
 - (NSFetchRequest *)createFetchingTasksRequestWithBatchSize:(unsigned int) batchSize;
 

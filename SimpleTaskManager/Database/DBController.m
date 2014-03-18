@@ -75,17 +75,13 @@ NSString * const kSTMTaskEntityName = @"STMTask";
     }];
 }
 
+#pragma mark - basic methods
+
 - (void)addTaskWithName:(NSString *)name successFullBlock:(void (^)(STMTask *))successFullBlock failureBlock:(void (^)(NSError *err))failureBlock {
-    [self loadNumberOfAllTasksIfNotLoaded];
 
     [self beginUndo];
 
-    STMTask *task = (STMTask *)[NSEntityDescription insertNewObjectForEntityForName:kSTMTaskEntityName inManagedObjectContext:self.context];
-    task.name = [name copy];
-    task.uid = [[NSUUID UUID] UUIDString];
-
-    //order is inversely proportional to index value
-    task.index = [NSNumber numberWithUnsignedLong:++_numberOfAllTasks];
+    STMTask *task = [self addTaskWithName:name withUid:nil withIndex:nil];
 
     [self saveWithSuccessFullBlock:^{
         [self endUndo];
@@ -102,20 +98,11 @@ NSString * const kSTMTaskEntityName = @"STMTask";
 }
 
 - (void)markAsCompletedTaskWithId:(NSString *)uid successFullBlock:(void (^)())successBlock failureBlock:(void (^)(NSError *))failureBlock {
-    [self loadNumberOfAllTasksIfNotLoaded];
-
-    NSError *err = nil;
-    STMTask *task = [self findTaskWithId:uid error:&err];
-    if (!task) {
-        if (failureBlock) {
-            failureBlock(err);
-        }
-        return;
-    }
 
     [self beginUndo];
 
-    if([self removeTask:task error:&err]){
+    NSError *err = nil;
+    if([self markAsCompletedTaskWithId:uid error:&err]){
         [self saveWithSuccessFullBlock:^{
             DDLogInfo(@"Task set as completed  successfully %@", uid);
             [self endUndo];
@@ -140,9 +127,64 @@ NSString * const kSTMTaskEntityName = @"STMTask";
 
 - (void)renameTaskWithId:(NSString *)uid
                   toName:(NSString *)theNewName
-        successFullBlock:(void (^)(id))successFullBlock
+        successFullBlock:(void (^)(STMTask *))successBlock
             failureBlock:(void (^)(NSError *))failureBlock{
 
+    [self beginUndo];
+
+    NSError *err = nil;
+    STMTask *renamedTask = [self renameTaskWithId:uid withName:theNewName error:&err];
+    if(renamedTask){
+        [self saveWithSuccessFullBlock:^{
+            DDLogInfo(@"Task renamed successfully %@ %@", uid, theNewName);
+            [self endUndo];
+            if(successBlock){
+                successBlock(renamedTask);
+            }
+        } andFailureBlock:^(NSError *error) {
+            DDLogWarn(@"Problem with renaming task (Saving %@ %@ %@", uid, theNewName, [err localizedDescription]);
+            [self undo];
+            if(failureBlock){
+                failureBlock(error);
+            }
+        }];
+    } else {
+        DDLogWarn(@"Problem with marking task as completed %@ %@ %@", uid, theNewName, [err localizedDescription]);
+        [self undo];
+        if(failureBlock){
+            failureBlock(err);
+        }
+    }
+}
+
+- (void)reorderTaskWithId:(NSString *)uid toIndex:(int)index successFullBlock:(void (^)())successBlock failureBlock:(void (^)(NSError *))failureBlock {
+    
+    [self beginUndo];
+
+    NSError *err = nil;
+    STMTask *task = [self reorderTaskWithId:uid toIndex:index error:&err];
+
+    if(task){
+        [self saveWithSuccessFullBlock:^{
+            DDLogInfo(@"Reorder of task performed successfully %@", uid);
+            [self endUndo];
+            if(successBlock){
+                successBlock();
+            }
+        } andFailureBlock:^(NSError *error) {
+            DDLogWarn(@"Problem with reordering task (Saving) %@ %@", uid, [err localizedDescription]);
+            [self undo];
+            if(failureBlock){
+                failureBlock(error);
+            }
+        }];
+    } else {
+        DDLogWarn(@"Problem with reordering task %@ %@", uid, [err localizedDescription]);
+        [self undo];
+        if(failureBlock){
+            failureBlock(err);
+        }
+    }
 }
 
 - (void)syncAddedTasks:(NSArray *)addedTasks
@@ -170,30 +212,6 @@ NSString * const kSTMTaskEntityName = @"STMTask";
     }
 }
 
-
-- (void) loadNumberOfAllTasksIfNotLoaded {
-    if(!_numberOfAllTasksEstimated){
-        BlockWeakSelf selfWeak = self;
-        [self.context performBlockAndWait:^{
-            NSFetchRequest *request = [[NSFetchRequest alloc] init];
-            [request setEntity:[NSEntityDescription entityForName:@"STMTask" inManagedObjectContext:selfWeak.context]];
-            [request setIncludesSubentities:NO];
-
-            NSError *err;
-            NSUInteger count = [selfWeak.context countForFetchRequest:request error:&err];
-            if(count == NSNotFound) {
-                DDLogError(@"There was problem with loading number of all tasks %@", [err localizedDescription]);
-            } else {
-                _numberOfAllTasks = count;
-                _numberOfAllTasksEstimated = true;
-
-                DDLogInfo(@"number of all Tasks is %lu", _numberOfAllTasks);
-            }
-        }];
-    }
-}
-
-
 - (NSFetchRequest *)createFetchingTasksRequestWithBatchSize:(unsigned int) batchSize {
     NSFetchRequest *fetchRequest= [self prepareTaskFetchRequest];
 
@@ -207,41 +225,6 @@ NSString * const kSTMTaskEntityName = @"STMTask";
 }
 
 
-- (void)reorderTaskWithId:(NSString *)uid toIndex:(int)index successFullBlock:(void (^)())successBlock failureBlock:(void (^)(NSError *))failureBlock {
-    [self loadNumberOfAllTasksIfNotLoaded];
 
-    NSError *err = nil;
-    STMTask *task = [self findTaskWithId:uid error:&err];
-    if (!task) {
-        if (failureBlock) {
-            failureBlock(err);
-        }
-        return;
-    }
-
-    [self beginUndo];
-
-    if([self reorderTask:task withIndex:index error:&err]){
-        [self saveWithSuccessFullBlock:^{
-            DDLogInfo(@"Reorder of task performed successfully %@", uid);
-            [self endUndo];
-            if(successBlock){
-                successBlock();
-            }
-        } andFailureBlock:^(NSError *error) {
-            DDLogWarn(@"Problem with reordering task (Saving) %@ %@", uid, [err localizedDescription]);
-            [self undo];
-            if(failureBlock){
-                failureBlock(error);
-            }
-        }];
-    } else {
-        DDLogWarn(@"Problem with reordering task %@ %@", uid, [err localizedDescription]);
-        [self undo];
-        if(failureBlock){
-            failureBlock(err);
-        }
-    }
-}
 
 @end

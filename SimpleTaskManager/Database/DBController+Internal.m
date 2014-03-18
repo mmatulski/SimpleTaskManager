@@ -9,6 +9,76 @@
 
 @implementation DBController (Internal)
 
+#pragma mark - basic methods
+
+- (STMTask *)addTaskWithName:(NSString *)name withUid:(NSString *) uid withIndex:(NSNumber *) indexNumber{
+    [self loadNumberOfAllTasksIfNotLoaded];
+
+    STMTask *task = (STMTask *)[NSEntityDescription insertNewObjectForEntityForName:kSTMTaskEntityName inManagedObjectContext:self.context];
+    task.name = [name copy];
+    if(uid){
+        task.uid = uid;
+    } else {
+        task.uid = [[NSUUID UUID] UUIDString];
+    }
+
+    //order is inversely proportional to index value
+    task.index = [NSNumber numberWithUnsignedLong:++_numberOfAllTasks];
+    return task;
+}
+
+- (BOOL) markAsCompletedTaskWithId:(NSString *)uid error:(NSError **) error {
+    [self loadNumberOfAllTasksIfNotLoaded];
+
+    NSError *err = nil;
+    STMTask *task = [self findTaskWithId:uid error:&err];
+    if (!task) {
+        forwardError(err, error);
+        return false;
+    }
+
+    if([self removeTask:task error:&err]){
+       return true;
+    } else {
+        forwardError(err, error);
+        return false;
+    }
+}
+
+- (STMTask *)renameTaskWithId:(NSString *)uid withName:(NSString *)theNewName error:(NSError **)error {
+    NSError *err = nil;
+    STMTask *task = [self findTaskWithId:uid error:&err];
+    if (!task) {
+        forwardError(err, error);
+        return nil;
+    }
+
+    task.name = theNewName;
+
+    return task;
+}
+
+- (STMTask *) reorderTaskWithId:(NSString *)uid toIndex:(int)index error:(NSError **) error {
+    [self loadNumberOfAllTasksIfNotLoaded];
+
+    NSError *err = nil;
+    STMTask *task = [self findTaskWithId:uid error:&err];
+    if (!task) {
+        forwardError(err, error);
+        return nil;
+    }
+
+    if([self reorderTask:task withIndex:index error:&err]){
+        return task;
+    } else {
+        forwardError(err, error);
+       return nil;
+    }
+}
+
+
+#pragma mark -
+
 - (STMTask *)findTaskWithId:(NSString *)uid error:(NSError **) error{
 
     NSFetchRequest *request = [self prepareTaskFetchRequest];
@@ -167,9 +237,9 @@
     int currentIndex = [[task index] intValue];
     int change = index - currentIndex;
 
-    int lowerOne = currentIndex;
-    int higherOne = index;
-    int diff = 1;
+    int lowerOne;
+    int higherOne;
+    int diff;
     if(change > 0){
          lowerOne = currentIndex + 1;
         higherOne = index;
@@ -194,6 +264,28 @@
     task.index = [NSNumber numberWithInt:index];
 
     return true;
+}
+
+- (void) loadNumberOfAllTasksIfNotLoaded {
+    if(!_numberOfAllTasksEstimated){
+        BlockWeakSelf selfWeak = self;
+        [self.context performBlockAndWait:^{
+            NSFetchRequest *request = [[NSFetchRequest alloc] init];
+            [request setEntity:[NSEntityDescription entityForName:@"STMTask" inManagedObjectContext:selfWeak.context]];
+            [request setIncludesSubentities:NO];
+
+            NSError *err;
+            NSUInteger count = [selfWeak.context countForFetchRequest:request error:&err];
+            if(count == NSNotFound) {
+                DDLogError(@"There was problem with loading number of all tasks %@", [err localizedDescription]);
+            } else {
+                _numberOfAllTasks = count;
+                _numberOfAllTasksEstimated = true;
+
+                DDLogInfo(@"number of all Tasks is %lu", _numberOfAllTasks);
+            }
+        }];
+    }
 }
 
 @end

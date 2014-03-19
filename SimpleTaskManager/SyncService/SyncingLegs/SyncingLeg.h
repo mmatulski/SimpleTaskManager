@@ -19,4 +19,5 @@
 
 - (SingleOperation *)nextOperation;
 
+- (void)operationPushedOnQueue:(SingleOperation *)operation;
 @end

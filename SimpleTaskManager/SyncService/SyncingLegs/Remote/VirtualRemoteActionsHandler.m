@@ -17,7 +17,7 @@
 - (id)init {
     self = [super init];
     if (self) {
-        _timerInterval = 10.0;
+        _timerInterval = 20.0;
     }
 
     return self;
@@ -47,38 +47,89 @@
 
 - (void)generateActionsForTasks:(NSArray *)tasks {
 
-    static int counter = 0;
+    static NSUInteger counter = 0;
+    static NSUInteger renameCounter = 0;
 
-    int numberOfTasks = [tasks count];
+    NSUInteger numberOfTasks = [tasks count];
 
-    int numberOfItemsToChange = (int) ceil((float) numberOfTasks * 0.25);
+    NSUInteger numberOfItemsToChange = (NSUInteger) floor((float) numberOfTasks * 0.25);
     if(numberOfItemsToChange > numberOfTasks){
         numberOfItemsToChange = numberOfTasks;
     }
-    int numberOfTasksToRename = (int) ceil(0.33 * (float) numberOfItemsToChange);
-    int numberOfTasksToReorder = (int) ceil(0.33 * (float) numberOfItemsToChange);
-    int numberOfTasksToRemove = (int) ceil(0.33 * (float) numberOfItemsToChange);
-    int increase = (int) ceil(0.05 * (float) numberOfItemsToChange);
+    NSUInteger numberOfTasksToRename = (NSUInteger) floor(0.33 * (float) numberOfItemsToChange);
+    NSUInteger numberOfTasksToReorder = (NSUInteger) floor(0.33 * (float) numberOfItemsToChange);
+    NSUInteger numberOfTasksToRemove = numberOfItemsToChange - (numberOfTasksToRename + numberOfTasksToReorder);
+
+    if(numberOfTasksToRemove < 0){
+        numberOfTasksToRemove = 0;
+    }
+
+    NSUInteger increase = (NSUInteger) floor(0.2 * (float) numberOfItemsToChange);
     if(increase == 0){
         increase = 1;
     }
-    int numberOfTasksToAdd = numberOfTasksToRemove + increase;
+    NSUInteger numberOfTasksToAdd = numberOfTasksToRemove + increase;
+ //   NSUInteger numberOfTasksToAdd = 0;//numberOfTasksToRemove + increase;
 
 
-    NSMutableArray *array = [[NSMutableArray alloc] init];
 
+
+
+    NSMutableArray * tasksToChange = [self drawFromArray:tasks numberOfItems:numberOfItemsToChange];
+
+    NSMutableArray *tasksToAdd = [[NSMutableArray alloc] init];
+    NSMutableArray *tasksToRemove = [[NSMutableArray alloc] init];
+    NSMutableArray *tasksToReorder = [[NSMutableArray alloc] init];
+    NSMutableArray *tasksToRename = [[NSMutableArray alloc] init];
+
+    //Adding
     for(int i = 0; i < numberOfTasksToAdd; i++){
         STMTaskModel *add1 = [[STMTaskModel alloc] initWithName:[NSString stringWithFormat:@"task %d_%d", counter++, i]
                                                             uid:nil index:nil];
-        [array addObject:add1];
+        [tasksToAdd addObject:add1];
     }
 
 
+    for (int i = 0; i < numberOfTasksToRemove; i++) {
+        STMTask *task = [tasksToChange firstObject];
+        if(!task){
+            break;
+        }
 
-    [self.remoteLeg syncAddedTasks:[NSArray arrayWithArray:array]
-                      removedTasks:nil
-                      renamedTasks:nil
-                    reorderedTasks:nil
+        STMTaskModel *taskModel = [[STMTaskModel alloc] initWitEntity:task];
+        [tasksToRemove addObject:taskModel];
+
+        [tasksToChange removeObject:task];
+    }
+
+    for (int i = 0; i < numberOfTasksToRename; i++) {
+        STMTask *task = [tasksToChange firstObject];
+        if(!task){
+            break;
+        }
+
+        STMTaskModel *taskModel = [[STMTaskModel alloc] initWitEntity:task];
+        [tasksToRename addObject:taskModel];
+        [taskModel setName:[NSString stringWithFormat:@"renamed %d", renameCounter++]];
+        [tasksToChange removeObject:task];
+    }
+
+    for (int i = 0; i < numberOfTasksToReorder; i++) {
+        STMTask *task = [tasksToChange firstObject];
+        if(!task){
+            break;
+        }
+
+        STMTaskModel *taskModel = [[STMTaskModel alloc] initWitEntity:task];
+        [self setAnotherOrderNrForTask:taskModel fromPossible:numberOfTasks];
+        [tasksToReorder addObject:taskModel];
+        [tasksToChange removeObject:task];
+    }
+
+    [self.remoteLeg syncAddedTasks:[NSArray arrayWithArray:tasksToAdd]
+                      removedTasks:[NSArray arrayWithArray:tasksToRemove]
+                      renamedTasks:[NSArray arrayWithArray:tasksToRename]
+                    reorderedTasks:[NSArray arrayWithArray:tasksToReorder]
                   successFullBlock:^(id o) {
                       DDLogInfo(@"generateActionsForTasks SUCCESS");
                   } failureBlock:^(NSError *error) {
@@ -92,6 +143,51 @@
     //self.remoteLeg
 
 
+}
+
+- (void)setAnotherOrderNrForTask:(STMTaskModel *)taskModel fromPossible:(NSUInteger)possible {
+    if(possible < 2){
+        return;
+    }
+
+    NSUInteger theNewIndex = [taskModel.index unsignedIntegerValue];
+    while (theNewIndex == [taskModel.index unsignedIntegerValue]){
+        theNewIndex =  arc4random_uniform(possible);
+    }
+
+    taskModel.index = [NSNumber numberWithUnsignedInt:theNewIndex];
+}
+
+- (NSMutableArray *)drawFromArray:(NSArray *)tasks numberOfItems:(int) numberOfTasksToDraw {
+    NSMutableArray *result = [[NSMutableArray alloc] init];
+
+    NSMutableArray *stillToDraw = [tasks mutableCopy];
+    int numberOfAllItems = [stillToDraw count];
+    if(numberOfTasksToDraw >= numberOfAllItems){
+        return stillToDraw;
+    }
+
+    for(int i = 0; i < numberOfTasksToDraw; i++){
+        STMTask *taskDrawn = [self drawItemFromArray:stillToDraw];
+        if(taskDrawn){
+            [result addObject:taskDrawn];
+            [stillToDraw removeObject:taskDrawn];
+        } else {
+            return nil;
+        }
+    }
+
+    return result;
+}
+
+- (STMTask *)drawItemFromArray:(NSMutableArray *)tasks {
+    uint32_t numberOfTasks = [tasks count];
+    uint32_t index = arc4random_uniform(numberOfTasks);
+    if(index >=0 && index < numberOfTasks){
+        return [tasks objectAtIndex:index];
+    }
+
+    return nil;
 }
 
 -(void) stopTrafficGenerator{

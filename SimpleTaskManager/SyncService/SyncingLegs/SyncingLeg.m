@@ -108,7 +108,7 @@
 
     [operation performAdequateBlock];
 
-    [self.operationsWaitingToSyncWidthLocalDB removeObjectAtIndex:0];
+    //[self.operationsWaitingToSyncWidthLocalDB removeObjectAtIndex:0];
 
     if([self.operationsWaitingToSyncWidthLocalDB count] > 0){
         [self.syncGuardService operationIsWaitingForExecutionOnSide:self];
@@ -120,4 +120,7 @@
     return [self.operationsWaitingToSyncWidthLocalDB firstObject];
 }
 
+- (void)operationPushedOnQueue:(SingleOperation *)operation {
+    [self.operationsWaitingToSyncWidthLocalDB removeObject:operation];
+}
 @end

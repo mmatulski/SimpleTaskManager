@@ -61,12 +61,16 @@
 
 - (void)userOperationIsWaitingForExecution {
     SingleOperation *operation = [self.user nextOperation];
+    self.localUserSideOperationRequested = true;
     [self.operationsQueue addOperation:operation];
+    [self.user operationPushedOnQueue:operation];
 }
 
 - (void)remoteSideOperationIsWaitingForExecution {
     SingleOperation *operation = [self.remoteSide nextOperation];
+    self.remoteSideOperationRequested = true;
     [self.operationsQueue addOperation:operation];
+    [self.remoteSide operationPushedOnQueue:operation];
 }
 
 

@@ -199,8 +199,15 @@ NSString * const kSTMTaskEntityName = @"STMTask";
 
     NSError *err = nil;
 
+    DDLogInfo(@"syncAddedTasks (Add %d, Remove %d, Rename %d, Reorder %d",
+    [addedTasks count],
+    [removedTasks count],
+    [renamedTasks count],
+    [reorderedTasks count]);
+
     for(STMTaskModel *taskModel in addedTasks){
         if(![self addTaskWithName:taskModel.name withUid:taskModel.uid withIndex:taskModel.index]){
+            DDLogInfo(@"addTaskWithName %@ failed", taskModel.uid);
             [self undo];
 
             if(failureBlock){
@@ -212,6 +219,7 @@ NSString * const kSTMTaskEntityName = @"STMTask";
 
     for(STMTaskModel *taskModel in removedTasks){
         if(![self markAsCompletedTaskWithId:taskModel.uid error:&err]){
+            DDLogInfo(@"markAsCompletedTaskWithId %@ failed %@", taskModel.uid, [err localizedDescription] );
             [self undo];
 
             if(failureBlock){
@@ -223,6 +231,7 @@ NSString * const kSTMTaskEntityName = @"STMTask";
 
     for(STMTaskModel *taskModel in renamedTasks){
         if(![self renameTaskWithId:taskModel.uid withName:taskModel.name error:&err]){
+            DDLogInfo(@"renameTaskWithId %@ failed %@", taskModel.uid, [err localizedDescription] );
             [self undo];
 
             if(failureBlock){
@@ -234,6 +243,7 @@ NSString * const kSTMTaskEntityName = @"STMTask";
 
     for(STMTaskModel *taskModel in reorderedTasks){
         if(![self reorderTaskWithId:taskModel.uid toIndex:[taskModel.index intValue] error:&err]){
+            DDLogInfo(@"reorderTaskWithId %@ failed %@", taskModel.uid, [err localizedDescription] );
             [self undo];
             if(failureBlock){
                 failureBlock(err);

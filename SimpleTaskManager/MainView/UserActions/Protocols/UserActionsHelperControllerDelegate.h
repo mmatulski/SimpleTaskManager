@@ -9,6 +9,6 @@
 
 @protocol UserActionsHelperControllerDelegate <NSObject>
 
--(void) userWantsToDeselectTask:(STMTask *) task;
+-(void) userWantsToDeselectTaskModel:(STMTaskModel *) taskModel;
 
 @end

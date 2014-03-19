@@ -12,6 +12,7 @@
 #import "SyncGuardService.h"
 #import "SyncingLeg.h"
 #import "LocalUserLeg.h"
+#import "STMTaskModel.h"
 
 
 @implementation UserActionsController {
@@ -29,21 +30,21 @@
 }
 
 
-- (void)showOptionsForTask:(STMTask *)task representedByCell:(UITableViewCell *)cell {
-    self.currentTaskWithOptionsShown = task;
-    [self.helperView showTaskOptionsViewForTask:task representedByCell:cell];
+- (void)showOptionsForTaskModel:(STMTaskModel *)taskModel representedByCell:(UITableViewCell *)cell {
+    self.currentTaskWithOptionsShown = taskModel;
+    [self.helperView showTaskOptionsViewForTaskModel:taskModel representedByCell:cell];
     self.helperView.taskOptionsView.delegate = self;
 }
 
-- (void)closeTaskOptionsForTask:(STMTask *)task {
-    if(self.currentTaskWithOptionsShown && [self.currentTaskWithOptionsShown isEqual:task]){
+- (void)closeTaskOptionsForTaskModel:(STMTaskModel *)taskModel {
+    if(self.currentTaskWithOptionsShown){
         [self.helperView closeTaskOptions];
         self.currentTaskWithOptionsShown = nil;
     }
 }
 
-- (void)updateTaskOptionsForTask:(STMTask *)task becauseItWasScrolledBy:(CGFloat)offsetChange {
-    if(self.currentTaskWithOptionsShown && [self.currentTaskWithOptionsShown isEqual:task]){
+- (void)updateTaskOptionsForTaskModel:(STMTaskModel *)taskModel becauseItWasScrolledBy:(CGFloat)offsetChange {
+    if(self.currentTaskWithOptionsShown && [self.currentTaskWithOptionsShown isEqual:taskModel]){
         [self.helperView updateTaskOptionsForTaskBecauseItWasScrolledBy:offsetChange];
         self.helperView.taskOptionsView.delegate = self;
     }
@@ -52,23 +53,25 @@
 #pragma mark - TaskOptionsViewDelegate methods
 
 - (void)userHasCompletedTask {
-    STMTask * task =  self.currentTaskWithOptionsShown;
-
-    if(task){
-        [[SyncGuardService singleUser] markAsCompletedTaskWithId:task.uid successFullBlock:^(id o) {
+    STMTaskModel * taskModel =  self.currentTaskWithOptionsShown;
+    
+    if(taskModel){
+        taskModel.completed = true;
+        [[SyncGuardService singleUser] markAsCompletedTaskWithId:taskModel.uid successFullBlock:^(id o) {
             DDLogInfo(@"SUCCESS");
             runOnMainThread(^{
-                [self closeTaskOptionsForTask:task];
+                [self closeTaskOptionsForTaskModel:taskModel];
             });
         } failureBlock:^(NSError *error) {
             DDLogError(@"FAILED");
+            taskModel.completed = false;
         }];
     }
 
 }
 
 - (void)userWantsDeselectTask {
-    [self.delegate userWantsToDeselectTask:self.currentTaskWithOptionsShown];
+    [self.delegate userWantsToDeselectTaskModel:self.currentTaskWithOptionsShown];
 }
 
 #pragma mark - UserActionsHelperViewDelegate methods

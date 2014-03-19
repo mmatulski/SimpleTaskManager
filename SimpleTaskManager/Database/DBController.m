@@ -294,6 +294,11 @@ NSString * const kSTMTaskEntityName = @"STMTask";
 }
 
 
+- (STMTask *)taskWithObjectID:(NSManagedObjectID *)objectId {
+    if(objectId){
+        return MakeSafeCast([self.context objectWithID:objectId], [STMTask class]);
+    }
 
-
+    return nil;
+}
 @end

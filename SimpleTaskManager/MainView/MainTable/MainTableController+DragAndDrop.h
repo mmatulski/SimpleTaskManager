@@ -6,6 +6,19 @@
 #import <Foundation/Foundation.h>
 #import "MainTableController.h"
 
+@class STMTask;
+
 @interface MainTableController (DragAndDrop)
+
 - (void)dropOrHideDraggedCellForPoint:(CGPoint)point globalPoint:(CGPoint)point1;
+
+- (void)userHasDroppedItem;
+
+- (void)cancelDragging;
+
+- (void)emergencyCancelDragging;
+
+- (STMTask *)taskForIndexPath:(NSIndexPath *)indexPath;
+
+- (void)userHasPressedLongOnIndexPath:(NSIndexPath *)path andWindowPoint:(CGPoint)point;
 @end

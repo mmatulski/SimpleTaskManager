@@ -27,6 +27,7 @@
         self.name = task.name;
         self.uid = task.uid;
         self.index = task.index;
+        self.objectId = task.objectID;
     }
     return self;
 }

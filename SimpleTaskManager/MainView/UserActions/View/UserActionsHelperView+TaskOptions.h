@@ -7,10 +7,11 @@
 #import "UserActionsHelperView.h"
 
 @class STMTask;
+@class STMTaskModel;
 
 @interface UserActionsHelperView (TaskOptions)
 
-- (void)showTaskOptionsViewForTask:(STMTask *)task representedByCell:(UITableViewCell *)cell;
+- (void)showTaskOptionsViewForTaskModel:(STMTaskModel *)taskModel representedByCell:(UITableViewCell *)cell;
 
 - (void)closeTaskOptions;
 

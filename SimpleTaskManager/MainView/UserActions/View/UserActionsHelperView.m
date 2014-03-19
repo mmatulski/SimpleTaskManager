@@ -62,8 +62,6 @@ CGFloat const kRightMarginForHandlingPanGesture = 20.0;
         return;
     }
 
-    DDLogTrace(@"handlePan");
-
     CGPoint translation = [recognizer translationInView:recognizer.view];
 
     if(recognizer.state == UIGestureRecognizerStateBegan){
@@ -112,19 +110,16 @@ CGFloat const kRightMarginForHandlingPanGesture = 20.0;
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
 
     if([self isAnyDialogOpenedOrBeganClosing]){
-        DDLogInfo(@"hitTest HANDLED1");
         return [super hitTest:point withEvent:event];
     }
 
     if([self isAnyDialogAnimatedNow]){
-        DDLogInfo(@"hitTest transparent1");
         return nil;
     }
 
     if([self isShowingTaskOptionsView]){
         CGPoint pointGlobal = [self convertPoint:point toView:nil];
         if([self.taskOptionsView shouldHandleTouchPoint:pointGlobal]){
-            DDLogInfo(@"hitTest HANDLED3");
             return [super hitTest:point withEvent:event];
         }
     }
@@ -132,17 +127,14 @@ CGFloat const kRightMarginForHandlingPanGesture = 20.0;
     CGRect rectangleForDetectingAddingTask = [self rectangleForDetectingAddingTask];
 
     if(CGRectContainsPoint(rectangleForDetectingAddingTask, point)){
-        DDLogInfo(@"hitTest HANDLED2");
         return [super hitTest:point withEvent:event];
     }
 
     CGRect rectangleForTheNewTaskHintView = self.hintViewForTheNewTask.frame;
     if(CGRectContainsPoint(rectangleForTheNewTaskHintView, point)){
-        DDLogInfo(@"hitTest HANDLED3");
         return [super hitTest:point withEvent:event];
     }
 
-    DDLogInfo(@"hitTest transparent2");
     return nil;
 }
 

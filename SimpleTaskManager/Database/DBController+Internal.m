@@ -152,7 +152,7 @@
 
 - (BOOL)changeIndexBy:(int)change inAllTasksWithIndexHigherThan:(int)higherThan butLowerThan:(int)lowerThan error:(NSError **)error {
 
-    DDLogInfo(@"changeIndexBy %d  higherThan %d lowerThan %d", change, higherThan, lowerThan);
+    DDLogTrace(@"changeIndexBy %d  higherThan %d lowerThan %d", change, higherThan, lowerThan);
 
     NSError *err = nil;
     NSArray * tasks = [self findAllTasksWithIndexHigherThan:higherThan andLowerThan:lowerThan error:&err];
@@ -174,11 +174,11 @@
     NSNumber *indexNumber =  task.index;
     int index = [indexNumber intValue];
     int theNewIndex = index + change;
-    NSNumber *changedIdnexNumber = [NSNumber numberWithInt:theNewIndex];
+    NSNumber *changedIndexNumber = [NSNumber numberWithInt:theNewIndex];
 
-    DDLogInfo(@"----- change [%@] %d  from %d to %d", task.name ,change, index, theNewIndex);
+    DDLogTrace(@"----- change [%@] %d  from %d to %d", task.name ,change, index, theNewIndex);
 
-    task.index = changedIdnexNumber;
+    task.index = changedIndexNumber;
 }
 
 - (NSArray *)findAllTasksWithIndexHigherThan:(int)relatedOrder error:(NSError **)error {
@@ -204,7 +204,7 @@
     NSFetchRequest *request = [self prepareTaskFetchRequest];
 
     NSString *predicateString = [NSString stringWithFormat:@"(index > %d) AND (index < %d)", higherThan, lowerThan];
-    DDLogInfo(@"findAllTasksWithIndexHigherThan higherThan %d lowerThan %d [%@]", higherThan, lowerThan, predicateString);
+    DDLogTrace(@"findAllTasksWithIndexHigherThan higherThan %d lowerThan %d [%@]", higherThan, lowerThan, predicateString);
     NSPredicate *predicate = [NSPredicate predicateWithFormat:predicateString];
     [request setPredicate:predicate];
 
@@ -250,7 +250,7 @@
         diff = 1;
     }
 
-    DDLogInfo(@"reorderTask %d -> %d", currentIndex, index);
+    DDLogTrace(@"reorderTask %d -> %d", currentIndex, index);
 
 
     NSError *err = nil;
@@ -260,7 +260,7 @@
         return false;
     }
 
-    DDLogInfo(@"---- FINALLY %d -> %d", currentIndex, index);
+    DDLogTrace(@"---- FINALLY %d -> %d", currentIndex, index);
     task.index = [NSNumber numberWithInt:index];
 
     return true;

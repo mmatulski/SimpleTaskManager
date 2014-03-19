@@ -10,17 +10,18 @@
 @class UserActionsHelperView;
 @class STMTask;
 @protocol UserActionsHelperControllerDelegate;
+@class STMTaskModel;
 
 @interface UserActionsController : NSObject <TaskOptionsDelegate, UserActionsHelperViewDelegate>
 
 @property(nonatomic, weak) id <UserActionsHelperControllerDelegate> delegate;
 @property(nonatomic, strong) UserActionsHelperView *helperView;
-@property(nonatomic, strong) STMTask *currentTaskWithOptionsShown;
+@property(nonatomic, strong) STMTaskModel *currentTaskWithOptionsShown;
 
 - (instancetype)initWithView:(UserActionsHelperView *)view;
 
-- (void)showOptionsForTask:(STMTask *)task representedByCell:(UITableViewCell *)cell;
-- (void)closeTaskOptionsForTask:(STMTask *)task;
-- (void)updateTaskOptionsForTask:(STMTask *)task becauseItWasScrolledBy:(CGFloat)offsetChange;
+- (void)showOptionsForTaskModel:(STMTaskModel *)taskModel representedByCell:(UITableViewCell *)cell;
+- (void)closeTaskOptionsForTaskModel:(STMTaskModel *)taskModel;
+- (void)updateTaskOptionsForTaskModel:(STMTaskModel *)taskModel becauseItWasScrolledBy:(CGFloat)offsetChange;
 
 @end

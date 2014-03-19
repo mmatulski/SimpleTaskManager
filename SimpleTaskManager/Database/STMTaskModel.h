@@ -13,6 +13,9 @@
 @property (nonatomic, copy) NSString * name;
 @property (nonatomic, copy) NSString * uid;
 @property (nonatomic, strong) NSNumber * index;
+@property (nonatomic, strong) NSManagedObjectID * objectId;
+
+@property(nonatomic) bool completed;
 
 - (instancetype)initWithName:(NSString *)name uid:(NSString *)uid index:(NSNumber *)index;
 - (instancetype)initWitEntity:(STMTask *) task;

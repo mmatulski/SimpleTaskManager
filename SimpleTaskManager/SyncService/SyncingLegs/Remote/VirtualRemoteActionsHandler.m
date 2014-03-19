@@ -17,7 +17,7 @@
 - (id)init {
     self = [super init];
     if (self) {
-        _timerInterval = 20.0;
+        _timerInterval = 10.0;
     }
 
     return self;
@@ -69,7 +69,6 @@
         increase = 1;
     }
     NSUInteger numberOfTasksToAdd = numberOfTasksToRemove + increase;
- //   NSUInteger numberOfTasksToAdd = 0;//numberOfTasksToRemove + increase;
 
 
 

@@ -7,6 +7,7 @@
 //
 
 #import "STMTask.h"
+#import "STMTaskModel.h"
 
 
 @implementation STMTask

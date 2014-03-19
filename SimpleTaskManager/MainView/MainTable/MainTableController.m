@@ -8,12 +8,10 @@
 #import "DBAccess.h"
 #import "STMTask.h"
 #import "DragAndDropHandler.h"
-#import "MainTableController+TaskOptions.h"
+#import "MainTableController+SelectedItem.h"
 #import "MainTableController+DragAndDrop.h"
 #import "TaskTableViewCell.h"
-#import "SyncGuardService.h"
-#import "SyncingLeg.h"
-#import "LocalUserLeg.h"
+#import "STMTaskModel.h"
 
 NSString * const kCellIdentifier = @"CellIdentifier";
 unsigned int const kDefaultBatchSize = 20;
@@ -25,7 +23,7 @@ unsigned int const kDefaultBatchSize = 20;
 - (instancetype)initWithTableView:(UITableView *)tableView {
     self = [super init];
     if (self) {
-        self.draggedIndexPath = nil;
+        self.draggedItemModel = nil;
         self.tableView = tableView;
 
         [self prepareDBController];
@@ -72,23 +70,25 @@ unsigned int const kDefaultBatchSize = 20;
     self.dragAndDropHandler = [[DragAndDropHandler alloc] initWithDraggingSpace:[self.delegate viewForTemporaryViewsPresentation]];
 }
 
-- (void)setSelectedIndexPath:(NSIndexPath *)selectedIndexPath {
-    if(![_selectedIndexPath isEqual:selectedIndexPath]){
-        if(selectedIndexPath){
-            [self showOptionsForItemAtIndexPath:selectedIndexPath];
+- (void)setSelectedItemModel:(STMTaskModel *)selectedItemModel {
+
+    if(![_selectedItemModel.objectId isEqual:selectedItemModel.objectId]){
+        if(selectedItemModel){
+            NSIndexPath *indexPath = [self indexPathForTaskModel:selectedItemModel];
+            [self showOptionsForItemAtIndexPath:indexPath taskModel:selectedItemModel];
         }
 
-        if(_selectedIndexPath){
-            [self hideOptionsForItemAtIndexPath:_selectedIndexPath];
+        if(_selectedItemModel && !selectedItemModel){
+            NSIndexPath *selectedIndexPath = [self indexPathForTaskModel:_selectedItemModel];
+            [self hideOptionsForItemAtIndexPath:selectedIndexPath taskModel:_selectedItemModel];
         }
 
         self.scrollOffsetWhenItemWasSelected = self.tableView.contentOffset.y;
 
-        _selectedIndexPath = selectedIndexPath;
-
-
+        _selectedItemModel = selectedItemModel;
     }
 }
+
 
 - (void)handleMemoryWarning {
     //TODO clean fetched cache
@@ -97,27 +97,20 @@ unsigned int const kDefaultBatchSize = 20;
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)path {
 
     NSIndexPath *pathToRequest = path;
-    if(self.draggedIndexPath){
-        if([self.draggedIndexPath row] >= [path row]){
-            pathToRequest = [NSIndexPath indexPathForRow:(path.row + 1) inSection:path.section];
-            DDLogTrace(@"configureCell increased %d %d", [path row], [pathToRequest row]);
-        }
-
-
-        if(self.temporaryTargetForDraggedIndexPath){
-            if([self.temporaryTargetForDraggedIndexPath row] < [path row]){
-                pathToRequest = [NSIndexPath indexPathForRow:(pathToRequest.row - 1) inSection:path.section];
-                DDLogTrace(@"configureCell decreased %d %d", [path row], [pathToRequest row]);
-            }
-
-            if([self.temporaryTargetForDraggedIndexPath isEqual:path]){
-                pathToRequest = self.draggedIndexPath;
-            }
-        }
-
-    }
 
     STMTask * task = [self.fetchedResultsController objectAtIndexPath:pathToRequest];
+    if(self.draggedItemModel){
+
+        if([self.draggedItemModel.uid isEqualToString:task.uid]){
+            pathToRequest = [NSIndexPath indexPathForRow:(path.row + 1) inSection:path.section];
+            task = [self.fetchedResultsController objectAtIndexPath:pathToRequest];
+        }
+
+        if(self.temporaryTargetForDraggedIndexPath && [path isEqual:self.temporaryTargetForDraggedIndexPath]){
+            task = [self taskForIndexPath:self.temporaryTargetForDraggedIndexPath];
+        }
+    }
+
     if(task){
         cell.textLabel.text = [NSString stringWithFormat:@"[%d] %@", [[task index] intValue] , task.name];
         if(self.temporaryTargetForDraggedIndexPath){
@@ -162,84 +155,38 @@ unsigned int const kDefaultBatchSize = 20;
 
 - (void)handleLongPress:(UIGestureRecognizer *)gestureRecognizer {
     CGPoint point = [gestureRecognizer locationInView: gestureRecognizer.view];
+    CGPoint pointRelatedToWindow = [gestureRecognizer locationInView:nil];
 
     if(gestureRecognizer.state == UIGestureRecognizerStateBegan){
-        DDLogInfo(@"Began");
 
         NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:point];
-        STMTask * task = [self.fetchedResultsController objectAtIndexPath:indexPath];
-        if(task){
-            UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+        [self userHasPressedLongOnIndexPath:indexPath andWindowPoint:pointRelatedToWindow];
 
-            self.draggedIndexPath = indexPath;
-
-            DDLogInfo(@"-- row %d", [self.draggedIndexPath row]);
-
-            [self disableTableGestureRecognizerForScrolling];
-
-            CGPoint pointRelatedToWindow = [gestureRecognizer locationInView:nil];
-            [self.dragAndDropHandler dragView:cell fromPoint:pointRelatedToWindow];
-
-           [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-
-        }
     } else if(gestureRecognizer.state == UIGestureRecognizerStateFailed || gestureRecognizer.state == UIGestureRecognizerStateCancelled){
-        DDLogInfo(@"Failed | Cancelled");
 
-        [self.tableView insertRowsAtIndexPaths:@[self.draggedIndexPath] withRowAnimation:UITableViewRowAnimationFade];
-        self.draggedIndexPath = nil;
-
-        if(self.temporaryTargetForDraggedIndexPath){
-            [self.tableView deleteRowsAtIndexPaths:@[self.temporaryTargetForDraggedIndexPath] withRowAnimation:UITableViewRowAnimationFade];
-            self.temporaryTargetForDraggedIndexPath = nil;
+        if(self.draggedItemModel){
+            [self cancelDragging];
         }
 
-        [self.dragAndDropHandler stopDragging];
-
-        [self enableTableGestureRecognizerForScrolling];
     } else if(gestureRecognizer.state == UIGestureRecognizerStateChanged){
-        DDLogTrace(@"Long changed");
-        CGPoint pointRelatedToWindow = [gestureRecognizer locationInView:nil];
-        [self.dragAndDropHandler moveDraggedViewToPoint:pointRelatedToWindow];
+        if(self.draggedItemModel){
 
-        [self dropOrHideDraggedCellForPoint:point globalPoint:pointRelatedToWindow];
+            [self.dragAndDropHandler moveDraggedViewToPoint:pointRelatedToWindow];
+            [self dropOrHideDraggedCellForPoint:point globalPoint:pointRelatedToWindow];
+        }
 
     } else if(gestureRecognizer.state == UIGestureRecognizerStateEnded){
-        DDLogInfo(@"Ended");
+        if(self.draggedItemModel){
 
-        NSIndexPath *indexPathSource = self.draggedIndexPath;
-        NSIndexPath *indexPathTarget = self.temporaryTargetForDraggedIndexPath;
-
-        self.draggedIndexPath = nil;
-        self.temporaryTargetForDraggedIndexPath = nil;
-
-        if(indexPathTarget){
-            [self changeOrderForTaskFromIndexPath:indexPathSource toIndexPath:indexPathTarget];
-        } else {
-            [self.tableView insertRowsAtIndexPaths:@[indexPathSource] withRowAnimation:UITableViewRowAnimationFade];
+           [self userHasDroppedItem];
         }
-
-        [self.dragAndDropHandler stopDragging];
-        [self enableTableGestureRecognizerForScrolling];
     }
 }
 
-- (void)changeOrderForTaskFromIndexPath:(NSIndexPath *)sourcePath toIndexPath:(NSIndexPath *)targetPath {
-    STMTask *task = [self.fetchedResultsController objectAtIndexPath:sourcePath];
 
-    int change = sourcePath.row - targetPath.row;
-    int theNewOrder = [task.index intValue] + change;
 
-    if(task){
-        [[SyncGuardService singleUser] reorderTaskWithId:task.uid toIndex:theNewOrder successFullBlock:^(id o) {
 
-        } failureBlock:^(NSError *error) {
-            runOnMainThread(^{
-                [self.tableView reloadData];
-            });
-        }];
-    }
-}
+
 
 - (void)enableTableGestureRecognizerForScrolling {
    [self.tableView panGestureRecognizer].enabled = true;
@@ -249,23 +196,29 @@ unsigned int const kDefaultBatchSize = 20;
    [self.tableView panGestureRecognizer].enabled = false;
 }
 
-- (void)deselectTask:(STMTask *)task {
-    if(self.selectedIndexPath){
-        [self.tableView deselectRowAtIndexPath:self.selectedIndexPath animated:true];
+- (void)deselectTaskModel:(STMTaskModel *)taskModel {
+    NSIndexPath *selectedIndexPath = [self indexPathForSelectedItem];
+    if(selectedIndexPath){
+        [self.tableView deselectRowAtIndexPath:selectedIndexPath animated:true];
     }
 
-    self.selectedIndexPath = nil;
+    self.selectedItemModel = nil;
 }
 
 #pragma mark - UITableViewDelegate methods
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
-    if(self.selectedIndexPath && [self.selectedIndexPath isEqual:indexPath]){
+    NSIndexPath *selectedIndexPath = [self indexPathForSelectedItem];
+    if(selectedIndexPath && [selectedIndexPath isEqual:indexPath]){
         [tableView deselectRowAtIndexPath:indexPath animated:true];
-        self.selectedIndexPath = nil;
+        self.selectedItemModel = nil;
     } else {
-        self.selectedIndexPath = indexPath;
+        STMTask *task = [self taskForIndexPath:indexPath];
+        if(task){
+            STMTaskModel *model = [[STMTaskModel alloc] initWitEntity:task];
+            self.selectedItemModel = model;
+        }
     }
 }
 
@@ -274,8 +227,9 @@ unsigned int const kDefaultBatchSize = 20;
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    if(self.selectedIndexPath){
-        [self updateOptionsPositionForItemAtIndexPath:self.selectedIndexPath];
+    if(self.selectedItemModel){
+        NSIndexPath *selectedIndexPath = [self indexPathForSelectedItem];
+        [self updateOptionsPositionForItemAtIndexPath:selectedIndexPath taskModel:self.selectedItemModel];
     }
 }
 
@@ -289,14 +243,18 @@ unsigned int const kDefaultBatchSize = 20;
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    id  sectionInfo = [[_fetchedResultsController sections] objectAtIndex:section];
-    int result = [sectionInfo numberOfObjects];
-    if(self.draggedIndexPath && !self.temporaryTargetForDraggedIndexPath){
-        result--;
-        DDLogTrace(@"result zmniejszony %d", result);
+    NSArray * sections = [_fetchedResultsController sections];
+    if(sections && [sections count] > section){
+        id  sectionInfo = [sections objectAtIndex:(NSUInteger) section];
+        int result = [sectionInfo numberOfObjects];
+        if(self.draggedItemModel && !self.temporaryTargetForDraggedIndexPath){
+            result--;
+        }
+
+        return result;
     }
 
-    return result;
+    return 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -312,6 +270,33 @@ unsigned int const kDefaultBatchSize = 20;
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
     UITableView *tableView = self.tableView;
+
+    STMTask *changedTask = MakeSafeCast(anObject, [STMTask class]);
+    DDLogTrace(@"didChangeObject %@ %@ %d", changedTask.objectID, changedTask.name, [changedTask.index intValue]);
+    if(self.draggedItemModel){
+        if([changedTask.objectID isEqual:self.draggedItemModel.objectId]){
+            if(type == NSFetchedResultsChangeDelete){
+               DDLogInfo(@"========= DRAGGED ITEM DELETED %@", self.draggedItemModel.name);
+                self.shouldCancelDragging = true;
+
+            } else {
+                DDLogInfo(@"========= DRAGGED ITEM CHANGED %@", self.draggedItemModel.name);
+            }
+        }
+    }
+
+    if(self.selectedItemModel && !self.selectedItemWillBeRemoved){
+        if([changedTask.objectID isEqual:self.selectedItemModel.objectId]){
+            if(type == NSFetchedResultsChangeDelete){
+                DDLogInfo(@"========= SELECTED ITEM DELETED %@", self.selectedItemModel.name);
+                if(!self.selectedItemModel.completed){
+                    self.shouldCancelSelection = true;
+                }
+            } else {
+                DDLogInfo(@"========= SELECTED ITEM CHANGED %@", self.selectedItemModel.name);
+            }
+        }
+    }
 
     switch(type) {
 
@@ -334,6 +319,8 @@ unsigned int const kDefaultBatchSize = 20;
                     arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
             break;
     }
+
+
 }
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {
@@ -358,8 +345,31 @@ unsigned int const kDefaultBatchSize = 20;
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
     [self.tableView endUpdates];
 
-    //there is need to update selectedIndexPath
-    self.selectedIndexPath = self.tableView.indexPathForSelectedRow;
+    if(self.shouldCancelDragging){
+        [self emergencyCancelDragging];
+        self.shouldCancelDragging = false;
+    }
+
+    if(self.shouldCancelSelection){
+        [self emergencyCancelSelection];
+        self.shouldCancelSelection = false;
+    } else {
+        [self updateSelectedItemVisibility];
+    }
+}
+
+-(NSIndexPath *) indexPathForTaskModel:(STMTaskModel *) model{
+    STMTask *task = [self taskForModel:model];
+    if(task){
+        return [self.fetchedResultsController indexPathForObject:task];
+    }
+
+    return nil;
+}
+
+- (STMTask *)taskForModel:(STMTaskModel *)model {
+    STMTask* task = [self.dbController taskWithObjectID:model.objectId];
+    return task;
 }
 
 @end

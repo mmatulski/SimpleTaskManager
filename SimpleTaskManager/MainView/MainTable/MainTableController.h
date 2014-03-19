@@ -9,7 +9,8 @@
 
 @class DBController;
 @class DragAndDropHandler;
-
+@class STMTaskModel;
+@class STMTask;
 
 @interface MainTableController : NSObject <UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate, UIGestureRecognizerDelegate>
 
@@ -19,17 +20,31 @@
 @property(nonatomic, strong) NSFetchedResultsController* fetchedResultsController;
 
 @property(nonatomic, strong) UILongPressGestureRecognizer *longPressRecognizer;
-@property(nonatomic, strong) NSIndexPath * draggedIndexPath;
-@property(nonatomic, strong) NSIndexPath * temporaryTargetForDraggedIndexPath;
 @property(nonatomic, strong) DragAndDropHandler *dragAndDropHandler;
 
-@property(nonatomic, strong) NSIndexPath *selectedIndexPath;
+@property(nonatomic, strong) STMTaskModel * selectedItemModel;
+@property(nonatomic, strong) STMTaskModel * draggedItemModel;
+@property(nonatomic, strong) NSIndexPath * temporaryTargetForDraggedIndexPath;
 
 @property(nonatomic) CGFloat scrollOffsetWhenItemWasSelected;
+
+@property(nonatomic) BOOL shouldCancelSelection;
+
+@property(nonatomic) BOOL shouldCancelDragging;
+
+@property(nonatomic) BOOL selectedItemWillBeRemoved;
 
 - (instancetype)initWithTableView:(UITableView *)tableView;
 
 - (void)handleMemoryWarning;
 
-- (void)deselectTask:(STMTask *)task;
+- (void)enableTableGestureRecognizerForScrolling;
+
+- (void)disableTableGestureRecognizerForScrolling;
+
+- (void)deselectTaskModel:(STMTaskModel *)taskModel;
+
+- (NSIndexPath *)indexPathForTaskModel:(STMTaskModel *)model;
+
+- (STMTask *)taskForModel:(STMTaskModel *)model;
 @end

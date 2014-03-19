@@ -4,14 +4,13 @@
 //
 
 #import "UserActionsHelperView+TaskOptions.h"
-#import "STMTask.h"
 #import "TaskOptionsView.h"
-#import "MainViewConsts.h"
+#import "STMTaskModel.h"
 
 
 @implementation UserActionsHelperView (TaskOptions)
 
-- (void)showTaskOptionsViewForTask:(STMTask *)task representedByCell:(UITableViewCell *)cell {
+- (void)showTaskOptionsViewForTaskModel:(STMTaskModel *)taskModel representedByCell:(UITableViewCell *)cell {
     BOOL alreadyShowing = false;
     if(!self.taskOptionsView){
         [self prepareTaskOptionsView];

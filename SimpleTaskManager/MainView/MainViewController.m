@@ -14,6 +14,7 @@
 #import "UserActionsController.h"
 #import "SyncGuardService.h"
 #import "RemoteLeg.h"
+#import "STMTaskModel.h"
 
 @interface MainViewController ()
 
@@ -77,23 +78,22 @@
     return self.mainView.dialogsPresentationView;
 }
 
-- (void)showOptionsForTask:(STMTask *)task representedByCell:(UITableViewCell *)cell {
-    [self.dialogsPresentationController showOptionsForTask:task representedByCell:cell];
+- (void)showOptionsForTaskModel:(STMTaskModel *)taskModel representedByCell:(UITableViewCell *)cell {
+    [self.dialogsPresentationController showOptionsForTaskModel:taskModel representedByCell:cell];
 }
 
-- (void)closeTaskOptionsForTask:(STMTask *)task {
-    [self.dialogsPresentationController closeTaskOptionsForTask:task ];
+- (void)closeTaskOptionsForTaskModel:(STMTaskModel *)taskModel {
+    [self.dialogsPresentationController closeTaskOptionsForTaskModel:taskModel];
 }
 
-- (void)updatePositionOfOptionsForTask:(STMTask *)task becauseItWasScrolledBy:(CGFloat)offsetChange {
-    [self.dialogsPresentationController updateTaskOptionsForTask:task becauseItWasScrolledBy: offsetChange];
+- (void)updatePositionOfOptionsForTaskModel:(STMTaskModel *)taskModel becauseItWasScrolledBy:(CGFloat)offsetChange {
+    [self.dialogsPresentationController updateTaskOptionsForTaskModel:taskModel becauseItWasScrolledBy: offsetChange];
 }
 
 #pragma mark - UserActionsControllerDelegate methods
 
-- (void)userWantsToDeselectTask:(STMTask *)task {
-    [self.tableController deselectTask:task];
+- (void)userWantsToDeselectTaskModel:(STMTaskModel *)taskModel {
+    [self.tableController deselectTaskModel:taskModel];
 }
-
 
 @end

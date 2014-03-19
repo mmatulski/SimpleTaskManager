@@ -3,8 +3,6 @@
 // Copyright (c) 2014 Tomato. All rights reserved.
 //
 
-#import "AppErrors.h"
-
 NSString* const APPDOMAIN = @"STMDomain";
 
 @implementation AppErrors {
@@ -27,7 +25,6 @@ NSString* const APPDOMAIN = @"STMDomain";
 }
 
 +(NSString*) messageForErrorCode:(NSInteger) code{
-    NSString* result = nil;
     switch (code) {
         case ERROR_TASK_NOT_FOUND:
             return  __(@"Task not found");

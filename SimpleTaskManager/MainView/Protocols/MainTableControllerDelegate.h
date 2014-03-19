@@ -6,14 +6,15 @@
 #import <Foundation/Foundation.h>
 
 @class STMTask;
+@class STMTaskModel;
 
 @protocol MainTableControllerDelegate <NSObject>
 
 -(UIView *) viewForTemporaryViewsPresentation;
 
-- (void)showOptionsForTask:(STMTask *)task representedByCell:(UITableViewCell *)cell;
+- (void)showOptionsForTaskModel:(STMTaskModel *)taskModel representedByCell:(UITableViewCell *)cell;
 
-- (void)closeTaskOptionsForTask:(STMTask *)task;
+- (void)closeTaskOptionsForTaskModel:(STMTaskModel *)taskModel;
 
-- (void)updatePositionOfOptionsForTask:(STMTask *)task becauseItWasScrolledBy:(CGFloat)by;
+- (void)updatePositionOfOptionsForTaskModel:(STMTaskModel *)taskModel becauseItWasScrolledBy:(CGFloat)by;
 @end

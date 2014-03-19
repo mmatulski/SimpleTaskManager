@@ -59,4 +59,5 @@ extern NSString * const kSTMTaskEntityName;
 
 - (NSFetchRequest *)createFetchingTasksRequestWithBatchSize:(unsigned int) batchSize;
 
+- (STMTask *)taskWithObjectID:(NSManagedObjectID *)id;
 @end

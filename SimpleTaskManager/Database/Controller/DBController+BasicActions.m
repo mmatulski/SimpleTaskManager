@@ -21,6 +21,7 @@
     STMTask *task = [self addTaskWithName:name withUid:nil withIndex:nil];
 
     [self saveWithSuccessFullBlock:^{
+        DDLogInfo(@"Task added successfully %@", task.uid);
         [self endUndo];
         if(successFullBlock){
             successFullBlock(task);
@@ -41,7 +42,7 @@
     NSError *err = nil;
     if([self markAsCompletedTaskWithId:uid error:&err]){
         [self saveWithSuccessFullBlock:^{
-            DDLogInfo(@"Task set as completed  successfully %@", uid);
+            DDLogInfo(@"Task set as completed successfully %@", uid);
             [self endUndo];
             if(successBlock){
                 successBlock();
@@ -94,7 +95,7 @@
     }
 }
 
-- (void)reorderTaskWithId:(NSString *)uid toIndex:(int)index successFullBlock:(void (^)())successBlock failureBlock:(void (^)(NSError *))failureBlock {
+- (void)reorderTaskWithId:(NSString *)uid toIndex:(NSUInteger)index successFullBlock:(void (^)())successBlock failureBlock:(void (^)(NSError *))failureBlock {
 
     [self beginUndo];
 
@@ -218,7 +219,7 @@
     }
 }
 
-- (NSFetchRequest *)createFetchingTasksRequestWithBatchSize:(unsigned int) batchSize {
+- (NSFetchRequest *)createFetchingTasksRequestWithBatchSize:(NSUInteger) batchSize {
     NSFetchRequest *fetchRequest = [self prepareTaskFetchRequest];
 
     NSSortDescriptor *sort = [[NSSortDescriptor alloc]

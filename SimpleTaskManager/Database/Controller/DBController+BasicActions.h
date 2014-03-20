@@ -23,7 +23,7 @@
             failureBlock:(void (^)(NSError *))failureBlock;
 
 - (void)reorderTaskWithId:(NSString *)uid
-                  toIndex:(int)index
+                  toIndex:(NSUInteger)index
          successFullBlock:(void (^)())successFullBlock
              failureBlock:(void (^)(NSError *))failureBlock;
 
@@ -43,7 +43,7 @@
 
 #pragma mark -
 
-- (NSFetchRequest *)createFetchingTasksRequestWithBatchSize:(unsigned int) batchSize;
+- (NSFetchRequest *)createFetchingTasksRequestWithBatchSize:(NSUInteger) batchSize;
 
 
 

@@ -58,7 +58,7 @@
     return task;
 }
 
-- (STMTask *) reorderTaskWithId:(NSString *)uid toIndex:(int)index error:(NSError **) error {
+- (STMTask *)reorderTaskWithId:(NSString *)uid toIndex:(NSUInteger)index error:(NSError **) error {
     [self loadNumberOfAllTasksIfNotLoaded];
 
     NSError *err = nil;

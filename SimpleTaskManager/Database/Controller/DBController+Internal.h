@@ -18,7 +18,7 @@
 
 - (STMTask *)renameTaskWithId:(NSString *)uid withName:(NSString *)theNewName error:(NSError **)error;
 
-- (STMTask *)reorderTaskWithId:(NSString *)uid toIndex:(int)index1 error:(NSError **)error;
+- (STMTask *)reorderTaskWithId:(NSString *)uid toIndex:(NSUInteger)index1 error:(NSError **)error;
 
 - (STMTask *)findTaskWithId:(NSString *)uid error:(NSError **)error;
 

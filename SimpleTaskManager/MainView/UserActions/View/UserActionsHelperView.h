@@ -7,10 +7,10 @@
 #import "DPState.h"
 
 @class TheNewTaskDialog;
-@class MiniHintView;
-@class TheNewTaskHintView;
-@class ConfirmationHintView;
-@class CancelHintView;
+@class WrappedButton;
+@class TheNewTaskButton;
+@class ConfirmationButton;
+@class CancelButton;
 @class TaskOptionsView;
 @protocol UserActionsHelperViewDelegate;
 
@@ -48,9 +48,9 @@ It contains "Add" button and handler pan gesture which allows to pill AdTaskView
 @property(nonatomic, strong) UIPanGestureRecognizer *panGestureRecognizer;
 
 @property(nonatomic, strong) TheNewTaskDialog *theNewTaskDialog;
-@property(nonatomic, strong) TheNewTaskHintView *hintViewForTheNewTask;
-@property(nonatomic, strong) ConfirmationHintView *confirmationHintView;
-@property(nonatomic, strong) CancelHintView *cancelHintView;
+@property(nonatomic, strong) TheNewTaskButton *hintViewForTheNewTask;
+@property(nonatomic, strong) ConfirmationButton *confirmationHintView;
+@property(nonatomic, strong) CancelButton *cancelHintView;
 @property(nonatomic, strong) TaskOptionsView *taskOptionsView;
 
 @property(nonatomic, strong) NSArray *cachedLayoutConstraints;

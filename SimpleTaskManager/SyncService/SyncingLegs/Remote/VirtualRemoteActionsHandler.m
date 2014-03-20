@@ -17,7 +17,7 @@
 - (id)init {
     self = [super init];
     if (self) {
-        _timerInterval = 10.0;
+        _timerInterval = 20.0;
     }
 
     return self;
@@ -27,7 +27,7 @@
 - (void)connect {
     [super connect];
 
-    [self startTrafficGenerator];
+    //[self startTrafficGenerator];
 }
 
 - (void)startTrafficGenerator {

@@ -4,20 +4,20 @@
 //
 
 #import "UserActionsHelperView+Hints.h"
-#import "MiniHintView.h"
+#import "WrappedButton.h"
 #import "UserActionsHelperView+Constraints.h"
-#import "TheNewTaskHintView.h"
+#import "TheNewTaskButton.h"
 #import "UserActionsHelperView+TheNewTaskDialogHandling.h"
-#import "ConfirmationHintView.h"
+#import "ConfirmationButton.h"
 #import "TheNewTaskDialog.h"
-#import "CancelHintView.h"
+#import "CancelButton.h"
 #import "UserActionsHelperViewDelegate.h"
 
 
 @implementation UserActionsHelperView (Hints)
 
 -(void) showOpeningTheNewTaskViewHint{
-    self.hintViewForTheNewTask = [[TheNewTaskHintView alloc] initWithFrame:CGRectMake(0, 0, 70.0, 30.0)];
+    self.hintViewForTheNewTask = [[TheNewTaskButton alloc] initWithFrame:CGRectMake(0, 0, 70.0, 30.0)];
     [self.hintViewForTheNewTask setTranslatesAutoresizingMaskIntoConstraints:NO];
     [self addSubview:self.hintViewForTheNewTask];
 
@@ -32,7 +32,7 @@
         [self removeConfirmationHintView];
     }
 
-    self.confirmationHintView = [[ConfirmationHintView alloc] initWithFrame:CGRectMake(0, 0, 70.0, 30.0)];
+    self.confirmationHintView = [[ConfirmationButton alloc] initWithFrame:CGRectMake(0, 0, 70.0, 30.0)];
     [self.confirmationHintView setTranslatesAutoresizingMaskIntoConstraints:NO];
     [self addSubview:self.confirmationHintView];
 
@@ -48,7 +48,7 @@
         [self removeCancelHintView];
     }
 
-    self.cancelHintView = [[CancelHintView alloc] initWithFrame:CGRectMake(0, 0, 70.0, 30.0)];
+    self.cancelHintView = [[CancelButton alloc] initWithFrame:CGRectMake(0, 0, 70.0, 30.0)];
     [self.cancelHintView setTranslatesAutoresizingMaskIntoConstraints:NO];
     [self addSubview:self.cancelHintView];
 

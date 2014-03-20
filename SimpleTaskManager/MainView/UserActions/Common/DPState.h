@@ -16,7 +16,6 @@ typedef NS_ENUM(NSInteger , DPState) {
     DPStateNewTaskDialogOpeningAnimating,
     DPStateNewTaskDialogClosingBegan, //user can close it finally or resign
     DPStateNewTaskDialogClosingAnimating,
-
 };
 
 #endif

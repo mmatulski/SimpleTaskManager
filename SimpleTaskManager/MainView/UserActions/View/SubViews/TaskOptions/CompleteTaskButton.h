@@ -4,8 +4,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "MiniHintView.h"
+#import "WrappedButton.h"
 
 
-@interface TaskCompleteButton : MiniHintView
+@interface CompleteTaskButton : WrappedButton
 @end

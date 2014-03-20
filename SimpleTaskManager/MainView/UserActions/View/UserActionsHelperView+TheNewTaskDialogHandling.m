@@ -11,8 +11,8 @@
 #import "DBAccess.h"
 #import "DBController.h"
 #import "UserActionsHelperView+Hints.h"
-#import "ConfirmationHintView.h"
-#import "CancelHintView.h"
+#import "ConfirmationButton.h"
+#import "CancelButton.h"
 #import "UserActionsHelperViewDelegate.h"
 
 @implementation UserActionsHelperView (TheNewTaskDialogHandling)

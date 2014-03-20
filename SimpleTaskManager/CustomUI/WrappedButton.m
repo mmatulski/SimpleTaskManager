@@ -3,10 +3,9 @@
 // Copyright (c) 2014 Tomato. All rights reserved.
 //
 
-#import "MiniHintView.h"
+#import "WrappedButton.h"
 
-
-@implementation MiniHintView {
+@implementation WrappedButton {
 
 }
 
@@ -21,9 +20,7 @@
 
 - (void) buttonSelected {
     if(self.target && self.action){
-        if([self.target respondsToSelector:self.action]){
-            [self.target performSelector:self.action];
-        }
+        performSelectorIfRespondsToVoid(self.target, self.action);
     }
 }
 

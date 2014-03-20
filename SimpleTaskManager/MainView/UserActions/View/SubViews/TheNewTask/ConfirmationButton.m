@@ -3,27 +3,27 @@
 // Copyright (c) 2014 Tomato. All rights reserved.
 //
 
-#import "CancelHintView.h"
+#import "ConfirmationButton.h"
 
 
-@implementation CancelHintView {
+@implementation ConfirmationButton {
 
 }
 
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        self.backgroundColor = [UIColor redColor];
+        self.backgroundColor = [UIColor greenColor];
         self.alpha = 0.85;
-        [self prepareCancelButton];
+        [self prepareOkButton];
     }
 
     return self;
 }
 
-- (void)prepareCancelButton {
+- (void)prepareOkButton {
     self.button = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.button setTitle:@"Cancel" forState:UIControlStateNormal];
+    [self.button setTitle:@"OK" forState:UIControlStateNormal];
     [self.button addTarget:self action:@selector(buttonSelected) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:self.button];
 
@@ -35,10 +35,10 @@
     [self.button setTranslatesAutoresizingMaskIntoConstraints:NO];
 
     NSLayoutConstraint *H1 = [NSLayoutConstraint constraintWithItem:self.button
-                                                          attribute:NSLayoutAttributeLeading
+                                                          attribute:NSLayoutAttributeTrailing
                                                           relatedBy:NSLayoutRelationEqual
                                                              toItem:self
-                                                          attribute:NSLayoutAttributeLeading
+                                                          attribute:NSLayoutAttributeTrailing
                                                          multiplier:1.0
                                                            constant:0.0];
 

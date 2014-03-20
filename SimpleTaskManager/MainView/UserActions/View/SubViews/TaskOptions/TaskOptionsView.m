@@ -4,7 +4,7 @@
 //
 
 #import "TaskOptionsView.h"
-#import "TaskCompleteButton.h"
+#import "CompleteTaskButton.h"
 #import "DeselectTaskButton.h"
 #import "TaskOptionsDelegate.h"
 
@@ -28,7 +28,7 @@
 #pragma mark -
 
 - (void)prepareTaskCompleteButton {
-    self.completeButton = [[TaskCompleteButton alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
+    self.completeButton = [[CompleteTaskButton alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
     self.completeButton.target = self;
     self.completeButton.action = @selector(complete);
     [self addSubview:self.completeButton];

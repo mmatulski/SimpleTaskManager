@@ -4,8 +4,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "MiniHintView.h"
+#import "WrappedButton.h"
 
 
-@interface DeselectTaskButton : MiniHintView
+@interface DeselectTaskButton : WrappedButton
 @end

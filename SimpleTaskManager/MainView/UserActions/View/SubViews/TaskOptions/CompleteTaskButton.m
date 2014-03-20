@@ -3,9 +3,9 @@
 // Copyright (c) 2014 Tomato. All rights reserved.
 //
 
-#import "TaskCompleteButton.h"
+#import "CompleteTaskButton.h"
 
-@implementation TaskCompleteButton {
+@implementation CompleteTaskButton {
 
 }
 
@@ -14,13 +14,13 @@
     if (self) {
         self.backgroundColor = [UIColor greenColor];
         self.alpha = 0.95;
-        [self prepareOkButton];
+        [self prepareButton];
     }
 
     return self;
 }
 
-- (void)prepareOkButton {
+- (void)prepareButton {
     self.button = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.button setTitle:@"Complete" forState:UIControlStateNormal];
     //[self.button setImage:[ResourcesHelper image:@"image_checked_checkbox_64x64"] forState:UIControlStateNormal];

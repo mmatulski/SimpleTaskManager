@@ -5,14 +5,14 @@
 
 #import "UserActionsHelperView.h"
 #import "UserActionsHelperView+Constraints.h"
-#import "MiniHintView.h"
+#import "WrappedButton.h"
 #import "UserActionsHelperView+Hints.h"
-#import "TheNewTaskHintView.h"
+#import "TheNewTaskButton.h"
 #import "TaskOptionsView.h"
 #import "UserActionsHelperView+TaskOptions.h"
 #import "UserActionsHelperView+TheNewTaskDialogHandling.h"
-#import "ConfirmationHintView.h"
-#import "CancelHintView.h"
+#import "ConfirmationButton.h"
+#import "CancelButton.h"
 
 CGFloat const kRightMarginForHandlingPanGesture = 20.0;
 

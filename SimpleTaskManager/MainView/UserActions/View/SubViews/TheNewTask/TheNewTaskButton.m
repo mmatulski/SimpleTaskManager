@@ -3,10 +3,10 @@
 // Copyright (c) 2014 Tomato. All rights reserved.
 //
 
-#import "TheNewTaskHintView.h"
+#import "TheNewTaskButton.h"
 
 
-@implementation TheNewTaskHintView {
+@implementation TheNewTaskButton {
 
 }
 - (id)initWithFrame:(CGRect)frame {

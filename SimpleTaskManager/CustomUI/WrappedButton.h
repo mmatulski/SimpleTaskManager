@@ -5,9 +5,9 @@
 
 #import <Foundation/Foundation.h>
 
-@interface MiniHintView : UIView
+@interface WrappedButton : UIView
 
-@property(nonatomic, strong) UIButton *button;
+@property (nonatomic, strong) UIButton *button;
 @property (nonatomic, weak) id target;
 @property (nonatomic) SEL action;
 

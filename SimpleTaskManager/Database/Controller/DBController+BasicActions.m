@@ -154,18 +154,6 @@
         }
     }
 
-    for(STMTaskModel *taskModel in removedTasks){
-        if(![self markAsCompletedTaskWithId:taskModel.uid error:&err]){
-            DDLogError(@"markAsCompletedTaskWithId %@ failed %@", taskModel.uid, [err localizedDescription] );
-            [self undo];
-
-            if(failureBlock){
-                failureBlock(err);
-            }
-            return;
-        }
-    }
-
     for(STMTaskModel *taskModel in renamedTasks){
         if(![self renameTaskWithId:taskModel.uid withName:taskModel.name error:&err]){
             DDLogError(@"renameTaskWithId %@ failed %@", taskModel.uid, [err localizedDescription] );
@@ -179,9 +167,21 @@
     }
 
     for(STMTaskModel *taskModel in reorderedTasks){
-        if(![self reorderTaskWithId:taskModel.uid toIndex:[taskModel.index intValue] error:&err]){
+        if(![self reorderTaskWithId:taskModel.uid toIndex:[taskModel.index unsignedIntegerValue] error:&err]){
             DDLogError(@"reorderTaskWithId %@ failed %@", taskModel.uid, [err localizedDescription] );
             [self undo];
+            if(failureBlock){
+                failureBlock(err);
+            }
+            return;
+        }
+    }
+
+    for(STMTaskModel *taskModel in removedTasks){
+        if(![self markAsCompletedTaskWithId:taskModel.uid error:&err]){
+            DDLogError(@"markAsCompletedTaskWithId %@ failed %@", taskModel.uid, [err localizedDescription] );
+            [self undo];
+
             if(failureBlock){
                 failureBlock(err);
             }

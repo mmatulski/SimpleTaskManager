@@ -6,6 +6,7 @@
 #import "RenameOperation.h"
 #import "DBAccess.h"
 #import "DBController.h"
+#import "DBController+BasicActions.h"
 
 
 @implementation RenameOperation {
@@ -25,7 +26,7 @@
 - (void)main {
     DDLogInfo(@"RenameOperation BEGIN %@ %@", self.taskUid, self.theNewName);
 
-    DBController *dbController = [DBAccess createBackgroundController];
+    DBController *dbController = [DBAccess createBackgroundWorker];
     [dbController renameTaskWithId:self.taskUid toName:self.theNewName successFullBlock:^(id o) {
         DDLogInfo(@"RenameOperation END S %@ END", self.taskUid);
         [self finishedSuccessFully];

@@ -6,6 +6,7 @@
 #import "SyncOperation.h"
 #import "DBController.h"
 #import "DBAccess.h"
+#import "DBController+BasicActions.h"
 
 
 @implementation SyncOperation {
@@ -15,7 +16,7 @@
 - (void)main {
     DDLogInfo(@"SyncOperation BEGIN");
 
-    DBController *dbController = [DBAccess createBackgroundController];
+    DBController *dbController = [DBAccess createBackgroundWorker];
     [dbController syncAddedTasks:self.addedTasks
                     removedTasks:self.removedTasks
                     renamedTasks:self.renamedTasks

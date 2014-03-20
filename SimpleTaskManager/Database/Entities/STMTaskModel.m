@@ -10,6 +10,7 @@
 @implementation STMTaskModel {
 
 }
+
 - (instancetype)initWithName:(NSString *)name uid:(NSString *)uid index:(NSNumber *)index {
     self = [super init];
     if (self) {

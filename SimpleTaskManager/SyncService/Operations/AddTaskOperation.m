@@ -6,6 +6,7 @@
 #import "AddTaskOperation.h"
 #import "DBController.h"
 #import "DBAccess.h"
+#import "DBController+BasicActions.h"
 
 
 @implementation AddTaskOperation {
@@ -24,7 +25,7 @@
 - (void)main {
     DDLogInfo(@"AddTaskOperation BEGIN %@", _taskName);
 
-    DBController *dbController = [DBAccess createBackgroundController];
+    DBController *dbController = [DBAccess createBackgroundWorker];
     [dbController addTaskWithName:self.taskName successFullBlock:^(STMTask *task) {
         DDLogInfo(@"AddTaskOperation END SUCCESS");
         self.createdTask = task;

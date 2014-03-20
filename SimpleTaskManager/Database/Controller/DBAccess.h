@@ -7,15 +7,14 @@
 
 @class DBController;
 
-
 @interface DBAccess : NSObject
 
-@property(readonly, nonatomic, strong) DBController* masterController;
+@property(readonly, nonatomic, strong) DBController* masterControllerOnBackground;
 
-@property(readonly, nonatomic, strong) DBController*controllerOnMainQueue;
+@property(readonly, nonatomic, strong) DBController* controllerOnMainQueue;
 
 + (instancetype) sharedInstance;
 
-+ (DBController *)createBackgroundController;
++ (DBController *)createBackgroundWorker;
 
 @end

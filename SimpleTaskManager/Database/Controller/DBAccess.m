@@ -40,7 +40,7 @@
         NSManagedObjectContext* masterContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
         [masterContext setPersistentStoreCoordinator:coordinator];
 
-        _masterController = [[DBController alloc] initWithContext:masterContext];
+        _masterControllerOnBackground = [[DBController alloc] initWithContext:masterContext];
     }
 }
 
@@ -50,11 +50,14 @@
         NSManagedObjectContext* mainQueueContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
         [mainQueueContext setPersistentStoreCoordinator:coordinator];
 
-        _controllerOnMainQueue = [[DBController alloc] initWithContext:mainQueueContext parentController:self.masterController];
+        _controllerOnMainQueue = [[DBController alloc] initWithContext:mainQueueContext parentController:self.masterControllerOnBackground];
     }
 }
 
-+ (DBController *) createBackgroundController {
+/*
+    Use this worker for storing data.
+ */
++ (DBController *)createBackgroundWorker {
 
     DBController *mainController = [[DBAccess sharedInstance] controllerOnMainQueue];
     DBController *backgroundController = [[DBController alloc] initWithParentController:mainController];

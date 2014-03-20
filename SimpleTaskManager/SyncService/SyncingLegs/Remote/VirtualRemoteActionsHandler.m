@@ -9,6 +9,7 @@
 #import "STMTask.h"
 #import "RemoteLeg.h"
 #import "STMTaskModel.h"
+#import "DBController+BasicActions.h"
 
 @implementation VirtualRemoteActionsHandler {
 
@@ -37,7 +38,7 @@
 - (void)generateTraffic {
     DDLogInfo(@"TRAFFIC");
     BlockWeakSelf selfWeak = self;
-    DBController* controller = [DBAccess createBackgroundController];
+    DBController* controller = [DBAccess createBackgroundWorker];
     [controller fetchAllTasks:^(NSArray *tasks) {
         [selfWeak generateActionsForTasks:tasks];
     } failureBlock:^(NSError *error) {

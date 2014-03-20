@@ -1,80 +1,16 @@
 //
-// Created by Marek M on 09.03.2014.
+// Created by Marek M on 20.03.2014.
 // Copyright (c) 2014 Tomato. All rights reserved.
 //
 
-#import "DBController.h"
-#import "STMTask.h"
-#import "DBController+Internal.h"
+#import "DBController+BasicActions.h"
 #import "DBController+Undo.h"
+#import "DBController+Internal.h"
 #import "STMTaskModel.h"
+#import "STMTask.h"
 
-NSString * const kSTMTaskEntityName = @"STMTask";
 
-@implementation DBController
-
-- (instancetype)initWithContext:(NSManagedObjectContext *)context {
-    self = [super init];
-    if (self) {
-        _context = context;
-        _numberOfAllTasks = 0;
-
-        [self addUndoManager];
-    }
-
-    return self;
-}
-
-- (instancetype)initWithParentController:(DBController *)parentController {
-    self = [super init];
-    if (self) {
-        _parentController = parentController;
-        _numberOfAllTasks = 0;
-
-        NSManagedObjectContext* parentContext = parentController.context;
-        if(parentContext){
-            _context = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
-            [_context setParentContext:parentContext];
-
-            [self addUndoManager];
-        }
-    }
-
-    return self;
-}
-
-- (instancetype)initWithContext:(NSManagedObjectContext *)context parentController:(DBController *)parentController {
-    self = [super init];
-    if (self) {
-        _context = context;
-        _parentController = parentController;
-        _numberOfAllTasks = 0;
-
-        [self addUndoManager];
-    }
-
-    return self;
-}
-
-- (void)saveWithSuccessFullBlock:(void (^)())successFullBlock andFailureBlock:(void (^)(NSError *))failureBlock {
-    BlockWeakSelf selfWeak = self;
-    [self.context performBlock:^{
-        NSError *err = nil;
-        if ([selfWeak.context save:&err]) {
-            if(self.parentController){
-                [self.parentController saveWithSuccessFullBlock:successFullBlock andFailureBlock:failureBlock];
-            } else {
-                if(successFullBlock){
-                    successFullBlock();
-                }
-            }
-        } else {
-            if(failureBlock){
-                failureBlock(err);
-            }
-        }
-    }];
-}
+@implementation DBController (BasicActions)
 
 #pragma mark - basic methods
 
@@ -91,9 +27,9 @@ NSString * const kSTMTaskEntityName = @"STMTask";
         }
     } andFailureBlock:^(NSError *error){
         [self undo];
-       if(failureBlock){
-           failureBlock(error);
-       }
+        if(failureBlock){
+            failureBlock(error);
+        }
     }];
 
 }
@@ -159,7 +95,7 @@ NSString * const kSTMTaskEntityName = @"STMTask";
 }
 
 - (void)reorderTaskWithId:(NSString *)uid toIndex:(int)index successFullBlock:(void (^)())successBlock failureBlock:(void (^)(NSError *))failureBlock {
-    
+
     [self beginUndo];
 
     NSError *err = nil;
@@ -207,7 +143,7 @@ NSString * const kSTMTaskEntityName = @"STMTask";
 
     for(STMTaskModel *taskModel in addedTasks){
         if(![self addTaskWithName:taskModel.name withUid:taskModel.uid withIndex:taskModel.index]){
-            DDLogInfo(@"addTaskWithName %@ failed", taskModel.uid);
+            DDLogError(@"addTaskWithName %@ failed", taskModel.uid);
             [self undo];
 
             if(failureBlock){
@@ -219,7 +155,7 @@ NSString * const kSTMTaskEntityName = @"STMTask";
 
     for(STMTaskModel *taskModel in removedTasks){
         if(![self markAsCompletedTaskWithId:taskModel.uid error:&err]){
-            DDLogInfo(@"markAsCompletedTaskWithId %@ failed %@", taskModel.uid, [err localizedDescription] );
+            DDLogError(@"markAsCompletedTaskWithId %@ failed %@", taskModel.uid, [err localizedDescription] );
             [self undo];
 
             if(failureBlock){
@@ -231,7 +167,7 @@ NSString * const kSTMTaskEntityName = @"STMTask";
 
     for(STMTaskModel *taskModel in renamedTasks){
         if(![self renameTaskWithId:taskModel.uid withName:taskModel.name error:&err]){
-            DDLogInfo(@"renameTaskWithId %@ failed %@", taskModel.uid, [err localizedDescription] );
+            DDLogError(@"renameTaskWithId %@ failed %@", taskModel.uid, [err localizedDescription] );
             [self undo];
 
             if(failureBlock){
@@ -243,7 +179,7 @@ NSString * const kSTMTaskEntityName = @"STMTask";
 
     for(STMTaskModel *taskModel in reorderedTasks){
         if(![self reorderTaskWithId:taskModel.uid toIndex:[taskModel.index intValue] error:&err]){
-            DDLogInfo(@"reorderTaskWithId %@ failed %@", taskModel.uid, [err localizedDescription] );
+            DDLogError(@"reorderTaskWithId %@ failed %@", taskModel.uid, [err localizedDescription] );
             [self undo];
             if(failureBlock){
                 failureBlock(err);
@@ -258,6 +194,7 @@ NSString * const kSTMTaskEntityName = @"STMTask";
             successFullBlock(nil);
         }
     } andFailureBlock:^(NSError *error){
+        DDLogError(@"syncAddedTasks failed %@", [err localizedDescription] );
         [self undo];
         if(failureBlock){
             failureBlock(error);
@@ -282,7 +219,7 @@ NSString * const kSTMTaskEntityName = @"STMTask";
 }
 
 - (NSFetchRequest *)createFetchingTasksRequestWithBatchSize:(unsigned int) batchSize {
-    NSFetchRequest *fetchRequest= [self prepareTaskFetchRequest];
+    NSFetchRequest *fetchRequest = [self prepareTaskFetchRequest];
 
     NSSortDescriptor *sort = [[NSSortDescriptor alloc]
             initWithKey:@"index" ascending:NO];
@@ -296,9 +233,18 @@ NSString * const kSTMTaskEntityName = @"STMTask";
 
 - (STMTask *)taskWithObjectID:(NSManagedObjectID *)objectId {
     if(objectId){
-        return MakeSafeCast([self.context objectWithID:objectId], [STMTask class]);
+        NSError *err = nil;
+        NSManagedObject * object = [self.context existingObjectWithID:objectId error:&err];
+        if(!object){
+            DDLogWarn(@"object with objectId: %@ does not exist", objectId);
+            return nil;
+        }
+        return MakeSafeCast(object, [STMTask class]);
     }
+
+    DDLogWarn(@"taskWithObjectID: but no objectId set");
 
     return nil;
 }
+
 @end

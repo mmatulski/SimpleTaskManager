@@ -7,7 +7,6 @@
 
 @class STMTask;
 
-
 @interface STMTaskModel : NSObject
 
 @property (nonatomic, copy) NSString * name;
@@ -15,7 +14,7 @@
 @property (nonatomic, strong) NSNumber * index;
 @property (nonatomic, strong) NSManagedObjectID * objectId;
 
-@property(nonatomic) bool completed;
+@property(nonatomic) BOOL completed; //it means "to remove"
 
 - (instancetype)initWithName:(NSString *)name uid:(NSString *)uid index:(NSNumber *)index;
 - (instancetype)initWitEntity:(STMTask *) task;

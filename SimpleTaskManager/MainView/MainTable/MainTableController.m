@@ -12,6 +12,7 @@
 #import "MainTableController+DragAndDrop.h"
 #import "TaskTableViewCell.h"
 #import "STMTaskModel.h"
+#import "DBController+BasicActions.h"
 
 NSString * const kCellIdentifier = @"CellIdentifier";
 unsigned int const kDefaultBatchSize = 20;

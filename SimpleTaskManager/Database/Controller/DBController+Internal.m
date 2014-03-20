@@ -17,13 +17,14 @@
     STMTask *task = (STMTask *)[NSEntityDescription insertNewObjectForEntityForName:kSTMTaskEntityName inManagedObjectContext:self.context];
     task.name = [name copy];
     if(uid){
+        //this case means that task was added on remote side
         task.uid = uid;
     } else {
         task.uid = [[NSUUID UUID] UUIDString];
     }
 
     //order is inversely proportional to index value
-    task.index = [NSNumber numberWithUnsignedLong:++_numberOfAllTasks];
+    task.index = [NSNumber numberWithUnsignedInt:++_numberOfAllTasks];
     return task;
 }
 
@@ -58,7 +59,7 @@
     return task;
 }
 
-- (STMTask *)reorderTaskWithId:(NSString *)uid toIndex:(NSUInteger)index error:(NSError **) error {
+- (STMTask *)reorderTaskWithId:(NSString *)uid toIndex:(NSInteger)index error:(NSError **) error {
     [self loadNumberOfAllTasksIfNotLoaded];
 
     NSError *err = nil;
@@ -114,9 +115,10 @@
 }
 
 - (BOOL)removeTask:(STMTask *)task error:(NSError **)error {
+    [self loadNumberOfAllTasksIfNotLoaded];
 
     NSNumber *indexNumber =  task.index;
-    int indexOfTaskToRemove = [indexNumber intValue];
+    int indexOfTaskToRemove = [indexNumber integerValue];
 
     [self.context deleteObject:task];
 
@@ -132,7 +134,8 @@
     return true;
 }
 
-- (BOOL)changeIndexBy:(int)change inAllTaskWithIndexGreaterThan:(int)relatedOrder error:(NSError **)error {
+- (BOOL)changeIndexBy:(NSInteger)change inAllTaskWithIndexGreaterThan:(NSInteger)relatedOrder error:(NSError **)error {
+    [self loadNumberOfAllTasksIfNotLoaded];
 
     NSError *err = nil;
     NSArray * tasks = [self findAllTasksWithIndexHigherThan:relatedOrder error:&err];
@@ -150,7 +153,8 @@
     return true;
 }
 
-- (BOOL)changeIndexBy:(int)change inAllTasksWithIndexHigherThan:(int)higherThan butLowerThan:(int)lowerThan error:(NSError **)error {
+- (BOOL)changeIndexBy:(NSInteger)change inAllTasksWithIndexHigherThan:(NSInteger)higherThan butLowerThan:(NSInteger)lowerThan error:(NSError **)error {
+    [self loadNumberOfAllTasksIfNotLoaded];
 
     DDLogTrace(@"changeIndexBy %d  higherThan %d lowerThan %d", change, higherThan, lowerThan);
 
@@ -170,11 +174,26 @@
     return true;
 }
 
-- (void)changeIndexBy:(int)change inTask:(STMTask *)task {
+- (void)changeIndexBy:(NSInteger)change inTask:(STMTask *)task {
+    [self loadNumberOfAllTasksIfNotLoaded];
+
     NSNumber *indexNumber =  task.index;
-    int index = [indexNumber intValue];
-    int theNewIndex = index + change;
-    NSNumber *changedIndexNumber = [NSNumber numberWithInt:theNewIndex];
+    NSInteger index = [indexNumber integerValue];
+    NSInteger theNewIndex = index + change;
+
+    if(index < 1){
+        //it is only index so maybe there is no need to do anything
+        //one solution can be setting flag . i.e. needsOrdersRework which will cause estimating orders again
+        DDLogWarn(@"changeIndexBy error: the new index for task %@ is not valid %d", task.uid, index);
+        theNewIndex = 1;
+    } else if(index > _numberOfAllTasks){
+        //it is only index so maybe there is no need to do anything
+        //one solution can be setting flag . i.e. needsOrdersRework which will cause estimating orders again
+        DDLogWarn(@"changeIndexBy error: the new index for task %@ is not valid %d", task.uid, index);
+        theNewIndex = _numberOfAllTasks;
+    }
+
+    NSNumber *changedIndexNumber = [NSNumber numberWithInteger:theNewIndex];
 
     DDLogTrace(@"----- change [%@] %d  from %d to %d", task.name ,change, index, theNewIndex);
 
@@ -199,7 +218,7 @@
     return fetchResults;
 }
 
-- (NSArray *) findAllTasksWithIndexHigherThan:(int)higherThan andLowerThan:(int) lowerThan error:(NSError **)error {
+- (NSArray *) findAllTasksWithIndexHigherThan:(NSInteger)higherThan andLowerThan:(NSInteger) lowerThan error:(NSError **)error {
 
     NSFetchRequest *request = [self prepareTaskFetchRequest];
 
@@ -233,13 +252,13 @@
     return fetchResults;
 }
 
-- (BOOL)reorderTask:(STMTask *)task withIndex:(int)index error:(NSError **)error {
-    int currentIndex = [[task index] intValue];
-    int change = index - currentIndex;
+- (BOOL)reorderTask:(STMTask *)task withIndex:(NSInteger)index error:(NSError **)error {
+    NSInteger currentIndex = [[task index] integerValue];
+    NSInteger change = index - currentIndex;
 
-    int lowerOne;
-    int higherOne;
-    int diff;
+    NSInteger lowerOne;
+    NSInteger higherOne;
+    NSInteger diff;
     if(change > 0){
          lowerOne = currentIndex + 1;
         higherOne = index;
@@ -261,7 +280,7 @@
     }
 
     DDLogTrace(@"---- FINALLY %d -> %d", currentIndex, index);
-    task.index = [NSNumber numberWithInt:index];
+    task.index = [NSNumber numberWithInteger:index];
 
     return true;
 }
@@ -271,7 +290,8 @@
         BlockWeakSelf selfWeak = self;
         [self.context performBlockAndWait:^{
             NSFetchRequest *request = [[NSFetchRequest alloc] init];
-            [request setEntity:[NSEntityDescription entityForName:@"STMTask" inManagedObjectContext:selfWeak.context]];
+            [request setEntity:[NSEntityDescription entityForName:kSTMTaskEntityName
+                                           inManagedObjectContext:selfWeak.context]];
             [request setIncludesSubentities:NO];
 
             NSError *err;

@@ -16,7 +16,7 @@
     self = [super init];
     if (self) {
         _context = context;
-        _numberOfAllTasks = NSUIntegerMax;
+        _numberOfAllTasks = 0;
 
         [self addUndoManager];
     }
@@ -28,7 +28,7 @@
     self = [super init];
     if (self) {
         _parentController = parentController;
-        _numberOfAllTasks = NSUIntegerMax;
+        _numberOfAllTasks = 0;
 
         NSManagedObjectContext* parentContext = parentController.context;
         if(parentContext){
@@ -47,7 +47,7 @@
     if (self) {
         _context = context;
         _parentController = parentController;
-        _numberOfAllTasks = NSUIntegerMax;
+        _numberOfAllTasks = 0;
 
         [self addUndoManager];
     }

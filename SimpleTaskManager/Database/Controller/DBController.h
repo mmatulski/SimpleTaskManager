@@ -10,8 +10,8 @@
 extern NSString * const kSTMTaskEntityName;
 
 @interface DBController : NSObject {
-    NSUInteger _numberOfAllTasks;
-    NSUInteger _numberOfAllTasksForUndo;
+    NSInteger _numberOfAllTasks;
+    NSInteger _numberOfAllTasksForUndo;
     BOOL _numberOfAllTasksEstimated;
 }
 

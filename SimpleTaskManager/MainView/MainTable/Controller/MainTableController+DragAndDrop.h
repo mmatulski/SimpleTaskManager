@@ -8,15 +8,8 @@
 
 @class STMTask;
 
-@interface MainTableController (DragAndDrop)
+@interface MainTableController (DragAndDrop) <UIGestureRecognizerDelegate>
 
-- (void)dropOrHideDraggedCellForPoint:(CGPoint)point globalPoint:(CGPoint)point1;
+- (void)addLongPressRecognizer;
 
-- (void)userHasDroppedItem;
-
-- (void)cancelDragging;
-
-- (void)emergencyCancelDragging;
-
-- (void)userHasPressedLongOnIndexPath:(NSIndexPath *)path andWindowPoint:(CGPoint)point;
 @end

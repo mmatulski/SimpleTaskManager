@@ -16,6 +16,59 @@
 
 @implementation MainTableController (DragAndDrop)
 
+- (void)addLongPressRecognizer {
+    self.longPressRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPress:)];
+    self.longPressRecognizer.minimumPressDuration = 0.8;
+    self.longPressRecognizer.delegate = self;
+
+    [self.tableView addGestureRecognizer:self.longPressRecognizer];
+}
+
+- (BOOL)isDraggingAnyItem {
+    return self.draggedItemModel != nil;
+}
+
+- (void)enableTableGestureRecognizerForScrolling {
+    [self.tableView panGestureRecognizer].enabled = true;
+}
+
+- (void)disableTableGestureRecognizerForScrolling {
+    [self.tableView panGestureRecognizer].enabled = false;
+}
+
+#pragma mark - Long Press handling
+
+- (void)handleLongPress:(UIGestureRecognizer *)gestureRecognizer {
+    CGPoint point = [gestureRecognizer locationInView: gestureRecognizer.view];
+    CGPoint pointRelatedToWindow = [gestureRecognizer locationInView:nil];
+
+    if(gestureRecognizer.state == UIGestureRecognizerStateBegan){
+
+        NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:point];
+        [self userHasPressedLongOnIndexPath:indexPath andWindowPoint:pointRelatedToWindow];
+
+    } else if(gestureRecognizer.state == UIGestureRecognizerStateChanged){
+
+        if([self isDraggingAnyItem]){
+            [self userWantsToMoveDraggingItemToLocalViewPoint:point andRelatedToWindowPoint:pointRelatedToWindow];
+        }
+
+    } else if(gestureRecognizer.state == UIGestureRecognizerStateEnded){
+
+        if([self isDraggingAnyItem]){
+            [self userHasDroppedItem];
+        }
+    } else if(gestureRecognizer.state == UIGestureRecognizerStateFailed || gestureRecognizer.state == UIGestureRecognizerStateCancelled){
+
+        if([self isDraggingAnyItem]){
+            [self draggingHasBeenFailedOrCancelled];
+        }
+
+    }
+}
+
+#pragma mark - Proper Actions
+
 - (void)userHasPressedLongOnIndexPath:(NSIndexPath *)indexPath andWindowPoint:(CGPoint)pointRelatedToWindow {
     STMTask *task = [self.dataSource taskForIndexPath:indexPath];
 
@@ -28,44 +81,43 @@
 
         [self.dragAndDropHandler dragView:cell fromPoint:pointRelatedToWindow];
 
-        [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationMiddle];
-
+        [self.dataSource cellForTaskModel:self.draggedItemModel hasBeenDraggedFromIndexPath:indexPath animateHiding:true];
+    } else {
+        [self.tableView reloadData];
     }
 }
 
-- (void)cancelDragging {
-    NSIndexPath *indexPathSource = [self indexPathForDraggedItem];
-    NSIndexPath *indexPathTarget = self.temporaryTargetForDraggedIndexPath;
+- (void)userWantsToMoveDraggingItemToLocalViewPoint:(CGPoint)point andRelatedToWindowPoint:(CGPoint)pointRelatedToWindow {
+    [self.dragAndDropHandler moveDraggedViewToPoint:pointRelatedToWindow];
+    [self dropOrHideDraggedCellForPoint:point globalPoint:pointRelatedToWindow];
+}
+
+- (void)userHasDroppedItem {
+    if(self.temporaryTargetForDraggedIndexPath){
+        [self.dataSource resetDraggedCell];
+        [self changeOrderForDraggedItemToIndexPath:self.temporaryTargetForDraggedIndexPath];
+    } else {
+        [self.dataSource draggedCellHasBeenReturned:true];
+    }
 
     self.draggedItemModel = nil;
     self.temporaryTargetForDraggedIndexPath = nil;
 
-    [self.tableView beginUpdates];
-
-    if(indexPathSource){
-        [self.tableView insertRowsAtIndexPaths:@[indexPathSource] withRowAnimation:UITableViewRowAnimationFade];
-    }
-
-    if(indexPathTarget){
-        [self.tableView deleteRowsAtIndexPaths:@[indexPathTarget] withRowAnimation:UITableViewRowAnimationFade];
-    }
-
-    [self.tableView endUpdates];
-
-    if(!indexPathSource && !indexPathTarget){
-        [self.tableView reloadData];
-    }
-
     [self.dragAndDropHandler stopDragging];
-
     [self enableTableGestureRecognizerForScrolling];
 }
+
+- (void)draggingHasBeenFailedOrCancelled {
+    [self cancelDragging];
+}
+
+#pragma mark -
 
 - (void)dropOrHideDraggedCellForPoint:(CGPoint)point globalPoint:(CGPoint)globalPoint {
 
     BOOL noCellFound = false;
     NSIndexPath *suggestedIndexPath = [self getPath:point globalPoint:globalPoint noCell:&noCellFound];
-
+    DDLogTrace(@"suggestedIndexPath %d", [suggestedIndexPath row]);
    if(self.temporaryTargetForDraggedIndexPath){
         if(suggestedIndexPath){
             if(![self.temporaryTargetForDraggedIndexPath isEqual:suggestedIndexPath]){
@@ -82,43 +134,11 @@
 }
 
 - (void)changeTargetTo:(NSIndexPath *) indexPath {
-    [self.tableView beginUpdates];
-
-    if(self.temporaryTargetForDraggedIndexPath){
-        [self.tableView deleteRowsAtIndexPaths:@[self.temporaryTargetForDraggedIndexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }
-
     self.temporaryTargetForDraggedIndexPath = indexPath;
-
-    if(self.temporaryTargetForDraggedIndexPath){
-        [self.tableView insertRowsAtIndexPaths:@[self.temporaryTargetForDraggedIndexPath]  withRowAnimation:UITableViewRowAnimationFade];
-    }
-
-    [self.tableView endUpdates];
-
-    if(self.temporaryTargetForDraggedIndexPath){
-        [self.tableView scrollToRowAtIndexPath:self.temporaryTargetForDraggedIndexPath atScrollPosition:UITableViewScrollPositionMiddle animated:true];
-    }
+    [self.dataSource draggedCellHasBeenMovedToIndexPath:indexPath animateShowing:true];
 }
 
-- (void)userHasDroppedItem {
-    NSIndexPath *indexPathSource = [self indexPathForDraggedItem];
-    NSIndexPath *indexPathTarget = self.temporaryTargetForDraggedIndexPath;
 
-    self.draggedItemModel = nil;
-    self.temporaryTargetForDraggedIndexPath = nil;
-
-    if(indexPathTarget){
-        [self changeOrderForTaskFromIndexPath:indexPathSource toIndexPath:indexPathTarget];
-    } else if(indexPathSource){
-        [self.tableView insertRowsAtIndexPaths:@[indexPathSource] withRowAnimation:UITableViewRowAnimationFade];
-    } else {
-        [self.tableView reloadData];
-    }
-
-    [self.dragAndDropHandler stopDragging];
-    [self enableTableGestureRecognizerForScrolling];
-}
 
 
 - (NSIndexPath *)getPath:(CGPoint)point globalPoint:(CGPoint)globalPoint noCell:(BOOL *)noCellFound {
@@ -173,7 +193,33 @@
     return result;
 }
 
+- (void)cancelDragging {
+    NSIndexPath *indexPathSource = [self indexPathForDraggedItem];
+    NSIndexPath *indexPathTarget = self.temporaryTargetForDraggedIndexPath;
 
+    self.draggedItemModel = nil;
+    self.temporaryTargetForDraggedIndexPath = nil;
+
+    [self.tableView beginUpdates];
+
+    if(indexPathSource){
+        [self.tableView insertRowsAtIndexPaths:@[indexPathSource] withRowAnimation:UITableViewRowAnimationFade];
+    }
+
+    if(indexPathTarget){
+        [self.tableView deleteRowsAtIndexPaths:@[indexPathTarget] withRowAnimation:UITableViewRowAnimationFade];
+    }
+
+    [self.tableView endUpdates];
+
+    if(!indexPathSource && !indexPathTarget){
+        [self.tableView reloadData];
+    }
+
+    [self.dragAndDropHandler stopDragging];
+
+    [self enableTableGestureRecognizerForScrolling];
+}
 
 -(void) emergencyCancelDragging{
     self.draggedItemModel = nil;
@@ -194,14 +240,10 @@
     return [self.dataSource indexPathForTaskModel:self.draggedItemModel];
 }
 
-- (void)changeOrderForTaskFromIndexPath:(NSIndexPath *)sourcePath toIndexPath:(NSIndexPath *)targetPath {
-    STMTask *task = [self.dataSource taskForIndexPath:sourcePath];
-
-    int change = sourcePath.row - targetPath.row;
-    int theNewOrder = [task.index intValue] + change;
-
-    if(task){
-        [[SyncGuardService singleUser] reorderTaskWithId:task.uid toIndex:theNewOrder successFullBlock:^(id o) {
+- (void)changeOrderForDraggedItemToIndexPath:(NSIndexPath *)targetPath {
+    NSUInteger theNewOrder = [self.dataSource estimatedTaskIndexForTargetIndexPath:targetPath];
+    if(self.draggedItemModel){
+        [[SyncGuardService singleUser] reorderTaskWithId:self.draggedItemModel.uid toIndex:theNewOrder successFullBlock:^(id o) {
 
         } failureBlock:^(NSError *error) {
             runOnMainThread(^{
@@ -210,5 +252,20 @@
         }];
     }
 }
+
+#pragma mark UILongPressGestureRecognizer
+
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
+    return YES;
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+    return YES;
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+    return YES;
+}
+
 
 @end

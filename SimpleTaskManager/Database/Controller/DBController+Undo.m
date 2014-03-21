@@ -17,7 +17,7 @@
 }
 
 - (void)beginUndo {
-    _numberOfAllTasksForUndo = _numberOfAllTasks;
+    _numberOfAllTasksForUndo = self.numberOfAllTasks;
     [self.context.undoManager enableUndoRegistration];
 }
 
@@ -27,7 +27,7 @@
 }
 
 -(void) undo{
-    _numberOfAllTasks = _numberOfAllTasksForUndo;
+    self.numberOfAllTasks = _numberOfAllTasksForUndo;
 
     //lets estimate it once again
     _numberOfAllTasksEstimated = false;

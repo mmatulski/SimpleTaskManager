@@ -24,7 +24,7 @@
     }
 
     //order is inversely proportional to index value
-    task.index = [NSNumber numberWithUnsignedInt:++_numberOfAllTasks];
+    task.index = [NSNumber numberWithUnsignedInt:++self.numberOfAllTasks];
     return task;
 }
 
@@ -122,7 +122,7 @@
 
     [self.context deleteObject:task];
 
-    _numberOfAllTasks--;
+    self.numberOfAllTasks--;
 
     NSError *err = nil;
     if(![self changeIndexBy:-1 inAllTaskWithIndexGreaterThan:indexOfTaskToRemove error:&err]){
@@ -187,12 +187,12 @@
         //one solution can be setting flag . i.e. needsOrdersRework which will cause estimating orders again
         DDLogWarn(@"changeIndexBy error: the new index for task %@ is not valid %d less than 0", task.uid, theNewIndex);
         theNewIndex = 1;
-    } else if(theNewIndex > _numberOfAllTasks){
+    } else if(theNewIndex > self.numberOfAllTasks){
         //TODO
         //it is only index so maybe there is no need to do anything
         //one solution can be setting flag . i.e. needsOrdersRework which will cause estimating orders again
-        DDLogWarn(@"changeIndexBy error: the new index for task %@ is not valid %d greater than %d", task.uid, theNewIndex, _numberOfAllTasks);
-        theNewIndex = _numberOfAllTasks;
+        DDLogWarn(@"changeIndexBy error: the new index for task %@ is not valid %d greater than %d", task.uid, theNewIndex, self.numberOfAllTasks);
+        theNewIndex = self.numberOfAllTasks;
     }
 
     NSNumber *changedIndexNumber = [NSNumber numberWithInteger:theNewIndex];
@@ -301,10 +301,10 @@
             if(count == NSNotFound) {
                 DDLogError(@"There was problem with loading number of all tasks %@", [err localizedDescription]);
             } else {
-                _numberOfAllTasks = count;
+                self.numberOfAllTasks = count;
                 _numberOfAllTasksEstimated = true;
 
-                DDLogInfo(@"number of all Tasks is %u", _numberOfAllTasks);
+                DDLogInfo(@"number of all Tasks is %u", self.numberOfAllTasks);
             }
         }];
     }

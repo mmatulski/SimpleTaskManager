@@ -9,8 +9,4 @@
 
 @protocol MainTableDataSourceDelegate <NSObject>
 
--(STMTaskModel *)taskBeingMoved;
-
--(NSIndexPath *) currentTargetIndexPathForItemBeingMoved;
-
 @end

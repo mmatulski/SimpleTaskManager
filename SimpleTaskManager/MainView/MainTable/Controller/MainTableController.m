@@ -10,6 +10,7 @@
 #import "MainTableController+DragAndDrop.h"
 #import "STMTaskModel.h"
 #import "MainTableDataSource.h"
+#import "MainTableConsts.h"
 
 @implementation MainTableController {
 
@@ -67,85 +68,6 @@
     //TODO clean fetched cache
 }
 
-- (NSIndexPath *)tableView:(UITableView *)tableView targetIndexPathForMoveFromRowAtIndexPath:(NSIndexPath *)sourceIndexPath toProposedIndexPath:(NSIndexPath *)proposedDestinationIndexPath {
-    return nil;
-}
-
-
-- (void)addLongPressRecognizer {
-    self.longPressRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPress:)];
-    self.longPressRecognizer.minimumPressDuration = 0.8; //seconds
-    self.longPressRecognizer.delegate = self;
-
-    [self.tableView addGestureRecognizer:self.longPressRecognizer];
-}
-
-#pragma mark UILongPressGestureRecognizer
-
-- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
-    return YES;
-}
-
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
-    return YES;
-}
-
-//- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRequireFailureOfGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
-//    return NO;
-//}
-//
-//- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
-//    return NO;
-//}
-
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
-    return YES;
-}
-
-
-- (void)handleLongPress:(UIGestureRecognizer *)gestureRecognizer {
-    CGPoint point = [gestureRecognizer locationInView: gestureRecognizer.view];
-    CGPoint pointRelatedToWindow = [gestureRecognizer locationInView:nil];
-
-    if(gestureRecognizer.state == UIGestureRecognizerStateBegan){
-
-        NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:point];
-        [self userHasPressedLongOnIndexPath:indexPath andWindowPoint:pointRelatedToWindow];
-
-    } else if(gestureRecognizer.state == UIGestureRecognizerStateFailed || gestureRecognizer.state == UIGestureRecognizerStateCancelled){
-
-        if(self.draggedItemModel){
-            [self cancelDragging];
-        }
-
-    } else if(gestureRecognizer.state == UIGestureRecognizerStateChanged){
-        if(self.draggedItemModel){
-
-            [self.dragAndDropHandler moveDraggedViewToPoint:pointRelatedToWindow];
-            [self dropOrHideDraggedCellForPoint:point globalPoint:pointRelatedToWindow];
-        }
-
-    } else if(gestureRecognizer.state == UIGestureRecognizerStateEnded){
-        if(self.draggedItemModel){
-
-           [self userHasDroppedItem];
-        }
-    }
-}
-
-
-
-
-
-
-- (void)enableTableGestureRecognizerForScrolling {
-   [self.tableView panGestureRecognizer].enabled = true;
-}
-
-- (void)disableTableGestureRecognizerForScrolling {
-   [self.tableView panGestureRecognizer].enabled = false;
-}
-
 - (void)deselectTaskModel:(STMTaskModel *)taskModel {
     NSIndexPath *selectedIndexPath = [self indexPathForSelectedItem];
     if(selectedIndexPath){
@@ -156,6 +78,10 @@
 }
 
 #pragma mark - UITableViewDelegate methods
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return kCellDefaultHeight;
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
@@ -172,26 +98,11 @@
     }
 }
 
-- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset {
-
-}
-
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     if(self.selectedItemModel){
         NSIndexPath *selectedIndexPath = [self indexPathForSelectedItem];
         [self updateOptionsPositionForItemAtIndexPath:selectedIndexPath taskModel:self.selectedItemModel];
     }
 }
-
-
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 54.0;
-}
-
-
-
-
-
 
 @end

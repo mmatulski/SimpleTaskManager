@@ -11,7 +11,6 @@
 #import "MainTableConsts.h"
 #import "DBAccess.h"
 #import "TaskTableViewCell.h"
-#import "MainTableDataSourceDelegate.h"
 
 NSUInteger const kDefaultBatchSize = 20;
 
@@ -76,26 +75,35 @@ NSUInteger const kDefaultBatchSize = 20;
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)path {
 
+    DDLogTrace(@"configureCell %d '%@' %d", [path row], self.modelForTaskBeingMoved.name, [self.currentTargetIndexPathForItemBeingMoved row]);
+
     NSIndexPath *pathToRequest = path;
-
-    STMTask * task = [self.fetchedResultsController objectAtIndexPath:pathToRequest];
-
 
     BOOL thisCellShowsMovedItem = false;
 
-    STMTaskModel *modelForTaskBeingMoved = [self.delegate taskBeingMoved];
-    if(modelForTaskBeingMoved){
-        if([modelForTaskBeingMoved.uid isEqualToString:task.uid]){
+    STMTask * task = [self.fetchedResultsController objectAtIndexPath:pathToRequest];
+
+    if(self.modelForTaskBeingMoved){
+        NSIndexPath *originalIndexPathOfMovedModel = [self indexPathForTaskModel:self.modelForTaskBeingMoved];
+
+        if([originalIndexPathOfMovedModel row] >= [path row]){
             pathToRequest = [NSIndexPath indexPathForRow:(path.row + 1) inSection:path.section];
-            task = [self.fetchedResultsController objectAtIndexPath:pathToRequest];
         }
 
-        NSIndexPath * currentTargetIndexPathForItemBeingMoved = [self.delegate currentTargetIndexPathForItemBeingMoved];
+        if(self.currentTargetIndexPathForItemBeingMoved){
+            if([self.currentTargetIndexPathForItemBeingMoved row] < [path row]){
+                pathToRequest = [NSIndexPath indexPathForRow:(path.row - 1) inSection:path.section];
+            }
 
-        if(currentTargetIndexPathForItemBeingMoved && [path isEqual:currentTargetIndexPathForItemBeingMoved]){
-            thisCellShowsMovedItem = true;
-            task = [self taskForIndexPath:currentTargetIndexPathForItemBeingMoved];
+            if ([path isEqual:self.currentTargetIndexPathForItemBeingMoved]) {
+                thisCellShowsMovedItem = true;
+                task = [self taskForModel:self.modelForTaskBeingMoved];
+            }
         }
+    }
+
+    if(!thisCellShowsMovedItem){
+        task = [self.fetchedResultsController objectAtIndexPath:pathToRequest];
     }
 
     if(task){
@@ -113,9 +121,11 @@ NSUInteger const kDefaultBatchSize = 20;
     if(sections && [sections count] > section){
         id  sectionInfo = [sections objectAtIndex:(NSUInteger) section];
         int result = [sectionInfo numberOfObjects];
-        if([self.delegate taskBeingMoved] && ![self.delegate currentTargetIndexPathForItemBeingMoved]){
+        if(self.modelForTaskBeingMoved && !self.currentTargetIndexPathForItemBeingMoved){
             result--;
         }
+
+        DDLogTrace(@"numberOfRowsInSection %d", result);
 
         return result;
     }
@@ -235,6 +245,74 @@ NSUInteger const kDefaultBatchSize = 20;
 //    } else {
 //        [self updateSelectedItemVisibility];
 //    }
+}
+
+- (void)cellForTaskModel:(STMTaskModel *)draggedModel hasBeenDraggedFromIndexPath:(NSIndexPath *)indexPath animateHiding:(bool)animated {
+    self.modelForTaskBeingMoved = draggedModel;
+    [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:animated ? UITableViewRowAnimationMiddle : UITableViewRowAnimationNone];
+}
+
+- (void)draggedCellHasBeenMovedToIndexPath:(NSIndexPath *)indexPath animateShowing:(bool)animated {
+
+    [self.tableView beginUpdates];
+
+    if(self.currentTargetIndexPathForItemBeingMoved){
+        [self.tableView deleteRowsAtIndexPaths:@[self.currentTargetIndexPathForItemBeingMoved] withRowAnimation:animated ? UITableViewRowAnimationMiddle : UITableViewRowAnimationNone];
+    }
+
+    self.currentTargetIndexPathForItemBeingMoved = indexPath;
+
+    if(self.currentTargetIndexPathForItemBeingMoved){
+        [self.tableView insertRowsAtIndexPaths:@[self.currentTargetIndexPathForItemBeingMoved]  withRowAnimation:animated ? UITableViewRowAnimationMiddle : UITableViewRowAnimationNone];
+    }
+
+    [self.tableView endUpdates];
+
+    if(self.currentTargetIndexPathForItemBeingMoved){
+        [self.tableView scrollToRowAtIndexPath:self.currentTargetIndexPathForItemBeingMoved atScrollPosition:UITableViewScrollPositionMiddle animated:animated];
+    }
+
+}
+
+- (void)draggedCellHasBeenReturned:(BOOL) animateShowingItAgain {
+    if(self.modelForTaskBeingMoved){
+        NSIndexPath *indexPath = [self indexPathForTaskModel:self.modelForTaskBeingMoved];
+
+        self.modelForTaskBeingMoved = nil;
+        self.currentTargetIndexPathForItemBeingMoved = nil;
+
+        if(indexPath){
+            [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation: animateShowingItAgain ? UITableViewRowAnimationMiddle : UITableViewRowAnimationNone];
+        } else {
+            [self.tableView reloadData];
+        }
+    }
+
+    self.modelForTaskBeingMoved = nil;
+    self.currentTargetIndexPathForItemBeingMoved = nil;
+}
+
+- (NSUInteger)estimatedTaskIndexForTargetIndexPath:(NSIndexPath *)indexPath {
+    NSUInteger numberOfAllTasks = self.dbController.numberOfAllTasks;
+    if([indexPath row] == 0){
+        return numberOfAllTasks;
+    }
+
+//    if([indexPath row] == (numberOfAllTasks - 1)){
+//        return 1;
+//    }
+
+    NSInteger result = numberOfAllTasks - [indexPath row];
+    if(result < 0){
+        return 0;
+    }
+
+    return (NSUInteger) result;
+}
+
+- (void)resetDraggedCell {
+    self.modelForTaskBeingMoved = nil;
+    self.currentTargetIndexPathForItemBeingMoved = nil;
 }
 
 @end

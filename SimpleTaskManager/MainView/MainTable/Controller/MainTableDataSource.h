@@ -8,14 +8,15 @@
 @class DBController;
 @class STMTaskModel;
 @class STMTask;
-@protocol MainTableDataSourceDelegate;
 
 @interface MainTableDataSource : NSObject <UITableViewDataSource, NSFetchedResultsControllerDelegate>
 
-@property(nonatomic, weak) id <MainTableDataSourceDelegate> delegate;
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) DBController *dbController;
 @property (nonatomic, strong) NSFetchedResultsController* fetchedResultsController;
+
+@property(nonatomic, strong) STMTaskModel *modelForTaskBeingMoved;
+@property(nonatomic, strong) NSIndexPath *currentTargetIndexPathForItemBeingMoved;
 
 - (instancetype)initWithTableView:(UITableView *)tableView;
 
@@ -25,5 +26,14 @@
 
 - (STMTask *)taskForModel:(STMTaskModel *)model;
 
+- (void)cellForTaskModel:(STMTaskModel *)model hasBeenDraggedFromIndexPath:(NSIndexPath *)path animateHiding:(bool)animated;
 
+- (void)draggedCellHasBeenMovedToIndexPath:(NSIndexPath *)indexPath animateShowing:(bool)animated;
+
+
+- (void)draggedCellHasBeenReturned:(BOOL)animateShowingItAgain;
+
+- (NSUInteger)estimatedTaskIndexForTargetIndexPath:(NSIndexPath *)path;
+
+- (void)resetDraggedCell;
 @end

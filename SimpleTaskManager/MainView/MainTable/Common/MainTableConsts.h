@@ -6,3 +6,4 @@
 #import <Foundation/Foundation.h>
 
 extern NSString * const kCellIdentifier;
+extern CGFloat const kCellDefaultHeight;

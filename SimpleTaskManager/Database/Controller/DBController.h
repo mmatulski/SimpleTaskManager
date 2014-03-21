@@ -10,13 +10,14 @@
 extern NSString * const kSTMTaskEntityName;
 
 @interface DBController : NSObject {
-    NSInteger _numberOfAllTasks;
     NSInteger _numberOfAllTasksForUndo;
     BOOL _numberOfAllTasksEstimated;
 }
 
 @property(readonly, nonatomic, strong) NSManagedObjectContext *context;
 @property(readonly, nonatomic, strong) DBController *parentController;
+
+@property NSUInteger numberOfAllTasks;
 
 - (instancetype)initWithContext:(NSManagedObjectContext *)context;
 - (instancetype)initWithParentController:(DBController *)parentController;

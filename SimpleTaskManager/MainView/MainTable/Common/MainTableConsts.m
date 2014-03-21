@@ -6,3 +6,4 @@
 #import "MainTableConsts.h"
 
 NSString * const kCellIdentifier = @"CellIdentifier";
+CGFloat const kCellDefaultHeight = 54.0;

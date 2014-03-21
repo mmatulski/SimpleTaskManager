@@ -6,6 +6,7 @@
 #import "DBController.h"
 #import "DBController+Undo.h"
 #import "NSError+Log.h"
+#import "DBController+Internal.h"
 
 @implementation DBController
 
@@ -13,7 +14,7 @@
     self = [super init];
     if (self) {
         _context = context;
-        _numberOfAllTasks = 0;
+        self.numberOfAllTasks = 0;
 
         [self addUndoManager];
     }
@@ -25,7 +26,7 @@
     self = [super init];
     if (self) {
         _parentController = parentController;
-        _numberOfAllTasks = 0;
+        self.numberOfAllTasks = 0;
 
         NSManagedObjectContext* parentContext = parentController.context;
         if(parentContext){
@@ -44,7 +45,7 @@
     if (self) {
         _context = context;
         _parentController = parentController;
-        _numberOfAllTasks = 0;
+        self.numberOfAllTasks = 0;
 
         [self addUndoManager];
     }
@@ -99,7 +100,11 @@
         DDLogInfo(@"DBController saveWithSuccessFullBlock performBlock E %@" , self);
     }];
     DDLogInfo(@"DBController saveWithSuccessFullBlock END %@" , self);
+}
 
+- (NSUInteger)numberOfAllTasks {
+    [self loadNumberOfAllTasksIfNotLoaded];
+    return _numberOfAllTasks;
 }
 
 @end

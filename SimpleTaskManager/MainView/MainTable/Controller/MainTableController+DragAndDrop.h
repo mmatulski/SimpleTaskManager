@@ -18,7 +18,5 @@
 
 - (void)emergencyCancelDragging;
 
-- (STMTask *)taskForIndexPath:(NSIndexPath *)indexPath;
-
 - (void)userHasPressedLongOnIndexPath:(NSIndexPath *)path andWindowPoint:(CGPoint)point;
 @end

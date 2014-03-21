@@ -11,12 +11,13 @@
 #import "SyncGuardService.h"
 #import "LocalUserLeg.h"
 #import "MessagesHelper.h"
+#import "MainTableDataSource.h"
 
 
 @implementation MainTableController (DragAndDrop)
 
 - (void)userHasPressedLongOnIndexPath:(NSIndexPath *)indexPath andWindowPoint:(CGPoint)pointRelatedToWindow {
-    STMTask *task = [self taskForIndexPath:indexPath];
+    STMTask *task = [self.dataSource taskForIndexPath:indexPath];
 
     if(task){
         UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
@@ -185,20 +186,16 @@
     [MessagesHelper showMessage:@"Task was changed by someone else ..."];
 }
 
-- (STMTask *)taskForIndexPath:(NSIndexPath *)indexPath {
-    return [self.fetchedResultsController objectAtIndexPath:indexPath];;
-}
-
 - (NSIndexPath *)indexPathForDraggedItem {
     if(!self.draggedItemModel){
         return nil;
     }
 
-    return [self indexPathForTaskModel:self.draggedItemModel];
+    return [self.dataSource indexPathForTaskModel:self.draggedItemModel];
 }
 
 - (void)changeOrderForTaskFromIndexPath:(NSIndexPath *)sourcePath toIndexPath:(NSIndexPath *)targetPath {
-    STMTask *task = [self.fetchedResultsController objectAtIndexPath:sourcePath];
+    STMTask *task = [self.dataSource taskForIndexPath:sourcePath];
 
     int change = sourcePath.row - targetPath.row;
     int theNewOrder = [task.index intValue] + change;

@@ -27,7 +27,7 @@
 - (void)connect {
     [super connect];
 
-    [self startTrafficGenerator];
+    //[self startTrafficGenerator];
 }
 
 - (void)startTrafficGenerator {
@@ -61,10 +61,6 @@
     NSUInteger numberOfTasksToRename = (NSUInteger) floor(0.33 * (float) numberOfItemsToChange);
     NSUInteger numberOfTasksToReorder = (NSUInteger) floor(0.33 * (float) numberOfItemsToChange);
     NSUInteger numberOfTasksToRemove = numberOfItemsToChange - (numberOfTasksToRename + numberOfTasksToReorder);
-
-    if(numberOfTasksToRemove < 0){
-        numberOfTasksToRemove = 0;
-    }
 
     NSUInteger increase = (NSUInteger) floor(0.2 * (float) numberOfItemsToChange);
     if(increase == 0){
@@ -177,7 +173,7 @@
 - (id)drawItemFromArray:(NSMutableArray *)tasks {
     uint32_t numberOfTasks = [tasks count];
     uint32_t index = arc4random_uniform(numberOfTasks);
-    if(index >=0 && index < numberOfTasks){
+    if(index < numberOfTasks){
         return [tasks objectAtIndex:index];
     }
 

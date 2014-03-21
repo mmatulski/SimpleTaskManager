@@ -8,6 +8,7 @@
 #import "STMTaskModel.h"
 #import "DBController.h"
 #import "MessagesHelper.h"
+#import "MainTableDataSource.h"
 
 
 @implementation MainTableController (SelectedItem)
@@ -34,7 +35,7 @@
         return nil;
     }
 
-    return [self indexPathForTaskModel:self.selectedItemModel];
+    return [self.dataSource indexPathForTaskModel:self.selectedItemModel];
 }
 
 - (void)updateSelectedItemVisibility {

@@ -11,13 +11,13 @@
 @class DragAndDropHandler;
 @class STMTaskModel;
 @class STMTask;
+@class MainTableDataSource;
 
-@interface MainTableController : NSObject <UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate, UIGestureRecognizerDelegate>
+@interface MainTableController : NSObject <UITableViewDelegate, NSFetchedResultsControllerDelegate, UIGestureRecognizerDelegate>
 
 @property(nonatomic, weak) id <MainTableControllerDelegate> delegate;
 @property(nonatomic, strong) UITableView *tableView;
-@property (nonatomic, strong) DBController *dbController;
-@property(nonatomic, strong) NSFetchedResultsController* fetchedResultsController;
+@property(nonatomic, strong) MainTableDataSource *dataSource;
 
 @property(nonatomic, strong) UILongPressGestureRecognizer *longPressRecognizer;
 @property(nonatomic, strong) DragAndDropHandler *dragAndDropHandler;
@@ -28,11 +28,11 @@
 
 @property(nonatomic) CGFloat scrollOffsetWhenItemWasSelected;
 
-@property(nonatomic) BOOL shouldCancelSelection;
-
-@property(nonatomic) BOOL shouldCancelDragging;
-
-@property(nonatomic) BOOL selectedItemWillBeRemoved;
+//@property(nonatomic) BOOL shouldCancelSelection;
+//
+//@property(nonatomic) BOOL shouldCancelDragging;
+//
+//@property(nonatomic) BOOL selectedItemWillBeRemoved;
 
 - (instancetype)initWithTableView:(UITableView *)tableView;
 
@@ -44,7 +44,5 @@
 
 - (void)deselectTaskModel:(STMTaskModel *)taskModel;
 
-- (NSIndexPath *)indexPathForTaskModel:(STMTaskModel *)model;
 
-- (STMTask *)taskForModel:(STMTaskModel *)model;
 @end

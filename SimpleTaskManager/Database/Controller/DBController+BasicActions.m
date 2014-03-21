@@ -275,7 +275,7 @@
 }
 
 
-- (STMTask *)taskWithObjectID:(NSManagedObjectID *)objectId {
+- (STMTask *)existingTaskWithObjectID:(NSManagedObjectID *)objectId {
     if(objectId){
         NSError *err = nil;
         NSManagedObject * object = [self.context existingObjectWithID:objectId error:&err];
@@ -286,7 +286,7 @@
         return MakeSafeCast(object, [STMTask class]);
     }
 
-    DDLogWarn(@"taskWithObjectID: but no objectId set");
+    DDLogWarn(@"existingTaskWithObjectID: but no objectId set");
 
     return nil;
 }

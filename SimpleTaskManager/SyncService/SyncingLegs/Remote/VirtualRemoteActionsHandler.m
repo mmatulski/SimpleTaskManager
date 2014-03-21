@@ -6,7 +6,6 @@
 #import "VirtualRemoteActionsHandler.h"
 #import "DBAccess.h"
 #import "DBController.h"
-#import "STMTask.h"
 #import "RemoteLeg.h"
 #import "STMTaskModel.h"
 #import "DBController+BasicActions.h"
@@ -18,7 +17,7 @@
 - (id)init {
     self = [super init];
     if (self) {
-        _timerInterval = 20.0;
+        _timerInterval = 2.0;
     }
 
     return self;
@@ -28,7 +27,7 @@
 - (void)connect {
     [super connect];
 
-    //[self startTrafficGenerator];
+    [self startTrafficGenerator];
 }
 
 - (void)startTrafficGenerator {
@@ -39,7 +38,7 @@
     DDLogInfo(@"TRAFFIC");
     BlockWeakSelf selfWeak = self;
     DBController* controller = [DBAccess createBackgroundWorker];
-    [controller fetchAllTasks:^(NSArray *tasks) {
+    [controller fetchAllTasksAsModels:^(NSArray *tasks) {
         [selfWeak generateActionsForTasks:tasks];
     } failureBlock:^(NSError *error) {
         DDLogError(@"generateTraffic Problem with fetching all tasks %@", [error localizedDescription]);
@@ -47,6 +46,8 @@
 }
 
 - (void)generateActionsForTasks:(NSArray *)tasks {
+
+    DDLogInfo(@"TRAFFIC generateActionsForTasks %d", [tasks count]);
 
     static NSUInteger counter = 0;
     static NSUInteger renameCounter = 0;
@@ -71,10 +72,6 @@
     }
     NSUInteger numberOfTasksToAdd = numberOfTasksToRemove + increase;
 
-
-
-
-
     NSMutableArray * tasksToChange = [self drawFromArray:tasks numberOfItems:numberOfItemsToChange];
 
     NSMutableArray *tasksToAdd = [[NSMutableArray alloc] init];
@@ -91,39 +88,36 @@
 
 
     for (int i = 0; i < numberOfTasksToRemove; i++) {
-        STMTask *task = [tasksToChange firstObject];
-        if(!task){
+        STMTaskModel *taskModel = [tasksToChange firstObject];
+        if(!taskModel){
             break;
         }
 
-        STMTaskModel *taskModel = [[STMTaskModel alloc] initWitEntity:task];
         [tasksToRemove addObject:taskModel];
 
-        [tasksToChange removeObject:task];
+        [tasksToChange removeObject:taskModel];
     }
 
     for (int i = 0; i < numberOfTasksToRename; i++) {
-        STMTask *task = [tasksToChange firstObject];
-        if(!task){
+        STMTaskModel *taskModel = [tasksToChange firstObject];
+        if(!taskModel){
             break;
         }
 
-        STMTaskModel *taskModel = [[STMTaskModel alloc] initWitEntity:task];
         [tasksToRename addObject:taskModel];
         [taskModel setName:[NSString stringWithFormat:@"renamed %d", renameCounter++]];
-        [tasksToChange removeObject:task];
+        [tasksToChange removeObject:taskModel];
     }
 
     for (int i = 0; i < numberOfTasksToReorder; i++) {
-        STMTask *task = [tasksToChange firstObject];
-        if(!task){
+        STMTaskModel *taskModel = [tasksToChange firstObject];
+        if(!taskModel){
             break;
         }
 
-        STMTaskModel *taskModel = [[STMTaskModel alloc] initWitEntity:task];
         [self setAnotherOrderNrForTask:taskModel fromPossible:numberOfTasks];
         [tasksToReorder addObject:taskModel];
-        [tasksToChange removeObject:task];
+        [tasksToChange removeObject:taskModel];
     }
 
     [self.remoteLeg syncAddedTasks:[NSArray arrayWithArray:tasksToAdd]
@@ -168,19 +162,19 @@
     }
 
     for(int i = 0; i < numberOfTasksToDraw; i++){
-        STMTask *taskDrawn = [self drawItemFromArray:stillToDraw];
+        STMTaskModel *taskDrawn = [self drawItemFromArray:stillToDraw];
         if(taskDrawn){
             [result addObject:taskDrawn];
             [stillToDraw removeObject:taskDrawn];
         } else {
-            return nil;
+            break;
         }
     }
 
     return result;
 }
 
-- (STMTask *)drawItemFromArray:(NSMutableArray *)tasks {
+- (id)drawItemFromArray:(NSMutableArray *)tasks {
     uint32_t numberOfTasks = [tasks count];
     uint32_t index = arc4random_uniform(numberOfTasks);
     if(index >=0 && index < numberOfTasks){

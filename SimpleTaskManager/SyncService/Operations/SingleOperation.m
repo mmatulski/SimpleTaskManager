@@ -32,6 +32,8 @@
 
     [self.delegate operationFinished:self];
 
+    [self finish];
+
 }
 
 -(void) failedWithError:(NSError *) error{
@@ -43,6 +45,8 @@
     self.success = false;
 
     [self.delegate operationFinished:self];
+
+    [self finish];
 }
 
 - (void)performAdequateBlock {

@@ -286,6 +286,18 @@ unsigned int const kDefaultBatchSize = 20;
         }
     }
 
+    NSString *stringType = @"";
+    switch (type){
+
+        case NSFetchedResultsChangeInsert: stringType = @"INSERT";break;
+        case NSFetchedResultsChangeDelete:stringType = @"DELETE";break;
+        case NSFetchedResultsChangeMove:stringType = @"MOVE";break;
+        case NSFetchedResultsChangeUpdate:stringType = @"UPDATE";break;
+    }
+
+    DDLogInfo(@"didChangeObject %@ %@ %@ %d", stringType, changedTask.objectID, changedTask.name, [changedTask.index integerValue]);
+
+
     if(self.selectedItemModel && !self.selectedItemWillBeRemoved){
         if([changedTask.objectID isEqual:self.selectedItemModel.objectId]){
             if(type == NSFetchedResultsChangeDelete){
@@ -340,11 +352,13 @@ unsigned int const kDefaultBatchSize = 20;
 }
 
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
+    DDLogInfo(@"controllerWillChangeContent");
     [self.tableView beginUpdates];
 }
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
     [self.tableView endUpdates];
+    DDLogInfo(@"controllerDidChangeContent");
 
     if(self.shouldCancelDragging){
         [self emergencyCancelDragging];

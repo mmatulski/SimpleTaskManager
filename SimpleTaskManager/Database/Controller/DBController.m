@@ -53,16 +53,26 @@
 }
 
 - (void)saveWithSuccessFullBlock:(void (^)())successFullBlock andFailureBlock:(void (^)(NSError *))failureBlock {
+    DDLogInfo(@"DBController saveWithSuccessFullBlock %@ BEGIN " , self);
     BlockWeakSelf selfWeak = self;
     [self.context performBlock:^{
+        DDLogInfo(@"DBController saveWithSuccessFullBlock %@ performBlock B" , self);
         NSError *err = nil;
         if ([selfWeak.context save:&err]) {
+            DDLogInfo(@"DBController saveWithSuccessFullBlock %@ performBlock SAVED" , self);
+
             if(self.parentController){
+                DDLogInfo(@"DBController saveWithSuccessFullBlock %@ performBlock SAVED but is has PARENT BEGIN" , self);
+
                 [self.parentController saveWithSuccessFullBlock:^{
+                    DDLogInfo(@"DBController saveWithSuccessFullBlock %@ performBlock SAVED but is has PARENT - PARENT SAVED" , self);
+
                     if(successFullBlock){
                         successFullBlock();
                     }
                 } andFailureBlock:^(NSError *error) {
+                    DDLogInfo(@"DBController saveWithSuccessFullBlock %@ performBlock SAVED but is has PARENT - PARENT SAVING FAILED" , self);
+
                     DDLogError(@"DBController saving parentController failed");
                     [error log];
 
@@ -70,12 +80,15 @@
                         failureBlock(err);
                     }
                 }];
+                DDLogInfo(@"DBController saveWithSuccessFullBlock %@ performBlock SAVED but is has PARENT END" , self);
             } else {
                 if(successFullBlock){
                     successFullBlock();
                 }
             }
         } else {
+            DDLogInfo(@"DBController saveWithSuccessFullBlock %@ performBlock FAILED" , self);
+
             DDLogError(@"DBController saving failed");
             [err log];
 
@@ -83,7 +96,10 @@
                 failureBlock(err);
             }
         }
+        DDLogInfo(@"DBController saveWithSuccessFullBlock performBlock E %@" , self);
     }];
+    DDLogInfo(@"DBController saveWithSuccessFullBlock END %@" , self);
+
 }
 
 @end

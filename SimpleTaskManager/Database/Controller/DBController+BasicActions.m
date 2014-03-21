@@ -238,6 +238,30 @@
     }];
 }
 
+- (void)fetchAllTasksAsModels:(void (^)(NSArray *tasks))successFullBlock failureBlock:(void (^)(NSError *))failureBlock {
+
+    [self.context performBlock:^{
+        NSError *err = nil;
+        NSArray *entitiesResult = [self fetchAllTasks:&err];
+        NSMutableArray *result = [[NSMutableArray alloc] initWithCapacity:[entitiesResult count]];
+        for(STMTask *task in entitiesResult){
+            STMTaskModel *taskModel = [[STMTaskModel alloc] initWitEntity:task];
+            [result addObject:taskModel];
+        }
+
+        if(result){
+            if(successFullBlock){
+                successFullBlock([NSArray arrayWithArray:result]);
+            }
+        } else {
+            DDLogWarn(@"Problem with fetchAllTasks %@", [err localizedDescription]);
+            if(failureBlock){
+                failureBlock(err);
+            }
+        }
+    }];
+}
+
 - (NSFetchRequest *)createFetchingTasksRequestWithBatchSize:(NSUInteger) batchSize {
     NSFetchRequest *fetchRequest = [self prepareTaskFetchRequest];
 

@@ -16,6 +16,7 @@
 - (void)main {
     DDLogInfo(@"SyncOperation BEGIN");
 
+    TICK
     DBController *dbController = [DBAccess createBackgroundWorker];
     [dbController syncAddedTasks:self.addedTasks
                     removedTasks:self.removedTasks
@@ -23,11 +24,14 @@
                   reorderedTasks:self.reorderedTasks
                 successFullBlock:^(id o) {
                     DDLogInfo(@"SyncOperation END S");
+                    TOCK
                     [self finishedSuccessFully];
                 } failureBlock:^(NSError *error) {
         DDLogError(@"SyncOperation END FAILED");
+        TOCK
         [self failedWithError:error];
     }];
+    DDLogInfo(@"SyncOperation END");
 }
 
 @end

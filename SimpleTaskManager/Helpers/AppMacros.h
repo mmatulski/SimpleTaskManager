@@ -14,6 +14,9 @@
 #define BlockStrongSelf BlockStrongObject(self)
 #define BlockStrongObject(o) __typeof(o) __strong
 
+#define TICK NSDate *startTime = [NSDate date];
+#define TOCK DDLogInfo(@"Elapsed Time: %f", -[startTime timeIntervalSinceNow]);
+
 extern id MakeSafeCast(id object, Class targetClass);
 extern void forwardError(NSError *err, NSError **error);
 

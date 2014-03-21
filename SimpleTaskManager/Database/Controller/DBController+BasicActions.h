@@ -39,6 +39,8 @@
 - (void)fetchAllTasks:(void (^)(NSArray *tasks))successFullBlock
          failureBlock:(void (^)(NSError *))failureBlock;
 
+- (void)fetchAllTasksAsModels:(void (^)(NSArray *tasks))successFullBlock failureBlock:(void (^)(NSError *))failureBlock;
+
 - (STMTask *)taskWithObjectID:(NSManagedObjectID *)id;
 
 #pragma mark -

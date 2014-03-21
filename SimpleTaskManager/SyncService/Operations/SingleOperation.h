@@ -4,12 +4,13 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ManagedOperation.h"
 
 @class STMTask;
 @protocol SingleOperationDelegate;
 
 
-@interface SingleOperation : NSOperation
+@interface SingleOperation : ManagedOperation
 
 @property(nonatomic, weak) id<SingleOperationDelegate> delegate;
 @property(nonatomic, strong) NSDate * timeWhenOperationWasRequested;//maybe all should be kept in db

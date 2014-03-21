@@ -181,17 +181,17 @@
     NSInteger index = [indexNumber integerValue];
     NSInteger theNewIndex = index + change;
 
-    if(index < 1){
+    if(theNewIndex < 1){
         //TODO
         //it is only index so maybe there is no need to do anything
         //one solution can be setting flag . i.e. needsOrdersRework which will cause estimating orders again
-        DDLogWarn(@"changeIndexBy error: the new index for task %@ is not valid %d", task.uid, index);
+        DDLogWarn(@"changeIndexBy error: the new index for task %@ is not valid %d less than 0", task.uid, theNewIndex);
         theNewIndex = 1;
-    } else if(index > _numberOfAllTasks){
+    } else if(theNewIndex > _numberOfAllTasks){
         //TODO
         //it is only index so maybe there is no need to do anything
         //one solution can be setting flag . i.e. needsOrdersRework which will cause estimating orders again
-        DDLogWarn(@"changeIndexBy error: the new index for task %@ is not valid %d", task.uid, index);
+        DDLogWarn(@"changeIndexBy error: the new index for task %@ is not valid %d greater than %d", task.uid, theNewIndex, _numberOfAllTasks);
         theNewIndex = _numberOfAllTasks;
     }
 

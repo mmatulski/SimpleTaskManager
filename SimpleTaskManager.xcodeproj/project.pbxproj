@@ -19,28 +19,33 @@
 		46AE21ADB459FE6F7476C745 /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 46AE23CED9E8C84B06A74B6A /* Main_iPad.storyboard */; };
 		46AE21C7020A62B100FF6382 /* SyncGuardService.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE2216AA82CD13F9F5CB15 /* SyncGuardService.m */; };
 		46AE220496BA281974A04197 /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 46AE2909F0FA738F7A189047 /* Main_iPhone.storyboard */; };
+		46AE2243092563CDC3ED229F /* NotificationsObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE2969DC9F972724708D92 /* NotificationsObserver.m */; };
 		46AE2248D5B2668A6584BFF1 /* STMTaskModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE2F787F03E57EFE1840F8 /* STMTaskModel.m */; };
 		46AE22663A7440C2240CFD78 /* DispatchQueueLogFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE2DDC84F3D49BDF480F09 /* DispatchQueueLogFormatter.m */; };
 		46AE22B08BB9D9DA976ED30F /* RemoteConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE237EA8E59CF3C97D72EB /* RemoteConnection.m */; };
 		46AE23A68CB442C4FE756B7D /* MainTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE2DB01D115BBC354C0755 /* MainTableController.m */; };
 		46AE23BC15720B5B963317D0 /* CancelButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE22292126082349121128 /* CancelButton.m */; };
+		46AE248A681A948340CA66D5 /* MainViewControllerNotificationsObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE24753C5F5F63EE2B4DCA /* MainViewControllerNotificationsObserver.m */; };
 		46AE24F2049689BF0F3D3346 /* STMColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE2D72188505ABE135A015 /* STMColors.m */; };
 		46AE24F4BC01F9E8A9901AEB /* DDAbstractDatabaseLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE265CA4766B920707FCCC /* DDAbstractDatabaseLogger.m */; };
-		46AE251EBE3E15AB460B9C47 /* MainTableDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE2C49A8B18483DDCC87B3 /* MainTableDataSource.m */; };
 		46AE2531981D3E9147CB01C8 /* DDFileLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE200C40F76326A469B578 /* DDFileLogger.m */; };
 		46AE256058ADA19E315BBD54 /* CompleteTaskOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE277CBF5F4633016BF7C1 /* CompleteTaskOperation.m */; };
 		46AE2562AA9F4FC145D9444B /* UIView+ScreenshootExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE2BE7D371E23F667CDF8B /* UIView+ScreenshootExtension.m */; };
 		46AE25C2431437F3F30CB279 /* DBController+Internal.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE2C62220A53387B3AFF2C /* DBController+Internal.m */; };
 		46AE25C60C3BC10BC458F9CD /* WrappedButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE28A5592332262CB66EC3 /* WrappedButton.m */; };
+		46AE25D42FCF094A632597A5 /* NotificationsSender.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE20A67A3FBD648624AE71 /* NotificationsSender.m */; };
 		46AE2619ABF5A338D4017D5D /* DDTTYLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE2C76FD9F949669985F67 /* DDTTYLogger.m */; };
 		46AE26453D38E0DF09CEF5E4 /* SyncOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE291CCDC7619B9144A932 /* SyncOperation.m */; };
 		46AE2669BFF9BE3FD4CB9896 /* RemoteLeg.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE26C1FF629E6F090FFCFF /* RemoteLeg.m */; };
 		46AE26FC2FF252DD316F6893 /* ConfirmationButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE2E8F2EB27D6CA7E68764 /* ConfirmationButton.m */; };
+		46AE2751CB7EBA8F82F2E453 /* CommonNotifications.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE2E44D90424E32F0C8542 /* CommonNotifications.m */; };
+		46AE27670DF39EEC0F87A53A /* SyncNotificationsObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE2C9BEE5BA91321C9D98E /* SyncNotificationsObserver.m */; };
 		46AE2778B30FF66F82F8BF4E /* DDASLLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE2FE512E06F60583C608B /* DDASLLogger.m */; };
 		46AE27A66156C8B32A046D0B /* UserActionsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE23DCD25D99401BDFDA75 /* UserActionsController.m */; };
 		46AE27B8902A33EBF1525E2B /* MainTableConsts.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE2C344FA95CD5DD9843F6 /* MainTableConsts.m */; };
 		46AE27D3C3D160CB80A2070E /* SingleOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE204ADA1B20EFC9AAA74E /* SingleOperation.m */; };
 		46AE28D263562FD91444CF76 /* MessagesHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE27F0EDE69E7AB20323B8 /* MessagesHelper.m */; };
+		46AE28FE62B405003299F9EF /* MainTableDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE26D6BBC630EB0CE4D286 /* MainTableDataSource.m */; };
 		46AE29449067611A9372BA7D /* ReorderTaskOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE2D54B672A37AB40BCA7D /* ReorderTaskOperation.m */; };
 		46AE29A44900EB5C0E2A5B18 /* MainTableController+SelectedItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE2E7F9F4726B9CC4DD8B2 /* MainTableController+SelectedItem.m */; };
 		46AE2A07D0A12FEDC85827BA /* UserActionsHelperView+Hints.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE250D010DC1097A951B7E /* UserActionsHelperView+Hints.m */; };
@@ -61,6 +66,7 @@
 		46AE2D03ED9D868168CAE1CC /* AppErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE21DDC7ACEAEE21E6F81F /* AppErrors.m */; };
 		46AE2D06B482CFAA3E94E87F /* VirtualRemoteActionsHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE2BD6C918267E0C06F612 /* VirtualRemoteActionsHandler.m */; };
 		46AE2D76FEA8C66FCA47545C /* DragAndDropHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE2795724950582F3887FD /* DragAndDropHandler.m */; };
+		46AE2D87C2A13E842E125409 /* MainTableDataSourceNotificationsObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE23FF50984A09F1CF69C0 /* MainTableDataSourceNotificationsObserver.m */; };
 		46AE2DD6B6147E651DA20928 /* WindowHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE2E08FC8F8130C452D6B0 /* WindowHelper.m */; };
 		46AE2E1BCCE8DB068A01FE02 /* AddTaskOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE255ADD79A2ACDDFE08E5 /* AddTaskOperation.m */; };
 		46AE2E390CF0891859C0A2AD /* LocalUserLeg.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE2A4623A8E17D88150A60 /* LocalUserLeg.m */; };
@@ -107,7 +113,9 @@
 		46AE202FABC21C396A111026 /* WrappedButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WrappedButton.h; sourceTree = "<group>"; };
 		46AE2036DF7B66531855FE15 /* AppErrors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppErrors.h; sourceTree = "<group>"; };
 		46AE204ADA1B20EFC9AAA74E /* SingleOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SingleOperation.m; sourceTree = "<group>"; };
+		46AE208889623F546496B628 /* MainViewControllerNotificationsObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewControllerNotificationsObserver.h; sourceTree = "<group>"; };
 		46AE20892BC06D5AC3C5C78F /* TheNewTaskButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TheNewTaskButton.h; sourceTree = "<group>"; };
+		46AE20A67A3FBD648624AE71 /* NotificationsSender.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotificationsSender.m; sourceTree = "<group>"; };
 		46AE20A9055962495CAAC61F /* CGEstimations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGEstimations.h; sourceTree = "<group>"; };
 		46AE213846FBC49661E8DD72 /* DDTTYLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDTTYLogger.h; sourceTree = "<group>"; };
 		46AE214CAA6AD25D5BFE6A36 /* RenameOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RenameOperation.m; sourceTree = "<group>"; };
@@ -132,10 +140,13 @@
 		46AE23C9F40E6BE7FB4E26E8 /* MainTableController+DragAndDrop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MainTableController+DragAndDrop.m"; sourceTree = "<group>"; };
 		46AE23CED9E8C84B06A74B6A /* Main_iPad.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main_iPad.storyboard; sourceTree = "<group>"; };
 		46AE23DCD25D99401BDFDA75 /* UserActionsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserActionsController.m; sourceTree = "<group>"; };
+		46AE23FF50984A09F1CF69C0 /* MainTableDataSourceNotificationsObserver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainTableDataSourceNotificationsObserver.m; sourceTree = "<group>"; };
 		46AE244B2DC1C1DE13B6FD4B /* LocalUserLeg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalUserLeg.h; sourceTree = "<group>"; };
 		46AE246192A12FAE43023862 /* DBController+BasicActions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DBController+BasicActions.m"; sourceTree = "<group>"; };
+		46AE24753C5F5F63EE2B4DCA /* MainViewControllerNotificationsObserver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewControllerNotificationsObserver.m; sourceTree = "<group>"; };
 		46AE247999C7ABCB39C52F84 /* MainTableController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainTableController.h; sourceTree = "<group>"; };
 		46AE24CC8ED1A00E4EDA8696 /* VirtualRemoteActionsHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VirtualRemoteActionsHandler.h; sourceTree = "<group>"; };
+		46AE24E0C1AD33FC4634E090 /* SyncNotificationsObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyncNotificationsObserver.h; sourceTree = "<group>"; };
 		46AE24F94DD51897D87D4744 /* MainTableController+SelectedItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MainTableController+SelectedItem.h"; sourceTree = "<group>"; };
 		46AE24FEE7E06BB54039C52F /* STMTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STMTask.m; sourceTree = "<group>"; };
 		46AE2508F77E36A6B261FB83 /* UserActionsHelperView+TheNewTaskDialogHandling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UserActionsHelperView+TheNewTaskDialogHandling.m"; sourceTree = "<group>"; };
@@ -143,6 +154,7 @@
 		46AE25319A3E0BE4F74DF356 /* UserActionsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserActionsController.h; sourceTree = "<group>"; };
 		46AE255647B2256E6A025575 /* ManagedOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManagedOperation.h; sourceTree = "<group>"; };
 		46AE255ADD79A2ACDDFE08E5 /* AddTaskOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddTaskOperation.m; sourceTree = "<group>"; };
+		46AE25B6F48C9B87CD40D5B5 /* NotificationsObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationsObserver.h; sourceTree = "<group>"; };
 		46AE25C089EB487CE98C9315 /* UserActionsHelperView+Constraints.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UserActionsHelperView+Constraints.m"; sourceTree = "<group>"; };
 		46AE25E982BCFFE1112E4618 /* UserActionsHelperView+TaskOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UserActionsHelperView+TaskOptions.h"; sourceTree = "<group>"; };
 		46AE25EFB32E6C711250F83A /* STMColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STMColors.h; sourceTree = "<group>"; };
@@ -156,6 +168,7 @@
 		46AE26BD08E756878C70251D /* CompleteTaskButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompleteTaskButton.h; sourceTree = "<group>"; };
 		46AE26BD3C2DAA306AFD90D2 /* AppMacros.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppMacros.m; sourceTree = "<group>"; };
 		46AE26C1FF629E6F090FFCFF /* RemoteLeg.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RemoteLeg.m; sourceTree = "<group>"; };
+		46AE26D6BBC630EB0CE4D286 /* MainTableDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainTableDataSource.m; sourceTree = "<group>"; };
 		46AE26E61D5922E9660495D7 /* DispatchQueueLogFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DispatchQueueLogFormatter.h; sourceTree = "<group>"; };
 		46AE26FFDD69E23BBC21D900 /* MainView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainView.h; sourceTree = "<group>"; };
 		46AE272768F24D3A6FB8FC1E /* DBController+Undo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DBController+Undo.h"; sourceTree = "<group>"; };
@@ -180,6 +193,7 @@
 		46AE29254562E4CFE13A7960 /* NSError+Log.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+Log.m"; sourceTree = "<group>"; };
 		46AE29452987DA342142AB0B /* RenameOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenameOperation.h; sourceTree = "<group>"; };
 		46AE29520211A7CB2A4CC530 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
+		46AE2969DC9F972724708D92 /* NotificationsObserver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotificationsObserver.m; sourceTree = "<group>"; };
 		46AE297741B5EE56A7A18280 /* MainViewConsts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewConsts.h; sourceTree = "<group>"; };
 		46AE298CFF8F37B9D8FA3FAB /* DBController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBController.h; sourceTree = "<group>"; };
 		46AE299908DB838EC056EA35 /* CancelButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CancelButton.h; sourceTree = "<group>"; };
@@ -197,15 +211,17 @@
 		46AE2BE7D371E23F667CDF8B /* UIView+ScreenshootExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+ScreenshootExtension.m"; sourceTree = "<group>"; };
 		46AE2BE8AE068F93992ADB14 /* MessagesHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessagesHelper.h; sourceTree = "<group>"; };
 		46AE2C344FA95CD5DD9843F6 /* MainTableConsts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainTableConsts.m; sourceTree = "<group>"; };
-		46AE2C49A8B18483DDCC87B3 /* MainTableDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainTableDataSource.m; sourceTree = "<group>"; };
 		46AE2C5102BC649B877682E5 /* DDFileLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDFileLogger.h; sourceTree = "<group>"; };
 		46AE2C62220A53387B3AFF2C /* DBController+Internal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DBController+Internal.m"; sourceTree = "<group>"; };
 		46AE2C76FD9F949669985F67 /* DDTTYLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDTTYLogger.m; sourceTree = "<group>"; };
+		46AE2C79C37B185F5BC1227F /* CommonNotifications.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonNotifications.h; sourceTree = "<group>"; };
 		46AE2C9120B6071E643F759C /* TaskOptionsDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskOptionsDelegate.h; sourceTree = "<group>"; };
 		46AE2C92747F36475A9CAC8F /* DDAbstractDatabaseLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDAbstractDatabaseLogger.h; sourceTree = "<group>"; };
 		46AE2C981F6BC01BC008370C /* TheNewTaskDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TheNewTaskDialog.m; sourceTree = "<group>"; };
 		46AE2C9AB1BFB9B989FB8F8E /* UserActionsHelperControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserActionsHelperControllerDelegate.h; sourceTree = "<group>"; };
+		46AE2C9BEE5BA91321C9D98E /* SyncNotificationsObserver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SyncNotificationsObserver.m; sourceTree = "<group>"; };
 		46AE2CE63C4743869827F4E8 /* TaskTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskTableViewCell.h; sourceTree = "<group>"; };
+		46AE2CE6493787D855C7D772 /* MainTableDataSourceNotificationsObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainTableDataSourceNotificationsObserver.h; sourceTree = "<group>"; };
 		46AE2CE69B3BABBCC7C8AD48 /* SingleOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SingleOperation.h; sourceTree = "<group>"; };
 		46AE2CF9D3F1C28A5CBDE725 /* DBController+BasicActions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DBController+BasicActions.h"; sourceTree = "<group>"; };
 		46AE2D32702E0672E728A97A /* MainView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainView.m; sourceTree = "<group>"; };
@@ -221,6 +237,7 @@
 		46AE2E142BD4516E515AB33B /* STMTaskModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STMTaskModel.h; sourceTree = "<group>"; };
 		46AE2E1C02D2E169FDDBEA3C /* AddTaskOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddTaskOperation.h; sourceTree = "<group>"; };
 		46AE2E440FA35E30C64C0F7D /* CompleteTaskOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompleteTaskOperation.h; sourceTree = "<group>"; };
+		46AE2E44D90424E32F0C8542 /* CommonNotifications.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommonNotifications.m; sourceTree = "<group>"; };
 		46AE2E5B0762ABF0B824AA90 /* DBAccess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBAccess.h; sourceTree = "<group>"; };
 		46AE2E61952B5BCAF1AFA617 /* STMTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STMTask.h; sourceTree = "<group>"; };
 		46AE2E631B2AA753182DD123 /* DDLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDLog.m; sourceTree = "<group>"; };
@@ -228,7 +245,6 @@
 		46AE2E7F9F4726B9CC4DD8B2 /* MainTableController+SelectedItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MainTableController+SelectedItem.m"; sourceTree = "<group>"; };
 		46AE2E8F2EB27D6CA7E68764 /* ConfirmationButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfirmationButton.m; sourceTree = "<group>"; };
 		46AE2EAA806AAC6671007634 /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
-		46AE2EE7C9424D895FE3F4EF /* MainTableDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainTableDataSource.h; sourceTree = "<group>"; };
 		46AE2EF0D288C7BF6BC90F48 /* TaskTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaskTableViewCell.m; sourceTree = "<group>"; };
 		46AE2F082ED3165301B7D05A /* DBConsts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBConsts.h; sourceTree = "<group>"; };
 		46AE2F09AA5AF3BF86B6F267 /* UserActionsHelperViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserActionsHelperViewDelegate.h; sourceTree = "<group>"; };
@@ -237,7 +253,9 @@
 		46AE2F787F03E57EFE1840F8 /* STMTaskModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STMTaskModel.m; sourceTree = "<group>"; };
 		46AE2F793D2FC0CD9E6484DA /* AppMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppMacros.h; sourceTree = "<group>"; };
 		46AE2F958FD5F01A795332EB /* SyncingLeg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyncingLeg.h; sourceTree = "<group>"; };
+		46AE2F98D42FA6190681F715 /* NotificationsSender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationsSender.h; sourceTree = "<group>"; };
 		46AE2FE512E06F60583C608B /* DDASLLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDASLLogger.m; sourceTree = "<group>"; };
+		46AE2FEC52CB4E94B7B9D98D /* MainTableDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainTableDataSource.h; sourceTree = "<group>"; };
 		46AE2FF66ED81A46B635A7C0 /* NSError+Log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+Log.h"; sourceTree = "<group>"; };
 		EA34DA5218CD493B0042CDA9 /* SimpleTaskManager.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SimpleTaskManager.xcdatamodel; sourceTree = "<group>"; };
 		EA3D0E0618CB6B9C00CB333E /* SimpleTaskManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleTaskManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -303,6 +321,17 @@
 				46AE2F082ED3165301B7D05A /* DBConsts.h */,
 			);
 			path = Common;
+			sourceTree = "<group>";
+		};
+		46AE2378F190CB14F25945C8 /* MainTableDataSource */ = {
+			isa = PBXGroup;
+			children = (
+				46AE26D6BBC630EB0CE4D286 /* MainTableDataSource.m */,
+				46AE2FEC52CB4E94B7B9D98D /* MainTableDataSource.h */,
+				46AE23FF50984A09F1CF69C0 /* MainTableDataSourceNotificationsObserver.m */,
+				46AE2CE6493787D855C7D772 /* MainTableDataSourceNotificationsObserver.h */,
+			);
+			path = MainTableDataSource;
 			sourceTree = "<group>";
 		};
 		46AE2389EFF6DDA685A8780B /* TheNewTask */ = {
@@ -442,9 +471,8 @@
 				46AE27371766C01239F9F130 /* MainTableController+DragAndDrop.h */,
 				46AE2E7F9F4726B9CC4DD8B2 /* MainTableController+SelectedItem.m */,
 				46AE24F94DD51897D87D4744 /* MainTableController+SelectedItem.h */,
-				46AE2C49A8B18483DDCC87B3 /* MainTableDataSource.m */,
-				46AE2EE7C9424D895FE3F4EF /* MainTableDataSource.h */,
 				46AE233E5D4AA2770D944B71 /* MainTableDataSourceDelegate.h */,
+				46AE2378F190CB14F25945C8 /* MainTableDataSource */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -500,6 +528,8 @@
 			children = (
 				46AE22D87A98C0287A2AFEFC /* MainViewController.m */,
 				46AE29520211A7CB2A4CC530 /* MainViewController.h */,
+				46AE24753C5F5F63EE2B4DCA /* MainViewControllerNotificationsObserver.m */,
+				46AE208889623F546496B628 /* MainViewControllerNotificationsObserver.h */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -511,6 +541,15 @@
 				46AE2F1CA69F9FA8429C28E5 /* MainViewConsts.m */,
 			);
 			path = Common;
+			sourceTree = "<group>";
+		};
+		46AE2A8E476B0452FE9950D8 /* SyncNotifications */ = {
+			isa = PBXGroup;
+			children = (
+				46AE2C9BEE5BA91321C9D98E /* SyncNotificationsObserver.m */,
+				46AE24E0C1AD33FC4634E090 /* SyncNotificationsObserver.h */,
+			);
+			path = SyncNotifications;
 			sourceTree = "<group>";
 		};
 		46AE2ACD875439BC8EC35270 /* Helpers */ = {
@@ -530,6 +569,20 @@
 				46AE2BE8AE068F93992ADB14 /* MessagesHelper.h */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		46AE2B1A1B2EB110FF1ECAC5 /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				46AE2C79C37B185F5BC1227F /* CommonNotifications.h */,
+				46AE2E44D90424E32F0C8542 /* CommonNotifications.m */,
+				46AE2F98D42FA6190681F715 /* NotificationsSender.h */,
+				46AE20A67A3FBD648624AE71 /* NotificationsSender.m */,
+				46AE25B6F48C9B87CD40D5B5 /* NotificationsObserver.h */,
+				46AE2969DC9F972724708D92 /* NotificationsObserver.m */,
+				46AE2A8E476B0452FE9950D8 /* SyncNotifications */,
+			);
+			path = Notifications;
 			sourceTree = "<group>";
 		};
 		46AE2B50EA42F0C52CF7369F /* Resources */ = {
@@ -768,6 +821,7 @@
 				46AE26526DD261DC853DC386 /* Categories */,
 				46AE27D48751AB2E90203B60 /* CustomUI */,
 				46AE2F4E0EE3E569B6F73476 /* SyncService */,
+				46AE2B1A1B2EB110FF1ECAC5 /* Notifications */,
 			);
 			path = SimpleTaskManager;
 			sourceTree = "<group>";
@@ -965,8 +1019,14 @@
 				46AE23A68CB442C4FE756B7D /* MainTableController.m in Sources */,
 				46AE2E414CC8F193EA7B4707 /* MainTableController+DragAndDrop.m in Sources */,
 				46AE29A44900EB5C0E2A5B18 /* MainTableController+SelectedItem.m in Sources */,
-				46AE251EBE3E15AB460B9C47 /* MainTableDataSource.m in Sources */,
 				46AE27B8902A33EBF1525E2B /* MainTableConsts.m in Sources */,
+				46AE2751CB7EBA8F82F2E453 /* CommonNotifications.m in Sources */,
+				46AE25D42FCF094A632597A5 /* NotificationsSender.m in Sources */,
+				46AE2243092563CDC3ED229F /* NotificationsObserver.m in Sources */,
+				46AE248A681A948340CA66D5 /* MainViewControllerNotificationsObserver.m in Sources */,
+				46AE27670DF39EEC0F87A53A /* SyncNotificationsObserver.m in Sources */,
+				46AE28FE62B405003299F9EF /* MainTableDataSource.m in Sources */,
+				46AE2D87C2A13E842E125409 /* MainTableDataSourceNotificationsObserver.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

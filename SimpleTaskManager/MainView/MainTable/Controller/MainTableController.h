@@ -38,11 +38,6 @@
 
 - (void)handleMemoryWarning;
 
-- (void)enableTableGestureRecognizerForScrolling;
-
-- (void)disableTableGestureRecognizerForScrolling;
-
 - (void)deselectTaskModel:(STMTaskModel *)taskModel;
-
 
 @end

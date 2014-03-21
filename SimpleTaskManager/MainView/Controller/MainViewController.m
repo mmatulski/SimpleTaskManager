@@ -15,6 +15,7 @@
 #import "SyncGuardService.h"
 #import "RemoteLeg.h"
 #import "STMTaskModel.h"
+#import "MainViewControllerNotificationsObserver.h"
 
 @interface MainViewController ()
 
@@ -38,6 +39,7 @@
     // Do any additional setup after loading the view.
     [self prepareTableController];
     [self prepareDialogsPresentationController];
+    [self prepareNotificationsObserver];
 
     [[SyncGuardService sharedInstance] connectToServer];
 }
@@ -58,6 +60,10 @@
 - (void)prepareDialogsPresentationController {
     self.dialogsPresentationController = [[UserActionsController alloc] initWithView:self.mainView.dialogsPresentationView];
     self.dialogsPresentationController.delegate = self;
+}
+
+- (void)prepareNotificationsObserver {
+    self.notificationsObserver = [[MainViewControllerNotificationsObserver alloc] initWithMainViewController:self];
 }
 
 - (MainView *)mainView {

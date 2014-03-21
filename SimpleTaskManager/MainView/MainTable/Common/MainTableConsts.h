@@ -7,3 +7,4 @@
 
 extern NSString * const kCellIdentifier;
 extern CGFloat const kCellDefaultHeight;
+extern NSString * const kFetchedResultsControllerCacheName;

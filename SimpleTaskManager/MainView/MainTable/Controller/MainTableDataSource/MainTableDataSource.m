@@ -11,6 +11,7 @@
 #import "MainTableConsts.h"
 #import "DBAccess.h"
 #import "TaskTableViewCell.h"
+#import "MainTableDataSourceNotificationsObserver.h"
 
 NSUInteger const kDefaultBatchSize = 20;
 
@@ -27,6 +28,7 @@ NSUInteger const kDefaultBatchSize = 20;
 
         [self prepareDBController];
         [self prepareFetchedResultsController];
+        [self prepareNotificationsObserver];
 
         self.tableView.dataSource = self;
     }
@@ -44,12 +46,34 @@ NSUInteger const kDefaultBatchSize = 20;
 
     self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
                                                                         managedObjectContext:self.dbController.context sectionNameKeyPath:nil
-                                                                                   cacheName:@"Root"];
+                                                                                   cacheName:kFetchedResultsControllerCacheName];
     self.fetchedResultsController.delegate = self;
 
     NSError *err = nil;
     if(![self.fetchedResultsController performFetch:&err]){
         DDLogError(@"prepareFetchedResultsController performFetch failed %@", [err localizedDescription]);
+    }
+}
+
+- (void)prepareNotificationsObserver {
+    self.notificationsObserver = [[MainTableDataSourceNotificationsObserver alloc] initWithMainTableDataSource:self];
+}
+
+- (void)setPaused:(BOOL)paused {
+
+    _paused = paused;
+
+    if (paused) {
+        self.fetchedResultsController.delegate = nil;
+        [NSFetchedResultsController deleteCacheWithName:kFetchedResultsControllerCacheName];
+    } else {
+        self.fetchedResultsController.delegate = self;
+        NSError *err = nil;
+        if(![self.fetchedResultsController performFetch:&err]){
+            DDLogError(@"prepareFetchedResultsController performFetch failed %@", [err localizedDescription]);
+        }
+
+        [self.tableView reloadData];
     }
 }
 

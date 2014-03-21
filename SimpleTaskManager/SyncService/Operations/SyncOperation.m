@@ -7,6 +7,7 @@
 #import "DBController.h"
 #import "DBAccess.h"
 #import "DBController+BasicActions.h"
+#import "CommonNotifications.h"
 
 
 @implementation SyncOperation {
@@ -15,6 +16,8 @@
 
 - (void)main {
     DDLogInfo(@"SyncOperation BEGIN");
+
+    [CommonNotifications remoteSyncStarted];
 
     TICK
     DBController *dbController = [DBAccess createBackgroundWorker];
@@ -33,5 +36,12 @@
     }];
     DDLogInfo(@"SyncOperation END");
 }
+
+- (void)finish {
+    [CommonNotifications remoteSyncFinished];
+
+    [super finish];
+}
+
 
 @end

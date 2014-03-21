@@ -7,3 +7,4 @@
 
 NSString * const kCellIdentifier = @"CellIdentifier";
 CGFloat const kCellDefaultHeight = 54.0;
+NSString * const kFetchedResultsControllerCacheName = @"kFetchedResultsControllerCacheName";

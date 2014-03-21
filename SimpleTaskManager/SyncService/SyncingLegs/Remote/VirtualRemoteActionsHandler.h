@@ -9,7 +9,10 @@
 
 @interface VirtualRemoteActionsHandler : RemoteActionsHandler
 
-@property(nonatomic) NSTimeInterval timerInterval;
+@property NSTimeInterval timerInterval;
+@property CGFloat changedItemsFactor;
+@property CGFloat increaseFactor;
+
 
 @property(nonatomic, strong) NSTimer *timer;
 

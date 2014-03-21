@@ -8,6 +8,7 @@
 @class DBController;
 @class STMTaskModel;
 @class STMTask;
+@class MainTableDataSourceNotificationsObserver;
 
 @interface MainTableDataSource : NSObject <UITableViewDataSource, NSFetchedResultsControllerDelegate>
 
@@ -17,6 +18,9 @@
 
 @property(nonatomic, strong) STMTaskModel *modelForTaskBeingMoved;
 @property(nonatomic, strong) NSIndexPath *currentTargetIndexPathForItemBeingMoved;
+
+@property(nonatomic, strong) MainTableDataSourceNotificationsObserver *notificationsObserver;
+@property(nonatomic) BOOL paused;
 
 - (instancetype)initWithTableView:(UITableView *)tableView;
 

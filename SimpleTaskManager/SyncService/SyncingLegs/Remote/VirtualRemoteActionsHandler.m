@@ -17,7 +17,9 @@
 - (id)init {
     self = [super init];
     if (self) {
-        _timerInterval = 2.0;
+        _timerInterval = 5.0;
+        _changedItemsFactor = 0.25;
+        _increaseFactor = 1.1;
     }
 
     return self;
@@ -27,7 +29,7 @@
 - (void)connect {
     [super connect];
 
-    //[self startTrafficGenerator];
+    [self startTrafficGenerator];
 }
 
 - (void)startTrafficGenerator {
@@ -54,7 +56,7 @@
 
     NSUInteger numberOfTasks = [tasks count];
 
-    NSUInteger numberOfItemsToChange = (NSUInteger) floor((float) numberOfTasks * 0.25);
+    NSUInteger numberOfItemsToChange = (NSUInteger) floor((float) numberOfTasks * self.changedItemsFactor);
     if(numberOfItemsToChange > numberOfTasks){
         numberOfItemsToChange = numberOfTasks;
     }
@@ -62,11 +64,35 @@
     NSUInteger numberOfTasksToReorder = (NSUInteger) floor(0.33 * (float) numberOfItemsToChange);
     NSUInteger numberOfTasksToRemove = numberOfItemsToChange - (numberOfTasksToRename + numberOfTasksToReorder);
 
-    NSUInteger increase = (NSUInteger) floor(0.2 * (float) numberOfItemsToChange);
+//    NSUInteger increase = (NSUInteger) floor(0.2 * (float) numberOfItemsToChange);
+//    if(increase == 0){
+//        increase = 1;
+//    }
+
+    CGFloat increseF = (CGFloat) numberOfTasksToRemove * self.increaseFactor;
+
+    if(increseF == 0){
+        increseF = 1.0;
+    }
+
+    if(increseF < 1 && increseF > 0){
+        increseF = 1;
+    }
+
+    if(increseF > -1 && increseF < 0){
+        increseF = -1;
+    }
+
+    NSInteger increase = (NSInteger)floor(increseF) - numberOfTasksToRemove;
+
     if(increase == 0){
         increase = 1;
     }
+
     NSUInteger numberOfTasksToAdd = numberOfTasksToRemove + increase;
+    if(numberOfTasksToAdd < 0){
+        numberOfTasksToAdd = 0;
+    }
 
     NSMutableArray * tasksToChange = [self drawFromArray:tasks numberOfItems:numberOfItemsToChange];
 

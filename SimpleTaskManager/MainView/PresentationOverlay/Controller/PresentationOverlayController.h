@@ -12,7 +12,7 @@
 @protocol UserActionsHelperControllerDelegate;
 @class STMTaskModel;
 
-@interface UserActionsController : NSObject <TaskOptionsDelegate, UserActionsHelperViewDelegate>
+@interface PresentationOverlayController : NSObject <TaskOptionsDelegate, UserActionsHelperViewDelegate>
 
 @property(nonatomic, weak) id <UserActionsHelperControllerDelegate> delegate;
 @property(nonatomic, strong) PresentationOverlayView *helperView;

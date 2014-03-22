@@ -11,7 +11,7 @@
 #import "MainTableController.h"
 #import "PresentationOverlayView.h"
 #import "STMTask.h"
-#import "UserActionsController.h"
+#import "PresentationOverlayController.h"
 #import "SyncGuardService.h"
 #import "RemoteLeg.h"
 #import "STMTaskModel.h"
@@ -58,7 +58,7 @@
 }
 
 - (void)prepareDialogsPresentationController {
-    self.dialogsPresentationController = [[UserActionsController alloc] initWithView:self.mainView.overlayView];
+    self.dialogsPresentationController = [[PresentationOverlayController alloc] initWithView:self.mainView.overlayView];
     self.dialogsPresentationController.delegate = self;
 }
 

@@ -3,7 +3,7 @@
 // Copyright (c) 2014 Tomato. All rights reserved.
 //
 
-#import "UserActionsController.h"
+#import "PresentationOverlayController.h"
 #import "STMTask.h"
 #import "TaskOptionsView.h"
 #import "PresentationOverlayView+TaskOptions.h"
@@ -15,7 +15,7 @@
 #import "STMTaskModel.h"
 
 
-@implementation UserActionsController {
+@implementation PresentationOverlayController {
 
 }
 

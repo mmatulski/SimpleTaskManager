@@ -12,13 +12,13 @@
 
 @class MainView;
 @class MainTableController;
-@class UserActionsController;
+@class PresentationOverlayController;
 @class MainViewControllerNotificationsObserver;
 
 @interface MainViewController : UIViewController <MainTableControllerDelegate, UserActionsHelperControllerDelegate>
 
 @property(nonatomic, strong) MainTableController * tableController;
-@property(nonatomic, strong) UserActionsController *dialogsPresentationController;
+@property(nonatomic, strong) PresentationOverlayController *dialogsPresentationController;
 @property(nonatomic, strong) MainViewControllerNotificationsObserver *notificationsObserver;
 
 -(MainView*) mainView;

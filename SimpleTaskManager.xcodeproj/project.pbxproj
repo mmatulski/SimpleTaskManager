@@ -35,7 +35,7 @@
 		46AE24F2049689BF0F3D3346 /* AppColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE2D72188505ABE135A015 /* AppColors.m */; };
 		46AE24F4BC01F9E8A9901AEB /* DDAbstractDatabaseLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE265CA4766B920707FCCC /* DDAbstractDatabaseLogger.m */; };
 		46AE2531981D3E9147CB01C8 /* DDFileLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE200C40F76326A469B578 /* DDFileLogger.m */; };
-		46AE2546ED20173CEF7842B4 /* UserActionsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE2D8E68C863EE412D7051 /* UserActionsController.m */; };
+		46AE2546ED20173CEF7842B4 /* PresentationOverlayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE2D8E68C863EE412D7051 /* PresentationOverlayController.m */; };
 		46AE256058ADA19E315BBD54 /* CompleteTaskOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE277CBF5F4633016BF7C1 /* CompleteTaskOperation.m */; };
 		46AE2562AA9F4FC145D9444B /* UIView+ScreenshootExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE2BE7D371E23F667CDF8B /* UIView+ScreenshootExtension.m */; };
 		46AE25C2431437F3F30CB279 /* DBController+Internal.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE2C62220A53387B3AFF2C /* DBController+Internal.m */; };
@@ -166,7 +166,7 @@
 		46AE265CA4766B920707FCCC /* DDAbstractDatabaseLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDAbstractDatabaseLogger.m; sourceTree = "<group>"; };
 		46AE26790178C8E4EBD9A505 /* ContextFilterLogFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContextFilterLogFormatter.h; sourceTree = "<group>"; };
 		46AE26C1FF629E6F090FFCFF /* RemoteLeg.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RemoteLeg.m; sourceTree = "<group>"; };
-		46AE26D4DC8D22D98F8F7B1C /* UserActionsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserActionsController.h; sourceTree = "<group>"; };
+		46AE26D4DC8D22D98F8F7B1C /* PresentationOverlayController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PresentationOverlayController.h; sourceTree = "<group>"; };
 		46AE26D6BBC630EB0CE4D286 /* MainTableDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainTableDataSource.m; sourceTree = "<group>"; };
 		46AE26E61D5922E9660495D7 /* DispatchQueueLogFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DispatchQueueLogFormatter.h; sourceTree = "<group>"; };
 		46AE26FFDD69E23BBC21D900 /* MainView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainView.h; sourceTree = "<group>"; };
@@ -234,7 +234,7 @@
 		46AE2D54B672A37AB40BCA7D /* ReorderTaskOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReorderTaskOperation.m; sourceTree = "<group>"; };
 		46AE2D72188505ABE135A015 /* AppColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppColors.m; sourceTree = "<group>"; };
 		46AE2D79C0CC5F96056529D3 /* ResourcesHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourcesHelper.m; sourceTree = "<group>"; };
-		46AE2D8E68C863EE412D7051 /* UserActionsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserActionsController.m; sourceTree = "<group>"; };
+		46AE2D8E68C863EE412D7051 /* PresentationOverlayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PresentationOverlayController.m; sourceTree = "<group>"; };
 		46AE2DB01D115BBC354C0755 /* MainTableController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainTableController.m; sourceTree = "<group>"; };
 		46AE2DCD9A0EF7019A6C597E /* PresentationOverlayView+TheNewTaskDialogHandling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PresentationOverlayView+TheNewTaskDialogHandling.h"; sourceTree = "<group>"; };
 		46AE2DDC84F3D49BDF480F09 /* DispatchQueueLogFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DispatchQueueLogFormatter.m; sourceTree = "<group>"; };
@@ -568,8 +568,8 @@
 		46AE28DB0A1DF6584B7B284F /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				46AE26D4DC8D22D98F8F7B1C /* UserActionsController.h */,
-				46AE2D8E68C863EE412D7051 /* UserActionsController.m */,
+				46AE26D4DC8D22D98F8F7B1C /* PresentationOverlayController.h */,
+				46AE2D8E68C863EE412D7051 /* PresentationOverlayController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1024,7 +1024,7 @@
 				46AE23FBB5A6E9C4AB51DC2F /* TheNewTaskButton.m in Sources */,
 				46AE227EE89832BC06100B60 /* CancelButton.m in Sources */,
 				46AE225272A5E606A108D9ED /* ConfirmationButton.m in Sources */,
-				46AE2546ED20173CEF7842B4 /* UserActionsController.m in Sources */,
+				46AE2546ED20173CEF7842B4 /* PresentationOverlayController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

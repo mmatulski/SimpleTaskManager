@@ -9,7 +9,7 @@
 #import "MainViewController.h"
 #import "MainView.h"
 #import "MainTableController.h"
-#import "UserActionsHelperView.h"
+#import "PresentationOverlayView.h"
 #import "STMTask.h"
 #import "UserActionsController.h"
 #import "SyncGuardService.h"
@@ -58,7 +58,7 @@
 }
 
 - (void)prepareDialogsPresentationController {
-    self.dialogsPresentationController = [[UserActionsController alloc] initWithView:self.mainView.dialogsPresentationView];
+    self.dialogsPresentationController = [[UserActionsController alloc] initWithView:self.mainView.overlayView];
     self.dialogsPresentationController.delegate = self;
 }
 
@@ -81,7 +81,7 @@
 #pragma mark MainTableControllerDelegate methods
 
 - (UIView *)viewForTemporaryViewsPresentation {
-    return self.mainView.dialogsPresentationView;
+    return self.mainView.overlayView;
 }
 
 - (void)showOptionsForTaskModel:(STMTaskModel *)taskModel representedByCell:(UITableViewCell *)cell {

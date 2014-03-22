@@ -3,9 +3,9 @@
 // Copyright (c) 2014 Tomato. All rights reserved.
 //
 
-#import "UserActionsHelperView+Constraints.h"
+#import "PresentationOverlayView+Constraints.h"
 
-@implementation UserActionsHelperView (Constraints)
+@implementation PresentationOverlayView (Constraints)
 
 - (void)prepareLayoutConstraints {
 

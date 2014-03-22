@@ -4,12 +4,12 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "UserActionsHelperView.h"
+#import "PresentationOverlayView.h"
 
 @class STMTask;
 @class STMTaskModel;
 
-@interface UserActionsHelperView (TaskOptions)
+@interface PresentationOverlayView (TaskOptions)
 
 - (void)showTaskOptionsViewForTaskModel:(STMTaskModel *)taskModel representedByCell:(UITableViewCell *)cell;
 

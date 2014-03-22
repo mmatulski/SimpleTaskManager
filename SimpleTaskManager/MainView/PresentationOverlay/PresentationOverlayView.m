@@ -3,20 +3,20 @@
 // Copyright (c) 2014 Tomato. All rights reserved.
 //
 
-#import "UserActionsHelperView.h"
-#import "UserActionsHelperView+Constraints.h"
+#import "PresentationOverlayView.h"
+#import "PresentationOverlayView+Constraints.h"
 #import "WrappedButton.h"
-#import "UserActionsHelperView+Hints.h"
+#import "PresentationOverlayView+Hints.h"
 #import "TheNewTaskButton.h"
 #import "TaskOptionsView.h"
-#import "UserActionsHelperView+TaskOptions.h"
-#import "UserActionsHelperView+TheNewTaskDialogHandling.h"
+#import "PresentationOverlayView+TaskOptions.h"
+#import "PresentationOverlayView+TheNewTaskDialogHandling.h"
 #import "ConfirmationButton.h"
 #import "CancelButton.h"
 
 CGFloat const kRightMarginForHandlingPanGesture = 20.0;
 
-@implementation UserActionsHelperView
+@implementation PresentationOverlayView
 
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
@@ -29,7 +29,7 @@ CGFloat const kRightMarginForHandlingPanGesture = 20.0;
 
 
 - (id)initWithDefaultFrame {
-    CGRect defaultFrame = CGRectMake(0, 0, 100, 100);
+    CGRect defaultFrame = CGRectZero;
     self = [super initWithFrame:defaultFrame];
     if(self){
         [self commonInit];

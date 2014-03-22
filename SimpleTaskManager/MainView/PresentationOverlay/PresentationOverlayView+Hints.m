@@ -3,18 +3,18 @@
 // Copyright (c) 2014 Tomato. All rights reserved.
 //
 
-#import "UserActionsHelperView+Hints.h"
+#import "PresentationOverlayView+Hints.h"
 #import "WrappedButton.h"
-#import "UserActionsHelperView+Constraints.h"
+#import "PresentationOverlayView+Constraints.h"
 #import "TheNewTaskButton.h"
-#import "UserActionsHelperView+TheNewTaskDialogHandling.h"
+#import "PresentationOverlayView+TheNewTaskDialogHandling.h"
 #import "ConfirmationButton.h"
 #import "TheNewTaskDialog.h"
 #import "CancelButton.h"
 #import "UserActionsHelperViewDelegate.h"
 
 
-@implementation UserActionsHelperView (Hints)
+@implementation PresentationOverlayView (Hints)
 
 -(void) showOpeningTheNewTaskViewHint{
     self.hintViewForTheNewTask = [[TheNewTaskButton alloc] initWithFrame:CGRectMake(0, 0, 70.0, 30.0)];

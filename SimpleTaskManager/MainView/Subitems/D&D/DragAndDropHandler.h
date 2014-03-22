@@ -5,7 +5,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class UserActionsHelperView;
+@class PresentationOverlayView;
 
 
 @interface DragAndDropHandler : NSObject

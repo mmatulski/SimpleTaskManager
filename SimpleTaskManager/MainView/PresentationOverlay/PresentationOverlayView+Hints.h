@@ -4,9 +4,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "UserActionsHelperView.h"
+#import "PresentationOverlayView.h"
 
-@interface UserActionsHelperView (Hints)
+@interface PresentationOverlayView (Hints)
 
 - (void)showOpeningTheNewTaskViewHint;
 

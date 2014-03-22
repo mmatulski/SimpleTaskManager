@@ -7,7 +7,7 @@
 #import "TaskOptionsDelegate.h"
 #import "UserActionsHelperViewDelegate.h"
 
-@class UserActionsHelperView;
+@class PresentationOverlayView;
 @class STMTask;
 @protocol UserActionsHelperControllerDelegate;
 @class STMTaskModel;
@@ -15,10 +15,10 @@
 @interface UserActionsController : NSObject <TaskOptionsDelegate, UserActionsHelperViewDelegate>
 
 @property(nonatomic, weak) id <UserActionsHelperControllerDelegate> delegate;
-@property(nonatomic, strong) UserActionsHelperView *helperView;
+@property(nonatomic, strong) PresentationOverlayView *helperView;
 @property(nonatomic, strong) STMTaskModel *currentTaskWithOptionsShown;
 
-- (instancetype)initWithView:(UserActionsHelperView *)view;
+- (instancetype)initWithView:(PresentationOverlayView *)view;
 
 - (void)showOptionsForTaskModel:(STMTaskModel *)taskModel representedByCell:(UITableViewCell *)cell;
 - (void)closeTaskOptionsForTaskModel:(STMTaskModel *)taskModel;

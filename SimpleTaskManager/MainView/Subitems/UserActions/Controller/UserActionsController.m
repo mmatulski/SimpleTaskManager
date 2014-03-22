@@ -6,8 +6,8 @@
 #import "UserActionsController.h"
 #import "STMTask.h"
 #import "TaskOptionsView.h"
-#import "UserActionsHelperView+TaskOptions.h"
-#import "UserActionsHelperView+TheNewTaskDialogHandling.h"
+#import "PresentationOverlayView+TaskOptions.h"
+#import "PresentationOverlayView+TheNewTaskDialogHandling.h"
 #import "UserActionsHelperControllerDelegate.h"
 #import "SyncGuardService.h"
 #import "SyncingLeg.h"
@@ -19,7 +19,7 @@
 
 }
 
-- (instancetype)initWithView:(UserActionsHelperView *)view {
+- (instancetype)initWithView:(PresentationOverlayView *)view {
     self = [super init];
     if (self) {
         self.helperView = view;

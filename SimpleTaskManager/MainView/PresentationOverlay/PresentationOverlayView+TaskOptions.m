@@ -3,12 +3,12 @@
 // Copyright (c) 2014 Tomato. All rights reserved.
 //
 
-#import "UserActionsHelperView+TaskOptions.h"
+#import "PresentationOverlayView+TaskOptions.h"
 #import "TaskOptionsView.h"
 #import "STMTaskModel.h"
 
 
-@implementation UserActionsHelperView (TaskOptions)
+@implementation PresentationOverlayView (TaskOptions)
 
 - (void)showTaskOptionsViewForTaskModel:(STMTaskModel *)taskModel representedByCell:(UITableViewCell *)cell {
     BOOL alreadyShowing = false;

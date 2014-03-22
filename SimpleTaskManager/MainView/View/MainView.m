@@ -7,7 +7,7 @@
 //
 
 #import "MainView.h"
-#import "UserActionsHelperView.h"
+#import "PresentationOverlayView.h"
 
 @implementation MainView
 
@@ -44,12 +44,12 @@
 
 
 - (void)prepareDialogsPresentationView {
-    self.dialogsPresentationView = [[UserActionsHelperView alloc] initWithDefaultFrame];
+    self.overlayView = [[PresentationOverlayView alloc] initWithDefaultFrame];
 
-    [self addSubview:self.dialogsPresentationView];
+    [self addSubview:self.overlayView];
 
-    [self.dialogsPresentationView setTranslatesAutoresizingMaskIntoConstraints:NO];
-    [self addConstraints:self.dialogsPresentationView.cachedLayoutConstraints];
+    [self.overlayView setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [self addConstraints:self.overlayView.cachedLayoutConstraints];
 }
 
 /*
@@ -62,7 +62,7 @@
 */
 
 - (void)viewDidAppear {
-    [self.dialogsPresentationView viewDidAppear];
+    [self.overlayView viewDidAppear];
 }
 
 @end

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@class UserActionsHelperView;
+@class PresentationOverlayView;
 
 @interface MainView : UIView
 
@@ -16,7 +16,7 @@
 @property (weak, nonatomic) IBOutlet UIView *centralPanel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
-@property(nonatomic, strong) UserActionsHelperView *dialogsPresentationView;
+@property(nonatomic, strong) PresentationOverlayView *overlayView;
 
 - (void)viewDidAppear;
 @end

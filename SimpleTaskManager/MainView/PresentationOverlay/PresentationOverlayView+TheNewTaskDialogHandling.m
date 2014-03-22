@@ -3,19 +3,19 @@
 // Copyright (c) 2014 Tomato. All rights reserved.
 //
 
-#import "UserActionsHelperView+TheNewTaskDialogHandling.h"
+#import "PresentationOverlayView+TheNewTaskDialogHandling.h"
 #import "MainViewConsts.h"
 #import "TheNewTaskDialog.h"
 #import "CGEstimations.h"
 #import "STMTask.h"
 #import "DBAccess.h"
 #import "DBController.h"
-#import "UserActionsHelperView+Hints.h"
+#import "PresentationOverlayView+Hints.h"
 #import "ConfirmationButton.h"
 #import "CancelButton.h"
 #import "UserActionsHelperViewDelegate.h"
 
-@implementation UserActionsHelperView (TheNewTaskDialogHandling)
+@implementation PresentationOverlayView (TheNewTaskDialogHandling)
 
 - (void)prepareTheNewTaskDialogLayoutConstraints {
 

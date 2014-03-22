@@ -4,9 +4,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "UserActionsHelperView.h"
+#import "PresentationOverlayView.h"
 
-@interface UserActionsHelperView (Constraints)
+@interface PresentationOverlayView (Constraints)
 
 
 - (void)prepareLayoutConstraints;

@@ -4,6 +4,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "STMTaskModifcationType.h"
 
 @class STMTask;
 
@@ -15,6 +16,7 @@
 @property (nonatomic, strong) NSManagedObjectID * objectId;
 
 @property(nonatomic) BOOL completed; //it means "to remove"
+@property (nonatomic) STMTaskModificationType modificationType;
 
 - (instancetype)initWithName:(NSString *)name uid:(NSString *)uid index:(NSNumber *)index;
 - (instancetype)initWitEntity:(STMTask *) task;

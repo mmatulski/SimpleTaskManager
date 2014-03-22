@@ -8,6 +8,7 @@
 #import "DBAccess.h"
 #import "DBController+BasicActions.h"
 #import "CommonNotifications.h"
+#import "DBController+FastSync.h"
 
 
 @implementation SyncOperation {
@@ -21,7 +22,8 @@
 
     TICK
     DBController *dbController = [DBAccess createBackgroundWorker];
-    [dbController syncAddedTasks:self.addedTasks
+    [dbController fast_sync_AddedTasks:self.addedTasks
+    //[dbController syncAddedTasks:self.addedTasks
                     removedTasks:self.removedTasks
                     renamedTasks:self.renamedTasks
                   reorderedTasks:self.reorderedTasks

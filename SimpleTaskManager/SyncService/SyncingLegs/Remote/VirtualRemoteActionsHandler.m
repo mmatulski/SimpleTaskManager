@@ -17,9 +17,9 @@
 - (id)init {
     self = [super init];
     if (self) {
-        _timerInterval = 5.0;
+        _timerInterval = 20.0;
         _changedItemsFactor = 0.25;
-        _increaseFactor = 1.1;
+        _increaseFactor = 1.0;
     }
 
     return self;
@@ -68,6 +68,10 @@
 //    if(increase == 0){
 //        increase = 1;
 //    }
+
+//    numberOfTasksToReorder = 0;
+//    numberOfTasksToRename = 0;
+//    numberOfTasksToRemove = 0;
 
     CGFloat increseF = (CGFloat) numberOfTasksToRemove * self.increaseFactor;
 

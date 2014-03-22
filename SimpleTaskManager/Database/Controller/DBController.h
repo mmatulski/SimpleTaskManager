@@ -17,7 +17,7 @@ extern NSString * const kSTMTaskEntityName;
 @property(readonly, nonatomic, strong) NSManagedObjectContext *context;
 @property(readonly, nonatomic, strong) DBController *parentController;
 
-@property NSUInteger numberOfAllTasks;
+@property (nonatomic) NSUInteger numberOfAllTasks;
 
 - (instancetype)initWithContext:(NSManagedObjectContext *)context;
 - (instancetype)initWithParentController:(DBController *)parentController;

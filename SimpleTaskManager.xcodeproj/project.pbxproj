@@ -45,6 +45,7 @@
 		46AE27B8902A33EBF1525E2B /* MainTableConsts.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE2C344FA95CD5DD9843F6 /* MainTableConsts.m */; };
 		46AE27D3C3D160CB80A2070E /* SingleOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE204ADA1B20EFC9AAA74E /* SingleOperation.m */; };
 		46AE28D263562FD91444CF76 /* MessagesHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE27F0EDE69E7AB20323B8 /* MessagesHelper.m */; };
+		46AE28D2A8ECD249B0BB0E45 /* DBController+FastSync.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE27BF0223B13465ABEA7D /* DBController+FastSync.m */; };
 		46AE28FE62B405003299F9EF /* MainTableDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE26D6BBC630EB0CE4D286 /* MainTableDataSource.m */; };
 		46AE29449067611A9372BA7D /* ReorderTaskOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE2D54B672A37AB40BCA7D /* ReorderTaskOperation.m */; };
 		46AE29A44900EB5C0E2A5B18 /* MainTableController+SelectedItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE2E7F9F4726B9CC4DD8B2 /* MainTableController+SelectedItem.m */; };
@@ -173,9 +174,11 @@
 		46AE26FFDD69E23BBC21D900 /* MainView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainView.h; sourceTree = "<group>"; };
 		46AE272768F24D3A6FB8FC1E /* DBController+Undo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DBController+Undo.h"; sourceTree = "<group>"; };
 		46AE27371766C01239F9F130 /* MainTableController+DragAndDrop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MainTableController+DragAndDrop.h"; sourceTree = "<group>"; };
+		46AE275F31C7CBD76B7FE493 /* DBController+FastSync.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DBController+FastSync.h"; sourceTree = "<group>"; };
 		46AE277CBF5F4633016BF7C1 /* CompleteTaskOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CompleteTaskOperation.m; sourceTree = "<group>"; };
 		46AE2795724950582F3887FD /* DragAndDropHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DragAndDropHandler.m; sourceTree = "<group>"; };
 		46AE27B3785FF74D45399323 /* SyncingLeg.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SyncingLeg.m; sourceTree = "<group>"; };
+		46AE27BF0223B13465ABEA7D /* DBController+FastSync.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DBController+FastSync.m"; sourceTree = "<group>"; };
 		46AE27C81E94D75901538190 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
 		46AE27E1E53770C50885AE60 /* UIView+ScreenshootExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+ScreenshootExtension.h"; sourceTree = "<group>"; };
 		46AE27EBD57116A04A0408D1 /* RemoteLeg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemoteLeg.h; sourceTree = "<group>"; };
@@ -204,6 +207,7 @@
 		46AE2A6F94B596B531D78DD6 /* MainTableConsts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainTableConsts.h; sourceTree = "<group>"; };
 		46AE2AA7E85BC6C84484A095 /* DBController+Undo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DBController+Undo.m"; sourceTree = "<group>"; };
 		46AE2ACD926DD48FF5A75F35 /* DPState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPState.h; sourceTree = "<group>"; };
+		46AE2B3CB6E830576263866D /* STMTaskModifcationType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STMTaskModifcationType.h; sourceTree = "<group>"; };
 		46AE2B4F013E18A60B809BE6 /* DBController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBController.m; sourceTree = "<group>"; };
 		46AE2BC0E04ABB32A7DFE410 /* DeselectTaskButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeselectTaskButton.m; sourceTree = "<group>"; };
 		46AE2BD6C918267E0C06F612 /* VirtualRemoteActionsHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VirtualRemoteActionsHandler.m; sourceTree = "<group>"; };
@@ -319,6 +323,7 @@
 			children = (
 				46AE234745D2603E3E1FB1AB /* DBConsts.m */,
 				46AE2F082ED3165301B7D05A /* DBConsts.h */,
+				46AE2B3CB6E830576263866D /* STMTaskModifcationType.h */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -731,6 +736,8 @@
 				46AE263D377B4EE742696671 /* DBAccess.m */,
 				46AE246192A12FAE43023862 /* DBController+BasicActions.m */,
 				46AE2CF9D3F1C28A5CBDE725 /* DBController+BasicActions.h */,
+				46AE27BF0223B13465ABEA7D /* DBController+FastSync.m */,
+				46AE275F31C7CBD76B7FE493 /* DBController+FastSync.h */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1027,6 +1034,7 @@
 				46AE27670DF39EEC0F87A53A /* SyncNotificationsObserver.m in Sources */,
 				46AE28FE62B405003299F9EF /* MainTableDataSource.m in Sources */,
 				46AE2D87C2A13E842E125409 /* MainTableDataSourceNotificationsObserver.m in Sources */,
+				46AE28D2A8ECD249B0BB0E45 /* DBController+FastSync.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -4,7 +4,7 @@
 //
 
 #import "TaskTableViewCell.h"
-#import "STMColors.h"
+#import "AppColors.h"
 
 
 @implementation TaskTableViewCell {
@@ -21,12 +21,15 @@
 }
 
 - (void)commonInit {
-    self.backgroundColor = [STMColors cellBackgroundColor];
-    self.textLabel.textColor = [STMColors cellTextColor];
+    self.backgroundColor = [AppColors cellBackgroundColor];
+    self.textLabel.textColor = [AppColors cellTextColor];
     self.textLabel.numberOfLines = 0;
     self.textLabel.lineBreakMode = NSLineBreakByWordWrapping;
     self.textLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:20.0];
-    self.textLabel.backgroundColor = [STMColors cellBackgroundColor];
+    self.textLabel.backgroundColor = [AppColors cellBackgroundColor];
+
+    self.selectedBackgroundView = [[UIView alloc] initWithFrame:self.bounds];
+    self.selectedBackgroundView.backgroundColor = [AppColors selectedCellBackgroundColor];
 }
 
 - (void)prepareForReuse {
@@ -42,12 +45,26 @@
 
 }
 
+
+
 - (void)updateBackgroundColor {
     if(self.dropped){
-        self.backgroundColor = [UIColor greenColor];
+        self.backgroundColor = [AppColors cellDraggingTargetBackgroundColor];
     } else {
-        self.backgroundColor = [STMColors cellBackgroundColor];
+        self.backgroundColor = [AppColors cellBackgroundColor];
     }
+}
+
+- (void)blinkCell {
+    UIView* blinkingView = [[UIView alloc] initWithFrame:self.bounds];
+    blinkingView.backgroundColor = [AppColors cellBlinkingColor];
+    blinkingView.alpha = 0.0;
+    [self.contentView addSubview:blinkingView];
+    [UIView animateWithDuration:0.5 delay:0.0 options:nil animations:^{
+        blinkingView.alpha = 0.6;
+    } completion:^(BOOL finished) {
+        [blinkingView removeFromSuperview];
+    }];
 }
 
 @end

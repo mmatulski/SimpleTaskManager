@@ -10,4 +10,7 @@
 
 +(BOOL) isRetinaDisplay;
 
++ (UIWindow *)mainWindow;
+
++ (CGRect)mainWindowBoundsIOnCurrentOrientation;
 @end

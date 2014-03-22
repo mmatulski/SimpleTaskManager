@@ -10,4 +10,5 @@
 
 @property(nonatomic) BOOL dropped;
 
+- (void)blinkCell;
 @end

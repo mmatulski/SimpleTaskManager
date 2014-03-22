@@ -112,6 +112,8 @@
     [self.context performBlock:^{
         [self beginUndo];
 
+        DDLogInfo(@"Reorder task with uid %@ to index index", uid);
+
         NSError *err = nil;
         STMTask *task = [self reorderTaskWithId:uid toIndex:index error:&err];
 

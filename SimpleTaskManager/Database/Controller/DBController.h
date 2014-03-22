@@ -26,5 +26,9 @@ extern NSString * const kSTMTaskEntityName;
 - (void)saveWithSuccessFullBlock:(void (^)())successFullBlock
                  andFailureBlock:(void (^)(NSError *))block;
 
+- (void)loadNumberOfAllTasksIfNotLoaded;
 
+- (void)increaseNumberOfAllTasks;
+
+- (void)decreaseNumberOfAllTasks;
 @end

@@ -11,6 +11,8 @@
 #import "STMTaskModel.h"
 #import "MainTableDataSource.h"
 #import "MainTableConsts.h"
+#import "MainTableStateController.h"
+#import "AppMessages.h"
 
 @implementation MainTableController {
 
@@ -25,10 +27,15 @@
         self.dataSource = [[MainTableDataSource alloc] initWithTableView:self.tableView];
         self.tableView.delegate = self;
 
+        [self prepareStateController];
         [self addLongPressRecognizer];
     }
 
     return self;
+}
+
+- (void)prepareStateController {
+    self.stateController = [[MainTableStateController alloc] initWithMainTableController:self];
 }
 
 - (DragAndDropHandler *)dragAndDropHandler {
@@ -60,9 +67,10 @@
         self.scrollOffsetWhenItemWasSelected = self.tableView.contentOffset.y;
 
         _selectedItemModel = selectedItemModel;
+
+        self.stateController.taskSelected = _selectedItemModel != nil;
     }
 }
-
 
 - (void)handleMemoryWarning {
     //TODO clean fetched cache
@@ -90,6 +98,12 @@
         [tableView deselectRowAtIndexPath:indexPath animated:true];
         self.selectedItemModel = nil;
     } else {
+        if(![self.stateController isSelectionAvailabelNow]){
+            [tableView deselectRowAtIndexPath:indexPath animated:false];
+            [self.stateController showInfoThatActionsAreBlockedWhenSyncing];
+            return;
+        }
+
         STMTask *task = [self.dataSource taskForIndexPath:indexPath];
         if(task){
             STMTaskModel *model = [[STMTaskModel alloc] initWitEntity:task];
@@ -102,6 +116,22 @@
     if(self.selectedItemModel){
         NSIndexPath *selectedIndexPath = [self indexPathForSelectedItem];
         [self updateOptionsPositionForItemAtIndexPath:selectedIndexPath taskModel:self.selectedItemModel];
+    }
+}
+
+- (void)refreshSelectedItemBecauseSyncHasBeenPerformed {
+    if(self.selectedItemModel){
+        NSIndexPath *selectedIndexPath = [self indexPathForSelectedItem];
+        if(selectedIndexPath){
+            [self.tableView selectRowAtIndexPath:selectedIndexPath animated:false scrollPosition:UITableViewScrollPositionMiddle];
+            self.scrollOffsetWhenItemWasSelected = self.tableView.contentOffset.y;
+            [self showOptionsForItemAtIndexPath:selectedIndexPath taskModel:self.selectedItemModel];
+        } else {
+            [self cancelSelection];
+            [AppMessages showError:@"Task has been closed by remote side"];
+        }
+
+
     }
 }
 

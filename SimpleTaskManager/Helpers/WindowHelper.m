@@ -19,4 +19,27 @@
     return false;
 }
 
++(UIWindow*) mainWindow{
+    NSArray* windows = [UIApplication sharedApplication].windows;
+    if (windows && [windows count] > 0) {
+        return [windows objectAtIndex:0];
+    }
+
+    return nil;
+}
+
++(CGRect) mainWindowBoundsIOnCurrentOrientation{
+    CGRect result = [self mainWindowBounds];
+    UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+    if (UIInterfaceOrientationIsLandscape(orientation)) {
+        result = CGRectMake(result.origin.x, result.origin.y, result.size.height, result.size.width);
+    }
+
+    return result;
+}
+
++(CGRect) mainWindowBounds{
+    return self.mainWindow.bounds;
+}
+
 @end

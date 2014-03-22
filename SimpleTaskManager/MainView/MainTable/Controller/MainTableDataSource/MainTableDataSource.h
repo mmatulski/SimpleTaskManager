@@ -19,7 +19,6 @@
 @property(nonatomic, strong) STMTaskModel *modelForTaskBeingMoved;
 @property(nonatomic, strong) NSIndexPath *currentTargetIndexPathForItemBeingMoved;
 
-@property(nonatomic, strong) MainTableDataSourceNotificationsObserver *notificationsObserver;
 @property(nonatomic) BOOL paused;
 
 - (instancetype)initWithTableView:(UITableView *)tableView;
@@ -40,4 +39,6 @@
 - (NSUInteger)estimatedTaskIndexForTargetIndexPath:(NSIndexPath *)path;
 
 - (void)resetDraggedCell;
+
+- (NSUInteger)numberOfAllTasks;
 @end

@@ -82,16 +82,20 @@
 
         task = [tasksEnumeratorSortedByUid nextObject];
         taskModel = [taskModelToReorderEnumeratorSortedByUid nextObject];
+
+        [self loadNumberOfAllTasksIfNotLoaded];
         while (task){
             DDLogTrace(@"enumerate remove %@ %@", task.uid, taskModel.uid);
             if([task.uid isEqualToString:taskModel.uid]){
                 [tasksSortedByIndexesAndMutable removeObject:task];
+                [self decreaseNumberOfAllTasks];
             }
 
             task = [tasksEnumeratorSortedByUid nextObject];
         }
 
         for(STMTaskModel *taskModel in addedTasks){
+            [self increaseNumberOfAllTasks];
             STMTask * taskCreated = [self addTaskWithName:taskModel.name withUid:taskModel.uid withIndex:taskModel.index];
             if(!taskCreated){
                 DDLogError(@"addTaskWithName %@ failed", taskModel.uid);

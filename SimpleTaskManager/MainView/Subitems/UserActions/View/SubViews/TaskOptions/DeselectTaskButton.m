@@ -4,7 +4,7 @@
 //
 
 #import "DeselectTaskButton.h"
-#import "STMColors.h"
+#import "AppColors.h"
 
 
 @implementation DeselectTaskButton {
@@ -14,7 +14,7 @@
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        self.backgroundColor = [STMColors stillToDoButtonColor];
+        self.backgroundColor = [AppColors stillToDoButtonColor];
         self.alpha = 0.85;
         [self prepareButton];
     }

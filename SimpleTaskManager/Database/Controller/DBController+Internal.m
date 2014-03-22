@@ -12,8 +12,6 @@
 #pragma mark - basic methods
 
 - (STMTask *)addTaskWithName:(NSString *)name withUid:(NSString *) uid withIndex:(NSNumber *) indexNumber{
-    [self loadNumberOfAllTasksIfNotLoaded];
-
     STMTask *task = (STMTask *)[NSEntityDescription insertNewObjectForEntityForName:kSTMTaskEntityName inManagedObjectContext:self.context];
     task.name = [name copy];
     if(uid){
@@ -24,13 +22,15 @@
     }
 
     //order is inversely proportional to index value
-    task.index = [NSNumber numberWithUnsignedInt:++self.numberOfAllTasks];
+
+    [self increaseNumberOfAllTasks];
+    task.index = [NSNumber numberWithUnsignedInt:self.numberOfAllTasks];
     return task;
 }
 
-- (BOOL) markAsCompletedTaskWithId:(NSString *)uid error:(NSError **) error {
-    [self loadNumberOfAllTasksIfNotLoaded];
 
+
+- (BOOL) markAsCompletedTaskWithId:(NSString *)uid error:(NSError **) error {
     NSError *err = nil;
     STMTask *task = [self findTaskWithId:uid error:&err];
     if (!task) {
@@ -60,8 +60,6 @@
 }
 
 - (STMTask *)reorderTaskWithId:(NSString *)uid toIndex:(NSInteger)index error:(NSError **) error {
-    [self loadNumberOfAllTasksIfNotLoaded];
-
     NSError *err = nil;
     STMTask *task = [self findTaskWithId:uid error:&err];
     if (!task) {
@@ -115,14 +113,12 @@
 }
 
 - (BOOL)removeTask:(STMTask *)task error:(NSError **)error {
-    [self loadNumberOfAllTasksIfNotLoaded];
-
     NSNumber *indexNumber =  task.index;
     int indexOfTaskToRemove = [indexNumber integerValue];
 
     [self.context deleteObject:task];
 
-    self.numberOfAllTasks--;
+    [self decreaseNumberOfAllTasks];
 
     NSError *err = nil;
     if(![self changeIndexBy:-1 inAllTaskWithIndexGreaterThan:indexOfTaskToRemove error:&err]){
@@ -135,8 +131,6 @@
 }
 
 - (BOOL)changeIndexBy:(NSInteger)change inAllTaskWithIndexGreaterThan:(NSInteger)relatedOrder error:(NSError **)error {
-    [self loadNumberOfAllTasksIfNotLoaded];
-
     NSError *err = nil;
     NSArray * tasks = [self findAllTasksWithIndexHigherThan:relatedOrder error:&err];
 
@@ -154,8 +148,6 @@
 }
 
 - (BOOL)changeIndexBy:(NSInteger)change inAllTasksWithIndexHigherThan:(NSInteger)higherThan butLowerThan:(NSInteger)lowerThan error:(NSError **)error {
-    [self loadNumberOfAllTasksIfNotLoaded];
-
     DDLogTrace(@"changeIndexBy %d  higherThan %d lowerThan %d", change, higherThan, lowerThan);
 
     NSError *err = nil;
@@ -175,8 +167,6 @@
 }
 
 - (void)changeIndexBy:(NSInteger)change inTask:(STMTask *)task {
-    [self loadNumberOfAllTasksIfNotLoaded];
-
     NSNumber *indexNumber =  task.index;
     NSInteger index = [indexNumber integerValue];
     NSInteger theNewIndex = index + change;
@@ -255,6 +245,7 @@
 }
 
 - (BOOL)reorderTask:(STMTask *)task withIndex:(NSInteger)index error:(NSError **)error {
+
     NSInteger currentIndex = [[task index] integerValue];
     NSInteger change = index - currentIndex;
 
@@ -271,7 +262,7 @@
         diff = 1;
     }
 
-    DDLogTrace(@"reorderTask %d -> %d", currentIndex, index);
+    DDLogInfo(@"reorderTask %d -> %d", currentIndex, index);
 
 
     NSError *err = nil;
@@ -285,29 +276,6 @@
     task.index = [NSNumber numberWithInteger:index];
 
     return true;
-}
-
-- (void) loadNumberOfAllTasksIfNotLoaded {
-    if(!_numberOfAllTasksEstimated){
-        BlockWeakSelf selfWeak = self;
-        [self.context performBlockAndWait:^{
-            NSFetchRequest *request = [[NSFetchRequest alloc] init];
-            [request setEntity:[NSEntityDescription entityForName:kSTMTaskEntityName
-                                           inManagedObjectContext:selfWeak.context]];
-            [request setIncludesSubentities:NO];
-
-            NSError *err;
-            NSUInteger count = [selfWeak.context countForFetchRequest:request error:&err];
-            if(count == NSNotFound) {
-                DDLogError(@"There was problem with loading number of all tasks %@", [err localizedDescription]);
-            } else {
-                self.numberOfAllTasks = count;
-                _numberOfAllTasksEstimated = true;
-
-                DDLogInfo(@"number of all Tasks is %u", self.numberOfAllTasks);
-            }
-        }];
-    }
 }
 
 @end

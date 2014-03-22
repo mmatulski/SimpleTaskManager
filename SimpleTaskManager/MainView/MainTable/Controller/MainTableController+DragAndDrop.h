@@ -12,4 +12,5 @@
 
 - (void)addLongPressRecognizer;
 
+- (void)cancelDraggingAnimate:(BOOL)animate;
 @end

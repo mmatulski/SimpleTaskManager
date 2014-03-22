@@ -11,7 +11,7 @@
 #import "MainTableConsts.h"
 #import "DBAccess.h"
 #import "TaskTableViewCell.h"
-#import "MainTableDataSourceNotificationsObserver.h"
+#import "DBController+Internal.h"
 
 NSUInteger const kDefaultBatchSize = 20;
 
@@ -28,7 +28,6 @@ NSUInteger const kDefaultBatchSize = 20;
 
         [self prepareDBController];
         [self prepareFetchedResultsController];
-        [self prepareNotificationsObserver];
 
         self.tableView.dataSource = self;
     }
@@ -55,25 +54,23 @@ NSUInteger const kDefaultBatchSize = 20;
     }
 }
 
-- (void)prepareNotificationsObserver {
-    self.notificationsObserver = [[MainTableDataSourceNotificationsObserver alloc] initWithMainTableDataSource:self];
-}
-
 - (void)setPaused:(BOOL)paused {
 
-    _paused = paused;
+    if(_paused != paused){
+        _paused = paused;
 
-    if (paused) {
-        self.fetchedResultsController.delegate = nil;
-        [NSFetchedResultsController deleteCacheWithName:kFetchedResultsControllerCacheName];
-    } else {
-        self.fetchedResultsController.delegate = self;
-        NSError *err = nil;
-        if(![self.fetchedResultsController performFetch:&err]){
-            DDLogError(@"prepareFetchedResultsController performFetch failed %@", [err localizedDescription]);
+        if (paused) {
+            self.fetchedResultsController.delegate = nil;
+            [NSFetchedResultsController deleteCacheWithName:kFetchedResultsControllerCacheName];
+        } else {
+            self.fetchedResultsController.delegate = self;
+            NSError *err = nil;
+            if(![self.fetchedResultsController performFetch:&err]){
+                DDLogError(@"prepareFetchedResultsController performFetch failed %@", [err localizedDescription]);
+            }
+
+            [self.tableView reloadData];
         }
-
-        [self.tableView reloadData];
     }
 }
 
@@ -149,7 +146,7 @@ NSUInteger const kDefaultBatchSize = 20;
             result--;
         }
 
-        DDLogTrace(@"numberOfRowsInSection %d", result);
+        DDLogInfo(@"numberOfRowsInSection %d", result);
 
         return result;
     }
@@ -319,6 +316,7 @@ NSUInteger const kDefaultBatchSize = 20;
 - (NSUInteger)estimatedTaskIndexForTargetIndexPath:(NSIndexPath *)indexPath {
     NSUInteger numberOfAllTasks = self.dbController.numberOfAllTasks;
     if([indexPath row] == 0){
+        DDLogInfo(@"estimatedTaskIndexForTargetIndexPath R %d", numberOfAllTasks);
         return numberOfAllTasks;
     }
 
@@ -327,9 +325,13 @@ NSUInteger const kDefaultBatchSize = 20;
 //    }
 
     NSInteger result = numberOfAllTasks - [indexPath row];
-    if(result < 0){
-        return 0;
+    if(result < 1){
+        DDLogInfo(@"estimatedTaskIndexForTargetIndexPath B 1");
+
+        return 1;
     }
+
+    DDLogInfo(@"estimatedTaskIndexForTargetIndexPath %d", result);
 
     return (NSUInteger) result;
 }
@@ -339,4 +341,8 @@ NSUInteger const kDefaultBatchSize = 20;
     self.currentTargetIndexPathForItemBeingMoved = nil;
 }
 
+- (NSUInteger)numberOfAllTasks {
+    //we should be careful here because tableview can have shown less items
+    return self.dbController.numberOfAllTasks;
+}
 @end

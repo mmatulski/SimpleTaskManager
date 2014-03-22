@@ -4,11 +4,9 @@
 //
 
 #import "MainTableController+SelectedItem.h"
-#import "STMTask.h"
 #import "STMTaskModel.h"
-#import "DBController.h"
-#import "MessagesHelper.h"
 #import "MainTableDataSource.h"
+#import "AppMessages.h"
 
 
 @implementation MainTableController (SelectedItem)
@@ -42,14 +40,23 @@
     if(self.selectedItemModel){
        self.selectedItemModel = nil;
 
-       [MessagesHelper showMessage:@"Tasks has been synced."];
+       [AppMessages showMessage:@"Tasks has been synced."];
     }
 }
 
 - (void)emergencyCancelSelection {
     self.selectedItemModel = nil;
 
-    [MessagesHelper showMessage:@"Task was changed by someone else ..."];
+    [AppMessages showMessage:@"Task was changed by someone else ..."];
 }
+
+- (void)cancelSelection {
+    self.selectedItemModel = nil;
+    NSIndexPath * selectedIndexPath = [self.tableView indexPathForSelectedRow];
+    if(selectedIndexPath){
+        [self.tableView deselectRowAtIndexPath:selectedIndexPath animated:false];
+    }
+}
+
 
 @end

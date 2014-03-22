@@ -30,5 +30,4 @@
 
 - (BOOL)reorderTask:(STMTask *)task withIndex:(NSInteger)index error:(NSError **)error;
 
-- (void)loadNumberOfAllTasksIfNotLoaded;
 @end

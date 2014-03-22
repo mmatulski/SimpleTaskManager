@@ -102,9 +102,42 @@
     DDLogTrace(@"DBController saveWithSuccessFullBlock END %@" , self);
 }
 
-- (NSUInteger)numberOfAllTasks {
+- (NSUInteger) numberOfAllTasks {
     [self loadNumberOfAllTasksIfNotLoaded];
     return _numberOfAllTasks;
+}
+
+- (void) loadNumberOfAllTasksIfNotLoaded {
+    if(!_numberOfAllTasksEstimated){
+        BlockWeakSelf selfWeak = self;
+        [self.context performBlockAndWait:^{
+            NSFetchRequest *request = [[NSFetchRequest alloc] init];
+            [request setEntity:[NSEntityDescription entityForName:kSTMTaskEntityName
+                                           inManagedObjectContext:selfWeak.context]];
+            [request setIncludesSubentities:NO];
+
+            NSError *err;
+            NSUInteger count = [selfWeak.context countForFetchRequest:request error:&err];
+            if(count == NSNotFound) {
+                DDLogError(@"There was problem with loading number of all tasks %@", [err localizedDescription]);
+            } else {
+                _numberOfAllTasks = count;
+                _numberOfAllTasksEstimated = true;
+
+                DDLogInfo(@"number of all Tasks is %u", self.numberOfAllTasks);
+            }
+        }];
+    }
+}
+
+- (void)increaseNumberOfAllTasks {
+    [self loadNumberOfAllTasksIfNotLoaded];
+    _numberOfAllTasks++;
+}
+
+- (void)decreaseNumberOfAllTasks {
+    [self loadNumberOfAllTasksIfNotLoaded];
+    _numberOfAllTasks--;
 }
 
 @end

@@ -12,20 +12,21 @@
 @class STMTaskModel;
 @class STMTask;
 @class MainTableDataSource;
+@class MainTableStateController;
 
 @interface MainTableController : NSObject <UITableViewDelegate, NSFetchedResultsControllerDelegate, UIGestureRecognizerDelegate>
 
 @property(nonatomic, weak) id <MainTableControllerDelegate> delegate;
 @property(nonatomic, strong) UITableView *tableView;
 @property(nonatomic, strong) MainTableDataSource *dataSource;
+@property(nonatomic, strong) MainTableStateController *stateController;
 
 @property(nonatomic, strong) UILongPressGestureRecognizer *longPressRecognizer;
 @property(nonatomic, strong) DragAndDropHandler *dragAndDropHandler;
-
-@property(nonatomic, strong) STMTaskModel * selectedItemModel;
 @property(nonatomic, strong) STMTaskModel * draggedItemModel;
 @property(nonatomic, strong) NSIndexPath * temporaryTargetForDraggedIndexPath;
 
+@property(nonatomic, strong) STMTaskModel * selectedItemModel;
 @property(nonatomic) CGFloat scrollOffsetWhenItemWasSelected;
 
 //@property(nonatomic) BOOL shouldCancelSelection;
@@ -40,4 +41,5 @@
 
 - (void)deselectTaskModel:(STMTaskModel *)taskModel;
 
+- (void)refreshSelectedItemBecauseSyncHasBeenPerformed;
 @end

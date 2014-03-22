@@ -5,10 +5,18 @@
 
 #import <Foundation/Foundation.h>
 
-@interface STMColors : NSObject
+@interface AppColors : NSObject
 + (UIColor *)cellBackgroundColor;
 
 + (UIColor *)cellTextColor;
 
 + (UIColor *)stillToDoButtonColor;
+
++ (UIColor *)messageDialogsBackgroundColor;
+
++ (UIColor *)cellDraggingTargetBackgroundColor;
+
++ (UIColor *)cellBlinkingColor;
+
++ (UIColor *)selectedCellBackgroundColor;
 @end

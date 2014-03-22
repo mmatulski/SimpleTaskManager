@@ -17,7 +17,7 @@
 - (id)init {
     self = [super init];
     if (self) {
-        _timerInterval = 20.0;
+        _timerInterval = 15.0;
         _changedItemsFactor = 0.25;
         _increaseFactor = 1.0;
     }
@@ -29,11 +29,77 @@
 - (void)connect {
     [super connect];
 
-    [self startTrafficGenerator];
+    //[self startTrafficGenerator];
 }
 
 - (void)startTrafficGenerator {
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:self.timerInterval target:self selector:@selector(generateTraffic) userInfo:nil repeats:YES];
+    //self.timer = [NSTimer scheduledTimerWithTimeInterval:self.timerInterval target:self selector:@selector(generateTraffic) userInfo:nil repeats:YES];
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(generateTrafficM) userInfo:nil repeats:NO];
+}
+
+- (void)generateTrafficM {
+    NSMutableArray *tasksToAdd = [[NSMutableArray alloc] init];
+
+    //Adding
+    [tasksToAdd addObject:[[STMTaskModel alloc] initWithName:@"Pierwszy" uid:nil index:nil]];
+    [tasksToAdd addObject:[[STMTaskModel alloc] initWithName:@"Drugi" uid:nil index:nil]];
+    [tasksToAdd addObject:[[STMTaskModel alloc] initWithName:@"Trzeci" uid:nil index:nil]];
+    [tasksToAdd addObject:[[STMTaskModel alloc] initWithName:@"Czwarty" uid:nil index:nil]];
+    [tasksToAdd addObject:[[STMTaskModel alloc] initWithName:@"Piaty" uid:nil index:nil]];
+    [tasksToAdd addObject:[[STMTaskModel alloc] initWithName:@"Szósty" uid:nil index:nil]];
+    [tasksToAdd addObject:[[STMTaskModel alloc] initWithName:@"Siódmy" uid:nil index:nil]];
+    [tasksToAdd addObject:[[STMTaskModel alloc] initWithName:@"Ósmy" uid:nil index:nil]];
+    [tasksToAdd addObject:[[STMTaskModel alloc] initWithName:@"Dziewiąty" uid:nil index:nil]];
+    [tasksToAdd addObject:[[STMTaskModel alloc] initWithName:@"Dziesiąty" uid:nil index:nil]];
+    [tasksToAdd addObject:[[STMTaskModel alloc] initWithName:@"Jedenasty" uid:nil index:nil]];
+    [tasksToAdd addObject:[[STMTaskModel alloc] initWithName:@"Dwunasty" uid:nil index:nil]];
+    [tasksToAdd addObject:[[STMTaskModel alloc] initWithName:@"Trzynasty" uid:nil index:nil]];
+    [tasksToAdd addObject:[[STMTaskModel alloc] initWithName:@"Czternasty" uid:nil index:nil]];
+    [tasksToAdd addObject:[[STMTaskModel alloc] initWithName:@"Piętnasty" uid:nil index:nil]];
+    [tasksToAdd addObject:[[STMTaskModel alloc] initWithName:@"Szesnasty" uid:nil index:nil]];
+    [tasksToAdd addObject:[[STMTaskModel alloc] initWithName:@"Siedemnasty" uid:nil index:nil]];
+    [tasksToAdd addObject:[[STMTaskModel alloc] initWithName:@"Osiemnasty" uid:nil index:nil]];
+    [tasksToAdd addObject:[[STMTaskModel alloc] initWithName:@"Dziewiętnasty" uid:nil index:nil]];
+    [tasksToAdd addObject:[[STMTaskModel alloc] initWithName:@"Dwudziesty" uid:nil index:nil]];
+    [tasksToAdd addObject:[[STMTaskModel alloc] initWithName:@"Dwudziesty pierwszy" uid:nil index:nil]];
+    [tasksToAdd addObject:[[STMTaskModel alloc] initWithName:@"Dwudziesty drugi" uid:nil index:nil]];
+    [tasksToAdd addObject:[[STMTaskModel alloc] initWithName:@"Dwudziesty trzeci" uid:nil index:nil]];
+    [tasksToAdd addObject:[[STMTaskModel alloc] initWithName:@"Dwudziesty czwarty" uid:nil index:nil]];
+    [tasksToAdd addObject:[[STMTaskModel alloc] initWithName:@"Dwudziesty piąty" uid:nil index:nil]];
+    [tasksToAdd addObject:[[STMTaskModel alloc] initWithName:@"Dwudziesty szósty" uid:nil index:nil]];
+    [tasksToAdd addObject:[[STMTaskModel alloc] initWithName:@"Dwudziesty siódmy" uid:nil index:nil]];
+    [tasksToAdd addObject:[[STMTaskModel alloc] initWithName:@"Dwudziesty ósmy" uid:nil index:nil]];
+    [tasksToAdd addObject:[[STMTaskModel alloc] initWithName:@"Dwudziesty dziewiąty" uid:nil index:nil]];
+    [tasksToAdd addObject:[[STMTaskModel alloc] initWithName:@"Trzydiesty" uid:nil index:nil]];
+    [tasksToAdd addObject:[[STMTaskModel alloc] initWithName:@"Trzydiesty pierwszy" uid:nil index:nil]];
+    [tasksToAdd addObject:[[STMTaskModel alloc] initWithName:@"Trzydiesty drugi" uid:nil index:nil]];
+    [tasksToAdd addObject:[[STMTaskModel alloc] initWithName:@"Trzydiesty trzeci" uid:nil index:nil]];
+    [tasksToAdd addObject:[[STMTaskModel alloc] initWithName:@"Trzydiesty czwarty" uid:nil index:nil]];
+    [tasksToAdd addObject:[[STMTaskModel alloc] initWithName:@"Trzydiesty piąty" uid:nil index:nil]];
+    [tasksToAdd addObject:[[STMTaskModel alloc] initWithName:@"Trzydiesty szósty" uid:nil index:nil]];
+    [tasksToAdd addObject:[[STMTaskModel alloc] initWithName:@"Trzydiesty siódmy" uid:nil index:nil]];
+    [tasksToAdd addObject:[[STMTaskModel alloc] initWithName:@"Trzydiesty ósmy" uid:nil index:nil]];
+    [tasksToAdd addObject:[[STMTaskModel alloc] initWithName:@"Trzydiesty dziewiąty" uid:nil index:nil]];
+    [tasksToAdd addObject:[[STMTaskModel alloc] initWithName:@"Czterdziesty" uid:nil index:nil]];
+    [tasksToAdd addObject:[[STMTaskModel alloc] initWithName:@"Czterdziesty pierwszy" uid:nil index:nil]];
+    [tasksToAdd addObject:[[STMTaskModel alloc] initWithName:@"Czterdziesty drugi" uid:nil index:nil]];
+    [tasksToAdd addObject:[[STMTaskModel alloc] initWithName:@"Czterdziesty trzeci" uid:nil index:nil]];
+    [tasksToAdd addObject:[[STMTaskModel alloc] initWithName:@"Czterdziesty czwarty" uid:nil index:nil]];
+    [tasksToAdd addObject:[[STMTaskModel alloc] initWithName:@"Czterdziesty piąty" uid:nil index:nil]];
+    [tasksToAdd addObject:[[STMTaskModel alloc] initWithName:@"Czterdziesty szósty" uid:nil index:nil]];
+    [tasksToAdd addObject:[[STMTaskModel alloc] initWithName:@"Czterdziesty siódmy" uid:nil index:nil]];
+    [tasksToAdd addObject:[[STMTaskModel alloc] initWithName:@"Czterdziesty ósmy" uid:nil index:nil]];
+    [tasksToAdd addObject:[[STMTaskModel alloc] initWithName:@"Czterdziesty dziewiąty" uid:nil index:nil]];
+
+    [self.remoteLeg syncAddedTasks:[NSArray arrayWithArray:tasksToAdd]
+                      removedTasks:[NSArray arrayWithArray:nil]
+                      renamedTasks:[NSArray arrayWithArray:nil]
+                    reorderedTasks:[NSArray arrayWithArray:nil]
+                  successFullBlock:^(id o) {
+                      DDLogInfo(@"generateActionsForTasks SUCCESS");
+                  } failureBlock:^(NSError *error) {
+        DDLogInfo(@"generateActionsForTasks FAILURE %@", [error localizedDescription]);
+    }];
 }
 
 - (void)generateTraffic {

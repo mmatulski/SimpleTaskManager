@@ -7,12 +7,11 @@
 #import "STMTask.h"
 #import "DragAndDropHandler.h"
 #import "STMTaskModel.h"
-#import "DBController.h"
 #import "SyncGuardService.h"
 #import "LocalUserLeg.h"
-#import "MessagesHelper.h"
 #import "MainTableDataSource.h"
-
+#import "MainTableStateController.h"
+#import "TaskTableViewCell.h"
 
 @implementation MainTableController (DragAndDrop)
 
@@ -70,10 +69,16 @@
 #pragma mark - Proper Actions
 
 - (void)userHasPressedLongOnIndexPath:(NSIndexPath *)indexPath andWindowPoint:(CGPoint)pointRelatedToWindow {
-    STMTask *task = [self.dataSource taskForIndexPath:indexPath];
+    if(![self.stateController isDraggingAvailabelNow]){
+        [self.stateController showInfoThatActionsAreBlockedWhenSyncing];
+        return;
+    }
 
+    STMTask *task = [self.dataSource taskForIndexPath:indexPath];
     if(task){
         UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+
+        self.stateController.dragging = true;
 
         self.draggedItemModel = [[STMTaskModel alloc] initWitEntity:task];
 
@@ -105,10 +110,12 @@
 
     [self.dragAndDropHandler stopDragging];
     [self enableTableGestureRecognizerForScrolling];
+
+    self.stateController.dragging = false;
 }
 
 - (void)draggingHasBeenFailedOrCancelled {
-    [self cancelDragging];
+    [self cancelDraggingAnimate:true];
 }
 
 #pragma mark -
@@ -175,7 +182,13 @@
         int row = [indexPathUnderTheFinger row];
 
         if(show){
-            result = [NSIndexPath indexPathForRow:showOnBottom ? row + 1 : row inSection:0];
+
+            NSUInteger finalRow = showOnBottom ? row + 1 : row;
+            if(finalRow >= [self.dataSource numberOfAllTasks]){
+                return nil;
+            }
+
+            result = [NSIndexPath indexPathForRow:finalRow inSection:0];
             NSIndexPath *currentDraggedIndexPath = [self indexPathForDraggedItem];
             if([currentDraggedIndexPath isEqual:result]){
                 result = nil;
@@ -193,7 +206,7 @@
     return result;
 }
 
-- (void)cancelDragging {
+- (void)cancelDraggingAnimate:(BOOL) animate {
     NSIndexPath *indexPathSource = [self indexPathForDraggedItem];
     NSIndexPath *indexPathTarget = self.temporaryTargetForDraggedIndexPath;
 
@@ -203,11 +216,11 @@
     [self.tableView beginUpdates];
 
     if(indexPathSource){
-        [self.tableView insertRowsAtIndexPaths:@[indexPathSource] withRowAnimation:UITableViewRowAnimationFade];
+        [self.tableView insertRowsAtIndexPaths:@[indexPathSource] withRowAnimation:animate ? UITableViewRowAnimationFade : UITableViewRowAnimationNone];
     }
 
     if(indexPathTarget){
-        [self.tableView deleteRowsAtIndexPaths:@[indexPathTarget] withRowAnimation:UITableViewRowAnimationFade];
+        [self.tableView deleteRowsAtIndexPaths:@[indexPathTarget] withRowAnimation:animate ? UITableViewRowAnimationFade : UITableViewRowAnimationNone];
     }
 
     [self.tableView endUpdates];
@@ -219,18 +232,20 @@
     [self.dragAndDropHandler stopDragging];
 
     [self enableTableGestureRecognizerForScrolling];
+
+    self.stateController.dragging = false;
 }
 
--(void) emergencyCancelDragging{
-    self.draggedItemModel = nil;
-    self.temporaryTargetForDraggedIndexPath = nil;
-
-    [self.dragAndDropHandler stopDragging];
-
-    [self enableTableGestureRecognizerForScrolling];
-
-    [MessagesHelper showMessage:@"Task was changed by someone else ..."];
-}
+//-(void) emergencyCancelDragging{
+//    self.draggedItemModel = nil;
+//    self.temporaryTargetForDraggedIndexPath = nil;
+//
+//    [self.dragAndDropHandler stopDragging];
+//
+//    [self enableTableGestureRecognizerForScrolling];
+//
+//    [MessagesHelper showMessage:@"Task was changed by someone else ..."];
+//}
 
 - (NSIndexPath *)indexPathForDraggedItem {
     if(!self.draggedItemModel){
@@ -243,13 +258,28 @@
 - (void)changeOrderForDraggedItemToIndexPath:(NSIndexPath *)targetPath {
     NSUInteger theNewOrder = [self.dataSource estimatedTaskIndexForTargetIndexPath:targetPath];
     if(self.draggedItemModel){
-        [[SyncGuardService singleUser] reorderTaskWithId:self.draggedItemModel.uid toIndex:theNewOrder successFullBlock:^(id o) {
-
+        STMTaskModel *taskModel = self.draggedItemModel;
+        BlockWeakSelf selfWeak = self;
+        [[SyncGuardService singleUser] reorderTaskWithId:taskModel.uid toIndex:theNewOrder successFullBlock:^(id obj) {
+            runOnMainThread(^{
+                [selfWeak highlightCellForTaskModel:taskModel];
+            });
         } failureBlock:^(NSError *error) {
             runOnMainThread(^{
                 [self.tableView reloadData];
+                [selfWeak highlightCellForTaskModel:taskModel];
             });
         }];
+    }
+}
+
+-(void) highlightCellForTaskModel:(STMTaskModel *) model{
+    NSIndexPath *indexPath = [self.dataSource indexPathForTaskModel:model];
+    if(indexPath){
+        [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionMiddle animated:true];
+        UITableViewCell * cell = [self.tableView cellForRowAtIndexPath:indexPath];
+        TaskTableViewCell *taskCell = MakeSafeCast(cell, [TaskTableViewCell class]);
+        [taskCell blinkCell];
     }
 }
 

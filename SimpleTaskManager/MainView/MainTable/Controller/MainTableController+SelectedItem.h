@@ -21,4 +21,6 @@
 - (void)updateSelectedItemVisibility;
 
 - (void)emergencyCancelSelection;
+
+- (void)cancelSelection;
 @end

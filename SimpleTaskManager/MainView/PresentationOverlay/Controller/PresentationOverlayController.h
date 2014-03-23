@@ -15,7 +15,7 @@
 @interface PresentationOverlayController : NSObject <TaskOptionsDelegate, PresentationOverlayViewDelegate>
 
 @property(nonatomic, weak) id <UserActionsHelperControllerDelegate> delegate;
-@property(nonatomic, strong) PresentationOverlayView *helperView;
+@property(nonatomic, strong) PresentationOverlayView *presentationOverlayView;
 @property(nonatomic, strong) STMTaskModel *currentTaskWithOptionsShown;
 
 - (instancetype)initWithView:(PresentationOverlayView *)view;

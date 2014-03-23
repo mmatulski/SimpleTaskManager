@@ -22,8 +22,8 @@
 - (instancetype)initWithView:(PresentationOverlayView *)view {
     self = [super init];
     if (self) {
-        self.helperView = view;
-        self.helperView.delegate = self;
+        self.presentationOverlayView = view;
+        self.presentationOverlayView.delegate = self;
     }
 
     return self;
@@ -31,21 +31,21 @@
 
 - (void)showOptionsForTaskModel:(STMTaskModel *)taskModel representedByCell:(UITableViewCell *)cell animated:(BOOL)animated {
     self.currentTaskWithOptionsShown = taskModel;
-    [self.helperView showTaskOptionsViewForCell:cell animated:animated];
-    self.helperView.taskOptionsView.delegate = self;
+    [self.presentationOverlayView showTaskOptionsViewForCell:cell animated:animated];
+    self.presentationOverlayView.taskOptionsView.delegate = self;
 }
 
 - (void)closeTaskOptionsForTaskModel:(STMTaskModel *)taskModel {
     if(self.currentTaskWithOptionsShown){
-        [self.helperView closeTaskOptions];
+        [self.presentationOverlayView closeTaskOptions];
         self.currentTaskWithOptionsShown = nil;
     }
 }
 
 - (void)updateTaskOptionsForTaskModel:(STMTaskModel *)taskModel becauseItWasScrolledBy:(CGFloat)offsetChange {
     if(self.currentTaskWithOptionsShown && [self.currentTaskWithOptionsShown isEqual:taskModel]){
-        [self.helperView updateTaskOptionsForTaskBecauseItWasScrolledBy:offsetChange];
-        self.helperView.taskOptionsView.delegate = self;
+        [self.presentationOverlayView updateTaskOptionsForTaskBecauseItWasScrolledBy:offsetChange];
+        self.presentationOverlayView.taskOptionsView.delegate = self;
     }
 }
 
@@ -80,7 +80,7 @@
     [[SyncGuardService singleUser] addTaskWithName:taskName successFullBlock:^(id o) {
         DDLogInfo(@"SUCCESS");
         runOnMainThread(^{
-            [self.helperView theNewTaskSaved];
+            [self.presentationOverlayView theNewTaskSaved];
         });
     } failureBlock:^(NSError *err) {
         DDLogError(@"FAILED");

@@ -18,9 +18,9 @@
 - (id)init {
     self = [super init];
     if (self) {
-        _timerInterval = 5.0;
+        _timerInterval = 20.0;
         _changedItemsFactor = 0.25;
-        _increaseFactor = 1.02;
+        _increaseFactor = 1.01;
     }
 
     return self;

@@ -109,12 +109,8 @@ CGFloat const kRightMarginForHandlingPanGesture = 20.0;
 
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
 
-    if([self isAnyDialogOpenedOrBeganClosing]){
+    if([self isAnyDialogOpenedOrBeganClosing] || [self isAnyDialogAnimatedNow]){
         return [super hitTest:point withEvent:event];
-    }
-
-    if([self isAnyDialogAnimatedNow]){
-        return nil;
     }
 
     if([self isShowingTaskOptionsView]){

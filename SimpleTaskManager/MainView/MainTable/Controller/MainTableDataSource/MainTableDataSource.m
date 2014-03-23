@@ -11,7 +11,6 @@
 #import "MainTableConsts.h"
 #import "DBAccess.h"
 #import "TaskTableViewCell.h"
-#import "DBController+Internal.h"
 
 NSUInteger const kDefaultBatchSize = 20;
 
@@ -96,7 +95,7 @@ NSUInteger const kDefaultBatchSize = 20;
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)path {
 
-    DDLogTrace(@"configureCell %d '%@' %d", [path row], self.modelForTaskBeingMoved.name, [self.currentTargetIndexPathForItemBeingMoved row]);
+    DDLogTrace(@"configureCell %zd '%@' %zd", [path row], self.modelForTaskBeingMoved.name, [self.currentTargetIndexPathForItemBeingMoved row]);
 
     NSIndexPath *pathToRequest = path;
 
@@ -141,12 +140,12 @@ NSUInteger const kDefaultBatchSize = 20;
     NSArray * sections = [_fetchedResultsController sections];
     if(sections && [sections count] > section){
         id  sectionInfo = [sections objectAtIndex:(NSUInteger) section];
-        int result = [sectionInfo numberOfObjects];
+        NSInteger result = [sectionInfo numberOfObjects];
         if(self.modelForTaskBeingMoved && !self.currentTargetIndexPathForItemBeingMoved){
             result--;
         }
 
-        DDLogInfo(@"numberOfRowsInSection %d [%d]", result, self.dbController.numberOfAllTasks);
+        DDLogInfo(@"numberOfRowsInSection %zd [%td]", result, self.dbController.numberOfAllTasks);
 
         return result;
     }
@@ -190,7 +189,7 @@ NSUInteger const kDefaultBatchSize = 20;
         case NSFetchedResultsChangeUpdate:stringType = @"UPDATE";break;
     }
 
-    DDLogInfo(@"didChangeObject %@ %@ %@ %d", stringType, changedTask.objectID, changedTask.name, [changedTask.index integerValue]);
+    DDLogInfo(@"didChangeObject %@ %@ %@ %td", stringType, changedTask.objectID, changedTask.name, [changedTask.index unsignedIntegerValue]);
 
 
 //    if(self.selectedItemModel && !self.selectedItemWillBeRemoved){
@@ -316,13 +315,9 @@ NSUInteger const kDefaultBatchSize = 20;
 - (NSUInteger)estimatedTaskIndexForTargetIndexPath:(NSIndexPath *)indexPath {
     NSUInteger numberOfAllTasks = self.dbController.numberOfAllTasks;
     if([indexPath row] == 0){
-        DDLogInfo(@"estimatedTaskIndexForTargetIndexPath R %d", numberOfAllTasks);
+        DDLogInfo(@"estimatedTaskIndexForTargetIndexPath R %td", numberOfAllTasks);
         return numberOfAllTasks;
     }
-
-//    if([indexPath row] == (numberOfAllTasks - 1)){
-//        return 1;
-//    }
 
     NSInteger result = numberOfAllTasks - [indexPath row];
     if(result < 1){
@@ -331,7 +326,7 @@ NSUInteger const kDefaultBatchSize = 20;
         return 1;
     }
 
-    DDLogInfo(@"estimatedTaskIndexForTargetIndexPath %d", result);
+    DDLogInfo(@"estimatedTaskIndexForTargetIndexPath %zd", result);
 
     return (NSUInteger) result;
 }

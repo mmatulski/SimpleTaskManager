@@ -127,7 +127,7 @@
                 _numberOfAllTasks = count;
                 _numberOfAllTasksEstimated = true;
 
-                DDLogInfo(@"number of all Tasks is %u", self.numberOfAllTasks);
+                DDLogInfo(@"number of all Tasks is %td", self.numberOfAllTasks);
             }
         }];
     }

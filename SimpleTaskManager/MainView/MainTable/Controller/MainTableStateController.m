@@ -41,13 +41,13 @@
 
         self.mainTableController.dataSource.paused = _syncing;
 
-        if (_dragging && ![self isDraggingAvailabelNow]) {
+        if (_dragging && ![self isDraggingAvailableNow]) {
             [self.mainTableController cancelDraggingAnimate:false];
             [self showInfoThatActionsAreBlockedWhenSyncing];
         }
 
         if (_taskSelected){
-            if([self isSelectionAvailabelNow]){
+            if([self isSelectionAvailableNow]){
                 if(!_syncing){
                     [self.mainTableController refreshSelectedItemBecauseSyncHasBeenPerformed];
                 }
@@ -100,11 +100,11 @@
 //    }
 //}
 
--(BOOL) isDraggingAvailabelNow{
+-(BOOL)isDraggingAvailableNow {
     return ![self blockUserForActionsWhenSyncing] || !_syncing;
 }
 
--(BOOL) isSelectionAvailabelNow{
+-(BOOL)isSelectionAvailableNow {
     return ![self blockUserForActionsWhenSyncing] || !_syncing;
 }
 

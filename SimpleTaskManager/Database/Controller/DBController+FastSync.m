@@ -24,7 +24,7 @@
 
         NSError *err = nil;
 
-        DDLogInfo(@"syncAddedTasks (Add %d, Remove %d, Rename %d, Reorder %d",
+        DDLogInfo(@"syncAddedTasks (Add %td, Remove %td, Rename %td, Reorder %td",
         [addedTasks count],
         [removedTasks count],
         [renamedTasks count],
@@ -42,9 +42,9 @@
         NSArray *modelsToRenameSortedByUid = [renamedTasks sortedArrayUsingDescriptors:@[sortByUid]];
 
         [self reorderTasksModels:modelsToReorderSortedByUid inSortedByIndexArray:tasksSortedByIndexAndMutable usingSortedByUIDTasks:tasksSortedByUid];
-        [self renameTasksModels:modelsToRenameSortedByUid inSortedByIndexArray:tasksSortedByIndexAndMutable usingSortedByUIDTasks:tasksSortedByUid];
+        [self renameTasksModels:modelsToRenameSortedByUid usingSortedByUIDTasks:tasksSortedByUid];
         [self removeTasksModels:modelsToRemoveSortedByUid fromSortedByIndexArray:tasksSortedByIndexAndMutable usingSortedByUIDTasks:tasksSortedByUid];
-        [self addTasksModels:addedTasks toSortedByIndexArray:tasksSortedByIndexAndMutable usingSortedByUIDTasks:tasksSortedByUid];
+        [self addTasksModels:addedTasks toSortedByIndexArray:tasksSortedByIndexAndMutable];
         [self reestimateIndexesInSortedByIndexArray:tasksSortedByIndexAndMutable];
 
         [self saveWithSuccessFullBlock:^{
@@ -75,10 +75,10 @@
     STMTask *task = [tasksEnumerator nextObject];
     STMTask *model = [modelsEnumerator nextObject];
 
-    NSInteger numberOfProcessedItems = 0;
+    NSUInteger numberOfProcessedItems = 0;
 
     while ([modelsToProcess count] > 0){
-        DDLogTrace(@"reordering %d tasks", [modelsToProcess count]);
+        DDLogTrace(@"reordering %td tasks", [modelsToProcess count]);
 
         while(task){
             DDLogTrace(@"enumerate reorder %@ %@", task.uid, model.uid);
@@ -91,11 +91,11 @@
                 NSUInteger changedIndex = [model.index unsignedIntegerValue];
                 NSInteger idxInTable = changedIndex - 1;
                 if(idxInTable < 0){
-                    DDLogWarn(@"index %d for task %@ not valid (will be added with 1", changedIndex, model.uid);
+                    DDLogWarn(@"index %td for task %@ not valid (will be added with 1", changedIndex, model.uid);
                     [result insertObject:task atIndex:
                             0];
                 } else if(idxInTable >= [result count]){
-                    DDLogWarn(@"index %d for task %@ not valid (will be added with top %d", changedIndex, model.uid, ([result count] + 1));
+                    DDLogWarn(@"index %td for task %@ not valid (will be added with top %td", changedIndex, model.uid, ([result count] + 1));
                     [result addObject:task];
                 } else {
                     [result insertObject:task atIndex:
@@ -127,10 +127,10 @@
         }
     }
 
-    DDLogInfo(@"Tasks reorderes [%d/%d]", numberOfProcessedItems, [models count]);
+    DDLogInfo(@"Tasks reorderes [%td/%td]", numberOfProcessedItems, [models count]);
 }
 
-- (void)renameTasksModels:(NSArray *)models inSortedByIndexArray:(NSMutableArray *)result usingSortedByUIDTasks:(NSArray *)tasks {
+- (void)renameTasksModels:(NSArray *)models usingSortedByUIDTasks:(NSArray *)tasks {
 
     NSMutableArray *modelsStillToRename = [models mutableCopy];
     NSMutableArray *modelsToProcess = [modelsStillToRename mutableCopy];
@@ -142,10 +142,10 @@
     STMTask *task = [tasksEnumerator nextObject];
     STMTask *model = [modelsEnumerator nextObject];
 
-    NSInteger numberOfProcessedItems = 0;
+    NSUInteger numberOfProcessedItems = 0;
 
     while ([modelsToProcess count] > 0){
-        DDLogTrace(@"rename %d tasks", [modelsStillToRename count]);
+        DDLogTrace(@"rename %td tasks", [modelsStillToRename count]);
 
         while(task){
             DDLogTrace(@"enumerate rename %@ %@", task.uid, model.uid);
@@ -180,7 +180,7 @@
         }
     }
 
-    DDLogInfo(@"Tasks renamed [%d/%d]", numberOfProcessedItems, [models count]);
+    DDLogInfo(@"Tasks renamed [%td/%td]", numberOfProcessedItems, [models count]);
 }
 
 - (void)removeTasksModels:(NSArray *)models fromSortedByIndexArray:(NSMutableArray *)result usingSortedByUIDTasks:(NSArray *)tasks {
@@ -195,10 +195,10 @@
     STMTask *task = [tasksEnumerator nextObject];
     STMTask *model = [modelsEnumerator nextObject];
 
-    NSInteger numberOfProcessedItems = 0;
+    NSUInteger numberOfProcessedItems = 0;
 
     while ([modelsToProcess count] > 0){
-        DDLogTrace(@"rename %d tasks", [modelsStillToRemove count]);
+        DDLogTrace(@"rename %td tasks", [modelsStillToRemove count]);
 
         while(task){
             DDLogTrace(@"enumerate remove %@ %@", task.uid, model.uid);
@@ -235,10 +235,10 @@
         }
     }
 
-    DDLogInfo(@"Tasks removed [%d/%d]", numberOfProcessedItems, [models count]);
+    DDLogInfo(@"Tasks removed [%td/%td]", numberOfProcessedItems, [models count]);
 }
 
-- (void) addTasksModels:(NSArray *)models toSortedByIndexArray:(NSMutableArray *)result usingSortedByUIDTasks:(NSMutableArray *)tasks{
+- (void) addTasksModels:(NSArray *)models toSortedByIndexArray:(NSMutableArray *)result{
     
     for(STMTaskModel *taskModel in models){
         
@@ -258,8 +258,8 @@
     STMTask * task = [tasksEnumerator nextObject];
     NSUInteger index = 1;
     while (task){
-        DDLogTrace(@"enumerate gives order again %@ %d", task.uid, index);
-        task.index = [NSNumber numberWithUnsignedInt:index];
+        DDLogTrace(@"enumerate gives order again %@ %td", task.uid, index);
+        task.index = [NSNumber numberWithUnsignedInteger:index];
 
         task = [tasksEnumerator nextObject];
         index++;

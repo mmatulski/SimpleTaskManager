@@ -16,17 +16,13 @@
 @property(nonatomic) BOOL syncing;
 @property(nonatomic) BOOL dragging;
 @property(nonatomic) BOOL taskSelected;
-@property(nonatomic) BOOL disableDataSourceUntilDraggingFinished;
 
 - (instancetype)initWithMainTableController:(MainTableController *)mainTableController;
 
-- (BOOL)isDraggingAvailabelNow;
+- (BOOL)isDraggingAvailableNow;
 
-- (BOOL)isSelectionAvailabelNow;
-
-- (BOOL)isNewTaskAvailabelNow;
+- (BOOL)isSelectionAvailableNow;
 
 - (void)showInfoThatActionsAreBlockedWhenSyncing;
 
-- (void)refreshSelectedItemBecauseSyncHasBeenPerformed;
 @end

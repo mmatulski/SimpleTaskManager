@@ -23,7 +23,7 @@
             failureBlock:(void (^)(NSError *))failureBlock;
 
 - (void)reorderTaskWithId:(NSString *)uid
-                  toIndex:(NSInteger)index
+                  toIndex:(NSUInteger)index
          successFullBlock:(void (^)())successFullBlock
              failureBlock:(void (^)(NSError *))failureBlock;
 

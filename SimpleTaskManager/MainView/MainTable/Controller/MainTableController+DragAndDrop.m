@@ -69,7 +69,7 @@
 #pragma mark - Proper Actions
 
 - (void)userHasPressedLongOnIndexPath:(NSIndexPath *)indexPath andWindowPoint:(CGPoint)pointRelatedToWindow {
-    if(![self.stateController isDraggingAvailabelNow]){
+    if(![self.stateController isDraggingAvailableNow]){
         [self.stateController showInfoThatActionsAreBlockedWhenSyncing];
         return;
     }
@@ -124,7 +124,7 @@
 
     BOOL noCellFound = false;
     NSIndexPath *suggestedIndexPath = [self getPath:point globalPoint:globalPoint noCell:&noCellFound];
-    DDLogTrace(@"suggestedIndexPath %d", [suggestedIndexPath row]);
+    DDLogTrace(@"suggestedIndexPath %zd", [suggestedIndexPath row]);
    if(self.temporaryTargetForDraggedIndexPath){
         if(suggestedIndexPath){
             if(![self.temporaryTargetForDraggedIndexPath isEqual:suggestedIndexPath]){
@@ -179,11 +179,11 @@
 
         }
 
-        int row = [indexPathUnderTheFinger row];
+        NSInteger row = [indexPathUnderTheFinger row];
 
         if(show){
 
-            NSUInteger finalRow = showOnBottom ? row + 1 : row;
+            NSInteger finalRow = showOnBottom ? row + 1 : row;
             if(finalRow >= [self.dataSource numberOfAllTasks]){
                 return nil;
             }

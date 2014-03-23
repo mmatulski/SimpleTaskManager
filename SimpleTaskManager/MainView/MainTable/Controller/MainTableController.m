@@ -102,7 +102,7 @@
         [tableView deselectRowAtIndexPath:indexPath animated:true];
         self.selectedItemModel = nil;
     } else {
-        if(![self.stateController isSelectionAvailabelNow]){
+        if(![self.stateController isSelectionAvailableNow]){
             [tableView deselectRowAtIndexPath:indexPath animated:false];
             [self.stateController showInfoThatActionsAreBlockedWhenSyncing];
             return;

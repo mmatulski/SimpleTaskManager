@@ -10,8 +10,8 @@
 @interface ReorderTaskOperation : SingleOperation
 
 @property(nonatomic, copy) NSString *taskUid;
-@property(nonatomic) int targetIndex;
+@property(nonatomic) NSUInteger targetIndex;
 
-- (instancetype)initWithTaskUid:(NSString *)taskUid targetIndex:(int)targetIndex;
+- (instancetype)initWithTaskUid:(NSString *)taskUid targetIndex:(NSUInteger)targetIndex;
 
 @end

@@ -18,7 +18,7 @@
 
 - (STMTask *)renameTaskWithId:(NSString *)uid withName:(NSString *)theNewName error:(NSError **)error;
 
-- (STMTask *)reorderTaskWithId:(NSString *)uid toIndex:(NSInteger)index1 error:(NSError **)error;
+- (STMTask *)reorderTaskWithId:(NSString *)uid toIndex:(NSUInteger)index1 error:(NSError **)error;
 
 - (STMTask *)findTaskWithId:(NSString *)uid error:(NSError **)error;
 
@@ -28,6 +28,6 @@
 
 - (NSArray *)fetchAllTasks:(NSError **)error;
 
-- (BOOL)reorderTask:(STMTask *)task withIndex:(NSInteger)index error:(NSError **)error;
+- (BOOL)reorderTask:(STMTask *)task withIndex:(NSUInteger)index error:(NSError **)error;
 
 @end

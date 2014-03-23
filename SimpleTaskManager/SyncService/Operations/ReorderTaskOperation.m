@@ -13,7 +13,7 @@
 
 }
 
-- (instancetype)initWithTaskUid:(NSString *)taskUid targetIndex:(int)targetIndex {
+- (instancetype)initWithTaskUid:(NSString *)taskUid targetIndex:(NSUInteger)targetIndex {
     self = [super init];
     if (self) {
         self.taskUid = taskUid;
@@ -24,7 +24,7 @@
 }
 
 - (void)main {
-    DDLogInfo(@"ReorderTaskOperation BEGIN %@ %d", self.taskUid, self.targetIndex);
+    DDLogInfo(@"ReorderTaskOperation BEGIN %@ %td", self.taskUid, self.targetIndex);
 
     DBController *dbController = [DBAccess createBackgroundWorker];
     [dbController reorderTaskWithId:self.taskUid toIndex:self.targetIndex successFullBlock:^() {

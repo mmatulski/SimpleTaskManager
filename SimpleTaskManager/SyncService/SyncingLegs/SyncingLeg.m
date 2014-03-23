@@ -46,8 +46,8 @@
                             failureBlock:failureBlock];
 }
 
-- (void)reorderTaskWithId:(NSString *)uid
-                  toIndex:(int)targetIndex
+- (void) reorderTaskWithId:(NSString *)uid
+                  toIndex:(NSUInteger)targetIndex
          successFullBlock:(void (^)(id))successFullBlock
              failureBlock:(void (^)(NSError *))failureBlock {
     ReorderTaskOperation *operation = [[ReorderTaskOperation alloc]

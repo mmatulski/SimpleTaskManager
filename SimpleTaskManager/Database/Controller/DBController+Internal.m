@@ -64,7 +64,7 @@
     return task;
 }
 
-- (STMTask *)reorderTaskWithId:(NSString *)uid toIndex:(NSInteger)index error:(NSError **) error {
+- (STMTask *)reorderTaskWithId:(NSString *)uid toIndex:(NSUInteger)index error:(NSError **) error {
     NSError *err = nil;
     STMTask *task = [self findTaskWithId:uid error:&err];
     if (!task) {
@@ -173,26 +173,26 @@
 
 - (void)changeIndexBy:(NSInteger)change inTask:(STMTask *)task {
     NSNumber *indexNumber =  task.index;
-    NSInteger index = [indexNumber integerValue];
-    NSInteger theNewIndex = index + change;
+    NSUInteger index = [indexNumber unsignedIntegerValue];
+    NSUInteger theNewIndex = index + change;
 
     if(theNewIndex < 1){
         //TODO
         //it is only index so maybe there is no need to do anything
         //one solution can be setting flag . i.e. needsOrdersRework which will cause estimating orders again
-        DDLogWarn(@"changeIndexBy error: the new index for task %@ is not valid %d less than 0", task.uid, theNewIndex);
+        DDLogWarn(@"changeIndexBy error: the new index for task %@ is not valid %td less than 0", task.uid, theNewIndex);
         theNewIndex = 1;
     } else if(theNewIndex > self.numberOfAllTasks){
         //TODO
         //it is only index so maybe there is no need to do anything
         //one solution can be setting flag . i.e. needsOrdersRework which will cause estimating orders again
-        DDLogWarn(@"changeIndexBy error: the new index for task %@ is not valid %d greater than %d", task.uid, theNewIndex, self.numberOfAllTasks);
+        DDLogWarn(@"changeIndexBy error: the new index for task %@ is not valid %td greater than %td", task.uid, theNewIndex, self.numberOfAllTasks);
         theNewIndex = self.numberOfAllTasks;
     }
 
-    NSNumber *changedIndexNumber = [NSNumber numberWithInteger:theNewIndex];
+    NSNumber *changedIndexNumber = [NSNumber numberWithUnsignedInteger:theNewIndex];
 
-    DDLogTrace(@"----- change [%@] %d  from %d to %d", task.name ,change, index, theNewIndex);
+    DDLogTrace(@"----- change [%@] %zd  from %td to %td", task.name ,change, index, theNewIndex);
 
     task.index = changedIndexNumber;
 }
@@ -207,7 +207,7 @@
     NSError *err = nil;
     NSArray *fetchResults = [self.context executeFetchRequest:request error:&err];
     if (fetchResults == nil) {
-        DDLogError(@"DBController err when findAllTasksWithIndexHigherThan %d: %@", relatedOrder, [err localizedDescription]);
+        DDLogError(@"DBController err when findAllTasksWithIndexHigherThan %td: %@", relatedOrder, [err localizedDescription]);
         forwardError(err, error);
         return nil;
     }
@@ -215,19 +215,19 @@
     return fetchResults;
 }
 
-- (NSArray *) findAllTasksWithIndexHigherThan:(NSInteger)higherThan andLowerThan:(NSInteger) lowerThan error:(NSError **)error {
+- (NSArray *) findAllTasksWithIndexHigherThan:(NSUInteger)higherThan andLowerThan:(NSUInteger) lowerThan error:(NSError **)error {
 
     NSFetchRequest *request = [self prepareTaskFetchRequest];
 
-    NSString *predicateString = [NSString stringWithFormat:@"(index > %d) AND (index < %d)", higherThan, lowerThan];
-    DDLogTrace(@"findAllTasksWithIndexHigherThan higherThan %d lowerThan %d [%@]", higherThan, lowerThan, predicateString);
+    NSString *predicateString = [NSString stringWithFormat:@"(index > %td) AND (index < %td)", higherThan, lowerThan];
+    DDLogTrace(@"findAllTasksWithIndexHigherThan higherThan %td lowerThan %td [%@]", higherThan, lowerThan, predicateString);
     NSPredicate *predicate = [NSPredicate predicateWithFormat:predicateString];
     [request setPredicate:predicate];
 
     NSError *err = nil;
     NSArray *fetchResults = [self.context executeFetchRequest:request error:&err];
     if (fetchResults == nil) {
-        DDLogError(@"DBController err when findAllTasksWithIndexHigherThan %d andLowerThan %d: %@", higherThan, lowerThan, [err localizedDescription]);
+        DDLogError(@"DBController err when findAllTasksWithIndexHigherThan %td andLowerThan %td: %@", higherThan, lowerThan, [err localizedDescription]);
         forwardError(err, error);
         return nil;
     }
@@ -249,13 +249,13 @@
     return fetchResults;
 }
 
-- (BOOL)reorderTask:(STMTask *)task withIndex:(NSInteger)index error:(NSError **)error {
+- (BOOL)reorderTask:(STMTask *)task withIndex:(NSUInteger)index error:(NSError **)error {
 
-    NSInteger currentIndex = [[task index] integerValue];
-    NSInteger change = index - currentIndex;
+    NSUInteger currentIndex = [[task index] unsignedIntegerValue];
+    NSInteger change = (NSInteger) index - (NSInteger) currentIndex;
 
-    NSInteger lowerOne;
-    NSInteger higherOne;
+    NSUInteger lowerOne;
+    NSUInteger higherOne;
     NSInteger diff;
     if(change > 0){
          lowerOne = currentIndex + 1;
@@ -267,17 +267,17 @@
         diff = 1;
     }
 
-    DDLogInfo(@"reorderTask %d -> %d", currentIndex, index);
+    DDLogInfo(@"reorderTask %td -> %td", currentIndex, index);
 
 
     NSError *err = nil;
     if(![self changeIndexBy:diff inAllTasksWithIndexHigherThan:(lowerOne - 1) butLowerThan:(higherOne+1) error:&err]){
-        DDLogError(@"DBController err when reorderTask %d %d: %@", currentIndex, index, [err localizedDescription]);
+        DDLogError(@"DBController err when reorderTask %td %td: %@", currentIndex, index, [err localizedDescription]);
         forwardError(err, error);
         return false;
     }
 
-    DDLogTrace(@"---- FINALLY %d -> %d", currentIndex, index);
+    DDLogTrace(@"---- FINALLY %td -> %td", currentIndex, index);
     task.index = [NSNumber numberWithInteger:index];
 
     return true;

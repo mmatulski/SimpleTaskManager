@@ -105,14 +105,14 @@
 }
 
 - (void)reorderTaskWithId:(NSString *)uid
-                  toIndex:(NSInteger)index
+                  toIndex:(NSUInteger)index
          successFullBlock:(void (^)())successBlock
              failureBlock:(void (^)(NSError *))failureBlock {
 
     [self.context performBlock:^{
         [self beginUndo];
 
-        DDLogInfo(@"Reorder task with uid %@ to index %d", uid, index);
+        DDLogInfo(@"Reorder task with uid %@ to index %td", uid, index);
 
         NSError *err = nil;
         STMTask *task = [self reorderTaskWithId:uid toIndex:index error:&err];
@@ -153,7 +153,7 @@
 
         NSError *err = nil;
 
-        DDLogInfo(@"syncAddedTasks (Add %d, Remove %d, Rename %d, Reorder %d",
+        DDLogInfo(@"syncAddedTasks (Add %td, Remove %td, Rename %td, Reorder %td",
         [addedTasks count],
         [removedTasks count],
         [renamedTasks count],

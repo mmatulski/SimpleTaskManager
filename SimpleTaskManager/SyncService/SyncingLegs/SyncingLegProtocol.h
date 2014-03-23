@@ -16,7 +16,7 @@
                      failureBlock:(void (^)(NSError *))failureBlock;
 
 - (void)reorderTaskWithId:(NSString *)uid
-                  toIndex:(int)targetIndex
+                  toIndex:(NSUInteger)targetIndex
          successFullBlock:(void (^)(id))successFullBlock
              failureBlock:(void (^)(NSError *))failureBlock;
 

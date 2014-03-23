@@ -9,6 +9,8 @@
 #import "RemoteLeg.h"
 #import "STMTaskModel.h"
 #import "DBController+BasicActions.h"
+#import "STMTaskModel+JSONSerializer.h"
+#import "NSError+Log.h"
 
 @implementation VirtualRemoteActionsHandler {
 
@@ -17,7 +19,7 @@
 - (id)init {
     self = [super init];
     if (self) {
-        _timerInterval = 15.0;
+        _timerInterval = 10.0;
         _changedItemsFactor = 0.25;
         _increaseFactor = 1.0;
     }
@@ -29,12 +31,12 @@
 - (void)connect {
     [super connect];
 
-    //[self startTrafficGenerator];
+    [self startTrafficGenerator];
 }
 
 - (void)startTrafficGenerator {
-    //self.timer = [NSTimer scheduledTimerWithTimeInterval:self.timerInterval target:self selector:@selector(generateTraffic) userInfo:nil repeats:YES];
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(generateTrafficM) userInfo:nil repeats:NO];
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:self.timerInterval target:self selector:@selector(generateTraffic) userInfo:nil repeats:YES];
+    //self.timer = [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(generateTrafficM) userInfo:nil repeats:NO];
 }
 
 - (void)generateTrafficM {
@@ -107,7 +109,11 @@
     BlockWeakSelf selfWeak = self;
     DBController* controller = [DBAccess createBackgroundWorker];
     [controller fetchAllTasksAsModels:^(NSArray *tasks) {
-        [selfWeak generateActionsForTasks:tasks];
+
+        NSData *previousData = self.lastTimeChangedItemsJSON;
+        self.lastTimeChangedItemsJSON = [self serializedTaskModels:tasks];
+        //[selfWeak generateActionsForTasks:tasks];
+        [selfWeak generateActionsForSerializedTasks:previousData];
     } failureBlock:^(NSError *error) {
         DDLogError(@"generateTraffic Problem with fetching all tasks %@", [error localizedDescription]);
     }];
@@ -116,6 +122,8 @@
 - (void)generateActionsForTasks:(NSArray *)tasks {
 
     DDLogInfo(@"TRAFFIC generateActionsForTasks %d", [tasks count]);
+
+
 
     static NSUInteger counter = 0;
     static NSUInteger renameCounter = 0;
@@ -221,14 +229,109 @@
                   } failureBlock:^(NSError *error) {
         DDLogInfo(@"generateActionsForTasks FAILURE %@", [error localizedDescription]);
     }];
+}
 
-//    for(STMTask *task in tasks){
-//
-//    }
+- (void)generateActionsForSerializedTasks:(NSData *)data {
+    if(!data){
+        DDLogWarn(@"generateActionsForSerializedTasks no data to process");
+        return;
+    }
 
-    //self.remoteLeg
+    NSArray *taskModels = [self deserializeTasksFromJsonData:data];
+    if(!taskModels){
+        DDLogWarn(@"generateActionsForSerializedTasks data was not deserialized");
 
+    }
 
+    [self generateActionsForTasks:taskModels];
+}
+
+- (NSArray *)deserializeTasksFromJsonData:(NSData *)data {
+    
+    if(!data){
+        DDLogError(@"deserializeTasksFromData data are nil");
+        return nil;
+    }
+    
+    NSString *stringWithData = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    DDLogInfo(@"deserializeTasksFromData string %@", stringWithData);
+
+    NSError *err;
+    NSArray *deserializedArrayOfSerializedTaskModels = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&err];
+    if (!deserializedArrayOfSerializedTaskModels) {
+        return nil;
+    }
+
+    NSArray *arrayOfTaskModels = [self deserializeTaskModelsFromArray:deserializedArrayOfSerializedTaskModels];
+    if (!arrayOfTaskModels) {
+        DDLogError(@"deserializeTasksFromData deserializedArrayOfSerializedTaskModels can not be deserialized");
+    }
+
+    return arrayOfTaskModels;
+}
+
+- (NSArray *)deserializeTaskModelsFromArray:(NSArray *)arrayOfSerializedTaskModels {
+    
+    if(!arrayOfSerializedTaskModels){
+        DDLogWarn(@"deserializeTaskModelsFromArray array is empty");
+        return nil;
+    }
+    
+    NSMutableArray *result = [[NSMutableArray alloc] init];
+
+    for (NSDictionary *taskModelDictionary in arrayOfSerializedTaskModels) {
+        NSError *err = nil;
+        STMTaskModel *taskModel = [[STMTaskModel alloc] initWithDictionary:taskModelDictionary];
+        if (taskModel) {
+            [result addObject:taskModel];
+        }
+    }
+
+    return [NSArray arrayWithArray:result];
+}
+
+- (NSArray *)arrayOfSerializedTasksModels:(NSArray *)tasksModels {
+    NSSortDescriptor *sortByUid = [[NSSortDescriptor alloc]
+            initWithKey:@"uid" ascending:NO];
+
+    NSArray *tasksSortedByUid = [tasksModels sortedArrayUsingDescriptors:@[sortByUid]];
+
+    NSMutableArray *result = [[NSMutableArray alloc] init];
+
+    NSEnumerator *sortedTasksEnumerator = [tasksSortedByUid objectEnumerator];
+    STMTaskModel *model = [sortedTasksEnumerator nextObject];
+    while (model){
+        //NSData *serializedModel = [model serializeToJSON];
+        NSDictionary *serializedModel = [model serializeToDctionary];
+        if(serializedModel){
+            [result addObject:serializedModel];
+        }
+
+        model = [sortedTasksEnumerator nextObject];
+    }
+
+    return [NSArray arrayWithArray:result];
+}
+
+-(NSData *) serializedTaskModels:(NSArray *)tasksModels{
+    NSArray *arrayWithSerializedModels = [self arrayOfSerializedTasksModels:tasksModels];
+    if(!arrayWithSerializedModels){
+        DDLogError(@"serializedTaskModels array is empty");
+        return nil;
+    }
+    
+    if(![NSJSONSerialization isValidJSONObject:arrayWithSerializedModels]){
+        DDLogError(@"serializedTaskModels array is not valid");
+    }
+
+    NSError *err = nil;
+    NSData * result = [NSJSONSerialization dataWithJSONObject:arrayWithSerializedModels options:0 error:&err];
+    if(!result){
+        DDLogError(@"serializedTaskModels serialization failed");
+        [err log];
+    }
+
+    return result;
 }
 
 - (void)setAnotherOrderNrForTask:(STMTaskModel *)taskModel fromPossible:(NSUInteger)possible {

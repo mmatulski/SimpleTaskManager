@@ -78,6 +78,7 @@
 		46AE2E414CC8F193EA7B4707 /* MainTableController+DragAndDrop.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE23C9F40E6BE7FB4E26E8 /* MainTableController+DragAndDrop.m */; };
 		46AE2E9CB59C9D0F60522C54 /* DBController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE2B4F013E18A60B809BE6 /* DBController.m */; };
 		46AE2ECC06D616F491387B63 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE22D87A98C0287A2AFEFC /* MainViewController.m */; };
+		46AE2EDFE5374BB27A6A2CD4 /* STMTaskModel+JSONSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE2BF1DF56BE1F935C1B3E /* STMTaskModel+JSONSerializer.m */; };
 		46AE2FAC36325727D21EC813 /* DBConsts.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE234745D2603E3E1FB1AB /* DBConsts.m */; };
 		46AE2FDA06986FB6E7DDC671 /* AppMacros.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE28478C828CE118686C86 /* AppMacros.m */; };
 		46AE2FFC427BB9D20420498C /* TheNewTaskDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE2E01AF49CCEE68BACF63 /* TheNewTaskDialog.m */; };
@@ -218,6 +219,7 @@
 		46AE2BD6C918267E0C06F612 /* VirtualRemoteActionsHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VirtualRemoteActionsHandler.m; sourceTree = "<group>"; };
 		46AE2BE3B00AC3763189619E /* PresentationOverlayView+TaskOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PresentationOverlayView+TaskOptions.h"; sourceTree = "<group>"; };
 		46AE2BE7D371E23F667CDF8B /* UIView+ScreenshootExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+ScreenshootExtension.m"; sourceTree = "<group>"; };
+		46AE2BF1DF56BE1F935C1B3E /* STMTaskModel+JSONSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "STMTaskModel+JSONSerializer.m"; sourceTree = "<group>"; };
 		46AE2C344FA95CD5DD9843F6 /* MainTableConsts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainTableConsts.m; sourceTree = "<group>"; };
 		46AE2C40335F7FCFD8B51A54 /* ConfirmationButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfirmationButton.m; sourceTree = "<group>"; };
 		46AE2C5102BC649B877682E5 /* DDFileLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDFileLogger.h; sourceTree = "<group>"; };
@@ -251,6 +253,7 @@
 		46AE2E6519D021D83F36EE52 /* SyncingLegProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyncingLegProtocol.h; sourceTree = "<group>"; };
 		46AE2E7F9F4726B9CC4DD8B2 /* MainTableController+SelectedItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MainTableController+SelectedItem.m"; sourceTree = "<group>"; };
 		46AE2EAA806AAC6671007634 /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
+		46AE2EB4687BE16ABD5768FB /* STMTaskModel+JSONSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "STMTaskModel+JSONSerializer.h"; sourceTree = "<group>"; };
 		46AE2EC25700C25DA2D79904 /* PresentationOverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PresentationOverlayView.m; sourceTree = "<group>"; };
 		46AE2EF0D288C7BF6BC90F48 /* TaskTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaskTableViewCell.m; sourceTree = "<group>"; };
 		46AE2F082ED3165301B7D05A /* DBConsts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBConsts.h; sourceTree = "<group>"; };
@@ -427,6 +430,8 @@
 				46AE2E142BD4516E515AB33B /* STMTaskModel.h */,
 				46AE2F787F03E57EFE1840F8 /* STMTaskModel.m */,
 				46AE24FEE7E06BB54039C52F /* STMTask.m */,
+				46AE2BF1DF56BE1F935C1B3E /* STMTaskModel+JSONSerializer.m */,
+				46AE2EB4687BE16ABD5768FB /* STMTaskModel+JSONSerializer.h */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -1025,6 +1030,7 @@
 				46AE227EE89832BC06100B60 /* CancelButton.m in Sources */,
 				46AE225272A5E606A108D9ED /* ConfirmationButton.m in Sources */,
 				46AE2546ED20173CEF7842B4 /* PresentationOverlayController.m in Sources */,
+				46AE2EDFE5374BB27A6A2CD4 /* STMTaskModel+JSONSerializer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -16,5 +16,9 @@
 
 @property(nonatomic, strong) NSTimer *timer;
 
+@property(nonatomic, strong) NSData *lastTimeChangedItemsJSON;
+
 - (void)generateActionsForTasks:(NSArray *)array;
+
+- (void)generateActionsForSerializedTasks:(NSData *)data;
 @end

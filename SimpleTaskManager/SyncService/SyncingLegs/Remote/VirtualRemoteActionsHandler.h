@@ -20,5 +20,5 @@
 
 - (void)generateActionsForTasks:(NSArray *)array;
 
-- (void)generateActionsForSerializedTasks:(NSData *)data;
+- (void)generateActionsForSerializedTasksUsedPreviously:(NSData *)data;
 @end

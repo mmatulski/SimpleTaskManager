@@ -7,7 +7,6 @@
 #import "DBAccess.h"
 #import "DBController.h"
 #import "RemoteLeg.h"
-#import "STMTaskModel.h"
 #import "DBController+BasicActions.h"
 #import "STMTaskModel+JSONSerializer.h"
 #import "NSError+Log.h"
@@ -36,10 +35,10 @@
 
 - (void)startTrafficGenerator {
     self.timer = [NSTimer scheduledTimerWithTimeInterval:self.timerInterval target:self selector:@selector(generateTraffic) userInfo:nil repeats:YES];
-    //self.timer = [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(generateTrafficM) userInfo:nil repeats:NO];
+    //self.timer = [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(addCommonTasks) userInfo:nil repeats:NO];
 }
 
-- (void)generateTrafficM {
+- (void)addCommonTasks {
     NSMutableArray *tasksToAdd = [[NSMutableArray alloc] init];
 
     //Adding
@@ -112,8 +111,8 @@
 
         NSData *previousData = self.lastTimeChangedItemsJSON;
         self.lastTimeChangedItemsJSON = [self serializedTaskModels:tasks];
-        //[selfWeak generateActionsForTasks:tasks];
-        [selfWeak generateActionsForSerializedTasks:previousData];
+        [selfWeak generateActionsForTasks:tasks];
+        [selfWeak generateActionsForSerializedTasksUsedPreviously:previousData];
     } failureBlock:^(NSError *error) {
         DDLogError(@"generateTraffic Problem with fetching all tasks %@", [error localizedDescription]);
     }];
@@ -231,7 +230,7 @@
     }];
 }
 
-- (void)generateActionsForSerializedTasks:(NSData *)data {
+- (void)generateActionsForSerializedTasksUsedPreviously:(NSData *)data {
     if(!data){
         DDLogWarn(@"generateActionsForSerializedTasks no data to process");
         return;
@@ -280,7 +279,6 @@
     NSMutableArray *result = [[NSMutableArray alloc] init];
 
     for (NSDictionary *taskModelDictionary in arrayOfSerializedTaskModels) {
-        NSError *err = nil;
         STMTaskModel *taskModel = [[STMTaskModel alloc] initWithDictionary:taskModelDictionary];
         if (taskModel) {
             [result addObject:taskModel];

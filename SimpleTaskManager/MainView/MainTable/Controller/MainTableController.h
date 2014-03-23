@@ -37,6 +37,8 @@
 
 - (instancetype)initWithTableView:(UITableView *)tableView;
 
+- (void)setSelectedItemModel:(STMTaskModel *)selectedItemModel animated:(BOOL)animated;
+
 - (void)handleMemoryWarning;
 
 - (void)deselectTaskModel:(STMTaskModel *)taskModel;

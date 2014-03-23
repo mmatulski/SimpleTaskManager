@@ -51,17 +51,17 @@
     self.dragAndDropHandler = [[DragAndDropHandler alloc] initWithDraggingSpace:[self.delegate viewForTemporaryViewsPresentation]];
 }
 
-- (void)setSelectedItemModel:(STMTaskModel *)selectedItemModel {
+- (void)setSelectedItemModel:(STMTaskModel *)selectedItemModel animated:(BOOL) animated{
 
     if(![_selectedItemModel.objectId isEqual:selectedItemModel.objectId]){
         if(selectedItemModel){
             NSIndexPath *indexPath = [self.dataSource indexPathForTaskModel:selectedItemModel];
-            [self showOptionsForItemAtIndexPath:indexPath taskModel:selectedItemModel];
+            [self showOptionsForItemAtIndexPath:indexPath taskModel:selectedItemModel animated:animated];
         }
 
         if(_selectedItemModel && !selectedItemModel){
             NSIndexPath *selectedIndexPath = [self.dataSource indexPathForTaskModel:_selectedItemModel];
-            [self hideOptionsForItemAtIndexPath:selectedIndexPath taskModel:_selectedItemModel];
+            [self hideOptionsForItemAtIndexPath:selectedIndexPath taskModel:_selectedItemModel];//TODO animated
         }
 
         self.scrollOffsetWhenItemWasSelected = self.tableView.contentOffset.y;
@@ -70,6 +70,10 @@
 
         self.stateController.taskSelected = _selectedItemModel != nil;
     }
+}
+
+- (void)setSelectedItemModel:(STMTaskModel *)selectedItemModel {
+    [self setSelectedItemModel:selectedItemModel animated:true];//TODO default should be false
 }
 
 - (void)handleMemoryWarning {
@@ -125,7 +129,7 @@
         if(selectedIndexPath){
             [self.tableView selectRowAtIndexPath:selectedIndexPath animated:false scrollPosition:UITableViewScrollPositionMiddle];
             self.scrollOffsetWhenItemWasSelected = self.tableView.contentOffset.y;
-            [self showOptionsForItemAtIndexPath:selectedIndexPath taskModel:self.selectedItemModel];
+            [self showOptionsForItemAtIndexPath:selectedIndexPath taskModel:self.selectedItemModel animated:false];
         } else {
             [self cancelSelection];
             [AppMessages showError:@"Task has been closed by remote side"];

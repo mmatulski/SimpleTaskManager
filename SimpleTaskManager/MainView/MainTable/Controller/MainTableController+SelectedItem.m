@@ -11,11 +11,12 @@
 
 @implementation MainTableController (SelectedItem)
 
-- (void)showOptionsForItemAtIndexPath:(NSIndexPath *)indexPath taskModel:(STMTaskModel *) taskModel{
+- (void)showOptionsForItemAtIndexPath:(NSIndexPath *)indexPath taskModel:(STMTaskModel *)taskModel animated:(BOOL)animated {
     UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
     if(cell){
-        [self.delegate showOptionsForTaskModel:taskModel representedByCell:cell];
+        [self.delegate showOptionsForTaskModel:taskModel representedByCell:cell animated:animated ];
     } else {
+        DDLogWarn(@"showOptionsForItemAtIndexPath no cell found");
         self.selectedItemModel = nil;
     }
 }

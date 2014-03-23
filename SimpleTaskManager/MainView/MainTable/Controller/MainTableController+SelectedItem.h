@@ -10,7 +10,7 @@
 
 @interface MainTableController (SelectedItem)
 
-- (void)showOptionsForItemAtIndexPath:(NSIndexPath *)indexPath taskModel:(STMTaskModel *)taskModel;
+- (void)showOptionsForItemAtIndexPath:(NSIndexPath *)indexPath taskModel:(STMTaskModel *)taskModel animated:(BOOL)animated;
 
 - (void)hideOptionsForItemAtIndexPath:(NSIndexPath *)indexPath taskModel:(STMTaskModel *)taskModel;
 

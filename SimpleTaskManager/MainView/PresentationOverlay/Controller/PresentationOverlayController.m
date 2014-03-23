@@ -30,9 +30,9 @@
 }
 
 
-- (void)showOptionsForTaskModel:(STMTaskModel *)taskModel representedByCell:(UITableViewCell *)cell {
+- (void)showOptionsForTaskModel:(STMTaskModel *)taskModel representedByCell:(UITableViewCell *)cell animated:(BOOL)animated {
     self.currentTaskWithOptionsShown = taskModel;
-    [self.helperView showTaskOptionsViewForTaskModel:taskModel representedByCell:cell];
+    [self.helperView showTaskOptionsViewForTaskModel:taskModel representedByCell:cell animated:animated ];
     self.helperView.taskOptionsView.delegate = self;
 }
 

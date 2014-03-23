@@ -84,8 +84,10 @@
     return self.mainView.overlayView;
 }
 
-- (void)showOptionsForTaskModel:(STMTaskModel *)taskModel representedByCell:(UITableViewCell *)cell {
-    [self.dialogsPresentationController showOptionsForTaskModel:taskModel representedByCell:cell];
+- (void)showOptionsForTaskModel:(STMTaskModel *)taskModel
+              representedByCell:(UITableViewCell *)cell
+                       animated:(BOOL)animated {
+    [self.dialogsPresentationController showOptionsForTaskModel:taskModel representedByCell:cell animated:animated ];
 }
 
 - (void)closeTaskOptionsForTaskModel:(STMTaskModel *)taskModel {

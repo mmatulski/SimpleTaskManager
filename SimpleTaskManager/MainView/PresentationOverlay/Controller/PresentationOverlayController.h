@@ -20,7 +20,7 @@
 
 - (instancetype)initWithView:(PresentationOverlayView *)view;
 
-- (void)showOptionsForTaskModel:(STMTaskModel *)taskModel representedByCell:(UITableViewCell *)cell;
+- (void)showOptionsForTaskModel:(STMTaskModel *)taskModel representedByCell:(UITableViewCell *)cell animated:(BOOL)animated;
 - (void)closeTaskOptionsForTaskModel:(STMTaskModel *)taskModel;
 - (void)updateTaskOptionsForTaskModel:(STMTaskModel *)taskModel becauseItWasScrolledBy:(CGFloat)offsetChange;
 

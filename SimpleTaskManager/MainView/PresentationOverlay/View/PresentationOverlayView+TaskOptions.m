@@ -10,7 +10,7 @@
 
 @implementation PresentationOverlayView (TaskOptions)
 
-- (void)showTaskOptionsViewForTaskModel:(STMTaskModel *)taskModel representedByCell:(UITableViewCell *)cell {
+- (void)showTaskOptionsViewForTaskModel:(STMTaskModel *)taskModel representedByCell:(UITableViewCell *)cell animated:(BOOL)animated {
     BOOL alreadyShowing = false;
     if(!self.taskOptionsView){
         [self prepareTaskOptionsView];
@@ -32,22 +32,28 @@
     _taskOptionsViewFirstTopY = cellBottomY;
 
     if(alreadyShowing){
-        [self animateMovingViewToTop:cellBottomY];
+        [self moveOptionsViewToTopPosition:cellBottomY animated:animated ];
     } else {
         [self moveTaskOptionsViewToTop:cellBottomY];
-        [self animateShowingOptionsView];
+        [self showOptionsViewAnimated:animated ];
     }
 }
 
-- (void)animateMovingViewToTop:(CGFloat)y {
-    _taskOptionsHeightLayoutConstraint.constant = 60.0;
-    [self layoutSubviews];
-    [UIView animateWithDuration:0.2 animations:^{
+- (void)moveOptionsViewToTopPosition:(CGFloat)y animated:(BOOL)animated {
+    if(animated){
+        _taskOptionsHeightLayoutConstraint.constant = 60.0;
+        [self layoutSubviews];
+        [UIView animateWithDuration:0.2 animations:^{
+            [_taskOptionsTopLayoutConstraint setConstant:y];
+            [self layoutSubviews];
+        } completion:^(BOOL finished) {
+
+        }];
+    } else {
         [_taskOptionsTopLayoutConstraint setConstant:y];
         [self layoutSubviews];
-    } completion:^(BOOL finished) {
+    }
 
-    }];
 }
 
 - (void)closeTaskOptions {
@@ -70,15 +76,20 @@
     _taskOptionsLayoutConstraints = nil;
 }
 
-- (void)animateShowingOptionsView {
-    [self layoutIfNeeded];
+- (void)showOptionsViewAnimated:(BOOL)animated {
+    if(animated){
+        [self layoutIfNeeded];
 
-    [UIView animateWithDuration:0.4 delay:0 options:UIViewAnimationOptionLayoutSubviews animations:^{
+        [UIView animateWithDuration:0.4 delay:0 options:UIViewAnimationOptionLayoutSubviews animations:^{
+            [_taskOptionsHeightLayoutConstraint setConstant:60.0];
+            [self layoutIfNeeded];
+        } completion:^(BOOL finished) {
+
+        }];
+    } else {
         [_taskOptionsHeightLayoutConstraint setConstant:60.0];
         [self layoutIfNeeded];
-    } completion:^(BOOL finished) {
-
-    }];
+    }
 }
 
 - (CGFloat)estimateTopPositionOfOptionsViewForCell:(UITableViewCell *)cell {

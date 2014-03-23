@@ -11,7 +11,7 @@
 
 @interface PresentationOverlayView (TaskOptions)
 
-- (void)showTaskOptionsViewForTaskModel:(STMTaskModel *)taskModel representedByCell:(UITableViewCell *)cell animated:(BOOL)animated;
+- (void)showTaskOptionsViewForCell:(UITableViewCell *)cell animated:(BOOL)animated;
 
 - (void)closeTaskOptions;
 

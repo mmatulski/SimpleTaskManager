@@ -262,8 +262,8 @@
         BlockWeakSelf selfWeak = self;
         [[SyncGuardService singleUser] reorderTaskWithId:taskModel.uid toIndex:theNewOrder successFullBlock:^(id obj) {
             runOnMainThread(^{
-                [selfWeak highlightCellForTaskModel:taskModel];
                 [self.tableView reloadData];
+                [selfWeak highlightCellForTaskModel:taskModel];
             });
         } failureBlock:^(NSError *error) {
             runOnMainThread(^{

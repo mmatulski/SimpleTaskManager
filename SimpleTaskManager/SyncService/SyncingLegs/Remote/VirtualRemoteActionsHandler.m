@@ -18,9 +18,9 @@
 - (id)init {
     self = [super init];
     if (self) {
-        _timerInterval = 20.0;
+        _timerInterval = 5.0;
         _changedItemsFactor = 0.25;
-        _increaseFactor = 1.1;
+        _increaseFactor = 1.02;
     }
 
     return self;
@@ -30,7 +30,7 @@
 - (void)connect {
     [super connect];
 
-    //[self startTrafficGenerator];
+    [self startTrafficGenerator];
 }
 
 - (void)startTrafficGenerator {

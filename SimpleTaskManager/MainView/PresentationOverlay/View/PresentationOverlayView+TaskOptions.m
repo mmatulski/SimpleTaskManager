@@ -5,20 +5,19 @@
 
 #import "PresentationOverlayView+TaskOptions.h"
 #import "TaskOptionsView.h"
-#import "STMTaskModel.h"
-
+#import "MainViewConsts.h"
 
 @implementation PresentationOverlayView (TaskOptions)
 
-- (void)showTaskOptionsViewForTaskModel:(STMTaskModel *)taskModel representedByCell:(UITableViewCell *)cell animated:(BOOL)animated {
-    BOOL alreadyShowing = false;
+- (void)showTaskOptionsViewForCell:(UITableViewCell *)cell animated:(BOOL)animated {
+    BOOL alreadyShown = false;
     if(!self.taskOptionsView){
         [self prepareTaskOptionsView];
-    } else {
-        alreadyShowing = true;
     }
 
-    if(!self.taskOptionsView.superview){
+    if(self.taskOptionsView.superview){
+        alreadyShown = true;
+    } else {
         [self addSubview:self.taskOptionsView];
     }
 
@@ -28,20 +27,19 @@
 
     [self addTaskOptionsViewConstraints];
 
-    CGFloat cellBottomY= [self estimateTopPositionOfOptionsViewForCell:cell];
-    _taskOptionsViewFirstTopY = cellBottomY;
+    _taskOptionsViewFirstTopY = [self estimateTopPositionOfOptionsViewForCell:cell];
 
-    if(alreadyShowing){
-        [self moveOptionsViewToTopPosition:cellBottomY animated:animated ];
+    if(alreadyShown){
+        [self moveOptionsViewToTopPosition:_taskOptionsViewFirstTopY animated:animated ];
     } else {
-        [self moveTaskOptionsViewToTop:cellBottomY];
+        [self moveTaskOptionsViewToTop:_taskOptionsViewFirstTopY];
         [self showOptionsViewAnimated:animated ];
     }
 }
 
 - (void)moveOptionsViewToTopPosition:(CGFloat)y animated:(BOOL)animated {
     if(animated){
-        _taskOptionsHeightLayoutConstraint.constant = 60.0;
+        _taskOptionsHeightLayoutConstraint.constant = kOptionsViewHeight;
         [self layoutSubviews];
         [UIView animateWithDuration:0.2 animations:^{
             [_taskOptionsTopLayoutConstraint setConstant:y];
@@ -81,13 +79,13 @@
         [self layoutIfNeeded];
 
         [UIView animateWithDuration:0.4 delay:0 options:UIViewAnimationOptionLayoutSubviews animations:^{
-            [_taskOptionsHeightLayoutConstraint setConstant:60.0];
+            [_taskOptionsHeightLayoutConstraint setConstant:kOptionsViewHeight];
             [self layoutIfNeeded];
         } completion:^(BOOL finished) {
 
         }];
     } else {
-        [_taskOptionsHeightLayoutConstraint setConstant:60.0];
+        [_taskOptionsHeightLayoutConstraint setConstant:kOptionsViewHeight];
         [self layoutIfNeeded];
     }
 }
@@ -97,8 +95,7 @@
     CGRect cellFrameRelatingToTheWindows = [parentViewOfCell convertRect:cell.frame toView:nil];
     CGRect cellFrame = [self convertRect:cellFrameRelatingToTheWindows fromView:nil];
 
-    CGFloat cellBottomY = cellFrame.origin.y + cellFrame.size.height;
-    return cellBottomY;
+    return cellFrame.origin.y + cellFrame.size.height;
 }
 
 - (void)addTaskOptionsViewConstraints {
@@ -120,7 +117,7 @@
 }
 
 - (void)prepareTaskOptionsView {
-    self.taskOptionsView = [[TaskOptionsView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
+    self.taskOptionsView = [[TaskOptionsView alloc] initWithFrame:CGRectZero];
 }
 
 - (void)prepareTaskOptionsViewLayoutConstraints {

@@ -31,7 +31,7 @@
 
 - (void)showOptionsForTaskModel:(STMTaskModel *)taskModel representedByCell:(UITableViewCell *)cell animated:(BOOL)animated {
     self.currentTaskWithOptionsShown = taskModel;
-    [self.helperView showTaskOptionsViewForTaskModel:taskModel representedByCell:cell animated:animated ];
+    [self.helperView showTaskOptionsViewForCell:cell animated:animated];
     self.helperView.taskOptionsView.delegate = self;
 }
 

@@ -7,3 +7,4 @@
 
 CGFloat const kAddTaskViewTopMargin = 40.0;
 CGFloat const kAddTaskViewHorizontalMargin = 26.0;
+CGFloat const kOptionsViewHeight = 60.0;

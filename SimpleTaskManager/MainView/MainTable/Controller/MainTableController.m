@@ -13,6 +13,7 @@
 #import "MainTableConsts.h"
 #import "MainTableStateController.h"
 #import "AppMessages.h"
+#import "AppColors.h"
 
 @implementation MainTableController {
 
@@ -29,6 +30,7 @@
 
         [self prepareStateController];
         [self addLongPressRecognizer];
+        [self prepareEmptyFooterView];
     }
 
     return self;
@@ -46,9 +48,18 @@
     return _dragAndDropHandler;
 }
 
-
 - (void)prepareDragAndDropHelper {
     self.dragAndDropHandler = [[DragAndDropHandler alloc] initWithDraggingSpace:[self.delegate viewForTemporaryViewsPresentation]];
+}
+
+
+- (void)prepareEmptyFooterView {
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, 100, 60.0,100)];
+    self.tableView.tableFooterView.backgroundColor = [UIColor clearColor];
+}
+
+-(void) closeFooterView{
+    self.tableView.tableFooterView = nil;
 }
 
 - (void)setSelectedItemModel:(STMTaskModel *)selectedItemModel animated:(BOOL) animated{

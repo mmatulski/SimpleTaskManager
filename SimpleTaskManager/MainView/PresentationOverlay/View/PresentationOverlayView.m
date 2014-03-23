@@ -65,16 +65,20 @@ CGFloat const kRightMarginForHandlingPanGesture = 20.0;
     CGPoint translation = [recognizer translationInView:recognizer.view];
 
     if(recognizer.state == UIGestureRecognizerStateBegan){
+
         [self userStartsOpeningNewTaskDialog];
+
     } else if(recognizer.state == UIGestureRecognizerStateChanged){
+
         [self userMovesTheNewTaskDialogByX:translation.x];
+
     } else if(recognizer.state == UIGestureRecognizerStateEnded){
 
         CGPoint velocity = [recognizer velocityInView:self];
-
         [self userFinishesOpeningTheNewTaskDialogWithTranslation:translation velocity:velocity];
 
     } else if(recognizer.state == UIGestureRecognizerStateCancelled || recognizer.state == UIGestureRecognizerStateFailed) {
+
         [self userCancelsMovingTheNewTaskDialog];
     }
 }
@@ -87,7 +91,7 @@ CGFloat const kRightMarginForHandlingPanGesture = 20.0;
     return _viewLayoutConstraints;
 }
 
-- (CGRect)rectangleForDetectingAddingTask {
+- (CGRect)rectangleForDetectingNewTaskPan {
     if(CGRectIsNull(_rectangleSensitiveForAddingTask)){
         CGRect result = self.bounds;
         CGRect temp;
@@ -120,14 +124,14 @@ CGFloat const kRightMarginForHandlingPanGesture = 20.0;
         }
     }
 
-    CGRect rectangleForDetectingAddingTask = [self rectangleForDetectingAddingTask];
+    CGRect rectangleForDetectingNewTaskPan = [self rectangleForDetectingNewTaskPan];
 
-    if(CGRectContainsPoint(rectangleForDetectingAddingTask, point)){
+    if(CGRectContainsPoint(rectangleForDetectingNewTaskPan, point)){
         return [super hitTest:point withEvent:event];
     }
 
-    CGRect rectangleForTheNewTaskHintView = self.theNewTaskButton.frame;
-    if(CGRectContainsPoint(rectangleForTheNewTaskHintView, point)){
+    CGRect rectangleForTheNewTaskButton = self.theNewTaskButton.frame;
+    if(CGRectContainsPoint(rectangleForTheNewTaskButton, point)){
         return [super hitTest:point withEvent:event];
     }
 
@@ -187,8 +191,8 @@ CGFloat const kRightMarginForHandlingPanGesture = 20.0;
         }
     }
 
-    CGRect rectangleForDetectingAddingTask = [self rectangleForDetectingAddingTask];
-    if(CGRectContainsPoint(rectangleForDetectingAddingTask, point)){
+    CGRect rectangleForDetectingNewTaskPan = [self rectangleForDetectingNewTaskPan];
+    if(CGRectContainsPoint(rectangleForDetectingNewTaskPan, point)){
         return true;
     }
 

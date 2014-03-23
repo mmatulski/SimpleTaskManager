@@ -106,22 +106,21 @@
 - (void)generateTraffic {
     DDLogInfo(@"TRAFFIC");
     BlockWeakSelf selfWeak = self;
-    DBController* controller = [DBAccess createBackgroundWorker];
+    DBController *controller = [DBAccess createBackgroundWorker];
     [controller fetchAllTasksAsModels:^(NSArray *tasks) {
 
         NSData *previousData = self.lastTimeChangedItemsJSON;
         self.lastTimeChangedItemsJSON = [self serializedTaskModels:tasks];
         [selfWeak generateActionsForTasks:tasks];
-        [selfWeak generateActionsForSerializedTasksUsedPreviously:previousData];
-    } failureBlock:^(NSError *error) {
+        [selfWeak generateWithDelayActionsForSerializedTasksUsedPreviously:previousData];
+    }                    failureBlock:^(NSError *error) {
         DDLogError(@"generateTraffic Problem with fetching all tasks %@", [error localizedDescription]);
     }];
 }
 
 - (void)generateActionsForTasks:(NSArray *)tasks {
 
-    DDLogInfo(@"TRAFFIC generateActionsForTasks %d", (uint32_t)[tasks count]);
-
+    DDLogInfo(@"TRAFFIC generateActionsForTasks %d", (uint32_t) [tasks count]);
 
 
     static NSUInteger counter = 0;
@@ -130,7 +129,7 @@
     NSUInteger numberOfTasks = [tasks count];
 
     NSUInteger numberOfItemsToChange = (NSUInteger) floor((float) numberOfTasks * self.changedItemsFactor);
-    if(numberOfItemsToChange > numberOfTasks){
+    if (numberOfItemsToChange > numberOfTasks) {
         numberOfItemsToChange = numberOfTasks;
     }
     NSUInteger numberOfTasksToRename = (NSUInteger) floor(0.33 * (float) numberOfItemsToChange);
@@ -148,27 +147,27 @@
 
     CGFloat increseF = (CGFloat) numberOfTasksToRemove * self.increaseFactor;
 
-    if(increseF == 0){
+    if (increseF == 0) {
         increseF = 1.0;
     }
 
-    if(increseF < 1 && increseF > 0){
+    if (increseF < 1 && increseF > 0) {
         increseF = 1;
     }
 
-    if(increseF > -1 && increseF < 0){
+    if (increseF > -1 && increseF < 0) {
         increseF = -1;
     }
 
-    NSInteger increase = (NSInteger)floor(increseF) - numberOfTasksToRemove;
+    NSInteger increase = (NSInteger) floor(increseF) - numberOfTasksToRemove;
 
-    if(increase == 0){
+    if (increase == 0) {
         increase = 1;
     }
 
     NSUInteger numberOfTasksToAdd = numberOfTasksToRemove + increase;
 
-    NSMutableArray * tasksToChange = [self drawFromArray:tasks numberOfItems:numberOfItemsToChange];
+    NSMutableArray *tasksToChange = [self drawFromArray:tasks numberOfItems:numberOfItemsToChange];
 
     NSMutableArray *tasksToAdd = [[NSMutableArray alloc] init];
     NSMutableArray *tasksToRemove = [[NSMutableArray alloc] init];
@@ -176,7 +175,7 @@
     NSMutableArray *tasksToRename = [[NSMutableArray alloc] init];
 
     //Adding
-    for(int32_t i = 0; i < numberOfTasksToAdd; i++){
+    for (int32_t i = 0; i < numberOfTasksToAdd; i++) {
         counter++;
         STMTaskModel *add1 = [[STMTaskModel alloc] initWithName:[NSString stringWithFormat:@"task %d_%d", (int32_t) counter, i]
                                                             uid:nil index:nil];
@@ -186,7 +185,7 @@
 
     for (int i = 0; i < numberOfTasksToRemove; i++) {
         STMTaskModel *taskModel = [tasksToChange firstObject];
-        if(!taskModel){
+        if (!taskModel) {
             break;
         }
 
@@ -197,7 +196,7 @@
 
     for (int i = 0; i < numberOfTasksToRename; i++) {
         STMTaskModel *taskModel = [tasksToChange firstObject];
-        if(!taskModel){
+        if (!taskModel) {
             break;
         }
 
@@ -209,7 +208,7 @@
 
     for (int i = 0; i < numberOfTasksToReorder; i++) {
         STMTaskModel *taskModel = [tasksToChange firstObject];
-        if(!taskModel){
+        if (!taskModel) {
             break;
         }
 
@@ -229,14 +228,22 @@
     }];
 }
 
+- (void)generateWithDelayActionsForSerializedTasksUsedPreviously:(NSData *)data {
+    BlockWeakSelf selfWeak = self;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t) (ceil(_timerInterval * NSEC_PER_SEC / 2.0)));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void) {
+        [selfWeak generateActionsForSerializedTasksUsedPreviously:data];
+    });
+}
+
 - (void)generateActionsForSerializedTasksUsedPreviously:(NSData *)data {
-    if(!data){
+    if (!data) {
         DDLogWarn(@"generateActionsForSerializedTasks no data to process");
         return;
     }
 
     NSArray *taskModels = [self deserializeTasksFromJsonData:data];
-    if(!taskModels){
+    if (!taskModels) {
         DDLogWarn(@"generateActionsForSerializedTasks data was not deserialized");
 
     }
@@ -245,12 +252,12 @@
 }
 
 - (NSArray *)deserializeTasksFromJsonData:(NSData *)data {
-    
-    if(!data){
+
+    if (!data) {
         DDLogError(@"deserializeTasksFromData data are nil");
         return nil;
     }
-    
+
     NSString *stringWithData = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     DDLogInfo(@"deserializeTasksFromData string %@", stringWithData);
 
@@ -269,12 +276,12 @@
 }
 
 - (NSArray *)deserializeTaskModelsFromArray:(NSArray *)arrayOfSerializedTaskModels {
-    
-    if(!arrayOfSerializedTaskModels){
+
+    if (!arrayOfSerializedTaskModels) {
         DDLogWarn(@"deserializeTaskModelsFromArray array is empty");
         return nil;
     }
-    
+
     NSMutableArray *result = [[NSMutableArray alloc] init];
 
     for (NSDictionary *taskModelDictionary in arrayOfSerializedTaskModels) {
@@ -297,10 +304,10 @@
 
     NSEnumerator *sortedTasksEnumerator = [tasksSortedByUid objectEnumerator];
     STMTaskModel *model = [sortedTasksEnumerator nextObject];
-    while (model){
+    while (model) {
         //NSData *serializedModel = [model serializeToJSON];
         NSDictionary *serializedModel = [model serializeToDctionary];
-        if(serializedModel){
+        if (serializedModel) {
             [result addObject:serializedModel];
         }
 
@@ -310,20 +317,20 @@
     return [NSArray arrayWithArray:result];
 }
 
--(NSData *) serializedTaskModels:(NSArray *)tasksModels{
+- (NSData *)serializedTaskModels:(NSArray *)tasksModels {
     NSArray *arrayWithSerializedModels = [self arrayOfSerializedTasksModels:tasksModels];
-    if(!arrayWithSerializedModels){
+    if (!arrayWithSerializedModels) {
         DDLogError(@"serializedTaskModels array is empty");
         return nil;
     }
-    
-    if(![NSJSONSerialization isValidJSONObject:arrayWithSerializedModels]){
+
+    if (![NSJSONSerialization isValidJSONObject:arrayWithSerializedModels]) {
         DDLogError(@"serializedTaskModels array is not valid");
     }
 
     NSError *err = nil;
-    NSData * result = [NSJSONSerialization dataWithJSONObject:arrayWithSerializedModels options:0 error:&err];
-    if(!result){
+    NSData *result = [NSJSONSerialization dataWithJSONObject:arrayWithSerializedModels options:0 error:&err];
+    if (!result) {
         DDLogError(@"serializedTaskModels serialization failed");
         [err log];
     }
@@ -332,30 +339,30 @@
 }
 
 - (void)setAnotherOrderNrForTask:(STMTaskModel *)taskModel fromPossible:(NSUInteger)possible {
-    if(possible < 2){
+    if (possible < 2) {
         return;
     }
 
     NSUInteger theNewIndex = [taskModel.index unsignedIntegerValue];
-    while (theNewIndex == [taskModel.index unsignedIntegerValue]){
-        theNewIndex =  arc4random_uniform((u_int32_t)possible);
+    while (theNewIndex == [taskModel.index unsignedIntegerValue]) {
+        theNewIndex = arc4random_uniform((u_int32_t) possible);
     }
 
     taskModel.index = [NSNumber numberWithUnsignedInteger:theNewIndex];
 }
 
-- (NSMutableArray *)drawFromArray:(NSArray *)tasks numberOfItems:(NSUInteger) numberOfTasksToDraw {
+- (NSMutableArray *)drawFromArray:(NSArray *)tasks numberOfItems:(NSUInteger)numberOfTasksToDraw {
     NSMutableArray *result = [[NSMutableArray alloc] init];
 
     NSMutableArray *stillToDraw = [tasks mutableCopy];
     NSUInteger numberOfAllItems = [stillToDraw count];
-    if(numberOfTasksToDraw >= numberOfAllItems){
+    if (numberOfTasksToDraw >= numberOfAllItems) {
         return stillToDraw;
     }
 
-    for(int i = 0; i < numberOfTasksToDraw; i++){
+    for (int i = 0; i < numberOfTasksToDraw; i++) {
         STMTaskModel *taskDrawn = [self drawItemFromArray:stillToDraw];
-        if(taskDrawn){
+        if (taskDrawn) {
             [result addObject:taskDrawn];
             [stillToDraw removeObject:taskDrawn];
         } else {
@@ -368,15 +375,15 @@
 
 - (id)drawItemFromArray:(NSMutableArray *)tasks {
     NSUInteger numberOfTasks = [tasks count];
-    uint32_t index = arc4random_uniform((uint32_t)numberOfTasks);
-    if(index < numberOfTasks){
+    uint32_t index = arc4random_uniform((uint32_t) numberOfTasks);
+    if (index < numberOfTasks) {
         return [tasks objectAtIndex:index];
     }
 
     return nil;
 }
 
--(void) stopTrafficGenerator{
+- (void)stopTrafficGenerator {
     [self.timer invalidate];
 }
 

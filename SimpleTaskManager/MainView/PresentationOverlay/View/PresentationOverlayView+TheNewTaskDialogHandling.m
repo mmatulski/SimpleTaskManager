@@ -251,7 +251,7 @@
         }
     } else {
         [self animatedMovingTheNewTaskDialogToOpenedStatePosition:0.0 completion:^{
-            c 
+           
         }];
     }
 }

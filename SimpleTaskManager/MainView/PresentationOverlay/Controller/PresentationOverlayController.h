@@ -5,14 +5,14 @@
 
 #import <Foundation/Foundation.h>
 #import "TaskOptionsDelegate.h"
-#import "UserActionsHelperViewDelegate.h"
+#import "PresentationOverlayViewDelegate.h"
 
 @class PresentationOverlayView;
 @class STMTask;
 @protocol UserActionsHelperControllerDelegate;
 @class STMTaskModel;
 
-@interface PresentationOverlayController : NSObject <TaskOptionsDelegate, UserActionsHelperViewDelegate>
+@interface PresentationOverlayController : NSObject <TaskOptionsDelegate, PresentationOverlayViewDelegate>
 
 @property(nonatomic, weak) id <UserActionsHelperControllerDelegate> delegate;
 @property(nonatomic, strong) PresentationOverlayView *helperView;

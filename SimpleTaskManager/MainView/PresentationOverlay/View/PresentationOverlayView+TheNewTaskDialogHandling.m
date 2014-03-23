@@ -7,13 +7,10 @@
 #import "MainViewConsts.h"
 #import "TheNewTaskDialog.h"
 #import "CGEstimations.h"
-#import "STMTask.h"
-#import "DBAccess.h"
-#import "DBController.h"
 #import "PresentationOverlayView+Hints.h"
 #import "ConfirmationButton.h"
 #import "CancelButton.h"
-#import "UserActionsHelperViewDelegate.h"
+#import "PresentationOverlayViewDelegate.h"
 
 @implementation PresentationOverlayView (TheNewTaskDialogHandling)
 
@@ -79,7 +76,7 @@
     [self moveTheNewTaskDialogBehindTheRightEdge];
 
     _originalPositionOfTheNewTaskDialogBeforeMoving = self.theNewTaskDialog.center;
-    self.state = DPStateNewTaskDialogOpeningStarted;
+    self.state = PresentationOverlayStateNewTaskDialogOpeningStarted;
 }
 
 - (void)prepareTheNewTaskDialog {
@@ -137,7 +134,7 @@
 //TODO replace strength with time
 - (void)animatedMovingTheNewTaskDialogToOpenedStatePosition:(CGFloat)strength completion:(void (^)(void)) completion {
 
-    self.state = DPStateNewTaskDialogOpeningAnimating;
+    self.state = PresentationOverlayStateNewTaskDialogOpeningAnimating;
 
     CGFloat animationDuration = 1.0f *  500.0 / (strength>0?strength:500.0);
 
@@ -147,6 +144,7 @@
 
     self.confirmationHintView.alpha = 0.0;
     self.cancelHintView.alpha = 0.0;
+    [self.theNewTaskDialog setEditing];
 
     [UIView animateWithDuration:animationDuration animations:^{
         [self removeConstraints:self.theNewTaskDialogLayoutConstraintsWhenBehindTheRightEdge];
@@ -166,7 +164,7 @@
 }
 
 - (void)theNewTaskViewNowIsOpenedAndReady {
-    self.state = DPStateNewTaskDialogOpened;
+    self.state = PresentationOverlayStateNewTaskDialogOpened;
     [self.theNewTaskDialog setEditing];
     [self moveGestureRecognizerToThewNewTaskDialog];
 
@@ -176,7 +174,7 @@
 
 - (void)animateClosingTheNewTaskDialogToTheRightEdge {
 
-    self.state = DPStateNewTaskDialogClosingAnimating;
+    self.state = PresentationOverlayStateNewTaskDialogClosingAnimating;
 
     [UIView animateWithDuration:0.7 animations:^{
         [self removeConstraints:self.theNewTaskDialogLayoutConstraintsWhenOpened];
@@ -193,7 +191,7 @@
 - (void)removeTheNewTaskView {
     [self.theNewTaskDialog removeFromSuperview];
     self.theNewTaskDialog = nil;
-    self.state = DPStateNoOpenedDialogs;
+    self.state = PresentationOverlayStateNormal;
 
     [self returnGestureRecognizerFromThewNewTaskDialog];
 
@@ -231,23 +229,29 @@
 
 - (void)userStartsClosingTheNewTaskDialog {
     _originalPositionOfTheNewTaskDialogBeforeMoving = self.theNewTaskDialog.center;
-    self.state = DPStateNewTaskDialogClosingBegan;
+    self.state = PresentationOverlayStateNewTaskDialogClosingBegan;
 }
 
 - (void)userFinishesClosingTheNewTaskDialogWithTranslation:(CGPoint)translation velocity:(CGPoint)velocity {
-    if([self shouldCloseAndSaveTheNewTaskDialogForTranslation:translation andVelocity:velocity]){
-        [self.delegate userWantsToSaveTheNewTask:[self.theNewTaskDialog taskName]];
-    } else if([self shouldCloseAndCancelTheNewTaskDialogForTranslation:translation andVelocity:velocity]){
+    if([self shouldCloseAndCancelTheNewTaskDialogForTranslation:translation andVelocity:velocity]){
         [self animateClosingTheNewTaskDialogToTheRightEdge];
+    } else if([self shouldCloseAndSaveTheNewTaskDialogForTranslation:translation andVelocity:velocity]){
 
-    } else {
-        NSString *warningMessage = nil;
-        if(![self.theNewTaskDialog isNameValid]){
-            warningMessage = @"The task can not be empty";
+        if([self.theNewTaskDialog isNameValid]){
+            [self.delegate userWantsToSaveTheNewTask:[self.theNewTaskDialog taskName]];
+        } else {
+            NSString *warningMessage = nil;
+            if(![self.theNewTaskDialog isNameValid]){
+                warningMessage = @"The task can not be empty";
+            }
+
+            [self animatedMovingTheNewTaskDialogToOpenedStatePosition:0.0 completion:^{
+                [self showWarningForTheNewTask:warningMessage];
+            }];
         }
-
+    } else {
         [self animatedMovingTheNewTaskDialogToOpenedStatePosition:0.0 completion:^{
-            [self showWarningForTheNewTask:warningMessage];
+            c 
         }];
     }
 }
@@ -272,7 +276,7 @@
 }
 
 - (void)animateClosingTheNewTaskDialogToTheLeftEdge {
-    self.state = DPStateNewTaskDialogClosingAnimating;
+    self.state = PresentationOverlayStateNewTaskDialogClosingAnimating;
 
     [UIView animateWithDuration:0.7 animations:^{
         [self removeConstraints:self.theNewTaskDialogLayoutConstraintsWhenOpened];
@@ -300,9 +304,6 @@
 }
 
 - (BOOL)shouldCloseAndSaveTheNewTaskDialogForTranslation:(CGPoint)point andVelocity:(CGPoint)velocity {
-    if(![self.theNewTaskDialog isNameValid]){
-        return false;
-    }
 
     CGPoint currentTheNewTaskDialogPosition = self.theNewTaskDialog.center;
     CGFloat currentViewWidth = self.frame.size.width;
@@ -317,7 +318,7 @@
 }
 
 - (BOOL)canShowTheNewTaskDialog {
-    return self.state == DPStateNoOpenedDialogs;
+    return self.state == PresentationOverlayStateNormal;
 }
 
 

@@ -133,7 +133,7 @@
 		46AE2216AA82CD13F9F5CB15 /* SyncGuardService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SyncGuardService.m; sourceTree = "<group>"; };
 		46AE222B601D6276546DD898 /* MainTableControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainTableControllerDelegate.h; sourceTree = "<group>"; };
 		46AE224459749A291566D1C8 /* AppMessages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppMessages.h; sourceTree = "<group>"; };
-		46AE22AAAEAB6CFDB435AA4B /* UserActionsHelperViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserActionsHelperViewDelegate.h; sourceTree = "<group>"; };
+		46AE22AAAEAB6CFDB435AA4B /* PresentationOverlayViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PresentationOverlayViewDelegate.h; sourceTree = "<group>"; };
 		46AE22CB58FB49DD429B1816 /* DDLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDLog.h; sourceTree = "<group>"; };
 		46AE22D87A98C0287A2AFEFC /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		46AE22ECD2D1C47A1FD3CD1E /* ContextFilterLogFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContextFilterLogFormatter.m; sourceTree = "<group>"; };
@@ -175,7 +175,7 @@
 		46AE27371766C01239F9F130 /* MainTableController+DragAndDrop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MainTableController+DragAndDrop.h"; sourceTree = "<group>"; };
 		46AE275F31C7CBD76B7FE493 /* DBController+FastSync.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DBController+FastSync.h"; sourceTree = "<group>"; };
 		46AE277CBF5F4633016BF7C1 /* CompleteTaskOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CompleteTaskOperation.m; sourceTree = "<group>"; };
-		46AE278FEA832EE05BD6B091 /* DPState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPState.h; sourceTree = "<group>"; };
+		46AE278FEA832EE05BD6B091 /* PresentationOverlayState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PresentationOverlayState.h; sourceTree = "<group>"; };
 		46AE27B3785FF74D45399323 /* SyncingLeg.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SyncingLeg.m; sourceTree = "<group>"; };
 		46AE27BF0223B13465ABEA7D /* DBController+FastSync.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DBController+FastSync.m"; sourceTree = "<group>"; };
 		46AE27C81E94D75901538190 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
@@ -389,7 +389,7 @@
 		46AE248644F1227A461AC82D /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				46AE22AAAEAB6CFDB435AA4B /* UserActionsHelperViewDelegate.h */,
+				46AE22AAAEAB6CFDB435AA4B /* PresentationOverlayViewDelegate.h */,
 				46AE2FBCAD21ACD8E387AC23 /* UserActionsHelperControllerDelegate.h */,
 			);
 			path = Protocols;
@@ -770,7 +770,7 @@
 		46AE2F8BCD530A25AD9FD680 /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				46AE278FEA832EE05BD6B091 /* DPState.h */,
+				46AE278FEA832EE05BD6B091 /* PresentationOverlayState.h */,
 			);
 			path = Common;
 			sourceTree = "<group>";

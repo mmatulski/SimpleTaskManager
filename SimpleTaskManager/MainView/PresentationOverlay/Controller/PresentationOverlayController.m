@@ -29,7 +29,6 @@
     return self;
 }
 
-
 - (void)showOptionsForTaskModel:(STMTaskModel *)taskModel representedByCell:(UITableViewCell *)cell animated:(BOOL)animated {
     self.currentTaskWithOptionsShown = taskModel;
     [self.helperView showTaskOptionsViewForTaskModel:taskModel representedByCell:cell animated:animated ];

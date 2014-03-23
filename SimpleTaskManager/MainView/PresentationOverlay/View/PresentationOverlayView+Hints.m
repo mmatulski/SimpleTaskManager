@@ -11,7 +11,7 @@
 #import "ConfirmationButton.h"
 #import "TheNewTaskDialog.h"
 #import "CancelButton.h"
-#import "UserActionsHelperViewDelegate.h"
+#import "PresentationOverlayViewDelegate.h"
 
 
 @implementation PresentationOverlayView (Hints)

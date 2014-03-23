@@ -30,7 +30,7 @@
 - (void)connect {
     [super connect];
 
-    [self startTrafficGenerator];
+    //[self startTrafficGenerator];
 }
 
 - (void)startTrafficGenerator {

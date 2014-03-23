@@ -4,7 +4,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "DPState.h"
+#import "PresentationOverlayState.h"
 
 @class TheNewTaskDialog;
 @class WrappedButton;
@@ -12,11 +12,11 @@
 @class ConfirmationButton;
 @class CancelButton;
 @class TaskOptionsView;
-@protocol UserActionsHelperViewDelegate;
+@protocol PresentationOverlayViewDelegate;
 
 /*
-This helperView is parent for Dialogs like TheNewTaskDialog or Checking Task View.
-It contains "Add" button and handler pan gesture which allows to pill AdTaskView from the right edge.
+This PresentationOverlayView is parent for Dialogs like TheNewTaskDialog or Checking Task View.
+It contains "Add" button and handles pan gestures which allows to pill AdTaskView from the right edge.
 
  */
 @interface PresentationOverlayView : UIView <UIGestureRecognizerDelegate>{
@@ -43,7 +43,7 @@ It contains "Add" button and handler pan gesture which allows to pill AdTaskView
     CGFloat _taskOptionsViewFirstTopY;
 }
 
-@property(nonatomic, weak) id <UserActionsHelperViewDelegate> delegate;
+@property(nonatomic, weak) id <PresentationOverlayViewDelegate> delegate;
 
 @property(nonatomic, strong) UIPanGestureRecognizer *panGestureRecognizer;
 
@@ -58,7 +58,7 @@ It contains "Add" button and handler pan gesture which allows to pill AdTaskView
 @property(nonatomic, strong) NSArray *theNewTaskDialogLayoutConstraintsWhenBehindTheRightEdge;
 @property(nonatomic, strong) NSArray *theNewTaskDialogLayoutConstraintsWhenBehindTheLeftEdge;
 
-@property(nonatomic) enum DPState state;
+@property(nonatomic) enum PresentationOverlayState state;
 
 - (id)initWithDefaultFrame;
 

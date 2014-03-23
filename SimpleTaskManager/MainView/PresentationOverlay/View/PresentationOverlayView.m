@@ -140,8 +140,8 @@ CGFloat const kRightMarginForHandlingPanGesture = 20.0;
 
 - (BOOL)isAnyDialogOpenedOrBeganClosing {
     switch (self.state) {
-        case DPStateNewTaskDialogOpened:
-        case DPStateNewTaskDialogClosingBegan:
+        case PresentationOverlayStateNewTaskDialogOpened:
+        case PresentationOverlayStateNewTaskDialogClosingBegan:
             return true;
         default:
             return false;
@@ -151,8 +151,8 @@ CGFloat const kRightMarginForHandlingPanGesture = 20.0;
 
 - (BOOL)isAnyDialogAnimatedNow {
     switch (self.state) {
-        case DPStateNewTaskDialogOpeningAnimating:
-        case DPStateNewTaskDialogClosingAnimating:
+        case PresentationOverlayStateNewTaskDialogOpeningAnimating:
+        case PresentationOverlayStateNewTaskDialogClosingAnimating:
             return true;
         default:
             return false;

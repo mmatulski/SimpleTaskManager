@@ -40,8 +40,16 @@
     [self prepareTableController];
     [self prepareDialogsPresentationController];
     [self prepareNotificationsObserver];
+    [self preloadKeyboard];
 
     [[SyncGuardService sharedInstance] connectToServer];
+}
+- (void)preloadKeyboard {
+    UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 100, 10.0)];
+    [self.view addSubview: textField];
+    [textField becomeFirstResponder];
+    [textField resignFirstResponder];
+    [textField removeFromSuperview];
 }
 
 - (void)viewDidAppear:(BOOL)animated {

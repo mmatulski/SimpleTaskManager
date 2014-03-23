@@ -5,7 +5,7 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol UserActionsHelperViewDelegate <NSObject>
+@protocol PresentationOverlayViewDelegate <NSObject>
 
 -(void) userWantsToSaveTheNewTask:(NSString *) taskName;
 

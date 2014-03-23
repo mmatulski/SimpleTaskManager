@@ -81,6 +81,9 @@
                         failureBlock(err);
                     }
                 }];
+
+                [self.parentController loadNumberOfAllTasksIfNotLoaded];
+
                 DDLogTrace(@"DBController saveWithSuccessFullBlock %@ performBlock SAVED but is has PARENT END" , self);
             } else {
                 if(successFullBlock){

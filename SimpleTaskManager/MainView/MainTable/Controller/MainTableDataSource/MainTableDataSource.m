@@ -146,7 +146,7 @@ NSUInteger const kDefaultBatchSize = 20;
             result--;
         }
 
-        DDLogInfo(@"numberOfRowsInSection %d", result);
+        DDLogInfo(@"numberOfRowsInSection %d [%d]", result, self.dbController.numberOfAllTasks);
 
         return result;
     }

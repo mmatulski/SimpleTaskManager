@@ -31,107 +31,30 @@
         [reorderedTasks count]);
 
         NSArray * tasksSortedByIndex = [self fetchAllTasksSorted:&err];
-
-        NSMutableArray *tasksSortedByIndexesAndMutable = [tasksSortedByIndex mutableCopy];
+        NSMutableArray *tasksSortedByIndexAndMutable = [tasksSortedByIndex mutableCopy];
 
         NSSortDescriptor *sortByUid = [[NSSortDescriptor alloc]
                 initWithKey:@"uid" ascending:NO];
 
-        NSMutableArray *tasksSortedByUid = [[tasksSortedByIndexesAndMutable sortedArrayUsingDescriptors:@[sortByUid]] mutableCopy];
-        NSArray *taskModelsToReorderSortedByUid = [reorderedTasks sortedArrayUsingDescriptors:@[sortByUid]];
+        NSMutableArray *tasksSortedByUid = [[tasksSortedByIndex sortedArrayUsingDescriptors:@[sortByUid]] mutableCopy];
+        NSArray *modelsToReorderSortedByUid = [reorderedTasks sortedArrayUsingDescriptors:@[sortByUid]];
+        NSArray *modelsToRemoveSortedByUid = [removedTasks sortedArrayUsingDescriptors:@[sortByUid]];
+        NSArray *modelsToRenameSortedByUid = [renamedTasks sortedArrayUsingDescriptors:@[sortByUid]];
 
-        NSEnumerator *taskModelToReorderEnumeratorSortedByUid = [taskModelsToReorderSortedByUid objectEnumerator];
-        NSEnumerator *tasksEnumeratorSortedByUid = [tasksSortedByUid objectEnumerator];
-
-        STMTask *task = [tasksEnumeratorSortedByUid nextObject];
-        STMTaskModel *taskModel = [taskModelToReorderEnumeratorSortedByUid nextObject];
-
-        while (task){
-            DDLogTrace(@"enumerate reorder%@ %@", task.uid, taskModel.uid);
-            if([task.uid isEqualToString:taskModel.uid]){
-                [tasksSortedByIndexesAndMutable removeObject:task];
-                NSUInteger changedIndex = [taskModel.index unsignedIntegerValue];
-                if([tasksSortedByIndexesAndMutable count] > (changedIndex - 1)){
-                    [tasksSortedByIndexesAndMutable insertObject:task atIndex:
-                            (changedIndex - 1)];
-                }
-                taskModel = [tasksEnumeratorSortedByUid nextObject];
-
-            }
-
-            task = [tasksEnumeratorSortedByUid nextObject];
-        }
-
-        taskModelToReorderEnumeratorSortedByUid = [taskModelsToReorderSortedByUid objectEnumerator];
-        tasksEnumeratorSortedByUid = [tasksSortedByUid objectEnumerator];
-
-        task = [tasksEnumeratorSortedByUid nextObject];
-        taskModel = [taskModelToReorderEnumeratorSortedByUid nextObject];
-        while (task){
-            DDLogTrace(@"enumerate rename %@ %@", task.uid, taskModel.uid);
-            if([task.uid isEqualToString:taskModel.uid]){
-                task.name = [taskModel name];
-                taskModel = [tasksEnumeratorSortedByUid nextObject];
-            }
-
-            task = [tasksEnumeratorSortedByUid nextObject];
-        }
-
-        taskModelToReorderEnumeratorSortedByUid = [taskModelsToReorderSortedByUid objectEnumerator];
-        tasksEnumeratorSortedByUid = [tasksSortedByUid objectEnumerator];
-
-        task = [tasksEnumeratorSortedByUid nextObject];
-        taskModel = [taskModelToReorderEnumeratorSortedByUid nextObject];
-
-        [self loadNumberOfAllTasksIfNotLoaded];
-        while (task){
-            DDLogTrace(@"enumerate remove %@ %@", task.uid, taskModel.uid);
-            if([task.uid isEqualToString:taskModel.uid]){
-                [tasksSortedByIndexesAndMutable removeObject:task];
-                [self decreaseNumberOfAllTasks];
-            }
-
-            task = [tasksEnumeratorSortedByUid nextObject];
-        }
-
-        for(STMTaskModel *taskModel in addedTasks){
-            [self increaseNumberOfAllTasks];
-            STMTask * taskCreated = [self addTaskWithName:taskModel.name withUid:taskModel.uid withIndex:taskModel.index];
-            if(!taskCreated){
-                DDLogError(@"addTaskWithName %@ failed", taskModel.uid);
-                [self undo];
-
-                if(failureBlock){
-                    failureBlock(nil);
-                }
-                return;
-            } else {
-                [tasksSortedByUid addObject:taskCreated];
-            }
-        }
-
-        tasksEnumeratorSortedByUid = [tasksSortedByUid objectEnumerator];
-
-        task = [tasksEnumeratorSortedByUid nextObject];
-
-        NSUInteger index = 1;
-        while (task){
-            DDLogTrace(@"enumerate gives order again %@ %d", task.uid, index);
-            task.index = [NSNumber numberWithUnsignedInt:index];
-
-            task = [tasksEnumeratorSortedByUid nextObject];
-            index++;
-        }
-
-
+        [self reorderTasksModels:modelsToReorderSortedByUid inSortedByIndexArray:tasksSortedByIndexAndMutable usingSortedByUIDTasks:tasksSortedByUid];
+        [self renameTasksModels:modelsToRenameSortedByUid inSortedByIndexArray:tasksSortedByIndexAndMutable usingSortedByUIDTasks:tasksSortedByUid];
+        [self removeTasksModels:modelsToRemoveSortedByUid fromSortedByIndexArray:tasksSortedByIndexAndMutable usingSortedByUIDTasks:tasksSortedByUid];
+        [self addTasksModels:addedTasks toSortedByIndexArray:tasksSortedByIndexAndMutable usingSortedByUIDTasks:tasksSortedByUid];
+        [self reestimateIndexesInSortedByIndexArray:tasksSortedByIndexAndMutable];
 
         [self saveWithSuccessFullBlock:^{
+            DDLogInfo(@"fast_syncAddedTasks SUCCESS");
             [self endUndo];
             if(successFullBlock){
                 successFullBlock(nil);
             }
         } andFailureBlock:^(NSError *error){
-            DDLogError(@"syncAddedTasks failed %@", [err localizedDescription] );
+            DDLogError(@"fast_syncAddedTasks failed %@", [err localizedDescription] );
             [self undo];
             if(failureBlock){
                 failureBlock(error);
@@ -140,7 +63,210 @@
     }];
 }
 
-- (NSArray *)fetchAllTasksSorted:(NSError **)pError {
+- (void)reorderTasksModels:(NSArray *)models inSortedByIndexArray:(NSMutableArray *)result usingSortedByUIDTasks:(NSArray *)tasks {
+
+    NSMutableArray *modelsStillToReorder = [models mutableCopy];
+    NSMutableArray *modelsToProcess = [modelsStillToReorder mutableCopy];
+
+    NSEnumerator *tasksEnumerator = [tasks objectEnumerator];
+    NSEnumerator *modelsEnumerator = [modelsToProcess objectEnumerator];
+
+    //------------------ reorder --------------------------------
+    STMTask *task = [tasksEnumerator nextObject];
+    STMTask *model = [modelsEnumerator nextObject];
+
+    NSInteger numberOfProcessedItems = 0;
+
+    while ([modelsToProcess count] > 0){
+        DDLogTrace(@"reordering %d tasks", [modelsToProcess count]);
+
+        while(task){
+            DDLogTrace(@"enumerate reorder %@ %@", task.uid, model.uid);
+            if([task.uid isEqualToString:model.uid]){
+                numberOfProcessedItems++;
+                [modelsStillToReorder removeObject:model];
+
+                [result removeObject:task];
+
+                NSUInteger changedIndex = [model.index unsignedIntegerValue];
+                NSInteger idxInTable = changedIndex - 1;
+                if(idxInTable < 0){
+                    DDLogWarn(@"index %d for task %@ not valid (will be added with 1", changedIndex, model.uid);
+                    [result insertObject:task atIndex:
+                            0];
+                } else if(idxInTable >= [result count]){
+                    DDLogWarn(@"index %d for task %@ not valid (will be added with top %d", changedIndex, model.uid, ([result count] + 1));
+                    [result addObject:task];
+                } else {
+                    [result insertObject:task atIndex:
+                            (changedIndex - 1)];
+                }
+
+                model = [modelsEnumerator nextObject];
+
+                if(!model){
+                    DDLogTrace(@"No more models to reorder");
+                    break;
+                }
+            }
+
+            task = [tasksEnumerator nextObject];
+        }
+
+        if(model){
+            DDLogWarn(@"Task to reorder %@ not found. It means task was already removed", model.uid);
+            [modelsStillToReorder removeObject:model];
+            modelsToProcess = [modelsStillToReorder mutableCopy];
+
+            if([modelsStillToReorder count] > 0){
+                modelsEnumerator = [modelsToProcess objectEnumerator];
+                model = [modelsEnumerator nextObject];
+            }
+        } else {
+            modelsToProcess = nil;
+        }
+    }
+
+    DDLogInfo(@"Tasks reorderes [%d/%d]", numberOfProcessedItems, [models count]);
+}
+
+- (void)renameTasksModels:(NSArray *)models inSortedByIndexArray:(NSMutableArray *)result usingSortedByUIDTasks:(NSArray *)tasks {
+
+    NSMutableArray *modelsStillToRename = [models mutableCopy];
+    NSMutableArray *modelsToProcess = [modelsStillToRename mutableCopy];
+
+    NSEnumerator *tasksEnumerator = [tasks objectEnumerator];
+    NSEnumerator *modelsEnumerator = [modelsToProcess objectEnumerator];
+
+    //------------------ rename --------------------------------
+    STMTask *task = [tasksEnumerator nextObject];
+    STMTask *model = [modelsEnumerator nextObject];
+
+    NSInteger numberOfProcessedItems = 0;
+
+    while ([modelsToProcess count] > 0){
+        DDLogTrace(@"rename %d tasks", [modelsStillToRename count]);
+
+        while(task){
+            DDLogTrace(@"enumerate rename %@ %@", task.uid, model.uid);
+            if([task.uid isEqualToString:model.uid]){
+                numberOfProcessedItems++;
+                [modelsStillToRename removeObject:model];
+
+                task.name = [model name];
+
+                model = [modelsEnumerator nextObject];
+
+                if(!model){
+                    DDLogTrace(@"No more models to rename");
+                    break;
+                }
+            }
+
+            task = [tasksEnumerator nextObject];
+        }
+
+        if(model){
+            DDLogWarn(@"Task to rename %@ not found. It means that it has been removed before", model.uid);
+            [modelsStillToRename removeObject:model];
+            modelsToProcess = [modelsStillToRename mutableCopy];
+
+            if([modelsToProcess count] > 0){
+                modelsEnumerator = [modelsToProcess objectEnumerator];
+                model = [modelsEnumerator nextObject];
+            }
+        } else {
+            modelsToProcess = nil;
+        }
+    }
+
+    DDLogInfo(@"Tasks renamed [%d/%d]", numberOfProcessedItems, [models count]);
+}
+
+- (void)removeTasksModels:(NSArray *)models fromSortedByIndexArray:(NSMutableArray *)result usingSortedByUIDTasks:(NSArray *)tasks {
+
+    NSMutableArray *modelsStillToRemove = [models mutableCopy];
+    NSMutableArray *modelsToProcess = [modelsStillToRemove mutableCopy];
+
+    NSEnumerator *tasksEnumerator = [tasks objectEnumerator];
+    NSEnumerator *modelsEnumerator = [modelsToProcess objectEnumerator];
+
+    //------------------ remove --------------------------------
+    STMTask *task = [tasksEnumerator nextObject];
+    STMTask *model = [modelsEnumerator nextObject];
+
+    NSInteger numberOfProcessedItems = 0;
+
+    while ([modelsToProcess count] > 0){
+        DDLogTrace(@"rename %d tasks", [modelsStillToRemove count]);
+
+        while(task){
+            DDLogTrace(@"enumerate remove %@ %@", task.uid, model.uid);
+            if([task.uid isEqualToString:model.uid]){
+                numberOfProcessedItems++;
+                [modelsStillToRemove removeObject:model];
+
+                [result removeObject:task];
+                [self.context deleteObject:task];
+                [self decreaseNumberOfAllTasks];
+
+                model = [modelsEnumerator nextObject];
+
+                if(!model){
+                    DDLogTrace(@"No more models to remove");
+                    break;
+                }
+            }
+
+            task = [tasksEnumerator nextObject];
+        }
+
+        if(model){
+            DDLogWarn(@"Task to remove %@ not found. It means that it has been removed before", model.uid);
+            [modelsStillToRemove removeObject:model];
+            modelsToProcess = [modelsStillToRemove mutableCopy];
+
+            if([modelsToProcess count] > 0){
+                modelsEnumerator = [modelsToProcess objectEnumerator];
+                model = [modelsEnumerator nextObject];
+            }
+        } else {
+            modelsToProcess = nil;
+        }
+    }
+
+    DDLogInfo(@"Tasks removed [%d/%d]", numberOfProcessedItems, [models count]);
+}
+
+- (void) addTasksModels:(NSArray *)models toSortedByIndexArray:(NSMutableArray *)result usingSortedByUIDTasks:(NSMutableArray *)tasks{
+    
+    for(STMTaskModel *taskModel in models){
+        
+        [self increaseNumberOfAllTasks];
+        STMTask * taskCreated = [self addTaskWithName:taskModel.name withUid:taskModel.uid withIndex:taskModel.index];
+        if(!taskCreated){
+            DDLogError(@"addTaskWithName %@ failed", taskModel.uid);
+        } else {
+            [result addObject:taskCreated];
+        }
+    }
+}
+
+- (void)reestimateIndexesInSortedByIndexArray:(NSArray *)tasks {
+
+    NSEnumerator *tasksEnumerator = [tasks objectEnumerator];
+    STMTask * task = [tasksEnumerator nextObject];
+    NSUInteger index = 1;
+    while (task){
+        DDLogTrace(@"enumerate gives order again %@ %d", task.uid, index);
+        task.index = [NSNumber numberWithUnsignedInt:index];
+
+        task = [tasksEnumerator nextObject];
+        index++;
+    }
+}
+
+- (NSArray *)fetchAllTasksSorted:(NSError **) error {
     NSFetchRequest *fetchRequest = [self prepareTaskFetchRequest];
 
     NSSortDescriptor *sort = [[NSSortDescriptor alloc]
@@ -149,6 +275,10 @@
 
     NSError* err = nil;
     NSArray *result = [self.context executeFetchRequest:fetchRequest error:&err];
+
+    if(!result){
+        forwardError(err, error);
+    }
 
     return result;
 }

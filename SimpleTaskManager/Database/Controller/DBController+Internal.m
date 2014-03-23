@@ -21,10 +21,15 @@
         task.uid = [[NSUUID UUID] UUIDString];
     }
 
+    if(indexNumber){
+        task.index = indexNumber;
+        //TODO needs reordering
+    }
+
     //order is inversely proportional to index value
 
     [self increaseNumberOfAllTasks];
-    task.index = [NSNumber numberWithUnsignedInt:self.numberOfAllTasks];
+    task.index = [NSNumber numberWithUnsignedInteger:self.numberOfAllTasks];
     return task;
 }
 
@@ -114,7 +119,7 @@
 
 - (BOOL)removeTask:(STMTask *)task error:(NSError **)error {
     NSNumber *indexNumber =  task.index;
-    int indexOfTaskToRemove = [indexNumber integerValue];
+    NSUInteger indexOfTaskToRemove = [indexNumber unsignedIntegerValue];
 
     [self.context deleteObject:task];
 
@@ -122,7 +127,7 @@
 
     NSError *err = nil;
     if(![self changeIndexBy:-1 inAllTaskWithIndexGreaterThan:indexOfTaskToRemove error:&err]){
-        DDLogError(@"DBController err when removeTask %d: %@", indexOfTaskToRemove, [err localizedDescription]);
+        DDLogError(@"DBController err when removeTask %d: %@", (uint32_t)indexOfTaskToRemove, [err localizedDescription]);
         forwardError(err, error);
         return false;
     }
@@ -130,12 +135,12 @@
     return true;
 }
 
-- (BOOL)changeIndexBy:(NSInteger)change inAllTaskWithIndexGreaterThan:(NSInteger)relatedOrder error:(NSError **)error {
+- (BOOL)changeIndexBy:(NSInteger)change inAllTaskWithIndexGreaterThan:(NSUInteger)relatedOrder error:(NSError **)error {
     NSError *err = nil;
     NSArray * tasks = [self findAllTasksWithIndexHigherThan:relatedOrder error:&err];
 
     if(!tasks){
-        DDLogError(@"DBController err when changeIndexBy inAllTaskWithIndexGreaterThan  %d: %@", relatedOrder, [err localizedDescription]);
+        DDLogError(@"DBController err when changeIndexBy inAllTaskWithIndexGreaterThan  %td: %@", relatedOrder, [err localizedDescription]);
         forwardError(err, error);
         return false;
     }
@@ -147,14 +152,14 @@
     return true;
 }
 
-- (BOOL)changeIndexBy:(NSInteger)change inAllTasksWithIndexHigherThan:(NSInteger)higherThan butLowerThan:(NSInteger)lowerThan error:(NSError **)error {
-    DDLogTrace(@"changeIndexBy %d  higherThan %d lowerThan %d", change, higherThan, lowerThan);
+- (BOOL)changeIndexBy:(NSInteger)change inAllTasksWithIndexHigherThan:(NSUInteger)higherThan butLowerThan:(NSUInteger)lowerThan error:(NSError **)error {
+    DDLogTrace(@"changeIndexBy %zd  higherThan %td lowerThan %td", change, higherThan, lowerThan);
 
     NSError *err = nil;
     NSArray * tasks = [self findAllTasksWithIndexHigherThan:higherThan andLowerThan:lowerThan error:&err];
 
     if(!tasks){
-        DDLogError(@"DBController err when changeIndexBy inAllTasksWithIndexHigherThan %d - %d: %@", higherThan, lowerThan, [err localizedDescription]);
+        DDLogError(@"DBController err when changeIndexBy inAllTasksWithIndexHigherThan %td - %td: %@", higherThan, lowerThan, [err localizedDescription]);
         forwardError(err, error);
         return false;
     }
@@ -192,7 +197,7 @@
     task.index = changedIndexNumber;
 }
 
-- (NSArray *)findAllTasksWithIndexHigherThan:(int)relatedOrder error:(NSError **)error {
+- (NSArray *)findAllTasksWithIndexHigherThan:(NSUInteger)relatedOrder error:(NSError **)error {
 
     NSFetchRequest *request = [self prepareTaskFetchRequest];
 

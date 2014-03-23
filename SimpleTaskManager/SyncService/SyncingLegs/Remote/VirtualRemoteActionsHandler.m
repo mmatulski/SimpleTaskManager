@@ -120,7 +120,7 @@
 
 - (void)generateActionsForTasks:(NSArray *)tasks {
 
-    DDLogInfo(@"TRAFFIC generateActionsForTasks %d", [tasks count]);
+    DDLogInfo(@"TRAFFIC generateActionsForTasks %d", (uint32_t)[tasks count]);
 
 
 
@@ -167,9 +167,6 @@
     }
 
     NSUInteger numberOfTasksToAdd = numberOfTasksToRemove + increase;
-    if(numberOfTasksToAdd < 0){
-        numberOfTasksToAdd = 0;
-    }
 
     NSMutableArray * tasksToChange = [self drawFromArray:tasks numberOfItems:numberOfItemsToChange];
 
@@ -179,8 +176,9 @@
     NSMutableArray *tasksToRename = [[NSMutableArray alloc] init];
 
     //Adding
-    for(int i = 0; i < numberOfTasksToAdd; i++){
-        STMTaskModel *add1 = [[STMTaskModel alloc] initWithName:[NSString stringWithFormat:@"task %d_%d", counter++, i]
+    for(int32_t i = 0; i < numberOfTasksToAdd; i++){
+        counter++;
+        STMTaskModel *add1 = [[STMTaskModel alloc] initWithName:[NSString stringWithFormat:@"task %d_%d", (int32_t) counter, i]
                                                             uid:nil index:nil];
         [tasksToAdd addObject:add1];
     }
@@ -204,7 +202,8 @@
         }
 
         [tasksToRename addObject:taskModel];
-        [taskModel setName:[NSString stringWithFormat:@"renamed %d", renameCounter++]];
+        renameCounter++;
+        [taskModel setName:[NSString stringWithFormat:@"renamed %d", (int32_t) renameCounter]];
         [tasksToChange removeObject:taskModel];
     }
 
@@ -339,17 +338,17 @@
 
     NSUInteger theNewIndex = [taskModel.index unsignedIntegerValue];
     while (theNewIndex == [taskModel.index unsignedIntegerValue]){
-        theNewIndex =  arc4random_uniform(possible);
+        theNewIndex =  arc4random_uniform((u_int32_t)possible);
     }
 
-    taskModel.index = [NSNumber numberWithUnsignedInt:theNewIndex];
+    taskModel.index = [NSNumber numberWithUnsignedInteger:theNewIndex];
 }
 
-- (NSMutableArray *)drawFromArray:(NSArray *)tasks numberOfItems:(int) numberOfTasksToDraw {
+- (NSMutableArray *)drawFromArray:(NSArray *)tasks numberOfItems:(NSUInteger) numberOfTasksToDraw {
     NSMutableArray *result = [[NSMutableArray alloc] init];
 
     NSMutableArray *stillToDraw = [tasks mutableCopy];
-    int numberOfAllItems = [stillToDraw count];
+    NSUInteger numberOfAllItems = [stillToDraw count];
     if(numberOfTasksToDraw >= numberOfAllItems){
         return stillToDraw;
     }
@@ -368,8 +367,8 @@
 }
 
 - (id)drawItemFromArray:(NSMutableArray *)tasks {
-    uint32_t numberOfTasks = [tasks count];
-    uint32_t index = arc4random_uniform(numberOfTasks);
+    NSUInteger numberOfTasks = [tasks count];
+    uint32_t index = arc4random_uniform((uint32_t)numberOfTasks);
     if(index < numberOfTasks){
         return [tasks objectAtIndex:index];
     }

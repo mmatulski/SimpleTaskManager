@@ -6,12 +6,12 @@
 #import "PresentationOverlayView.h"
 #import "PresentationOverlayView+Constraints.h"
 #import "WrappedButton.h"
-#import "PresentationOverlayView+Hints.h"
+#import "PresentationOverlayView+Buttons.h"
 #import "TheNewTaskButton.h"
 #import "TaskOptionsView.h"
 #import "PresentationOverlayView+TaskOptions.h"
 #import "PresentationOverlayView+TheNewTaskDialogHandling.h"
-#import "ConfirmationButton.h"
+#import "SaveNewTaskButton.h"
 #import "CancelButton.h"
 
 CGFloat const kRightMarginForHandlingPanGesture = 20.0;
@@ -48,7 +48,7 @@ CGFloat const kRightMarginForHandlingPanGesture = 20.0;
     self.panGestureRecognizer.delegate = self;
     [self addGestureRecognizer:self.panGestureRecognizer];
 
-    [self showOpeningTheNewTaskViewHint];
+    [self showNewTaskButton];
 }
 
 - (void)didRotate {
@@ -65,7 +65,7 @@ CGFloat const kRightMarginForHandlingPanGesture = 20.0;
     CGPoint translation = [recognizer translationInView:recognizer.view];
 
     if(recognizer.state == UIGestureRecognizerStateBegan){
-        [self userStartsOpeningTheNewTaskDialog];
+        [self userStartsOpeningNewTaskDialog];
     } else if(recognizer.state == UIGestureRecognizerStateChanged){
         [self userMovesTheNewTaskDialogByX:translation.x];
     } else if(recognizer.state == UIGestureRecognizerStateEnded){
@@ -79,12 +79,12 @@ CGFloat const kRightMarginForHandlingPanGesture = 20.0;
     }
 }
 
-- (NSArray *)cachedLayoutConstraints {
-    if(!_cachedLayoutConstraints){
+- (NSArray *)viewLayoutConstraints {
+    if(!_viewLayoutConstraints){
         [self prepareLayoutConstraints];
     }
 
-    return _cachedLayoutConstraints;
+    return _viewLayoutConstraints;
 }
 
 - (CGRect)rectangleForDetectingAddingTask {
@@ -130,7 +130,7 @@ CGFloat const kRightMarginForHandlingPanGesture = 20.0;
         return [super hitTest:point withEvent:event];
     }
 
-    CGRect rectangleForTheNewTaskHintView = self.hintViewForTheNewTask.frame;
+    CGRect rectangleForTheNewTaskHintView = self.theNewTaskButton.frame;
     if(CGRectContainsPoint(rectangleForTheNewTaskHintView, point)){
         return [super hitTest:point withEvent:event];
     }
@@ -172,15 +172,15 @@ CGFloat const kRightMarginForHandlingPanGesture = 20.0;
     CGPoint point = [touch locationInView:self];
 
     if([self isAnyDialogOpenedOrBeganClosing]){
-        if(self.confirmationHintView && self.confirmationHintView.superview){
-            CGRect rectangleForConfirmHintView = self.confirmationHintView.frame;
+        if(self.saveNewTaskButton && self.saveNewTaskButton.superview){
+            CGRect rectangleForConfirmHintView = self.saveNewTaskButton.frame;
             if(CGRectContainsPoint(rectangleForConfirmHintView, point)){
                 return false;
             }
         }
 
-        if(self.cancelHintView && self.cancelHintView.superview){
-            CGRect rectangleForCancelHintView = self.cancelHintView.frame;
+        if(self.cancelNewTaskButton && self.cancelNewTaskButton.superview){
+            CGRect rectangleForCancelHintView = self.cancelNewTaskButton.frame;
             if(CGRectContainsPoint(rectangleForCancelHintView, point)){
                 return false;
             }
@@ -204,7 +204,7 @@ CGFloat const kRightMarginForHandlingPanGesture = 20.0;
 }
 
 - (void)viewDidAppear {
-    [self animatedHintViewForTheNewTaskView:^{
+    [self animateNewTaskButton:^{
 
     }];
 }

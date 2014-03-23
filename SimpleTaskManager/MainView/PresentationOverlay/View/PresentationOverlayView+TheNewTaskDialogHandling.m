@@ -7,8 +7,8 @@
 #import "MainViewConsts.h"
 #import "TheNewTaskDialog.h"
 #import "CGEstimations.h"
-#import "PresentationOverlayView+Hints.h"
-#import "ConfirmationButton.h"
+#import "PresentationOverlayView+Buttons.h"
+#import "SaveNewTaskButton.h"
 #import "CancelButton.h"
 #import "PresentationOverlayViewDelegate.h"
 
@@ -71,7 +71,7 @@
     self.theNewTaskDialogLayoutConstraintsWhenBehindTheLeftEdge = @[H1WhenHiddenBehindLeftEdge, H2, V1, V2];
 }
 
-- (void)userStartsOpeningTheNewTaskDialog {
+- (void)userStartsOpeningNewTaskDialog {
     [self prepareTheNewTaskDialog];
     [self moveTheNewTaskDialogBehindTheRightEdge];
 
@@ -104,7 +104,7 @@
 - (void)userFinishesOpeningTheNewTaskDialogWithTranslation:(CGPoint)translation velocity:(CGPoint)velocity {
     if([self shouldOpenTheNewTaskDialogForTranslation:translation andVelocity:velocity]){
         CGFloat vectorLength = [CGEstimations pointDistanceToCenterOfAxis:velocity];
-        [self animatedMovingTheNewTaskDialogToOpenedStatePosition:vectorLength completion:NULL];
+        [self animatedMovingNewTaskDialogToOpenedStatePosition:vectorLength completion:NULL];
 
     } else {
         [self animateClosingTheNewTaskDialogToTheRightEdge];
@@ -132,7 +132,7 @@
 }
 
 //TODO replace strength with time
-- (void)animatedMovingTheNewTaskDialogToOpenedStatePosition:(CGFloat)strength completion:(void (^)(void)) completion {
+- (void)animatedMovingNewTaskDialogToOpenedStatePosition:(CGFloat)strength completion:(void (^)(void)) completion {
 
     self.state = PresentationOverlayStateNewTaskDialogOpeningAnimating;
 
@@ -142,8 +142,8 @@
         animationDuration = 0.7;
     }
 
-    self.confirmationHintView.alpha = 0.0;
-    self.cancelHintView.alpha = 0.0;
+    self.saveNewTaskButton.alpha = 0.0;
+    self.cancelNewTaskButton.alpha = 0.0;
     [self.theNewTaskDialog setEditing];
 
     [UIView animateWithDuration:animationDuration animations:^{
@@ -151,8 +151,8 @@
         [self addConstraints:self.theNewTaskDialogLayoutConstraintsWhenOpened];
         [self layoutSubviews];
 
-        self.confirmationHintView.alpha = 1.0;
-        self.cancelHintView.alpha = 1.0;
+        self.saveNewTaskButton.alpha = 1.0;
+        self.cancelNewTaskButton.alpha = 1.0;
 
     } completion:^(BOOL finished) {
         [self theNewTaskViewNowIsOpenedAndReady];
@@ -168,8 +168,8 @@
     [self.theNewTaskDialog setEditing];
     [self moveGestureRecognizerToThewNewTaskDialog];
 
-    [self showConfirmationHint];
-    [self showCancelHint];
+    [self showSaveNewTaskButton];
+    [self showCancelNewTaskButton];
 }
 
 - (void)animateClosingTheNewTaskDialogToTheRightEdge {
@@ -179,8 +179,8 @@
     [UIView animateWithDuration:0.7 animations:^{
         [self removeConstraints:self.theNewTaskDialogLayoutConstraintsWhenOpened];
         [self addConstraints:self.theNewTaskDialogLayoutConstraintsWhenBehindTheRightEdge];
-        self.confirmationHintView.alpha = 0.0;
-        self.cancelHintView.alpha = 0.0;
+        self.saveNewTaskButton.alpha = 0.0;
+        self.cancelNewTaskButton.alpha = 0.0;
 
         [self layoutSubviews];
     } completion:^(BOOL finished) {
@@ -195,8 +195,8 @@
 
     [self returnGestureRecognizerFromThewNewTaskDialog];
 
-    [self removeConfirmationHintView];
-    [self removeCancelHintView];
+    [self removeSaveNewTaskButton];
+    [self removeCancelTaskButton];
 }
 
 - (void)returnGestureRecognizerFromThewNewTaskDialog {
@@ -223,7 +223,7 @@
 
 
     } else if(recognizer.state == UIGestureRecognizerStateCancelled || recognizer.state == UIGestureRecognizerStateFailed) {
-        [self animatedMovingTheNewTaskDialogToOpenedStatePosition:0.0 completion:NULL];
+        [self animatedMovingNewTaskDialogToOpenedStatePosition:0.0 completion:NULL];
     }
 }
 
@@ -245,12 +245,12 @@
                 warningMessage = @"The task can not be empty";
             }
 
-            [self animatedMovingTheNewTaskDialogToOpenedStatePosition:0.0 completion:^{
+            [self animatedMovingNewTaskDialogToOpenedStatePosition:0.0 completion:^{
                 [self showWarningForTheNewTask:warningMessage];
             }];
         }
     } else {
-        [self animatedMovingTheNewTaskDialogToOpenedStatePosition:0.0 completion:^{
+        [self animatedMovingNewTaskDialogToOpenedStatePosition:0.0 completion:^{
 
         }];
     }
@@ -281,8 +281,8 @@
     [UIView animateWithDuration:0.7 animations:^{
         [self removeConstraints:self.theNewTaskDialogLayoutConstraintsWhenOpened];
         [self addConstraints:self.theNewTaskDialogLayoutConstraintsWhenBehindTheLeftEdge];
-        self.confirmationHintView.alpha = 0.0;
-        self.cancelHintView.alpha = 0.0;
+        self.saveNewTaskButton.alpha = 0.0;
+        self.cancelNewTaskButton.alpha = 0.0;
 
         [self layoutSubviews];
     } completion:^(BOOL finished) {
@@ -317,9 +317,19 @@
     return NO;
 }
 
-- (BOOL)canShowTheNewTaskDialog {
+- (BOOL)canShowNewTaskDialog {
     return self.state == PresentationOverlayStateNormal;
 }
 
+- (void)animateNewTaskViewBackToOpenedPositionWithWarning {
+    NSString *warningMessage = nil;
+    if (![self.theNewTaskDialog isNameValid]) {
+        warningMessage = @"The task can not be empty";
+    }
+
+    [self animatedMovingNewTaskDialogToOpenedStatePosition:0.0 completion:^{
+        [self showWarningForTheNewTask:warningMessage];
+    }];
+}
 
 @end

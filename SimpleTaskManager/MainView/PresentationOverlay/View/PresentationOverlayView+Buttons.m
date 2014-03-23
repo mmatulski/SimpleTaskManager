@@ -3,127 +3,108 @@
 // Copyright (c) 2014 Tomato. All rights reserved.
 //
 
-#import "PresentationOverlayView+Hints.h"
+#import "PresentationOverlayView+Buttons.h"
 #import "WrappedButton.h"
 #import "PresentationOverlayView+Constraints.h"
 #import "TheNewTaskButton.h"
 #import "PresentationOverlayView+TheNewTaskDialogHandling.h"
-#import "ConfirmationButton.h"
+#import "SaveNewTaskButton.h"
 #import "TheNewTaskDialog.h"
 #import "CancelButton.h"
 #import "PresentationOverlayViewDelegate.h"
 
 
-@implementation PresentationOverlayView (Hints)
+@implementation PresentationOverlayView (Buttons)
 
--(void) showOpeningTheNewTaskViewHint{
-    self.hintViewForTheNewTask = [[TheNewTaskButton alloc] initWithFrame:CGRectMake(0, 0, 70.0, 30.0)];
-    [self.hintViewForTheNewTask setTranslatesAutoresizingMaskIntoConstraints:NO];
-    [self addSubview:self.hintViewForTheNewTask];
+#pragma mark - Showing buttons
 
-    [self prepareHintViewLayoutsConstraintsForNewTask];
+-(void)showNewTaskButton {
+    self.theNewTaskButton = [[TheNewTaskButton alloc] initWithFrame:CGRectZero];
+    [self addSubview:self.theNewTaskButton];
 
-    [self.hintViewForTheNewTask setTarget:self];
-    [self.hintViewForTheNewTask setAction:@selector(userDidTapOnTheNewTaskHintView)];
+    [self prepareNewTaskButtonLayoutsConstraints];
+    [self.theNewTaskButton setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [self addConstraints:_theNewTaskButtonLayoutConstraints];
+
+    [self.theNewTaskButton setTarget:self];
+    [self.theNewTaskButton setAction:@selector(userDidTapOnNewTaskButton)];
 }
 
-- (void)showConfirmationHint {
-    if(self.confirmationHintView){
-        [self removeConfirmationHintView];
+- (void)showSaveNewTaskButton {
+    if(self.saveNewTaskButton){
+        [self removeSaveNewTaskButton];
     }
 
-    self.confirmationHintView = [[ConfirmationButton alloc] initWithFrame:CGRectMake(0, 0, 70.0, 30.0)];
-    [self.confirmationHintView setTranslatesAutoresizingMaskIntoConstraints:NO];
-    [self addSubview:self.confirmationHintView];
+    self.saveNewTaskButton = [[SaveNewTaskButton alloc] initWithFrame:CGRectZero];
+    [self addSubview:self.saveNewTaskButton];
 
-    [self prepareHintViewLayoutsConstraintsForConfirmHint];
-    [self addConstraints:_confirmationHintViewLayoutConstraints];
+    [self prepareSaveNewTaskButtonLayoutConstraints];
+    [self.saveNewTaskButton setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [self addConstraints:_saveNewTaskButtonLayoutConstraints];
 
-    [self.confirmationHintView setTarget:self];
-    [self.confirmationHintView setAction:@selector(userDidTapOnTheConfirmHintView)];
+    [self.saveNewTaskButton setTarget:self];
+    [self.saveNewTaskButton setAction:@selector(userDidTapOnSaveNewTaskButton)];
 }
 
-- (void)showCancelHint {
-    if(self.cancelHintView){
-        [self removeCancelHintView];
+- (void)showCancelNewTaskButton {
+    if(self.cancelNewTaskButton){
+        [self removeCancelTaskButton];
     }
 
-    self.cancelHintView = [[CancelButton alloc] initWithFrame:CGRectMake(0, 0, 70.0, 30.0)];
-    [self.cancelHintView setTranslatesAutoresizingMaskIntoConstraints:NO];
-    [self addSubview:self.cancelHintView];
+    self.cancelNewTaskButton = [[CancelButton alloc] initWithFrame:CGRectZero];
+    [self addSubview:self.cancelNewTaskButton];
 
-    [self prepareHintViewLayoutsConstraintsForCancelHint];
-    [self addConstraints:_cancelHintViewLayoutConstraints];
+    [self prepareCancelNewTaskButtonLayoutsConstraints];
+    [self.cancelNewTaskButton setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [self addConstraints:_cancelNewTaskButtonLayoutConstraints];
 
-    [self.cancelHintView setTarget:self];
-    [self.cancelHintView setAction:@selector(userDidTapOnTheCancelHintView)];
+    [self.cancelNewTaskButton setTarget:self];
+    [self.cancelNewTaskButton setAction:@selector(userDidTapOnCancelNewTaskButton)];
 }
 
-- (void)userDidTapOnTheNewTaskHintView {
-    if([self canShowTheNewTaskDialog]){
-        [self userStartsOpeningTheNewTaskDialog];
-        [self animatedMovingTheNewTaskDialogToOpenedStatePosition:0.0 completion:NULL];
+#pragma marl - Hiding buttons
+
+- (void)removeSaveNewTaskButton {
+    [self.saveNewTaskButton removeFromSuperview];
+    if(_saveNewTaskButtonLayoutConstraints){
+        [self removeConstraints:_saveNewTaskButtonLayoutConstraints];
+    }
+    self.saveNewTaskButton = nil;
+}
+
+- (void)removeCancelTaskButton {
+    [self.cancelNewTaskButton removeFromSuperview];
+    if(_cancelNewTaskButtonLayoutConstraints){
+        [self removeConstraints:_cancelNewTaskButtonLayoutConstraints];
+    }
+    self.cancelNewTaskButton = nil;
+}
+
+#pragma mark - Actions
+
+- (void)userDidTapOnNewTaskButton {
+    if([self canShowNewTaskDialog]){
+        [self userStartsOpeningNewTaskDialog];
+        [self animatedMovingNewTaskDialogToOpenedStatePosition:0.0 completion:NULL];
     }
 }
 
-- (void)userDidTapOnTheCancelHintView {
-    [self animateClosingTheNewTaskDialogToTheRightEdge];
-}
-
-- (void)userDidTapOnTheConfirmHintView {
+- (void)userDidTapOnSaveNewTaskButton {
     if([self.theNewTaskDialog isNameValid]){
         [self.delegate userWantsToSaveTheNewTask:[self.theNewTaskDialog taskName]];
     } else {
-        NSString *warningMessage = nil;
-        if(![self.theNewTaskDialog isNameValid]){
-            warningMessage = @"The task can not be empty";
-        }
-
-        [self animatedMovingTheNewTaskDialogToOpenedStatePosition:0.0 completion:^{
-            [self showWarningForTheNewTask:warningMessage];
-        }];
+        [self animateNewTaskViewBackToOpenedPositionWithWarning];
     }
 }
 
-
--(void) animatedHintViewForTheNewTaskView:(void (^)(void)) completion{
-    if(!self.hintViewForTheNewTask){
-        [self showOpeningTheNewTaskViewHint];
-    }
-
-    [_widthConstraintForNewTaskHintView setConstant:70];
-    [self layoutSubviews];
-    [UIView animateWithDuration:0.5 animations:^{
-        [_widthConstraintForNewTaskHintView setConstant:110];
-        [self layoutSubviews];
-    } completion:^(BOOL finished) {
-        [UIView animateWithDuration:0.3 animations:^{
-            [_widthConstraintForNewTaskHintView setConstant:50];
-            [self layoutSubviews];
-        } completion:^(BOOL finished) {
-            [UIView animateWithDuration:0.5 animations:^{
-                [_widthConstraintForNewTaskHintView setConstant:90];
-                [self layoutSubviews];
-            } completion:^(BOOL finished) {
-                [UIView animateWithDuration:0.5 animations:^{
-                    [_widthConstraintForNewTaskHintView setConstant:70];
-                    [self layoutSubviews];
-                } completion:^(BOOL finished) {
-                    [_widthConstraintForNewTaskHintView setConstant:70];
-                    if(completion){
-                        completion();
-                    }
-                }];
-            }];
-        }];
-    }];
+- (void)userDidTapOnCancelNewTaskButton {
+    [self animateClosingTheNewTaskDialogToTheRightEdge];
 }
 
+#pragma mark - Layout constraints
 
-
-
-- (void)prepareHintViewLayoutsConstraintsForNewTask {
-    NSLayoutConstraint *H1 = [NSLayoutConstraint constraintWithItem:self.hintViewForTheNewTask
+- (void)prepareNewTaskButtonLayoutsConstraints {
+    NSLayoutConstraint *H1 = [NSLayoutConstraint constraintWithItem:self.theNewTaskButton
                                                                                   attribute:NSLayoutAttributeTrailing
                                                                                   relatedBy:NSLayoutRelationEqual
                                                                                      toItem:self
@@ -131,7 +112,7 @@
                                                                                  multiplier:1.0
                                                                                    constant:0.0];
 
-    NSLayoutConstraint * H2 = [NSLayoutConstraint constraintWithItem:self.hintViewForTheNewTask
+    NSLayoutConstraint * H2 = [NSLayoutConstraint constraintWithItem:self.theNewTaskButton
                                                            attribute:NSLayoutAttributeWidth
                                                            relatedBy:NSLayoutRelationEqual
                                                               toItem:nil
@@ -139,10 +120,10 @@
                                                           multiplier:1.0
                                                             constant:70.0];
 
-    _trailingConstraintForNewTaskHintView = H1;
-    _widthConstraintForNewTaskHintView = H2;
+    _trailingConstraintForNewTaskButton = H1;
+    _widthConstraintForNewTaskButton = H2;
 
-    NSLayoutConstraint * V1 = [NSLayoutConstraint constraintWithItem:self.hintViewForTheNewTask
+    NSLayoutConstraint * V1 = [NSLayoutConstraint constraintWithItem:self.theNewTaskButton
                                                            attribute:NSLayoutAttributeTop
                                                            relatedBy:NSLayoutRelationEqual
                                                               toItem:self
@@ -150,19 +131,18 @@
                                                           multiplier:1.0
                                                             constant:60.0];
 
-    NSLayoutConstraint * V2 = [NSLayoutConstraint constraintWithItem:self.hintViewForTheNewTask
+    NSLayoutConstraint * V2 = [NSLayoutConstraint constraintWithItem:self.theNewTaskButton
                                                            attribute:NSLayoutAttributeHeight
                                                            relatedBy:NSLayoutRelationEqual
                                                               toItem:nil
                                                            attribute:NSLayoutAttributeHeight
                                                           multiplier:1.0
                                                             constant:40.0];
-    _hintViewForTheNewTaskLayoutConstraints = @[H1, H2, V1, V2];
-    [self addConstraints:_hintViewForTheNewTaskLayoutConstraints];
+    _theNewTaskButtonLayoutConstraints = @[H1, H2, V1, V2];
 }
 
-- (void)prepareHintViewLayoutsConstraintsForConfirmHint {
-    NSLayoutConstraint *H1 = [NSLayoutConstraint constraintWithItem:self.confirmationHintView
+- (void)prepareSaveNewTaskButtonLayoutConstraints {
+    NSLayoutConstraint *H1 = [NSLayoutConstraint constraintWithItem:self.saveNewTaskButton
                                                           attribute:NSLayoutAttributeLeading
                                                           relatedBy:NSLayoutRelationEqual
                                                              toItem:self
@@ -170,7 +150,7 @@
                                                          multiplier:1.0
                                                            constant:0.0];
 
-    NSLayoutConstraint * H2 = [NSLayoutConstraint constraintWithItem:self.confirmationHintView
+    NSLayoutConstraint * H2 = [NSLayoutConstraint constraintWithItem:self.saveNewTaskButton
                                                            attribute:NSLayoutAttributeWidth
                                                            relatedBy:NSLayoutRelationEqual
                                                               toItem:nil
@@ -178,10 +158,10 @@
                                                           multiplier:1.0
                                                             constant:70.0];
 
-    _leadingConstraintForConfirmationHintView = H1;
-    _widthConstraintForConfirmationHintView = H2;
+    _leadingConstraintForSaveNewTaskButton = H1;
+    _widthConstraintForSaveNewTaskButton = H2;
 
-    NSLayoutConstraint * V1 = [NSLayoutConstraint constraintWithItem:self.confirmationHintView
+    NSLayoutConstraint * V1 = [NSLayoutConstraint constraintWithItem:self.saveNewTaskButton
                                                            attribute:NSLayoutAttributeTop
                                                            relatedBy:NSLayoutRelationEqual
                                                               toItem:self
@@ -189,18 +169,18 @@
                                                           multiplier:1.0
                                                             constant:20.0];
 
-    NSLayoutConstraint * V2 = [NSLayoutConstraint constraintWithItem:self.confirmationHintView
+    NSLayoutConstraint * V2 = [NSLayoutConstraint constraintWithItem:self.saveNewTaskButton
                                                            attribute:NSLayoutAttributeHeight
                                                            relatedBy:NSLayoutRelationEqual
                                                               toItem:nil
                                                            attribute:NSLayoutAttributeHeight
                                                           multiplier:1.0
                                                             constant:40.0];
-    _confirmationHintViewLayoutConstraints = @[H1, H2, V1, V2];
+    _saveNewTaskButtonLayoutConstraints = @[H1, H2, V1, V2];
 }
 
-- (void)prepareHintViewLayoutsConstraintsForCancelHint {
-    NSLayoutConstraint *H1 = [NSLayoutConstraint constraintWithItem:self.cancelHintView
+- (void)prepareCancelNewTaskButtonLayoutsConstraints {
+    NSLayoutConstraint *H1 = [NSLayoutConstraint constraintWithItem:self.cancelNewTaskButton
                                                           attribute:NSLayoutAttributeTrailing
                                                           relatedBy:NSLayoutRelationEqual
                                                              toItem:self
@@ -208,7 +188,7 @@
                                                          multiplier:1.0
                                                            constant:0.0];
 
-    NSLayoutConstraint * H2 = [NSLayoutConstraint constraintWithItem:self.cancelHintView
+    NSLayoutConstraint * H2 = [NSLayoutConstraint constraintWithItem:self.cancelNewTaskButton
                                                            attribute:NSLayoutAttributeWidth
                                                            relatedBy:NSLayoutRelationEqual
                                                               toItem:nil
@@ -216,10 +196,10 @@
                                                           multiplier:1.0
                                                             constant:70.0];
 
-    _trailingConstraintForCancelHintView = H1;
-    _widthConstraintForCancelHintView = H2;
+    _trailingConstraintForCancelNewTaskButton = H1;
+    _widthConstraintForCancelNewTaskButton = H2;
 
-    NSLayoutConstraint * V1 = [NSLayoutConstraint constraintWithItem:self.cancelHintView
+    NSLayoutConstraint * V1 = [NSLayoutConstraint constraintWithItem:self.cancelNewTaskButton
                                                            attribute:NSLayoutAttributeTop
                                                            relatedBy:NSLayoutRelationEqual
                                                               toItem:self
@@ -227,30 +207,49 @@
                                                           multiplier:1.0
                                                             constant:20.0];
 
-    NSLayoutConstraint * V2 = [NSLayoutConstraint constraintWithItem:self.cancelHintView
+    NSLayoutConstraint * V2 = [NSLayoutConstraint constraintWithItem:self.cancelNewTaskButton
                                                            attribute:NSLayoutAttributeHeight
                                                            relatedBy:NSLayoutRelationEqual
                                                               toItem:nil
                                                            attribute:NSLayoutAttributeHeight
                                                           multiplier:1.0
                                                             constant:40.0];
-    _cancelHintViewLayoutConstraints = @[H1, H2, V1, V2];
+    _cancelNewTaskButtonLayoutConstraints = @[H1, H2, V1, V2];
 }
 
-- (void)removeConfirmationHintView {
-    [self.confirmationHintView removeFromSuperview];
-    if(_confirmationHintViewLayoutConstraints){
-        [self removeConstraints:_confirmationHintViewLayoutConstraints];
-    }
-    self.confirmationHintView = nil;
-}
+#pragma mark - Animations
 
-- (void)removeCancelHintView {
-    [self.cancelHintView removeFromSuperview];
-    if(_cancelHintViewLayoutConstraints){
-        [self removeConstraints:_cancelHintViewLayoutConstraints];
+-(void)animateNewTaskButton:(void (^)(void)) completion{
+    if(!self.theNewTaskButton){
+        [self showNewTaskButton];
     }
-    self.cancelHintView = nil;
+
+    [_widthConstraintForNewTaskButton setConstant:70];
+    [self layoutSubviews];
+    [UIView animateWithDuration:0.5 animations:^{
+        [_widthConstraintForNewTaskButton setConstant:110];
+        [self layoutSubviews];
+    } completion:^(BOOL finished) {
+        [UIView animateWithDuration:0.3 animations:^{
+            [_widthConstraintForNewTaskButton setConstant:50];
+            [self layoutSubviews];
+        } completion:^(BOOL finished1) {
+            [UIView animateWithDuration:0.5 animations:^{
+                [_widthConstraintForNewTaskButton setConstant:90];
+                [self layoutSubviews];
+            } completion:^(BOOL finished2) {
+                [UIView animateWithDuration:0.5 animations:^{
+                    [_widthConstraintForNewTaskButton setConstant:70];
+                    [self layoutSubviews];
+                } completion:^(BOOL finished3) {
+                    [_widthConstraintForNewTaskButton setConstant:70];
+                    if(completion){
+                        completion();
+                    }
+                }];
+            }];
+        }];
+    }];
 }
 
 @end

@@ -8,6 +8,6 @@
 
 @interface PresentationOverlayView (Constraints)
 
-
 - (void)prepareLayoutConstraints;
+
 @end

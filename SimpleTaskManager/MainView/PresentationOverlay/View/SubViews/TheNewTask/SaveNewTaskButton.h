@@ -7,6 +7,6 @@
 #import "WrappedButton.h"
 
 
-@interface ConfirmationButton : WrappedButton
+@interface SaveNewTaskButton : WrappedButton
 
 @end

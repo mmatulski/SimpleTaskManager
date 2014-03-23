@@ -9,7 +9,7 @@
 @class TheNewTaskDialog;
 @class WrappedButton;
 @class TheNewTaskButton;
-@class ConfirmationButton;
+@class SaveNewTaskButton;
 @class CancelButton;
 @class TaskOptionsView;
 @protocol PresentationOverlayViewDelegate;
@@ -24,17 +24,17 @@ It contains "Add" button and handles pan gestures which allows to pill AdTaskVie
     CGRect _rectangleSensitiveForAddingTask;
     CGPoint _originalPositionOfTheNewTaskDialogBeforeMoving;
 
-    NSLayoutConstraint *_trailingConstraintForNewTaskHintView;
-    NSLayoutConstraint *_widthConstraintForNewTaskHintView;
-    NSArray *_hintViewForTheNewTaskLayoutConstraints;
+    NSLayoutConstraint *_trailingConstraintForNewTaskButton;
+    NSLayoutConstraint *_widthConstraintForNewTaskButton;
+    NSArray *_theNewTaskButtonLayoutConstraints;
 
-    NSLayoutConstraint *_leadingConstraintForConfirmationHintView;
-    NSLayoutConstraint *_widthConstraintForConfirmationHintView;
-    NSArray *_confirmationHintViewLayoutConstraints;
+    NSLayoutConstraint *_leadingConstraintForSaveNewTaskButton;
+    NSLayoutConstraint *_widthConstraintForSaveNewTaskButton;
+    NSArray *_saveNewTaskButtonLayoutConstraints;
 
-    NSLayoutConstraint *_trailingConstraintForCancelHintView;
-    NSLayoutConstraint *_widthConstraintForCancelHintView;
-    NSArray *_cancelHintViewLayoutConstraints;
+    NSLayoutConstraint *_trailingConstraintForCancelNewTaskButton;
+    NSLayoutConstraint *_widthConstraintForCancelNewTaskButton;
+    NSArray *_cancelNewTaskButtonLayoutConstraints;
 
     NSLayoutConstraint *_taskOptionsTopLayoutConstraint;
     NSLayoutConstraint *_taskOptionsHeightLayoutConstraint;
@@ -48,12 +48,12 @@ It contains "Add" button and handles pan gestures which allows to pill AdTaskVie
 @property(nonatomic, strong) UIPanGestureRecognizer *panGestureRecognizer;
 
 @property(nonatomic, strong) TheNewTaskDialog *theNewTaskDialog;
-@property(nonatomic, strong) TheNewTaskButton *hintViewForTheNewTask;
-@property(nonatomic, strong) ConfirmationButton *confirmationHintView;
-@property(nonatomic, strong) CancelButton *cancelHintView;
+@property(nonatomic, strong) TheNewTaskButton *theNewTaskButton;
+@property(nonatomic, strong) SaveNewTaskButton *saveNewTaskButton;
+@property(nonatomic, strong) CancelButton *cancelNewTaskButton;
 @property(nonatomic, strong) TaskOptionsView *taskOptionsView;
 
-@property(nonatomic, strong) NSArray *cachedLayoutConstraints;
+@property(nonatomic, strong) NSArray *viewLayoutConstraints;
 @property(nonatomic, strong) NSArray *theNewTaskDialogLayoutConstraintsWhenOpened;
 @property(nonatomic, strong) NSArray *theNewTaskDialogLayoutConstraintsWhenBehindTheRightEdge;
 @property(nonatomic, strong) NSArray *theNewTaskDialogLayoutConstraintsWhenBehindTheLeftEdge;

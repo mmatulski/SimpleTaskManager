@@ -3,10 +3,10 @@
 // Copyright (c) 2014 Tomato. All rights reserved.
 //
 
-#import "ConfirmationButton.h"
+#import "SaveNewTaskButton.h"
 
 
-@implementation ConfirmationButton {
+@implementation SaveNewTaskButton {
 
 }
 

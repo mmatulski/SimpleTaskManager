@@ -12,7 +12,7 @@
 		46AE20A3875D1A44A068ABAD /* MainView.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE2D32702E0672E728A97A /* MainView.m */; };
 		46AE20AB481B38EEF613E706 /* SyncingLeg.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE27B3785FF74D45399323 /* SyncingLeg.m */; };
 		46AE20B46371F8858AFE3223 /* DBController+Undo.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE2AA7E85BC6C84484A095 /* DBController+Undo.m */; };
-		46AE20E5CC159DACA63F6047 /* PresentationOverlayView+Hints.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE2121B748D6CB8159610B /* PresentationOverlayView+Hints.m */; };
+		46AE20E5CC159DACA63F6047 /* PresentationOverlayView+Buttons.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE2121B748D6CB8159610B /* PresentationOverlayView+Buttons.m */; };
 		46AE212FD05EAEE66E043BF6 /* CGEstimations.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE28169C473584C7C5B45F /* CGEstimations.m */; };
 		46AE2153F6C011F2F20265FF /* ManagedOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE25FD85290A458E703B16 /* ManagedOperation.m */; };
 		46AE2163332C1162E9DE7E72 /* TaskTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE2EF0D288C7BF6BC90F48 /* TaskTableViewCell.m */; };
@@ -23,7 +23,7 @@
 		46AE220496BA281974A04197 /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 46AE2909F0FA738F7A189047 /* Main_iPhone.storyboard */; };
 		46AE2243092563CDC3ED229F /* NotificationsObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE2969DC9F972724708D92 /* NotificationsObserver.m */; };
 		46AE2248D5B2668A6584BFF1 /* STMTaskModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE2F787F03E57EFE1840F8 /* STMTaskModel.m */; };
-		46AE225272A5E606A108D9ED /* ConfirmationButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE2C40335F7FCFD8B51A54 /* ConfirmationButton.m */; };
+		46AE225272A5E606A108D9ED /* SaveNewTaskButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE2C40335F7FCFD8B51A54 /* SaveNewTaskButton.m */; };
 		46AE22663A7440C2240CFD78 /* DispatchQueueLogFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE2DDC84F3D49BDF480F09 /* DispatchQueueLogFormatter.m */; };
 		46AE227EE89832BC06100B60 /* CancelButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE23D09C099402D790F49A /* CancelButton.m */; };
 		46AE22B08BB9D9DA976ED30F /* RemoteConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE237EA8E59CF3C97D72EB /* RemoteConnection.m */; };
@@ -121,7 +121,7 @@
 		46AE20A67A3FBD648624AE71 /* NotificationsSender.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotificationsSender.m; sourceTree = "<group>"; };
 		46AE20A9055962495CAAC61F /* CGEstimations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGEstimations.h; sourceTree = "<group>"; };
 		46AE21153B5888DDB97B88E1 /* PresentationOverlayView+Constraints.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "PresentationOverlayView+Constraints.m"; sourceTree = "<group>"; };
-		46AE2121B748D6CB8159610B /* PresentationOverlayView+Hints.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "PresentationOverlayView+Hints.m"; sourceTree = "<group>"; };
+		46AE2121B748D6CB8159610B /* PresentationOverlayView+Buttons.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "PresentationOverlayView+Buttons.m"; sourceTree = "<group>"; };
 		46AE213846FBC49661E8DD72 /* DDTTYLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDTTYLogger.h; sourceTree = "<group>"; };
 		46AE214CAA6AD25D5BFE6A36 /* RenameOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RenameOperation.m; sourceTree = "<group>"; };
 		46AE2181CA44ACD28EEA7214 /* DeselectTaskButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeselectTaskButton.m; sourceTree = "<group>"; };
@@ -198,11 +198,11 @@
 		46AE29520211A7CB2A4CC530 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		46AE2969DC9F972724708D92 /* NotificationsObserver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotificationsObserver.m; sourceTree = "<group>"; };
 		46AE297741B5EE56A7A18280 /* MainViewConsts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewConsts.h; sourceTree = "<group>"; };
-		46AE2979C94CBA1D24595311 /* PresentationOverlayView+Hints.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PresentationOverlayView+Hints.h"; sourceTree = "<group>"; };
+		46AE2979C94CBA1D24595311 /* PresentationOverlayView+Buttons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PresentationOverlayView+Buttons.h"; sourceTree = "<group>"; };
 		46AE298CFF8F37B9D8FA3FAB /* DBController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBController.h; sourceTree = "<group>"; };
 		46AE29E1A4C377B4F05FA752 /* PresentationOverlayView+Constraints.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PresentationOverlayView+Constraints.h"; sourceTree = "<group>"; };
 		46AE2A08CB044C41DA1A33EA /* AppMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppMacros.h; sourceTree = "<group>"; };
-		46AE2A0EBB5231A371F7A9DF /* ConfirmationButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfirmationButton.h; sourceTree = "<group>"; };
+		46AE2A0EBB5231A371F7A9DF /* SaveNewTaskButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SaveNewTaskButton.h; sourceTree = "<group>"; };
 		46AE2A42699670AEA8148DD0 /* SyncOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyncOperation.h; sourceTree = "<group>"; };
 		46AE2A4623A8E17D88150A60 /* LocalUserLeg.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalUserLeg.m; sourceTree = "<group>"; };
 		46AE2A6F94B596B531D78DD6 /* MainTableConsts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainTableConsts.h; sourceTree = "<group>"; };
@@ -221,7 +221,7 @@
 		46AE2BE7D371E23F667CDF8B /* UIView+ScreenshootExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+ScreenshootExtension.m"; sourceTree = "<group>"; };
 		46AE2BF1DF56BE1F935C1B3E /* STMTaskModel+JSONSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "STMTaskModel+JSONSerializer.m"; sourceTree = "<group>"; };
 		46AE2C344FA95CD5DD9843F6 /* MainTableConsts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainTableConsts.m; sourceTree = "<group>"; };
-		46AE2C40335F7FCFD8B51A54 /* ConfirmationButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfirmationButton.m; sourceTree = "<group>"; };
+		46AE2C40335F7FCFD8B51A54 /* SaveNewTaskButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SaveNewTaskButton.m; sourceTree = "<group>"; };
 		46AE2C5102BC649B877682E5 /* DDFileLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDFileLogger.h; sourceTree = "<group>"; };
 		46AE2C62220A53387B3AFF2C /* DBController+Internal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DBController+Internal.m"; sourceTree = "<group>"; };
 		46AE2C76FD9F949669985F67 /* DDTTYLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDTTYLogger.m; sourceTree = "<group>"; };
@@ -474,10 +474,10 @@
 				46AE29E1A4C377B4F05FA752 /* PresentationOverlayView+Constraints.h */,
 				46AE2B5979AA78A00BBB79F3 /* PresentationOverlayView+TheNewTaskDialogHandling.m */,
 				46AE2F779F767D38DA89F712 /* PresentationOverlayView+TaskOptions.m */,
-				46AE2979C94CBA1D24595311 /* PresentationOverlayView+Hints.h */,
+				46AE2979C94CBA1D24595311 /* PresentationOverlayView+Buttons.h */,
 				46AE2BE3B00AC3763189619E /* PresentationOverlayView+TaskOptions.h */,
 				46AE2EC25700C25DA2D79904 /* PresentationOverlayView.m */,
-				46AE2121B748D6CB8159610B /* PresentationOverlayView+Hints.m */,
+				46AE2121B748D6CB8159610B /* PresentationOverlayView+Buttons.m */,
 				46AE21C44140A0D54467A600 /* PresentationOverlayView.h */,
 				46AE21153B5888DDB97B88E1 /* PresentationOverlayView+Constraints.m */,
 				46AE2DCD9A0EF7019A6C597E /* PresentationOverlayView+TheNewTaskDialogHandling.h */,
@@ -588,8 +588,8 @@
 				46AE2856CD9E6174273BD28C /* TheNewTaskButton.m */,
 				46AE23D09C099402D790F49A /* CancelButton.m */,
 				46AE249B31D48B5865720977 /* CancelButton.h */,
-				46AE2A0EBB5231A371F7A9DF /* ConfirmationButton.h */,
-				46AE2C40335F7FCFD8B51A54 /* ConfirmationButton.m */,
+				46AE2A0EBB5231A371F7A9DF /* SaveNewTaskButton.h */,
+				46AE2C40335F7FCFD8B51A54 /* SaveNewTaskButton.m */,
 			);
 			path = TheNewTask;
 			sourceTree = "<group>";
@@ -1020,7 +1020,7 @@
 				46AE2372F771F4A695FC548F /* PresentationOverlayView+TheNewTaskDialogHandling.m in Sources */,
 				46AE2C50ABA94F8C91391A92 /* PresentationOverlayView+TaskOptions.m in Sources */,
 				46AE2C8578F4C46CEE6095B3 /* PresentationOverlayView.m in Sources */,
-				46AE20E5CC159DACA63F6047 /* PresentationOverlayView+Hints.m in Sources */,
+				46AE20E5CC159DACA63F6047 /* PresentationOverlayView+Buttons.m in Sources */,
 				46AE293A7D18D8BFE66C5740 /* PresentationOverlayView+Constraints.m in Sources */,
 				46AE293373C0959D571686E6 /* TaskOptionsView.m in Sources */,
 				46AE2E172E1236C75C9E9045 /* DeselectTaskButton.m in Sources */,
@@ -1028,7 +1028,7 @@
 				46AE2FFC427BB9D20420498C /* TheNewTaskDialog.m in Sources */,
 				46AE23FBB5A6E9C4AB51DC2F /* TheNewTaskButton.m in Sources */,
 				46AE227EE89832BC06100B60 /* CancelButton.m in Sources */,
-				46AE225272A5E606A108D9ED /* ConfirmationButton.m in Sources */,
+				46AE225272A5E606A108D9ED /* SaveNewTaskButton.m in Sources */,
 				46AE2546ED20173CEF7842B4 /* PresentationOverlayController.m in Sources */,
 				46AE2EDFE5374BB27A6A2CD4 /* STMTaskModel+JSONSerializer.m in Sources */,
 			);

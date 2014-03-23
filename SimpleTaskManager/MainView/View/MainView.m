@@ -49,7 +49,7 @@
     [self addSubview:self.overlayView];
 
     [self.overlayView setTranslatesAutoresizingMaskIntoConstraints:NO];
-    [self addConstraints:self.overlayView.cachedLayoutConstraints];
+    [self addConstraints:self.overlayView.viewLayoutConstraints];
 }
 
 /*

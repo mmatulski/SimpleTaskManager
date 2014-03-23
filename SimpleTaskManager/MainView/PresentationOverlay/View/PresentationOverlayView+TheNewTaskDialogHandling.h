@@ -8,7 +8,7 @@
 
 @interface PresentationOverlayView (TheNewTaskDialogHandling)
 
-- (void)userStartsOpeningTheNewTaskDialog;
+- (void)userStartsOpeningNewTaskDialog;
 
 - (void)userMovesTheNewTaskDialogByX:(CGFloat)x;
 
@@ -16,7 +16,7 @@
 
 - (void)userCancelsMovingTheNewTaskDialog;
 
-- (void)animatedMovingTheNewTaskDialogToOpenedStatePosition:(CGFloat)strength completion:(void (^)(void))completion;
+- (void)animatedMovingNewTaskDialogToOpenedStatePosition:(CGFloat)strength completion:(void (^)(void))completion;
 
 - (void)animateClosingTheNewTaskDialogToTheRightEdge;
 
@@ -26,5 +26,7 @@
 
 - (void)showWarningForTheNewTask:(NSString *)message;
 
-- (BOOL)canShowTheNewTaskDialog;
+- (BOOL)canShowNewTaskDialog;
+
+- (void)animateNewTaskViewBackToOpenedPositionWithWarning;
 @end

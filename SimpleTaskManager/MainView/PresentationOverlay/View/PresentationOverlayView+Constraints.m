@@ -40,7 +40,7 @@
                                                            attribute:NSLayoutAttributeHeight
                                                           multiplier:1.0
                                                             constant:0.0];
-    self.cachedLayoutConstraints = @[H1, H2, V1, V2];
+    self.viewLayoutConstraints = @[H1, H2, V1, V2];
 }
 
 @end

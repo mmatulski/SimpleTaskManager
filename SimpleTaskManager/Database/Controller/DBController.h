@@ -31,4 +31,6 @@ extern NSString * const kSTMTaskEntityName;
 - (void)increaseNumberOfAllTasks;
 
 - (void)decreaseNumberOfAllTasks;
+
+- (void)reloadNumberOfAllTasks;
 @end

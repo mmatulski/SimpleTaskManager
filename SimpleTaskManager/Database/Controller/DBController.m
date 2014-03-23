@@ -6,7 +6,6 @@
 #import "DBController.h"
 #import "DBController+Undo.h"
 #import "NSError+Log.h"
-#import "DBController+Internal.h"
 
 @implementation DBController
 
@@ -82,7 +81,8 @@
                     }
                 }];
 
-                [self.parentController loadNumberOfAllTasksIfNotLoaded];
+                //sometimes we use dbcontroller numberOfAllTasks in place of fetchedresultscontroller data
+                [self.parentController reloadNumberOfAllTasks];
 
                 DDLogTrace(@"DBController saveWithSuccessFullBlock %@ performBlock SAVED but is has PARENT END" , self);
             } else {
@@ -112,25 +112,29 @@
 
 - (void) loadNumberOfAllTasksIfNotLoaded {
     if(!_numberOfAllTasksEstimated){
-        BlockWeakSelf selfWeak = self;
-        [self.context performBlockAndWait:^{
-            NSFetchRequest *request = [[NSFetchRequest alloc] init];
-            [request setEntity:[NSEntityDescription entityForName:kSTMTaskEntityName
-                                           inManagedObjectContext:selfWeak.context]];
-            [request setIncludesSubentities:NO];
-
-            NSError *err;
-            NSUInteger count = [selfWeak.context countForFetchRequest:request error:&err];
-            if(count == NSNotFound) {
-                DDLogError(@"There was problem with loading number of all tasks %@", [err localizedDescription]);
-            } else {
-                _numberOfAllTasks = count;
-                _numberOfAllTasksEstimated = true;
-
-                DDLogInfo(@"number of all Tasks is %td", self.numberOfAllTasks);
-            }
-        }];
+        [self reloadNumberOfAllTasks];
     }
+}
+
+- (void)reloadNumberOfAllTasks {
+    BlockWeakSelf selfWeak = self;
+    [self.context performBlockAndWait:^{
+        NSFetchRequest *request = [[NSFetchRequest alloc] init];
+        [request setEntity:[NSEntityDescription entityForName:kSTMTaskEntityName
+                                       inManagedObjectContext:selfWeak.context]];
+        [request setIncludesSubentities:NO];
+
+        NSError *err;
+        NSUInteger count = [selfWeak.context countForFetchRequest:request error:&err];
+        if(count == NSNotFound) {
+            DDLogError(@"There was problem with loading number of all tasks %@", [err localizedDescription]);
+        } else {
+            _numberOfAllTasks = count;
+            _numberOfAllTasksEstimated = true;
+
+            DDLogInfo(@"number of all Tasks is %td", self.numberOfAllTasks);
+        }
+    }];
 }
 
 - (void)increaseNumberOfAllTasks {

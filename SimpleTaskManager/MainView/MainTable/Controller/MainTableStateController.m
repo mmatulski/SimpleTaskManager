@@ -56,10 +56,6 @@
                 [self showInfoThatActionsAreBlockedWhenSyncing];
             }
         }
-
-        if(_syncing){
-            [AppMessages closeActivity];
-        }
     }
 }
 
@@ -109,6 +105,7 @@
 }
 
 -(BOOL) blockUserForActionsWhenSyncing{
+    //TURNED OFF (it was simple solution to block user, but user could be now happy with this
     return false;
 }
 

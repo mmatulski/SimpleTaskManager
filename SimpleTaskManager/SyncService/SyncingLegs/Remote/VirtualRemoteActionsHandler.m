@@ -18,9 +18,9 @@
 - (id)init {
     self = [super init];
     if (self) {
-        _timerInterval = 10.0;
+        _timerInterval = 20.0;
         _changedItemsFactor = 0.25;
-        _increaseFactor = 1.0;
+        _increaseFactor = 1.1;
     }
 
     return self;
@@ -34,7 +34,7 @@
 }
 
 - (void)startTrafficGenerator {
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:self.timerInterval target:self selector:@selector(generateTraffic) userInfo:nil repeats:NO];
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:self.timerInterval target:self selector:@selector(generateTraffic) userInfo:nil repeats:YES];
     //self.timer = [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(addCommonTasks) userInfo:nil repeats:NO];
 }
 

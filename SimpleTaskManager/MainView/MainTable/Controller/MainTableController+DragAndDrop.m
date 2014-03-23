@@ -263,6 +263,7 @@
         [[SyncGuardService singleUser] reorderTaskWithId:taskModel.uid toIndex:theNewOrder successFullBlock:^(id obj) {
             runOnMainThread(^{
                 [selfWeak highlightCellForTaskModel:taskModel];
+                [self.tableView reloadData];
             });
         } failureBlock:^(NSError *error) {
             runOnMainThread(^{

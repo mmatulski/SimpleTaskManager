@@ -68,17 +68,16 @@
     NSMutableArray *modelsStillToReorder = [models mutableCopy];
     NSMutableArray *modelsToProcess = [modelsStillToReorder mutableCopy];
 
-    NSEnumerator *tasksEnumerator = [tasks objectEnumerator];
     NSEnumerator *modelsEnumerator = [modelsToProcess objectEnumerator];
-
-    //------------------ reorder --------------------------------
-    STMTask *task = [tasksEnumerator nextObject];
-    STMTask *model = [modelsEnumerator nextObject];
+    STMTaskModel *model = [modelsEnumerator nextObject];
 
     NSUInteger numberOfProcessedItems = 0;
 
     while ([modelsToProcess count] > 0){
         DDLogTrace(@"reordering %td tasks", [modelsToProcess count]);
+
+        NSEnumerator *tasksEnumerator = [tasks objectEnumerator];
+        STMTask *task = [tasksEnumerator nextObject];
 
         while(task){
             DDLogTrace(@"enumerate reorder %@ %@", task.uid, model.uid);
@@ -135,17 +134,16 @@
     NSMutableArray *modelsStillToRename = [models mutableCopy];
     NSMutableArray *modelsToProcess = [modelsStillToRename mutableCopy];
 
-    NSEnumerator *tasksEnumerator = [tasks objectEnumerator];
     NSEnumerator *modelsEnumerator = [modelsToProcess objectEnumerator];
-
-    //------------------ rename --------------------------------
-    STMTask *task = [tasksEnumerator nextObject];
-    STMTask *model = [modelsEnumerator nextObject];
+    STMTaskModel *model = [modelsEnumerator nextObject];
 
     NSUInteger numberOfProcessedItems = 0;
 
     while ([modelsToProcess count] > 0){
         DDLogTrace(@"rename %td tasks", [modelsStillToRename count]);
+
+        NSEnumerator *tasksEnumerator = [tasks objectEnumerator];
+        STMTask *task = [tasksEnumerator nextObject];
 
         while(task){
             DDLogTrace(@"enumerate rename %@ %@", task.uid, model.uid);
@@ -188,24 +186,24 @@
     NSMutableArray *modelsStillToRemove = [models mutableCopy];
     NSMutableArray *modelsToProcess = [modelsStillToRemove mutableCopy];
 
-    NSEnumerator *tasksEnumerator = [tasks objectEnumerator];
     NSEnumerator *modelsEnumerator = [modelsToProcess objectEnumerator];
-
-    //------------------ remove --------------------------------
-    STMTask *task = [tasksEnumerator nextObject];
-    STMTask *model = [modelsEnumerator nextObject];
+    STMTaskModel *model = [modelsEnumerator nextObject];
 
     NSUInteger numberOfProcessedItems = 0;
 
     while ([modelsToProcess count] > 0){
         DDLogTrace(@"rename %td tasks", [modelsStillToRemove count]);
 
+        //once again
+        NSEnumerator *tasksEnumerator = [tasks objectEnumerator];
+        STMTask *task = [tasksEnumerator nextObject];
+
         while(task){
             DDLogTrace(@"enumerate remove %@ %@", task.uid, model.uid);
             if([task.uid isEqualToString:model.uid]){
                 numberOfProcessedItems++;
                 [modelsStillToRemove removeObject:model];
-
+                DDLogTrace(@"########## task removed %@", task.uid);
                 [result removeObject:task];
                 [self.context deleteObject:task];
                 [self decreaseNumberOfAllTasks];

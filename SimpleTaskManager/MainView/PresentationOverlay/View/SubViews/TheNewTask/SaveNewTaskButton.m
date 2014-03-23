@@ -4,6 +4,7 @@
 //
 
 #import "SaveNewTaskButton.h"
+#import "AppColors.h"
 
 
 @implementation SaveNewTaskButton {
@@ -13,12 +14,22 @@
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        self.backgroundColor = [UIColor greenColor];
-        self.alpha = 0.85;
+        self.backgroundColor = [AppColors colorForSaveButton];
+        self.alpha = 1.0;
+
+        [self addShadow];
+
         [self prepareOkButton];
     }
 
     return self;
+}
+
+- (void)addShadow {
+    self.layer.shadowColor = [[UIColor blackColor] CGColor];
+    self.layer.shadowOffset = CGSizeMake(4.0, 4.0);
+    self.layer.shadowOpacity = 0.4;
+    self.layer.shadowRadius = 0.0;
 }
 
 - (void)prepareOkButton {

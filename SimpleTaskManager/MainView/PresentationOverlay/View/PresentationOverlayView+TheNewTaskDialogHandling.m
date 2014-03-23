@@ -9,7 +9,7 @@
 #import "CGEstimations.h"
 #import "PresentationOverlayView+Buttons.h"
 #import "SaveNewTaskButton.h"
-#import "CancelButton.h"
+#import "CancelNewTaskButton.h"
 #import "PresentationOverlayViewDelegate.h"
 
 @implementation PresentationOverlayView (TheNewTaskDialogHandling)

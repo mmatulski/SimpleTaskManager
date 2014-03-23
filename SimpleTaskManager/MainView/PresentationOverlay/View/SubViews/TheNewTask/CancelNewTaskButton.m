@@ -3,22 +3,33 @@
 // Copyright (c) 2014 Tomato. All rights reserved.
 //
 
-#import "CancelButton.h"
+#import "CancelNewTaskButton.h"
+#import "AppColors.h"
 
 
-@implementation CancelButton {
+@implementation CancelNewTaskButton {
 
 }
 
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        self.backgroundColor = [UIColor redColor];
-        self.alpha = 0.85;
+        self.backgroundColor = [AppColors colorForCancelButton];
+        self.alpha = 1.0;
+
+        [self addShadow];
+
         [self prepareCancelButton];
     }
 
     return self;
+}
+
+- (void)addShadow {
+    self.layer.shadowColor = [[UIColor blackColor] CGColor];
+    self.layer.shadowOffset = CGSizeMake(-4.0, 4.0);
+    self.layer.shadowOpacity = 0.4;
+    self.layer.shadowRadius = 0.0;
 }
 
 - (void)prepareCancelButton {

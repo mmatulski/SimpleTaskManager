@@ -25,7 +25,7 @@
 		46AE2248D5B2668A6584BFF1 /* STMTaskModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE2F787F03E57EFE1840F8 /* STMTaskModel.m */; };
 		46AE225272A5E606A108D9ED /* SaveNewTaskButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE2C40335F7FCFD8B51A54 /* SaveNewTaskButton.m */; };
 		46AE22663A7440C2240CFD78 /* DispatchQueueLogFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE2DDC84F3D49BDF480F09 /* DispatchQueueLogFormatter.m */; };
-		46AE227EE89832BC06100B60 /* CancelButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE23D09C099402D790F49A /* CancelButton.m */; };
+		46AE227EE89832BC06100B60 /* CancelNewTaskButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE23D09C099402D790F49A /* CancelNewTaskButton.m */; };
 		46AE22B08BB9D9DA976ED30F /* RemoteConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE237EA8E59CF3C97D72EB /* RemoteConnection.m */; };
 		46AE22D21B6DFEC5786C3E95 /* CompleteTaskButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE23865DA48E089E1FE23C /* CompleteTaskButton.m */; };
 		46AE2372F771F4A695FC548F /* PresentationOverlayView+TheNewTaskDialogHandling.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE2B5979AA78A00BBB79F3 /* PresentationOverlayView+TheNewTaskDialogHandling.m */; };
@@ -144,12 +144,12 @@
 		46AE23C2A97DC0521E6B2BA2 /* MainTableDataSourceDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainTableDataSourceDelegate.h; sourceTree = "<group>"; };
 		46AE23C9F40E6BE7FB4E26E8 /* MainTableController+DragAndDrop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MainTableController+DragAndDrop.m"; sourceTree = "<group>"; };
 		46AE23CED9E8C84B06A74B6A /* Main_iPad.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main_iPad.storyboard; sourceTree = "<group>"; };
-		46AE23D09C099402D790F49A /* CancelButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CancelButton.m; sourceTree = "<group>"; };
+		46AE23D09C099402D790F49A /* CancelNewTaskButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CancelNewTaskButton.m; sourceTree = "<group>"; };
 		46AE244B2DC1C1DE13B6FD4B /* LocalUserLeg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalUserLeg.h; sourceTree = "<group>"; };
 		46AE246192A12FAE43023862 /* DBController+BasicActions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DBController+BasicActions.m"; sourceTree = "<group>"; };
 		46AE24753C5F5F63EE2B4DCA /* MainViewControllerNotificationsObserver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewControllerNotificationsObserver.m; sourceTree = "<group>"; };
 		46AE247999C7ABCB39C52F84 /* MainTableController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainTableController.h; sourceTree = "<group>"; };
-		46AE249B31D48B5865720977 /* CancelButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CancelButton.h; sourceTree = "<group>"; };
+		46AE249B31D48B5865720977 /* CancelNewTaskButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CancelNewTaskButton.h; sourceTree = "<group>"; };
 		46AE24AE2E21F3D4C8E71BB5 /* CompleteTaskButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompleteTaskButton.h; sourceTree = "<group>"; };
 		46AE24CC8ED1A00E4EDA8696 /* VirtualRemoteActionsHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VirtualRemoteActionsHandler.h; sourceTree = "<group>"; };
 		46AE24E0C1AD33FC4634E090 /* SyncNotificationsObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyncNotificationsObserver.h; sourceTree = "<group>"; };
@@ -586,8 +586,8 @@
 				46AE2549D70AB7B42A047C98 /* TheNewTaskDialog.h */,
 				46AE2D35C11CB6AC636E63F9 /* TheNewTaskButton.h */,
 				46AE2856CD9E6174273BD28C /* TheNewTaskButton.m */,
-				46AE23D09C099402D790F49A /* CancelButton.m */,
-				46AE249B31D48B5865720977 /* CancelButton.h */,
+				46AE23D09C099402D790F49A /* CancelNewTaskButton.m */,
+				46AE249B31D48B5865720977 /* CancelNewTaskButton.h */,
 				46AE2A0EBB5231A371F7A9DF /* SaveNewTaskButton.h */,
 				46AE2C40335F7FCFD8B51A54 /* SaveNewTaskButton.m */,
 			);
@@ -1027,7 +1027,7 @@
 				46AE22D21B6DFEC5786C3E95 /* CompleteTaskButton.m in Sources */,
 				46AE2FFC427BB9D20420498C /* TheNewTaskDialog.m in Sources */,
 				46AE23FBB5A6E9C4AB51DC2F /* TheNewTaskButton.m in Sources */,
-				46AE227EE89832BC06100B60 /* CancelButton.m in Sources */,
+				46AE227EE89832BC06100B60 /* CancelNewTaskButton.m in Sources */,
 				46AE225272A5E606A108D9ED /* SaveNewTaskButton.m in Sources */,
 				46AE2546ED20173CEF7842B4 /* PresentationOverlayController.m in Sources */,
 				46AE2EDFE5374BB27A6A2CD4 /* STMTaskModel+JSONSerializer.m in Sources */,

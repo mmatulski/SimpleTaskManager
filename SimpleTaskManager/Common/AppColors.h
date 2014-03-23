@@ -19,4 +19,8 @@
 + (UIColor *)cellBlinkingColor;
 
 + (UIColor *)selectedCellBackgroundColor;
+
++ (UIColor *)colorForSaveButton;
+
++ (UIColor *)colorForCancelButton;
 @end

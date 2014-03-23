@@ -10,7 +10,7 @@
 @class WrappedButton;
 @class TheNewTaskButton;
 @class SaveNewTaskButton;
-@class CancelButton;
+@class CancelNewTaskButton;
 @class TaskOptionsView;
 @protocol PresentationOverlayViewDelegate;
 
@@ -50,7 +50,7 @@ It contains "Add" button and handles pan gestures which allows to pill AdTaskVie
 @property(nonatomic, strong) TheNewTaskDialog *theNewTaskDialog;
 @property(nonatomic, strong) TheNewTaskButton *theNewTaskButton;
 @property(nonatomic, strong) SaveNewTaskButton *saveNewTaskButton;
-@property(nonatomic, strong) CancelButton *cancelNewTaskButton;
+@property(nonatomic, strong) CancelNewTaskButton *cancelNewTaskButton;
 @property(nonatomic, strong) TaskOptionsView *taskOptionsView;
 
 @property(nonatomic, strong) NSArray *viewLayoutConstraints;

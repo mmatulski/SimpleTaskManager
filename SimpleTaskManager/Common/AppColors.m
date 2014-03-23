@@ -39,4 +39,12 @@
 + (UIColor *)selectedCellBackgroundColor {
     return RGB(154,154,255);
 }
+
++ (UIColor *)colorForSaveButton {
+    return RGB(54,255,54);
+}
+
++ (UIColor *)colorForCancelButton {
+    return RGB(255,54,54);;
+}
 @end

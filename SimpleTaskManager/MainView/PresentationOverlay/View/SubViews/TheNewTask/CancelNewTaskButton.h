@@ -7,6 +7,6 @@
 #import "WrappedButton.h"
 
 
-@interface CancelButton : WrappedButton
+@interface CancelNewTaskButton : WrappedButton
 
 @end

@@ -26,14 +26,18 @@
         CGPoint newCenter = [self.draggingSpace convertPoint:point fromView:nil];
         CGPoint popViewCenter = [self estimateCenterPointForPopingView:viewToDrag];
 
-        CALayer *highLightLayer = [CALayer layer];
-        highLightLayer.backgroundColor = [UIColor colorWithRed:1.0 green:0.9 blue:0.0 alpha:0.5].CGColor;
-        highLightLayer.frame = viewToDrag.layer.bounds;
-        [viewToDrag.layer addSublayer:highLightLayer];
-        UIImageView*screenShotOfDraggedView = [[UIImageView alloc] initWithImage:[viewToDrag screenshotWithWidth:250.f]];
-        [highLightLayer removeFromSuperlayer];
+//        CALayer *highLightLayer = [CALayer layer];
+//        highLightLayer.backgroundColor = [UIColor colorWithRed:1.0 green:0.9 blue:0.0 alpha:0.5].CGColor;
+//        highLightLayer.frame = viewToDrag.layer.bounds;
+        //[viewToDrag.layer addSublayer:highLightLayer];
+        UIImageView *screenShotOfDraggedView = [[UIImageView alloc] initWithImage:[viewToDrag screenshotWithWidth:250.f]];
+
+
+//        [highLightLayer removeFromSuperlayer];
 
         self.draggedView = screenShotOfDraggedView;
+
+        [self addShadowToDraggedView];
 
         self.draggedView.center = popViewCenter;
         [self.draggingSpace addSubview:self.draggedView];
@@ -50,6 +54,13 @@
 
         [self moveDraggedViewToPoint:point];
     }
+}
+
+- (void)addShadowToDraggedView {
+    self.draggedView.layer.shadowColor = [[UIColor blackColor] CGColor];
+    self.draggedView.layer.shadowOffset = CGSizeMake(-4.0, 4.0);
+    self.draggedView.layer.shadowOpacity = 1.0;
+    self.draggedView.layer.shadowRadius = 0.0;
 }
 
 -(void) setDraggingStyleInDraggedView{

@@ -12,7 +12,7 @@
 #import "PresentationOverlayView+TaskOptions.h"
 #import "PresentationOverlayView+TheNewTaskDialogHandling.h"
 #import "SaveNewTaskButton.h"
-#import "CancelButton.h"
+#import "CancelNewTaskButton.h"
 
 CGFloat const kRightMarginForHandlingPanGesture = 20.0;
 

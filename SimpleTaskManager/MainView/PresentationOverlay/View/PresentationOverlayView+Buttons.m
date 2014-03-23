@@ -10,7 +10,7 @@
 #import "PresentationOverlayView+TheNewTaskDialogHandling.h"
 #import "SaveNewTaskButton.h"
 #import "TheNewTaskDialog.h"
-#import "CancelButton.h"
+#import "CancelNewTaskButton.h"
 #import "PresentationOverlayViewDelegate.h"
 
 
@@ -51,7 +51,7 @@
         [self removeCancelTaskButton];
     }
 
-    self.cancelNewTaskButton = [[CancelButton alloc] initWithFrame:CGRectZero];
+    self.cancelNewTaskButton = [[CancelNewTaskButton alloc] initWithFrame:CGRectZero];
     [self addSubview:self.cancelNewTaskButton];
 
     [self prepareCancelNewTaskButtonLayoutsConstraints];

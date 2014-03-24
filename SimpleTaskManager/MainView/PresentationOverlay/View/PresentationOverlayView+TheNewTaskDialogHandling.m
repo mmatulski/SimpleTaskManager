@@ -14,6 +14,8 @@
 
 @implementation PresentationOverlayView (TheNewTaskDialogHandling)
 
+#pragma mark - layout constraints
+
 - (void)prepareTheNewTaskDialogLayoutConstraints {
 
     [self.theNewTaskDialog setTranslatesAutoresizingMaskIntoConstraints:NO];

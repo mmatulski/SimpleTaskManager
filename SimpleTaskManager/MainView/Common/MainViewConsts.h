@@ -8,3 +8,5 @@
 extern CGFloat const kAddTaskViewTopMargin;
 extern CGFloat const kAddTaskViewHorizontalMargin;
 extern CGFloat const kOptionsViewHeight;
+
+extern CGFloat const kRightMarginForHandlingPanGesture;

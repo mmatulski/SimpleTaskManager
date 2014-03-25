@@ -3,7 +3,7 @@
 // Copyright (c) 2014 Tomato. All rights reserved.
 //
 
-#import "VirtualRemoteActionsHandler.h"
+#import "MockedRemoteActionsHandler.h"
 #import "DBAccess.h"
 #import "DBController.h"
 #import "RemoteLeg.h"
@@ -11,7 +11,7 @@
 #import "STMTaskModel+JSONSerializer.h"
 #import "NSError+Log.h"
 
-@implementation VirtualRemoteActionsHandler {
+@implementation MockedRemoteActionsHandler {
 
 }
 
@@ -20,7 +20,7 @@
     if (self) {
         _timerInterval = 20.0;
         _changedItemsFactor = 0.25;
-        _increaseFactor = 1.01;
+        _increaseFactor = 1.01;//no less than 1
     }
 
     return self;

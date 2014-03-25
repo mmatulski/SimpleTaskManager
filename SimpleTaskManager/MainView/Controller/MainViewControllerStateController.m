@@ -53,6 +53,17 @@
     }
 }
 
+- (void)setTaskAdding:(BOOL)taskAdding {
+    if(_taskAdding != taskAdding){
+        _taskAdding = taskAdding;
+
+        if(_taskIsSelected && _taskAdding){
+            [self.tableController cancelSelectionAnimated:true];
+        }
+    }
+}
+
+
 -(MainTableController *) tableController{
     return self.mainViewController.tableController;
 }

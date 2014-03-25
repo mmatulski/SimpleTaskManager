@@ -19,6 +19,6 @@
 @property (nonatomic) STMTaskModificationType modificationType;
 
 - (instancetype)initWithName:(NSString *)name uid:(NSString *)uid index:(NSNumber *)index;
-- (instancetype)initWitEntity:(STMTask *) task;
+- (instancetype)initWitTask:(STMTask *) task;
 
 @end

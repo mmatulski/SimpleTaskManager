@@ -14,6 +14,7 @@
 #import "SaveNewTaskButton.h"
 #import "CancelNewTaskButton.h"
 #import "MainViewConsts.h"
+#import "PresentationOverlayViewDelegate.h"
 
 @implementation PresentationOverlayView
 
@@ -104,6 +105,18 @@
 - (void)setFrame:(CGRect)frame {
     [super setFrame:frame];
     [self updateSensitiveViewParts];
+}
+
+- (void)setState:(enum PresentationOverlayState)state {
+    if(_state != state){
+        _state = state;
+
+        if(state == PresentationOverlayStateNormal){
+            [self.delegate theNewTaskDialogClosed];
+        } else {
+            [self.delegate theNewTaskDialogOpened];
+        }
+    }
 }
 
 - (void)updateSensitiveViewParts {

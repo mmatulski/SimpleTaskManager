@@ -11,6 +11,8 @@
 #import "MainTableDataSource.h"
 #import "MainTableConsts.h"
 #import "MainViewConsts.h"
+#import "STMTask.h"
+#import "TaskTableViewCell.h"
 
 @implementation MainTableController {
 
@@ -151,5 +153,25 @@
 - (void)handleMemoryWarning {
     //TODO clean fetched cache
 }
+
+-(void) showNewTask:(STMTask *) task{
+    STMTaskModel *taskModel = [[STMTaskModel alloc] initWitTask:task];
+    if(taskModel){
+        [self highlightCellForTaskModel:taskModel];
+    } else {
+        [self.dataSource reloadDataSourceAndTable];
+    }
+}
+
+-(void) highlightCellForTaskModel:(STMTaskModel *) model{
+    NSIndexPath *indexPath = [self.dataSource indexPathForTaskModel:model];
+    if(indexPath){
+        [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionMiddle animated:true];
+        UITableViewCell * cell = [self.tableView cellForRowAtIndexPath:indexPath];
+        TaskTableViewCell *taskCell = MakeSafeCast(cell, [TaskTableViewCell class]);
+        [taskCell blinkCell];
+    }
+}
+
 
 @end

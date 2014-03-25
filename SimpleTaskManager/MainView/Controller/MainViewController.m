@@ -14,10 +14,13 @@
 #import "PresentationOverlayController.h"
 #import "SyncGuardService.h"
 #import "RemoteLeg.h"
+#import "LocalUserLeg.h"
 #import "STMTaskModel.h"
 #import "MainViewControllerStateController.h"
 #import "MainTableController+SelectedItem.h"
 #import "MainViewController+OperationsForTasks.h"
+#import "AppMessages.h"
+#import "NSError+Log.h"
 
 @interface MainViewController ()
 
@@ -157,5 +160,32 @@
 - (void)userHasChosenToCloseTaskOptions {
     [self.tableController cancelSelectionAnimated:true];
 }
+
+- (void)userWantsToSaveTheNewTask:(NSString *)taskName {
+    BlockWeakSelf selfWeak = self;
+    [[SyncGuardService singleUser] addTaskWithName:taskName successFullBlock:^(id obj) {
+        DDLogInfo(@"SUCCESS");
+        runOnMainThread(^{
+            STMTask *addedTask = MakeSafeCast(obj, [STMTask class]);
+            [selfWeak.presentationOverlayController theNewTaskSaved];
+            selfWeak.stateController.taskAdding = false;
+            [selfWeak.tableController showNewTask:addedTask];
+        });
+    } failureBlock:^(NSError *err) {
+        DDLogError(@"FAILED");
+        [AppMessages showMessage:[NSString stringWithFormat:@"Problem with adding new task %@", [err localizedDescription]]];
+        [err log];
+    }];
+}
+
+
+- (void)userHasOpenedNewTaskDialog {
+    self.stateController.taskAdding = true;
+}
+
+- (void)userHasClosedNewTaskDialog {
+    self.stateController.taskAdding = false;
+}
+
 
 @end

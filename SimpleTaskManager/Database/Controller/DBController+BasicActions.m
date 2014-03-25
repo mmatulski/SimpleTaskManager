@@ -223,7 +223,7 @@
 
 - (void)fetchAllTasks:(void (^)(NSArray *tasks))successFullBlock failureBlock:(void (^)(NSError *))failureBlock {
 
-    [self.context performBlock:^{
+    [self.context performBlockAndWait:^{
         NSError *err = nil;
         NSArray *result = [self fetchAllTasks:&err];
 
@@ -242,12 +242,12 @@
 
 - (void)fetchAllTasksAsModels:(void (^)(NSArray *tasks))successFullBlock failureBlock:(void (^)(NSError *))failureBlock {
 
-    [self.context performBlock:^{
+    [self.context performBlockAndWait:^{
         NSError *err = nil;
         NSArray *entitiesResult = [self fetchAllTasks:&err];
         NSMutableArray *result = [[NSMutableArray alloc] initWithCapacity:[entitiesResult count]];
         for(STMTask *task in entitiesResult){
-            STMTaskModel *taskModel = [[STMTaskModel alloc] initWitEntity:task];
+            STMTaskModel *taskModel = [[STMTaskModel alloc] initWitTask:task];
             [result addObject:taskModel];
         }
 

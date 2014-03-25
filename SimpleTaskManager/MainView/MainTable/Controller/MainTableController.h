@@ -36,4 +36,7 @@
 
 - (void)handleMemoryWarning;
 
+- (void)showNewTask:(STMTask *)task;
+
+- (void)highlightCellForTaskModel:(STMTaskModel *)model;
 @end

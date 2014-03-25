@@ -73,6 +73,8 @@
     self.theNewTaskDialogLayoutConstraintsWhenBehindTheLeftEdge = @[H1WhenHiddenBehindLeftEdge, H2, V1, V2];
 }
 
+
+
 - (void)userStartsOpeningNewTaskDialog {
     [self prepareTheNewTaskDialog];
     [self moveTheNewTaskDialogBehindTheRightEdge];

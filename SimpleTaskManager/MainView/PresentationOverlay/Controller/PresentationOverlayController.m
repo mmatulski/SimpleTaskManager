@@ -13,6 +13,8 @@
 #import "SyncingLeg.h"
 #import "LocalUserLeg.h"
 #import "STMTaskModel.h"
+#import "AppMessages.h"
+#import "NSError+Log.h"
 
 
 @implementation PresentationOverlayController {
@@ -46,23 +48,9 @@
 
 #pragma mark -
 
-
-//- (void)showOptionsForTaskModel:(STMTaskModel *)taskModel representedByCell:(UITableViewCell *)cell animated:(BOOL)animated {
-//    self.currentTaskWithOptionsShown = taskModel;
-//    [self.presentationOverlayView showTaskOptionsViewForCell:cell animated:animated];
-//    self.presentationOverlayView.taskOptionsView.delegate = self;
-//}
-//
-//- (void)closeTaskOptionsForTaskModel:(STMTaskModel *)taskModel {
-//
-//}
-//
-//- (void)updateTaskOptionsForTaskModel:(STMTaskModel *)taskModel becauseItWasScrolledBy:(CGFloat)offsetChange {
-//    if(self.currentTaskWithOptionsShown && [self.currentTaskWithOptionsShown isEqual:taskModel]){
-//        [self.presentationOverlayView updateTaskOptionsForTaskBecauseItWasScrolledBy:offsetChange];
-//        self.presentationOverlayView.taskOptionsView.delegate = self;
-//    }
-//}
+-(void) theNewTaskSaved{
+    [self.presentationOverlayView theNewTaskSaved];
+}
 
 #pragma mark - TaskOptionsViewDelegate methods
 
@@ -74,20 +62,21 @@
     [self.delegate userHasChosenToCloseTaskOptions];
 }
 
-#pragma mark - UserActionsHelperViewDelegate methods
+#pragma mark - PresentationOverlayViewDelegate methods
 
--(void)userWantsToSaveTheNewTask:(NSString *) taskName {
-
-    [[SyncGuardService singleUser] addTaskWithName:taskName successFullBlock:^(id o) {
-        DDLogInfo(@"SUCCESS");
-        runOnMainThread(^{
-            [self.presentationOverlayView theNewTaskSaved];
-        });
-    } failureBlock:^(NSError *err) {
-        DDLogError(@"FAILED");
-    }];
+- (void)theNewTaskDialogOpened {
+    [self.delegate userHasOpenedNewTaskDialog];
 }
 
+- (void)theNewTaskDialogClosed {
+    [self.delegate userHasClosedNewTaskDialog];
+}
+
+- (void)userWantsToSaveTheNewTask:(NSString *)taskName {
+
+    [self.delegate userWantsToSaveTheNewTask:taskName];
+
+}
 
 
 @end

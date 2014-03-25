@@ -7,7 +7,7 @@
 #import "RemoteActionsHandler.h"
 
 
-@interface VirtualRemoteActionsHandler : RemoteActionsHandler
+@interface MockedRemoteActionsHandler : RemoteActionsHandler
 
 @property NSTimeInterval timerInterval;
 @property CGFloat changedItemsFactor;

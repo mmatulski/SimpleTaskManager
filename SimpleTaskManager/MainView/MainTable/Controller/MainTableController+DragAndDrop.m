@@ -77,7 +77,7 @@
         [self disableTableGestureRecognizerForScrolling];
 
         UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-        self.draggedItemModel = [[STMTaskModel alloc] initWitEntity:task];
+        self.draggedItemModel = [[STMTaskModel alloc] initWitTask:task];
         [self.dragAndDropHandler dragView:cell fromPoint:pointRelatedToWindow];
 
         [self.dataSource cellForTaskModel:self.draggedItemModel hasBeenDraggedFromIndexPath:indexPath animateHiding:true];
@@ -226,16 +226,6 @@
                 [selfWeak highlightCellForTaskModel:taskModel];
             });
         }];
-    }
-}
-
--(void) highlightCellForTaskModel:(STMTaskModel *) model{
-    NSIndexPath *indexPath = [self.dataSource indexPathForTaskModel:model];
-    if(indexPath){
-        [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionMiddle animated:true];
-        UITableViewCell * cell = [self.tableView cellForRowAtIndexPath:indexPath];
-        TaskTableViewCell *taskCell = MakeSafeCast(cell, [TaskTableViewCell class]);
-        [taskCell blinkCell];
     }
 }
 

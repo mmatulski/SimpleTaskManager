@@ -9,6 +9,10 @@
 
 @protocol PresentationOverlayControllerDelegate <NSObject>
 
+-(void) userHasOpenedNewTaskDialog;
+-(void) userHasClosedNewTaskDialog;
+
+-(void) userWantsToSaveTheNewTask:(NSString *) name;
 -(void) userHasChosenToMarkTaskAsCompleted;
 -(void) userHasChosenToCloseTaskOptions;
 

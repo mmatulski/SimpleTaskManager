@@ -22,7 +22,7 @@
     return self;
 }
 
-- (instancetype)initWitEntity:(STMTask *)task {
+- (instancetype)initWitTask:(STMTask *)task {
     self = [super init];
     if (self) {
         self.name = task.name;

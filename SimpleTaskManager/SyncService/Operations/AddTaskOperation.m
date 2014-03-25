@@ -36,4 +36,17 @@
     }];
 }
 
+//OVERRIDEN
+- (void)performAdequateBlock {
+    if (self.success) {
+        if(self.successFullBlock){
+            self.successFullBlock(self.createdTask);
+        }
+    } else {
+        if(self.failureBlock){
+            self.failureBlock(self.error);
+        }
+    }
+}
+
 @end

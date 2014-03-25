@@ -97,7 +97,7 @@
     if(indexPath){
         STMTask *task = [self.dataSource taskForIndexPath:indexPath];
         if(task){
-            self.selectedTaskModel = [[STMTaskModel alloc] initWitEntity:task];
+            self.selectedTaskModel = [[STMTaskModel alloc] initWitTask:task];
             [self.delegate taskHasBeenSelected];
         }
     }
@@ -108,7 +108,7 @@
     if(anotherIndexPath){
         STMTask *task = [self.dataSource taskForIndexPath:anotherIndexPath];
         if(task){
-            self.selectedTaskModel = [[STMTaskModel alloc] initWitEntity:task];
+            self.selectedTaskModel = [[STMTaskModel alloc] initWitTask:task];
             [self.delegate anotherTaskHasBeenSelected];
         }
     }

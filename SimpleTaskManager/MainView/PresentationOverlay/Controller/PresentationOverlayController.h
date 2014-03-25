@@ -24,6 +24,8 @@
 //- (void)closeTaskOptionsForTaskModel:(STMTaskModel *)taskModel;
 //- (void)updateTaskOptionsForTaskModel:(STMTaskModel *)taskModel becauseItWasScrolledBy:(CGFloat)offsetChange;
 
+
+
 #pragma mark - Task Options
 
 - (void)showTaskOptionsForCellWithFrame:(CGRect) cellFrame animated:(BOOL)animated;
@@ -32,4 +34,5 @@
 
 - (void)closeTaskOptionsAnimated:(BOOL) animated;
 
+- (void)theNewTaskSaved;
 @end

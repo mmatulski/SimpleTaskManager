@@ -7,6 +7,8 @@
 
 @protocol PresentationOverlayViewDelegate <NSObject>
 
+-(void) theNewTaskDialogOpened;
+-(void) theNewTaskDialogClosed;
 -(void) userWantsToSaveTheNewTask:(NSString *) taskName;
 
 @end

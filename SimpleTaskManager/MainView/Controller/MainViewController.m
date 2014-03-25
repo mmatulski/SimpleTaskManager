@@ -135,20 +135,17 @@
                                                                       animated:false];
 }
 
+- (void)taskHasBeenDragged {
+    self.stateController.taskIsDragged = true;
+}
 
-//- (void)showOptionsForTaskModel:(STMTaskModel *)taskModel
-//              representedByCell:(UITableViewCell *)cell
-//                       animated:(BOOL)animated {
-//    [self.presentationOverlayController showOptionsForTaskModel:taskModel representedByCell:cell animated:animated ];
-//}
-//
-//- (void)closeTaskOptionsForTaskModel:(STMTaskModel *)taskModel {
-//    [self.presentationOverlayController closeTaskOptionsForTaskModel:taskModel];
-//}
-//
-//- (void)updatePositionOfOptionsForTaskModel:(STMTaskModel *)taskModel becauseItWasScrolledBy:(CGFloat)offsetChange {
-//    [self.presentationOverlayController updateTaskOptionsForTaskModel:taskModel becauseItWasScrolledBy: offsetChange];
-//}
+- (void)taskHasBeenDropped {
+    self.stateController.taskIsDragged = false;
+}
+
+- (void)taskDraggingCancelled {
+    self.stateController.taskIsDragged = false;
+}
 
 #pragma mark - PresentationOverlayControllerDelegate methods
 

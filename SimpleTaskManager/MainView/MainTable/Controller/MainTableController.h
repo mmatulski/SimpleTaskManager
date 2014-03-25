@@ -25,7 +25,7 @@
 @property(nonatomic, strong) UILongPressGestureRecognizer *longPressRecognizer;
 @property(nonatomic, strong) DragAndDropHandler *dragAndDropHandler;
 @property(nonatomic, strong) STMTaskModel * draggedItemModel;
-@property(nonatomic, strong) NSIndexPath * temporaryTargetForDraggedIndexPath;
+@property(nonatomic, strong) NSIndexPath *lastTargetForDraggedIndexPath;
 
 @property(nonatomic, strong) STMTaskModel * selectedTaskModel;
 @property(nonatomic) CGFloat scrollOffsetWhenItemWasSelected;

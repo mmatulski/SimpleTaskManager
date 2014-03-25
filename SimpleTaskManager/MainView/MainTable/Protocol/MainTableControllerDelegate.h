@@ -12,17 +12,13 @@
 
 -(UIView *) viewForTemporaryViewsPresentation;
 
-//- (void)showOptionsForTaskModel:(STMTaskModel *)taskModel representedByCell:(UITableViewCell *)cell animated:(BOOL)animated;
-//
-//- (void)closeTaskOptionsForTaskModel:(STMTaskModel *)taskModel;
-//
-//- (void)updatePositionOfOptionsForTaskModel:(STMTaskModel *)taskModel becauseItWasScrolledBy:(CGFloat)by;
-
-//refactoring
-
 -(void) taskHasBeenSelected;
 -(void) taskHasBeenUnselected;
 -(void) anotherTaskHasBeenSelected;
 -(void) selectedTaskFrameChanged:(CGRect)changedFrame;
+
+-(void) taskHasBeenDragged;
+-(void) taskHasBeenDropped;
+-(void) taskDraggingCancelled;
 
 @end

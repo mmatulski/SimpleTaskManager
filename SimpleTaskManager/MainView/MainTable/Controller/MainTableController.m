@@ -160,7 +160,7 @@
 
     self.dataSource.paused = syncing;
 
-    if(!self.dataSource.paused){
+    if(!syncing){
         if (self.selectedTaskModel) {
             [self refreshSelectedItemBecauseTableHasBeenReloaded];
         }

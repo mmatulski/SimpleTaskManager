@@ -14,4 +14,5 @@
 
 - (void)cancelDraggingAnimate:(BOOL)animate;
 
+- (void)refreshDraggedItemBecauseTableHasBeenReloaded;
 @end

@@ -8,7 +8,6 @@
 #import "MainTableDataSource.h"
 #import "AppMessages.h"
 #import "STMTask.h"
-#import "MainTableConsts.h"
 #import "MainViewConsts.h"
 
 
@@ -75,30 +74,6 @@
     return CGRectNull;
 }
 
-//- (UITableViewCell *)cellForSelectedTask {
-//    NSIndexPath *indexPath = [self indexPathForSelectedTask];
-//    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-//    return cell;
-//}
-
-//- (void)showOptionsForItemAtIndexPath:(NSIndexPath *)indexPath taskModel:(STMTaskModel *)taskModel animated:(BOOL)animated {
-//    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-//    if(cell){
-//        [self.delegate showOptionsForTaskModel:taskModel representedByCell:cell animated:animated ];
-//    } else {
-//        DDLogWarn(@"showOptionsForItemAtIndexPath no cell found");
-//        self.selectedItemModel = nil;
-//    }
-//}
-//
-//- (void)hideOptionsForItemAtIndexPath:(NSIndexPath *)indexPath taskModel:(STMTaskModel *) taskModel{
-//    [self.delegate closeTaskOptionsForTaskModel:taskModel];
-//}
-//
-//-(void) updateOptionsPositionForItemAtIndexPath:(NSIndexPath *)indexPath taskModel:(STMTaskModel *) taskModel{
-//    [self.delegate updatePositionOfOptionsForTaskModel:taskModel becauseItWasScrolledBy:self.scrollOffsetWhenItemWasSelected - self.tableView.contentOffset.y];
-//}
-
 #pragma mark -
 
 - (void)selectedTaskCompletedByUser {
@@ -123,7 +98,6 @@
         STMTask *task = [self.dataSource taskForIndexPath:indexPath];
         if(task){
             self.selectedTaskModel = [[STMTaskModel alloc] initWitEntity:task];
-            self.scrollOffsetWhenItemWasSelected = self.tableView.contentOffset.y;
             [self.delegate taskHasBeenSelected];
         }
     }
@@ -135,7 +109,6 @@
         STMTask *task = [self.dataSource taskForIndexPath:anotherIndexPath];
         if(task){
             self.selectedTaskModel = [[STMTaskModel alloc] initWitEntity:task];
-            self.scrollOffsetWhenItemWasSelected = self.tableView.contentOffset.y;
             [self.delegate anotherTaskHasBeenSelected];
         }
     }

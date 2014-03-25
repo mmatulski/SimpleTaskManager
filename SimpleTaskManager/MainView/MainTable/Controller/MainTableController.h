@@ -12,7 +12,6 @@
 @class STMTaskModel;
 @class STMTask;
 @class MainTableDataSource;
-@class MainTableStateController;
 
 @interface MainTableController : NSObject <UITableViewDelegate, NSFetchedResultsControllerDelegate, UIGestureRecognizerDelegate>{
     UITableViewScrollPosition _scrollPositionWhenSelectingItem;
@@ -28,22 +27,8 @@
 @property(nonatomic, strong) NSIndexPath *lastTargetForDraggedIndexPath;
 
 @property(nonatomic, strong) STMTaskModel * selectedTaskModel;
-@property(nonatomic) CGFloat scrollOffsetWhenItemWasSelected;
-
-//@property(nonatomic) BOOL shouldCancelSelection;
-//
-//@property(nonatomic) BOOL shouldCancelDragging;
-//
-//@property(nonatomic) BOOL selectedItemWillBeRemoved;
 
 - (instancetype)initWithTableView:(UITableView *)tableView;
-
-//- (void)setSelectedItemModel:(STMTaskModel *)selectedItemModel animated:(BOOL)animated;
-//
-//
-//- (void)deselectTaskModel:(STMTaskModel *)taskModel;
-//
-//- (void)refreshSelectedItemBecauseTableHasBeenReloaded;
 
 - (CGRect)frameForCellAtIndexPath:(NSIndexPath *)indexPath;
 

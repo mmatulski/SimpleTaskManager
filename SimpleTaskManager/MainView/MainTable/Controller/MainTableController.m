@@ -78,40 +78,6 @@
     return CGRectNull;
 }
 
-//- (void)setSelectedItemModel:(STMTaskModel *)selectedItemModel animated:(BOOL) animated{
-//
-//    if(![_selectedItemModel.objectId isEqual:selectedItemModel.objectId]){
-//        if(selectedItemModel){
-//            NSIndexPath *indexPath = [self.dataSource indexPathForTaskModel:selectedItemModel];
-//            [self showOptionsForItemAtIndexPath:indexPath taskModel:selectedItemModel animated:animated];
-//        }
-//
-//        if(_selectedItemModel && !selectedItemModel){
-//            NSIndexPath *selectedIndexPath = [self.dataSource indexPathForTaskModel:_selectedItemModel];
-//            [self hideOptionsForItemAtIndexPath:selectedIndexPath taskModel:_selectedItemModel];//TODO animated
-//        }
-//
-//        self.scrollOffsetWhenItemWasSelected = self.tableView.contentOffset.y;
-//
-//        _selectedItemModel = selectedItemModel;
-//
-//        self.stateController.taskSelected = _selectedItemModel != nil;
-//    }
-//}
-
-//- (void)setSelectedItemModel:(STMTaskModel *)selectedItemModel {
-//    [self setSelectedItemModel:selectedItemModel animated:true];//TODO default should be false
-//}
-
-//- (void)deselectTaskModel:(STMTaskModel *)taskModel {
-//    NSIndexPath *selectedIndexPath = [self indexPathForSelectedTask];
-//    if(selectedIndexPath){
-//        [self.tableView deselectRowAtIndexPath:selectedIndexPath animated:true];
-//    }
-//
-//    self.selectedItemModel = nil;
-//}
-
 #pragma mark - UITableViewDelegate methods
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -130,24 +96,6 @@
     } else {
         [self setSelectedTaskAtForIndexPath:indexPath];
     }
-
-//    NSIndexPath *selectedIndexPath = [self indexPathForSelectedTask];
-//    if(selectedIndexPath && [selectedIndexPath isEqual:indexPath]){
-//        [tableView deselectRowAtIndexPath:indexPath animated:true];
-//        self.selectedItemModel = nil;
-//    } else {
-//        if(![self.stateController isSelectionAvailableNow]){
-//            [tableView deselectRowAtIndexPath:indexPath animated:false];
-//            [self.stateController showInfoThatActionsAreBlockedWhenSyncing];
-//            return;
-//        }
-//
-//        STMTask *task = [self.dataSource taskForIndexPath:indexPath];
-//        if(task){
-//            STMTaskModel *model = [[STMTaskModel alloc] initWitEntity:task];
-//            self.selectedItemModel = model;
-//        }
-//    }
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
@@ -163,6 +111,10 @@
     if(!syncing){
         if (self.selectedTaskModel) {
             [self refreshSelectedItemBecauseTableHasBeenReloaded];
+        }
+
+        if(self.draggedItemModel){
+            [self refreshDraggedItemBecauseTableHasBeenReloaded];
         }
     }
 }

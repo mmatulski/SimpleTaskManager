@@ -141,7 +141,6 @@
 		46AE237EA8E59CF3C97D72EB /* RemoteConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RemoteConnection.m; sourceTree = "<group>"; };
 		46AE23865DA48E089E1FE23C /* CompleteTaskButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CompleteTaskButton.m; sourceTree = "<group>"; };
 		46AE23B50794EBFC6601358F /* RemoteConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemoteConnection.h; sourceTree = "<group>"; };
-		46AE23C2A97DC0521E6B2BA2 /* MainTableDataSourceDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainTableDataSourceDelegate.h; sourceTree = "<group>"; };
 		46AE23C9F40E6BE7FB4E26E8 /* MainTableController+DragAndDrop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MainTableController+DragAndDrop.m"; sourceTree = "<group>"; };
 		46AE23CED9E8C84B06A74B6A /* Main_iPad.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main_iPad.storyboard; sourceTree = "<group>"; };
 		46AE23D09C099402D790F49A /* CancelNewTaskButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CancelNewTaskButton.m; sourceTree = "<group>"; };
@@ -348,7 +347,6 @@
 			children = (
 				46AE26D6BBC630EB0CE4D286 /* MainTableDataSource.m */,
 				46AE2FEC52CB4E94B7B9D98D /* MainTableDataSource.h */,
-				46AE23C2A97DC0521E6B2BA2 /* MainTableDataSourceDelegate.h */,
 			);
 			path = MainTableDataSource;
 			sourceTree = "<group>";

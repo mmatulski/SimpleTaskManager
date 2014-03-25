@@ -209,7 +209,7 @@
 
         [tasksToRename addObject:taskModel];
         renameCounter++;
-        [taskModel setName:[NSString stringWithFormat:@"renamed %d", (int32_t) renameCounter]];
+        [taskModel setName:[NSString stringWithFormat:@"%@ ren %d", taskModel.name, (int32_t) renameCounter]];
         [tasksToChange removeObject:taskModel];
     }
 

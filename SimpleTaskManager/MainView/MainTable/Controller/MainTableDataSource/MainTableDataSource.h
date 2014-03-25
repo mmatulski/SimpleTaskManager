@@ -8,7 +8,6 @@
 @class DBController;
 @class STMTaskModel;
 @class STMTask;
-@class MainTableDataSourceNotificationsObserver;
 
 @interface MainTableDataSource : NSObject <UITableViewDataSource, NSFetchedResultsControllerDelegate>
 
@@ -22,6 +21,8 @@
 @property(nonatomic) BOOL paused;
 
 - (instancetype)initWithTableView:(UITableView *)tableView;
+
+- (void)reloadDataSourceAndTable;
 
 - (NSIndexPath *)indexPathForTaskModel:(STMTaskModel *)model;
 

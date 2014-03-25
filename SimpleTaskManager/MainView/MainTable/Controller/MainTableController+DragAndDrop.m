@@ -12,6 +12,7 @@
 #import "MainTableDataSource.h"
 #import "TaskTableViewCell.h"
 #import "MainViewConsts.h"
+#import "AppMessages.h"
 
 @implementation MainTableController (DragAndDrop)
 
@@ -188,21 +189,7 @@
     self.draggedItemModel = nil;
     self.lastTargetForDraggedIndexPath = nil;
 
-    [self.tableView beginUpdates];
-
-    if(indexPathSource){
-        [self.tableView insertRowsAtIndexPaths:@[indexPathSource] withRowAnimation:animate ? UITableViewRowAnimationFade : UITableViewRowAnimationNone];
-    }
-
-    if(indexPathTarget){
-        [self.tableView deleteRowsAtIndexPaths:@[indexPathTarget] withRowAnimation:animate ? UITableViewRowAnimationFade : UITableViewRowAnimationNone];
-    }
-
-    [self.tableView endUpdates];
-
-    if(!indexPathSource && !indexPathTarget){
-        [self.tableView reloadData];
-    }
+    [self.dataSource draggedCellHasBeenReturned:animate];
 
     [self.dragAndDropHandler stopDragging];
 
@@ -211,23 +198,16 @@
     [self.delegate taskDraggingCancelled];
 }
 
-//-(void) emergencyCancelDragging{
-//    self.draggedItemModel = nil;
-//    self.lastTargetForDraggedIndexPath = nil;
-//
-//    [self.dragAndDropHandler stopDragging];
-//
-//    [self enableTableGestureRecognizerForScrolling];
-//
-//    [MessagesHelper showMessage:@"Task was changed by someone else ..."];
-//}
-
 - (NSIndexPath *)indexPathForDraggedItem {
     if(!self.draggedItemModel){
         return nil;
     }
 
     return [self.dataSource indexPathForTaskModel:self.draggedItemModel];
+}
+
+- (BOOL)isDraggedModelStillAvailable {
+    return [self.dataSource doesTaskForModelStillExistInFetchedResultsControllerData:self.draggedItemModel];
 }
 
 - (void)changeOrderForDraggedItemToIndexPath:(NSIndexPath *)targetPath {
@@ -259,6 +239,13 @@
     }
 }
 
+- (void)refreshDraggedItemBecauseTableHasBeenReloaded {
+    if (![self isDraggedModelStillAvailable]) {
+        [self cancelDraggingAnimate:false];
+        [AppMessages showError:@"Dragging Task has been closed"];
+    }
+}
+
 #pragma mark UILongPressGestureRecognizer
 
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
@@ -269,9 +256,9 @@
     return YES;
 }
 
+
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
     return YES;
 }
-
 
 @end

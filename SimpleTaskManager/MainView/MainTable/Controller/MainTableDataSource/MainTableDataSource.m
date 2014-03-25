@@ -59,6 +59,12 @@ NSUInteger const kDefaultBatchSize = 20;
     [self.tableView reloadData];
 }
 
+- (void)reloadDataSourceAndTableIfPaused {
+    if(self.paused){
+        [self reloadDataSourceAndTable];
+    }
+}
+
 - (void)setPaused:(BOOL)paused {
 
     if(_paused != paused){
@@ -66,7 +72,7 @@ NSUInteger const kDefaultBatchSize = 20;
 
         if (paused) {
             self.fetchedResultsController.delegate = nil;
-//            [NSFetchedResultsController deleteCacheWithName:kFetchedResultsControllerCacheName];
+            //[NSFetchedResultsController deleteCacheWithName:kFetchedResultsControllerCacheName];
         } else {
             self.fetchedResultsController.delegate = self;
             [self reloadDataSourceAndTable];
@@ -216,19 +222,6 @@ NSUInteger const kDefaultBatchSize = 20;
     UITableView *tableView = self.tableView;
 
     STMTask *changedTask = MakeSafeCast(anObject, [STMTask class]);
-//    DDLogTrace(@"didChangeObject %@ %@ %d", changedTask.objectID, changedTask.name, [changedTask.index intValue]);
-//    if(self.draggedItemModel){
-//        if([changedTask.objectID isEqual:self.draggedItemModel.objectId]){
-//            if(type == NSFetchedResultsChangeDelete){
-//                DDLogInfo(@"========= DRAGGED ITEM DELETED %@", self.draggedItemModel.name);
-//                self.shouldCancelDragging = true;
-//
-//            } else {
-//                DDLogInfo(@"========= DRAGGED ITEM CHANGED %@", self.draggedItemModel.name);
-//            }
-//        }
-//    }
-
     NSString *stringType = @"";
     switch (type){
 
@@ -238,21 +231,7 @@ NSUInteger const kDefaultBatchSize = 20;
         case NSFetchedResultsChangeUpdate:stringType = @"UPDATE";break;
     }
 
-    DDLogInfo(@"didChangeObject %@ %@ %@ %td", stringType, changedTask.objectID, changedTask.name, [changedTask.index unsignedIntegerValue]);
-
-
-//    if(self.selectedItemModel && !self.selectedItemWillBeRemoved){
-//        if([changedTask.objectID isEqual:self.selectedItemModel.objectId]){
-//            if(type == NSFetchedResultsChangeDelete){
-//                DDLogInfo(@"========= SELECTED ITEM DELETED %@", self.selectedItemModel.name);
-//                if(!self.selectedItemModel.completedByUser){
-//                    self.shouldCancelSelection = true;
-//                }
-//            } else {
-//                DDLogInfo(@"========= SELECTED ITEM CHANGED %@", self.selectedItemModel.name);
-//            }
-//        }
-//    }
+    DDLogTrace(@"didChangeObject %@ %@ %@ %td", stringType, changedTask.objectID, changedTask.name, [changedTask.index unsignedIntegerValue]);
 
     switch(type) {
 
@@ -302,18 +281,6 @@ NSUInteger const kDefaultBatchSize = 20;
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
     [self.tableView endUpdates];
     DDLogInfo(@"controllerDidChangeContent");
-
-//    if(self.shouldCancelDragging){
-//        [self emergencyCancelDragging];
-//        self.shouldCancelDragging = false;
-//    }
-//
-//    if(self.shouldCancelSelection){
-//        [self emergencyCancelSelection];
-//        self.shouldCancelSelection = false;
-//    } else {
-//        [self updateSelectedItemVisibility];
-//    }
 }
 
 - (void)cellForTaskModel:(STMTaskModel *)draggedModel hasBeenDraggedFromIndexPath:(NSIndexPath *)indexPath animateHiding:(bool)animated {
@@ -344,17 +311,29 @@ NSUInteger const kDefaultBatchSize = 20;
 }
 
 - (void)draggedCellHasBeenReturned:(BOOL) animateShowingItAgain {
-    if(self.modelForTaskBeingMoved){
-        NSIndexPath *indexPath = [self indexPathForTaskModel:self.modelForTaskBeingMoved];
+    if (self.modelForTaskBeingMoved) {
+        NSIndexPath *indexPathSource = [self indexPathForTaskModel:self.modelForTaskBeingMoved];
+        NSIndexPath *indexPathTarget = self.currentTargetIndexPathForItemBeingMoved;
 
         self.modelForTaskBeingMoved = nil;
         self.currentTargetIndexPathForItemBeingMoved = nil;
 
-        if(indexPath){
-            [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation: animateShowingItAgain ? UITableViewRowAnimationMiddle : UITableViewRowAnimationNone];
+        if(indexPathSource){
+            [self.tableView beginUpdates];
+
+            if (indexPathSource) {
+                [self.tableView insertRowsAtIndexPaths:@[indexPathSource] withRowAnimation:animateShowingItAgain ? UITableViewRowAnimationMiddle : UITableViewRowAnimationNone];
+            }
+
+            if (indexPathTarget) {
+                [self.tableView deleteRowsAtIndexPaths:@[indexPathTarget] withRowAnimation:animateShowingItAgain ? UITableViewRowAnimationMiddle : UITableViewRowAnimationNone];
+            }
+
+            [self.tableView endUpdates];
         } else {
-            [self.tableView reloadData];
+            [self reloadDataSourceAndTable];
         }
+
     }
 
     self.modelForTaskBeingMoved = nil;
@@ -402,12 +381,6 @@ NSUInteger const kDefaultBatchSize = 20;
 
 - (void)taskCompleted {
     [self reloadDataSourceAndTableIfPaused];
-}
-
-- (void)reloadDataSourceAndTableIfPaused {
-    if(self.paused){
-        [self reloadDataSourceAndTable];
-    }
 }
 
 @end

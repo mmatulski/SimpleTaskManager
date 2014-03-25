@@ -268,7 +268,7 @@
     NSFetchRequest *fetchRequest = [self prepareTaskFetchRequest];
 
     NSSortDescriptor *sort = [[NSSortDescriptor alloc]
-            initWithKey:@"index" ascending:NO];
+            initWithKey:@"index" ascending:YES];
     [fetchRequest setSortDescriptors:[NSArray arrayWithObject:sort]];
 
     NSError* err = nil;

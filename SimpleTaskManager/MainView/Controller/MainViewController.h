@@ -8,18 +8,18 @@
 
 #import <UIKit/UIKit.h>
 #import "MainTableControllerDelegate.h"
-#import "UserActionsHelperControllerDelegate.h"
+#import "PresentationOverlayControllerDelegate.h"
 
 @class MainView;
 @class MainTableController;
 @class PresentationOverlayController;
-@class MainViewControllerNotificationsObserver;
+@class MainViewControllerStateController;
 
-@interface MainViewController : UIViewController <MainTableControllerDelegate, UserActionsHelperControllerDelegate>
+@interface MainViewController : UIViewController <MainTableControllerDelegate, PresentationOverlayControllerDelegate>
 
 @property(nonatomic, strong) MainTableController * tableController;
-@property(nonatomic, strong) PresentationOverlayController *dialogsPresentationController;
-@property(nonatomic, strong) MainViewControllerNotificationsObserver *notificationsObserver;
+@property(nonatomic, strong) PresentationOverlayController *presentationOverlayController;
+@property(nonatomic, strong) MainViewControllerStateController *stateController;
 
 -(MainView*) mainView;
 

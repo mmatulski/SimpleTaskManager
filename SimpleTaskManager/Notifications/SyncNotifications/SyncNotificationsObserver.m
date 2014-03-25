@@ -4,7 +4,7 @@
 //
 
 #import "CommonNotifications.h"
-#import "MainViewControllerNotificationsObserver.h"
+#import "MainViewControllerStateController.h"
 #import "SyncNotificationsObserver.h"
 
 

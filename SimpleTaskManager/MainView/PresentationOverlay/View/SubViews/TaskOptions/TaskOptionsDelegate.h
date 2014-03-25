@@ -8,6 +8,6 @@
 @protocol TaskOptionsDelegate <NSObject>
 
 -(void) userHasCompletedTask;
--(void)userWantsDeselectTask;
+-(void) userWantsDeselectTask;
 
 @end

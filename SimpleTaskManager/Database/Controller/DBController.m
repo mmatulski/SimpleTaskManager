@@ -81,7 +81,7 @@
                     }
                 }];
 
-                //sometimes we use dbcontroller numberOfAllTasks in place of fetchedresultscontroller data
+                //sometimes we use dbcontroller numberOfAllTasksInDB in place of fetchedresultscontroller data
                 [self.parentController reloadNumberOfAllTasks];
 
                 DDLogTrace(@"DBController saveWithSuccessFullBlock %@ performBlock SAVED but is has PARENT END" , self);

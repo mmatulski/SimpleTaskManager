@@ -48,20 +48,20 @@
         NSError *err = nil;
         if([self markAsCompletedTaskWithId:uid error:&err]){
             [self saveWithSuccessFullBlock:^{
-                DDLogInfo(@"Task set as completed successfully %@", uid);
+                DDLogInfo(@"Task set as completedByUser successfully %@", uid);
                 [self endUndo];
                 if(successBlock){
                     successBlock();
                 }
             } andFailureBlock:^(NSError *error) {
-                DDLogWarn(@"Problem with marking task (Saving) as completed %@ %@", uid, [err localizedDescription]);
+                DDLogWarn(@"Problem with marking task (Saving) as completedByUser %@ %@", uid, [err localizedDescription]);
                 [self undo];
                 if(failureBlock){
                     failureBlock(error);
                 }
             }];
         } else {
-            DDLogWarn(@"Problem with marking task as completed %@ %@", uid, [err localizedDescription]);
+            DDLogWarn(@"Problem with marking task as completedByUser %@ %@", uid, [err localizedDescription]);
             [self undo];
             if(failureBlock){
                 failureBlock(err);
@@ -95,7 +95,7 @@
                 }
             }];
         } else {
-            DDLogWarn(@"Problem with marking task as completed %@ %@ %@", uid, theNewName, [err localizedDescription]);
+            DDLogWarn(@"Problem with marking task as completedByUser %@ %@ %@", uid, theNewName, [err localizedDescription]);
             [self undo];
             if(failureBlock){
                 failureBlock(err);
@@ -289,6 +289,21 @@
     }
 
     DDLogWarn(@"existingTaskWithObjectID: but no objectId set");
+
+    return nil;
+}
+
+- (STMTask *)taskWithObjectID:(NSManagedObjectID *)objectId {
+    if(objectId){
+        NSManagedObject * object = [self.context objectWithID:objectId];
+        if(!object){
+            DDLogWarn(@"object with objectId: %@ not found", objectId);
+            return nil;
+        }
+        return MakeSafeCast(object, [STMTask class]);
+    }
+
+    DDLogWarn(@"taskWithObjectID: but no objectId set");
 
     return nil;
 }

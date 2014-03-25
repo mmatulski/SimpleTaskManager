@@ -10,9 +10,15 @@
 @class MainViewController;
 
 
-@interface MainViewControllerNotificationsObserver : SyncNotificationsObserver
+@interface MainViewControllerStateController : SyncNotificationsObserver
 
 @property(nonatomic, weak) MainViewController *mainViewController;
+
+@property(nonatomic) BOOL taskAdding;
+@property(nonatomic) BOOL taskIsSelected;
+@property(nonatomic) BOOL taskIsDragged;
+
+@property(nonatomic) BOOL syncing;
 
 - (instancetype)initWithMainViewController:(MainViewController *)mainViewController;
 

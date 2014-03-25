@@ -10,14 +10,14 @@
 #import "SyncGuardService.h"
 #import "LocalUserLeg.h"
 #import "MainTableDataSource.h"
-#import "MainTableStateController.h"
 #import "TaskTableViewCell.h"
+#import "MainViewConsts.h"
 
 @implementation MainTableController (DragAndDrop)
 
 - (void)addLongPressRecognizer {
     self.longPressRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPress:)];
-    self.longPressRecognizer.minimumPressDuration = 0.8;
+    self.longPressRecognizer.minimumPressDuration = kLongPressReactionTimeForDragAndDrop;
     self.longPressRecognizer.delegate = self;
 
     [self.tableView addGestureRecognizer:self.longPressRecognizer];
@@ -69,12 +69,8 @@
 #pragma mark - Proper Actions
 
 - (void)userHasPressedLongOnIndexPath:(NSIndexPath *)indexPath andWindowPoint:(CGPoint)pointRelatedToWindow {
-    if(![self.stateController isDraggingAvailableNow]){
-        [self.stateController showInfoThatActionsAreBlockedWhenSyncing];
-        return;
-    }
 
-    STMTask *task = [self.dataSource taskForIndexPath:indexPath];
+    /*STMTask *task = [self.dataSource taskForIndexPath:indexPath];
     if(task){
         UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
 
@@ -89,7 +85,7 @@
         [self.dataSource cellForTaskModel:self.draggedItemModel hasBeenDraggedFromIndexPath:indexPath animateHiding:true];
     } else {
         [self.tableView reloadData];
-    }
+    }*/
 }
 
 - (void)userWantsToMoveDraggingItemToLocalViewPoint:(CGPoint)point andRelatedToWindowPoint:(CGPoint)pointRelatedToWindow {
@@ -98,20 +94,20 @@
 }
 
 - (void)userHasDroppedItem {
-    if(self.temporaryTargetForDraggedIndexPath){
-        [self.dataSource resetDraggedCell];
-        [self changeOrderForDraggedItemToIndexPath:self.temporaryTargetForDraggedIndexPath];
-    } else {
-        [self.dataSource draggedCellHasBeenReturned:true];
-    }
-
-    self.draggedItemModel = nil;
-    self.temporaryTargetForDraggedIndexPath = nil;
-
-    [self.dragAndDropHandler stopDragging];
-    [self enableTableGestureRecognizerForScrolling];
-
-    self.stateController.dragging = false;
+//    if(self.temporaryTargetForDraggedIndexPath){
+//        [self.dataSource resetDraggedCell];
+//        [self changeOrderForDraggedItemToIndexPath:self.temporaryTargetForDraggedIndexPath];
+//    } else {
+//        [self.dataSource draggedCellHasBeenReturned:true];
+//    }
+//
+//    self.draggedItemModel = nil;
+//    self.temporaryTargetForDraggedIndexPath = nil;
+//
+//    [self.dragAndDropHandler stopDragging];
+//    [self enableTableGestureRecognizerForScrolling];
+//
+//    self.stateController.dragging = false;
 }
 
 - (void)draggingHasBeenFailedOrCancelled {
@@ -184,7 +180,7 @@
         if(show){
 
             NSInteger finalRow = showOnBottom ? row + 1 : row;
-            if(finalRow >= [self.dataSource numberOfAllTasks]){
+            if(finalRow >= [self.dataSource numberOfAllTasksInFetchedResultsController]){
                 return nil;
             }
 
@@ -207,33 +203,33 @@
 }
 
 - (void)cancelDraggingAnimate:(BOOL) animate {
-    NSIndexPath *indexPathSource = [self indexPathForDraggedItem];
-    NSIndexPath *indexPathTarget = self.temporaryTargetForDraggedIndexPath;
-
-    self.draggedItemModel = nil;
-    self.temporaryTargetForDraggedIndexPath = nil;
-
-    [self.tableView beginUpdates];
-
-    if(indexPathSource){
-        [self.tableView insertRowsAtIndexPaths:@[indexPathSource] withRowAnimation:animate ? UITableViewRowAnimationFade : UITableViewRowAnimationNone];
-    }
-
-    if(indexPathTarget){
-        [self.tableView deleteRowsAtIndexPaths:@[indexPathTarget] withRowAnimation:animate ? UITableViewRowAnimationFade : UITableViewRowAnimationNone];
-    }
-
-    [self.tableView endUpdates];
-
-    if(!indexPathSource && !indexPathTarget){
-        [self.tableView reloadData];
-    }
-
-    [self.dragAndDropHandler stopDragging];
-
-    [self enableTableGestureRecognizerForScrolling];
-
-    self.stateController.dragging = false;
+//    NSIndexPath *indexPathSource = [self indexPathForDraggedItem];
+//    NSIndexPath *indexPathTarget = self.temporaryTargetForDraggedIndexPath;
+//
+//    self.draggedItemModel = nil;
+//    self.temporaryTargetForDraggedIndexPath = nil;
+//
+//    [self.tableView beginUpdates];
+//
+//    if(indexPathSource){
+//        [self.tableView insertRowsAtIndexPaths:@[indexPathSource] withRowAnimation:animate ? UITableViewRowAnimationFade : UITableViewRowAnimationNone];
+//    }
+//
+//    if(indexPathTarget){
+//        [self.tableView deleteRowsAtIndexPaths:@[indexPathTarget] withRowAnimation:animate ? UITableViewRowAnimationFade : UITableViewRowAnimationNone];
+//    }
+//
+//    [self.tableView endUpdates];
+//
+//    if(!indexPathSource && !indexPathTarget){
+//        [self.tableView reloadData];
+//    }
+//
+//    [self.dragAndDropHandler stopDragging];
+//
+//    [self enableTableGestureRecognizerForScrolling];
+//
+//    self.stateController.dragging = false;
 }
 
 //-(void) emergencyCancelDragging{

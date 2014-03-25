@@ -9,14 +9,66 @@
 
 @implementation PresentationOverlayView (TaskOptions)
 
-- (void)showTaskOptionsViewForCell:(UITableViewCell *)cell animated:(BOOL)animated {
+- (BOOL)isTaskOptionsViewShown {
+    return self.taskOptionsView.superview != nil;
+}
+
+#pragma mark Showing/Closing methods
+
+- (void)showTaskOptionsForCellWithFrame:(CGRect)cellFrame animated:(BOOL)animated {
     BOOL alreadyShown = false;
+    [self prepareOptionsViewAndCheckIfAlreadyShown:&alreadyShown];
+
+    _taskOptionsViewFirstTopY = [self estimateTopPositionForOptionsViewUsingCellFrame:cellFrame];
+
+    if(alreadyShown){
+        [self moveOptionsViewToTopPosition:_taskOptionsViewFirstTopY animated:animated];
+    } else {
+        //first move options to last correct position wihtout animation
+        [self moveOptionsViewToTopPosition:_taskOptionsViewFirstTopY animated:false];
+        [self makeOptionsViewVisibleAnimated:animated];
+    }
+}
+
+- (void)moveOptionsViewToTopPosition:(CGFloat)y animated:(BOOL)animated {
+    if(animated){
+        _taskOptionsHeightLayoutConstraint.constant = kOptionsViewHeight;
+        [self layoutSubviews];
+        [UIView animateWithDuration:kMoveOptionsAnimationDuration animations:^{
+            [_taskOptionsTopLayoutConstraint setConstant:y];
+            [self layoutSubviews];
+        }                completion:^(BOOL finished) {
+
+        }];
+    } else {
+        [_taskOptionsTopLayoutConstraint setConstant:y];
+        [self layoutSubviews];
+    }
+}
+
+- (void)closeTaskOptionsAnimated:(BOOL)animated {
+    if(animated){
+        [UIView animateWithDuration:kCloseOptionsAnimationDuration delay:0 options:UIViewAnimationOptionLayoutSubviews animations:^{
+            [_taskOptionsHeightLayoutConstraint setConstant:0.0];
+            [self layoutSubviews];
+        }                completion:^(BOOL finished) {
+            [self removeTaskOptionsView];
+        }];
+    } else {
+        [self removeTaskOptionsView];
+    }
+}
+
+#pragma mark -
+
+- (void) prepareOptionsViewAndCheckIfAlreadyShown:(BOOL *)alreadyShown {
+    BOOL result = false;
     if(!self.taskOptionsView){
         [self prepareTaskOptionsView];
     }
 
     if(self.taskOptionsView.superview){
-        alreadyShown = true;
+        result = true;
     } else {
         [self addSubview:self.taskOptionsView];
     }
@@ -27,44 +79,33 @@
 
     [self addTaskOptionsViewConstraints];
 
-    _taskOptionsViewFirstTopY = [self estimateTopPositionOfOptionsViewForCell:cell];
-
-    if(alreadyShown){
-        [self moveOptionsViewToTopPosition:_taskOptionsViewFirstTopY animated:animated ];
-    } else {
-        [self moveTaskOptionsViewToTop:_taskOptionsViewFirstTopY];
-        [self showOptionsViewAnimated:animated ];
-    }
+    *alreadyShown = result;
 }
 
-- (void)moveOptionsViewToTopPosition:(CGFloat)y animated:(BOOL)animated {
+- (CGFloat)estimateTopPositionForOptionsViewUsingCellFrame:(CGRect)cellFrame {
+    CGRect localCellFrame = [self convertRect:cellFrame fromView:nil];
+
+    return localCellFrame.origin.y + localCellFrame.size.height - 4.0;
+}
+
+- (void)makeOptionsViewVisibleAnimated:(BOOL)animated {
     if(animated){
-        _taskOptionsHeightLayoutConstraint.constant = kOptionsViewHeight;
-        [self layoutSubviews];
-        [UIView animateWithDuration:0.2 animations:^{
-            [_taskOptionsTopLayoutConstraint setConstant:y];
-            [self layoutSubviews];
-        } completion:^(BOOL finished) {
+        [self layoutIfNeeded];
+
+        BlockWeakSelf selfWeak = self;
+        [UIView animateWithDuration:kShowOptionsAnimationDuration delay:0 options:UIViewAnimationOptionLayoutSubviews animations:^{
+            [selfWeak makeOptionsViewVisible];
+        }                completion:^(BOOL finished) {
 
         }];
     } else {
-        [_taskOptionsTopLayoutConstraint setConstant:y];
-        [self layoutSubviews];
+        [self makeOptionsViewVisible];
     }
-
 }
 
-- (void)closeTaskOptions {
-    [UIView animateWithDuration:0.4 delay:0 options:UIViewAnimationOptionLayoutSubviews animations:^{
-        [_taskOptionsHeightLayoutConstraint setConstant:0.0];
-        [self layoutSubviews];
-    } completion:^(BOOL finished) {
-        [self removeTaskOptionsView];
-    }];
-}
-
-- (void)updateTaskOptionsForTaskBecauseItWasScrolledBy:(CGFloat)change {
-    [self moveTaskOptionsViewToTop:_taskOptionsViewFirstTopY + change];
+- (void)makeOptionsViewVisible {
+    [_taskOptionsHeightLayoutConstraint setConstant:kOptionsViewHeight];
+    [self layoutIfNeeded];
 }
 
 - (void)removeTaskOptionsView {
@@ -74,29 +115,15 @@
     _taskOptionsLayoutConstraints = nil;
 }
 
-- (void)showOptionsViewAnimated:(BOOL)animated {
-    if(animated){
-        [self layoutIfNeeded];
+//- (void)updateTaskOptionsForTaskBecauseItWasScrolledBy:(CGFloat)change {
+//    [self moveTaskOptionsViewToTop:_taskOptionsViewFirstTopY + change];
+//}
+//
 
-        [UIView animateWithDuration:0.4 delay:0 options:UIViewAnimationOptionLayoutSubviews animations:^{
-            [_taskOptionsHeightLayoutConstraint setConstant:kOptionsViewHeight];
-            [self layoutIfNeeded];
-        } completion:^(BOOL finished) {
+//
+//
+//
 
-        }];
-    } else {
-        [_taskOptionsHeightLayoutConstraint setConstant:kOptionsViewHeight];
-        [self layoutIfNeeded];
-    }
-}
-
-- (CGFloat)estimateTopPositionOfOptionsViewForCell:(UITableViewCell *)cell {
-    UIView * parentViewOfCell = cell.superview;
-    CGRect cellFrameRelatingToTheWindows = [parentViewOfCell convertRect:cell.frame toView:nil];
-    CGRect cellFrame = [self convertRect:cellFrameRelatingToTheWindows fromView:nil];
-
-    return cellFrame.origin.y + cellFrame.size.height;
-}
 
 - (void)addTaskOptionsViewConstraints {
     if(_taskOptionsLayoutConstraints){
@@ -109,11 +136,6 @@
     if(_taskOptionsLayoutConstraints){
         [self removeConstraints:_taskOptionsLayoutConstraints];
     }
-}
-
-- (void)moveTaskOptionsViewToTop:(CGFloat)y {
-    [_taskOptionsTopLayoutConstraint setConstant:y];
-    [self layoutSubviews];
 }
 
 - (void)prepareTaskOptionsView {
@@ -159,8 +181,6 @@
     _taskOptionsLayoutConstraints = @[H1, H2, V1, V2];
 }
 
-- (BOOL)isShowingTaskOptionsView {
-    return self.taskOptionsView.superview != nil;
-}
+
 
 @end

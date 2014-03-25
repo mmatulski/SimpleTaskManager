@@ -11,12 +11,16 @@
 
 @interface PresentationOverlayView (TaskOptions)
 
-- (void)showTaskOptionsViewForCell:(UITableViewCell *)cell animated:(BOOL)animated;
+- (BOOL)isTaskOptionsViewShown;
 
-- (void)closeTaskOptions;
+- (void)showTaskOptionsForCellWithFrame:(CGRect)rect animated:(BOOL)animated;
 
-- (void)updateTaskOptionsForTaskBecauseItWasScrolledBy:(CGFloat)change;
+- (void)closeTaskOptionsAnimated:(BOOL)animated;
 
-- (BOOL)isShowingTaskOptionsView;
+//- (void)updateTaskOptionsForTaskBecauseItWasScrolledBy:(CGFloat)change;
+//
+
+
+
 
 @end

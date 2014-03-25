@@ -65,4 +65,10 @@
     [self.overlayView viewDidAppear];
 }
 
+- (void)showSyncing:(BOOL)syncing {
+    runOnMainThread(^{
+        self.generatorView.backgroundColor = syncing ? [UIColor redColor] : [UIColor clearColor];
+    });
+}
+
 @end

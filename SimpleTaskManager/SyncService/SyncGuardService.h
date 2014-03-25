@@ -26,6 +26,10 @@
 
 -(void) connectToServer;
 
+- (void)disconnectFromServer;
+
+- (BOOL)isConnected;
+
 -(void) operationIsWaitingForExecutionOnSide:(SyncingLeg *) side;
 
 @end

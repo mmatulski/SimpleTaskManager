@@ -20,4 +20,12 @@
     [self.remoteActionsHandler connect];
 }
 
+- (void)disconnect {
+    [self.remoteActionsHandler disconnect];
+}
+
+- (BOOL) isConnected {
+    return [self.remoteActionsHandler isConnected];
+}
+
 @end

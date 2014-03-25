@@ -15,7 +15,9 @@
 #import "SyncGuardService.h"
 #import "RemoteLeg.h"
 #import "STMTaskModel.h"
-#import "MainViewControllerNotificationsObserver.h"
+#import "MainViewControllerStateController.h"
+#import "MainTableController+SelectedItem.h"
+#import "MainViewController+OperationsForTasks.h"
 
 @interface MainViewController ()
 
@@ -43,6 +45,8 @@
     [self preloadKeyboard];
 
     [[SyncGuardService sharedInstance] connectToServer];
+
+    self.mainView.generatorSwitch.on = [[SyncGuardService sharedInstance] isConnected];
 }
 - (void)preloadKeyboard {
     UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 100, 10.0)];
@@ -66,16 +70,28 @@
 }
 
 - (void)prepareDialogsPresentationController {
-    self.dialogsPresentationController = [[PresentationOverlayController alloc] initWithView:self.mainView.overlayView];
-    self.dialogsPresentationController.delegate = self;
+    self.presentationOverlayController = [[PresentationOverlayController alloc] initWithView:self.mainView.overlayView];
+    self.presentationOverlayController.delegate = self;
 }
 
 - (void)prepareNotificationsObserver {
-    self.notificationsObserver = [[MainViewControllerNotificationsObserver alloc] initWithMainViewController:self];
+    self.stateController = [[MainViewControllerStateController alloc] initWithMainViewController:self];
 }
 
 - (MainView *)mainView {
     return MakeSafeCast(self.view, [MainView class]);
+}
+
+- (IBAction)generatorSwitchChanged:(id)sender {
+    if(self.mainView.generatorSwitch.on){
+        if(![[SyncGuardService sharedInstance] isConnected]){
+            [[SyncGuardService sharedInstance] connectToServer];
+        }
+    } else {
+        if([[SyncGuardService sharedInstance] isConnected]){
+            [[SyncGuardService sharedInstance] disconnectFromServer];
+        }
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -92,24 +108,57 @@
     return self.mainView.overlayView;
 }
 
-- (void)showOptionsForTaskModel:(STMTaskModel *)taskModel
-              representedByCell:(UITableViewCell *)cell
-                       animated:(BOOL)animated {
-    [self.dialogsPresentationController showOptionsForTaskModel:taskModel representedByCell:cell animated:animated ];
+- (void)taskHasBeenSelected {
+    self.stateController.taskIsSelected = true;
+    CGRect frameForSelectedTask = [self.tableController selectedTaskFrame];
+    [self.presentationOverlayController showTaskOptionsForCellWithFrame:frameForSelectedTask animated:true];
+
+    //self.stateController.syncing = true;
 }
 
-- (void)closeTaskOptionsForTaskModel:(STMTaskModel *)taskModel {
-    [self.dialogsPresentationController closeTaskOptionsForTaskModel:taskModel];
+- (void)taskHasBeenUnselected {
+    self.stateController.taskIsSelected = false;
+    [self.presentationOverlayController closeTaskOptionsAnimated:true];
 }
 
-- (void)updatePositionOfOptionsForTaskModel:(STMTaskModel *)taskModel becauseItWasScrolledBy:(CGFloat)offsetChange {
-    [self.dialogsPresentationController updateTaskOptionsForTaskModel:taskModel becauseItWasScrolledBy: offsetChange];
+- (void)anotherTaskHasBeenSelected {
+
+    // in this case the behaviour is the same
+    // because method for showing options view chooses movement
+    // if optionsview is shown
+
+    [self taskHasBeenSelected];
 }
 
-#pragma mark - UserActionsControllerDelegate methods
+- (void)selectedTaskFrameChanged:(CGRect)changedFrame {
+    [self.presentationOverlayController updateOptionsViewFrameForCellWithFrame:changedFrame
+                                                                      animated:false];
+}
 
-- (void)userWantsToDeselectTaskModel:(STMTaskModel *)taskModel {
-    [self.tableController deselectTaskModel:taskModel];
+
+//- (void)showOptionsForTaskModel:(STMTaskModel *)taskModel
+//              representedByCell:(UITableViewCell *)cell
+//                       animated:(BOOL)animated {
+//    [self.presentationOverlayController showOptionsForTaskModel:taskModel representedByCell:cell animated:animated ];
+//}
+//
+//- (void)closeTaskOptionsForTaskModel:(STMTaskModel *)taskModel {
+//    [self.presentationOverlayController closeTaskOptionsForTaskModel:taskModel];
+//}
+//
+//- (void)updatePositionOfOptionsForTaskModel:(STMTaskModel *)taskModel becauseItWasScrolledBy:(CGFloat)offsetChange {
+//    [self.presentationOverlayController updateTaskOptionsForTaskModel:taskModel becauseItWasScrolledBy: offsetChange];
+//}
+
+#pragma mark - PresentationOverlayControllerDelegate methods
+
+- (void)userHasChosenToMarkTaskAsCompleted {
+
+    [self markSelectedTaskAsCompleted];
+}
+
+- (void)userHasChosenToCloseTaskOptions {
+    [self.tableController cancelSelectionAnimated:true];
 }
 
 @end

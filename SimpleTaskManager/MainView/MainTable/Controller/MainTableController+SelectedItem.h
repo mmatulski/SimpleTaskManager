@@ -10,17 +10,46 @@
 
 @interface MainTableController (SelectedItem)
 
-- (void)showOptionsForItemAtIndexPath:(NSIndexPath *)indexPath taskModel:(STMTaskModel *)taskModel animated:(BOOL)animated;
+-(BOOL)isAnyTaskSelected;
 
-- (void)hideOptionsForItemAtIndexPath:(NSIndexPath *)indexPath taskModel:(STMTaskModel *)taskModel;
+- (BOOL)isSelectedTaskShownAtIndexPath:(NSIndexPath *)path;
 
-- (void)updateOptionsPositionForItemAtIndexPath:(NSIndexPath *)indexPath taskModel:(STMTaskModel *)taskModel;
+#pragma mark - Frames estimations
+/*
+    returns frame of selected cell (if selected, otherwise returns CGRectNukk)
+    frame is related to UIWindow
+ */
+- (CGRect)selectedTaskFrame;
 
-- (NSIndexPath *)indexPathForSelectedItem;
+//- (void)showOptionsForItemAtIndexPath:(NSIndexPath *)indexPath taskModel:(STMTaskModel *)taskModel animated:(BOOL)animated;
+//
+//- (void)hideOptionsForItemAtIndexPath:(NSIndexPath *)indexPath taskModel:(STMTaskModel *)taskModel;
+//
+//- (void)updateOptionsPositionForItemAtIndexPath:(NSIndexPath *)indexPath taskModel:(STMTaskModel *)taskModel;
+//
+//- (NSIndexPath *)indexPathForSelectedTask;
+//
+//- (void)updateSelectedItemVisibility;
+//
+//- (void)emergencyCancelSelection;
+//
+//- (void)cancelSelection;
 
-- (void)updateSelectedItemVisibility;
+#pragma mark -
 
-- (void)emergencyCancelSelection;
+-(void) selectedTaskCompletedByUser;
 
-- (void)cancelSelection;
+#pragma mark - Selecting and Deselecting tasks
+
+- (void)setSelectedTaskAtForIndexPath:(NSIndexPath *)indexPath;
+
+- (void)changeSelectedTaskToAnotherOneAtIndexPath:(NSIndexPath *)path;
+
+- (void)cancelSelectionAnimated:(BOOL)animated;
+
+- (BOOL)isSelectedModelStillAvailable;
+
+- (void)refreshSelectedItemBecauseTableHasBeenReloaded;
+
+- (void)informDelegateAboutCurrentSelectedTaskFrame;
 @end

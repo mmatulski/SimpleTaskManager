@@ -18,4 +18,12 @@
     self.connection = [[RemoteConnection alloc] init];
 }
 
+- (void)disconnect {
+    self.connection = nil;
+}
+
+- (BOOL) isConnected {
+    return self.connection != nil;
+}
+
 @end

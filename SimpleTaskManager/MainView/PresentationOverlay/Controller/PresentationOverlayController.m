@@ -8,7 +8,7 @@
 #import "TaskOptionsView.h"
 #import "PresentationOverlayView+TaskOptions.h"
 #import "PresentationOverlayView+TheNewTaskDialogHandling.h"
-#import "UserActionsHelperControllerDelegate.h"
+#import "PresentationOverlayControllerDelegate.h"
 #import "SyncGuardService.h"
 #import "SyncingLeg.h"
 #import "LocalUserLeg.h"
@@ -29,48 +29,49 @@
     return self;
 }
 
-- (void)showOptionsForTaskModel:(STMTaskModel *)taskModel representedByCell:(UITableViewCell *)cell animated:(BOOL)animated {
-    self.currentTaskWithOptionsShown = taskModel;
-    [self.presentationOverlayView showTaskOptionsViewForCell:cell animated:animated];
+#pragma mark - Task Options
+
+- (void)showTaskOptionsForCellWithFrame:(CGRect)cellFrame animated:(BOOL)animated {
+    [self.presentationOverlayView showTaskOptionsForCellWithFrame:cellFrame animated:animated];
     self.presentationOverlayView.taskOptionsView.delegate = self;
 }
 
-- (void)closeTaskOptionsForTaskModel:(STMTaskModel *)taskModel {
-    if(self.currentTaskWithOptionsShown){
-        [self.presentationOverlayView closeTaskOptions];
-        self.currentTaskWithOptionsShown = nil;
-    }
+- (void)updateOptionsViewFrameForCellWithFrame:(CGRect)cellFrame animated:(BOOL)animated {
+    [self.presentationOverlayView showTaskOptionsForCellWithFrame:cellFrame animated:animated];
 }
 
-- (void)updateTaskOptionsForTaskModel:(STMTaskModel *)taskModel becauseItWasScrolledBy:(CGFloat)offsetChange {
-    if(self.currentTaskWithOptionsShown && [self.currentTaskWithOptionsShown isEqual:taskModel]){
-        [self.presentationOverlayView updateTaskOptionsForTaskBecauseItWasScrolledBy:offsetChange];
-        self.presentationOverlayView.taskOptionsView.delegate = self;
-    }
+- (void)closeTaskOptionsAnimated:(BOOL)animated {
+    [self.presentationOverlayView closeTaskOptionsAnimated:animated];
 }
+
+#pragma mark -
+
+
+//- (void)showOptionsForTaskModel:(STMTaskModel *)taskModel representedByCell:(UITableViewCell *)cell animated:(BOOL)animated {
+//    self.currentTaskWithOptionsShown = taskModel;
+//    [self.presentationOverlayView showTaskOptionsViewForCell:cell animated:animated];
+//    self.presentationOverlayView.taskOptionsView.delegate = self;
+//}
+//
+//- (void)closeTaskOptionsForTaskModel:(STMTaskModel *)taskModel {
+//
+//}
+//
+//- (void)updateTaskOptionsForTaskModel:(STMTaskModel *)taskModel becauseItWasScrolledBy:(CGFloat)offsetChange {
+//    if(self.currentTaskWithOptionsShown && [self.currentTaskWithOptionsShown isEqual:taskModel]){
+//        [self.presentationOverlayView updateTaskOptionsForTaskBecauseItWasScrolledBy:offsetChange];
+//        self.presentationOverlayView.taskOptionsView.delegate = self;
+//    }
+//}
 
 #pragma mark - TaskOptionsViewDelegate methods
 
 - (void)userHasCompletedTask {
-    STMTaskModel * taskModel =  self.currentTaskWithOptionsShown;
-    
-    if(taskModel){
-        taskModel.completed = true;
-        [[SyncGuardService singleUser] markAsCompletedTaskWithId:taskModel.uid successFullBlock:^(id o) {
-            DDLogInfo(@"SUCCESS");
-            runOnMainThread(^{
-                [self closeTaskOptionsForTaskModel:taskModel];
-            });
-        } failureBlock:^(NSError *error) {
-            DDLogError(@"FAILED");
-            taskModel.completed = false;
-        }];
-    }
-
+    [self.delegate userHasChosenToMarkTaskAsCompleted];
 }
 
 - (void)userWantsDeselectTask {
-    [self.delegate userWantsToDeselectTaskModel:self.currentTaskWithOptionsShown];
+    [self.delegate userHasChosenToCloseTaskOptions];
 }
 
 #pragma mark - UserActionsHelperViewDelegate methods
@@ -86,6 +87,7 @@
         DDLogError(@"FAILED");
     }];
 }
+
 
 
 @end

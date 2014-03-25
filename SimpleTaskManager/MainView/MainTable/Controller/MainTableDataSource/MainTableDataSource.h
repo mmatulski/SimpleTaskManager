@@ -25,9 +25,11 @@
 
 - (NSIndexPath *)indexPathForTaskModel:(STMTaskModel *)model;
 
+- (BOOL)doesTaskForModelStillExistInFetchedResultsControllerData:(STMTaskModel *)model;
+
 - (STMTask *)taskForIndexPath:(NSIndexPath *)indexPath;
 
-- (STMTask *)taskForModel:(STMTaskModel *)model;
+- (STMTask *)existingTaskFromDBForModel:(STMTaskModel *)model;
 
 - (void)cellForTaskModel:(STMTaskModel *)model hasBeenDraggedFromIndexPath:(NSIndexPath *)path animateHiding:(bool)animated;
 
@@ -40,5 +42,9 @@
 
 - (void)resetDraggedCell;
 
-- (NSUInteger)numberOfAllTasks;
+- (NSUInteger)numberOfAllTasksInDB;
+
+- (NSUInteger)numberOfAllTasksInFetchedResultsController;
+
+- (void)taskCompleted;
 @end

@@ -51,6 +51,14 @@
     [self.remoteSide connect];
 }
 
+- (void) disconnectFromServer {
+    [self.remoteSide disconnect];
+}
+
+-(BOOL) isConnected{
+    return [self.remoteSide isConnected];
+}
+
 - (void)operationIsWaitingForExecutionOnSide:(SyncingLeg *)side {
     if([side isKindOfClass:[LocalUserLeg class]]){
         [self userOperationIsWaitingForExecution];

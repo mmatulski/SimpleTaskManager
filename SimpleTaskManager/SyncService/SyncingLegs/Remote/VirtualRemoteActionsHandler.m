@@ -33,6 +33,13 @@
     [self startTrafficGenerator];
 }
 
+- (void)disconnect {
+    [super disconnect];
+
+    [self stopTrafficGenerator];
+}
+
+
 - (void)startTrafficGenerator {
     self.timer = [NSTimer scheduledTimerWithTimeInterval:self.timerInterval target:self selector:@selector(generateTraffic) userInfo:nil repeats:YES];
     //self.timer = [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(addCommonTasks) userInfo:nil repeats:NO];

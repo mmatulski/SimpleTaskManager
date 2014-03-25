@@ -15,4 +15,8 @@
 
 - (void) connect;
 
+- (void)disconnect;
+
+- (BOOL)isConnected;
+
 @end

@@ -116,7 +116,7 @@
         return [super hitTest:point withEvent:event];
     }
 
-    if([self isShowingTaskOptionsView]){
+    if([self isTaskOptionsViewShown]){
         CGPoint pointGlobal = [self convertPoint:point toView:nil];
         if([self.taskOptionsView shouldHandleTouchPoint:pointGlobal]){
             return [super hitTest:point withEvent:event];
@@ -207,7 +207,5 @@
 
     }];
 }
-
-
 
 @end

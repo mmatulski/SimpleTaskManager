@@ -6,6 +6,8 @@
 #import <Foundation/Foundation.h>
 #import "DBController.h"
 
+@class STMTask;
+
 @interface DBController (BasicActions)
 
 #pragma mark -
@@ -44,6 +46,8 @@
 - (STMTask *)existingTaskWithObjectID:(NSManagedObjectID *)id;
 
 #pragma mark -
+
+- (STMTask *)taskWithObjectID:(NSManagedObjectID *)objectId;
 
 - (NSFetchRequest *)createFetchingTasksRequestWithBatchSize:(NSUInteger) batchSize;
 

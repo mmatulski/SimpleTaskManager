@@ -7,8 +7,9 @@
 
 @class STMTask;
 
-@protocol UserActionsHelperControllerDelegate <NSObject>
+@protocol PresentationOverlayControllerDelegate <NSObject>
 
--(void) userWantsToDeselectTaskModel:(STMTaskModel *) taskModel;
+-(void) userHasChosenToMarkTaskAsCompleted;
+-(void) userHasChosenToCloseTaskOptions;
 
 @end

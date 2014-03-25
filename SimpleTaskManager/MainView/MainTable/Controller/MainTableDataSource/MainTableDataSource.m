@@ -47,10 +47,16 @@ NSUInteger const kDefaultBatchSize = 20;
                                                                                    cacheName:kFetchedResultsControllerCacheName];
     self.fetchedResultsController.delegate = self;
 
+    [self reloadDataSourceAndTable];
+}
+
+- (void) reloadDataSourceAndTable {
     NSError *err = nil;
     if(![self.fetchedResultsController performFetch:&err]){
         DDLogError(@"prepareFetchedResultsController performFetch failed %@", [err localizedDescription]);
     }
+
+    [self.tableView reloadData];
 }
 
 - (void)setPaused:(BOOL)paused {
@@ -60,23 +66,34 @@ NSUInteger const kDefaultBatchSize = 20;
 
         if (paused) {
             self.fetchedResultsController.delegate = nil;
-            [NSFetchedResultsController deleteCacheWithName:kFetchedResultsControllerCacheName];
+//            [NSFetchedResultsController deleteCacheWithName:kFetchedResultsControllerCacheName];
         } else {
             self.fetchedResultsController.delegate = self;
-            NSError *err = nil;
-            if(![self.fetchedResultsController performFetch:&err]){
-                DDLogError(@"prepareFetchedResultsController performFetch failed %@", [err localizedDescription]);
-            }
-
-            [self.tableView reloadData];
+            [self reloadDataSourceAndTable];
+            //TODO updatuj selecteditem, draggeditem, droppeditem
         }
     }
 }
 
-#pragma mark -
+#pragma mark - IndexPath
 
+/*
+    Returns indexpath in tableview for taskmodel even if task is already removed from db but still shown in tableview.
+ */
 -(NSIndexPath *) indexPathForTaskModel:(STMTaskModel *) model{
-    STMTask *task = [self taskForModel:model];
+
+    //fetchedResultsController shows number od cells which can be not the same as in DB
+    STMTask *task = [self taskFromDBForModel:model];
+    if (task) {
+        NSIndexPath *result = [self.fetchedResultsController indexPathForObject:task];
+        return result;
+    }
+
+    return nil;
+}
+
+-(NSIndexPath *) indexPathOnlyForExistingInDBTaskModel:(STMTaskModel *) model{
+    STMTask *task = [self existingTaskFromDBForModel:model];
     if(task){
         return [self.fetchedResultsController indexPathForObject:task];
     }
@@ -84,14 +101,40 @@ NSUInteger const kDefaultBatchSize = 20;
     return nil;
 }
 
-- (STMTask *)taskForIndexPath:(NSIndexPath *)indexPath {
-    return [self.fetchedResultsController objectAtIndexPath:indexPath];;
+#pragma mark - Checking if exists
+
+-(BOOL) doesTaskStillExistInDB:(STMTask *) task{
+    return [self existingTaskForObjectId:task.objectID] != nil;
 }
 
-- (STMTask *)taskForModel:(STMTaskModel *)model {
-    STMTask* task = [self.dbController existingTaskWithObjectID:model.objectId];
+-(BOOL) doesTaskForModelStillExistInFetchedResultsControllerData:(STMTaskModel *)model{
+        return [self indexPathForTaskModel:model] != nil;
+}
+
+#pragma mark - Finding task
+
+- (STMTask *)taskForIndexPath:(NSIndexPath *)indexPath {
+    return [self.fetchedResultsController objectAtIndexPath:indexPath];
+}
+
+- (STMTask *) existingTaskFromDBForModel:(STMTaskModel *)model {
+    return [self existingTaskForObjectId:model.objectId];
+}
+
+- (STMTask *)existingTaskForObjectId:(NSManagedObjectID *) objectID {
+    STMTask* task = [self.dbController existingTaskWithObjectID:objectID];
     return task;
 }
+
+/*
+    Task can not exist - be careful
+ */
+- (STMTask *)taskFromDBForModel:(STMTaskModel *)model {
+    STMTask* task = [self.dbController taskWithObjectID:model.objectId];
+    return task;
+}
+
+#pragma mark -
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)path {
 
@@ -117,7 +160,8 @@ NSUInteger const kDefaultBatchSize = 20;
 
             if ([path isEqual:self.currentTargetIndexPathForItemBeingMoved]) {
                 thisCellShowsMovedItem = true;
-                task = [self taskForModel:self.modelForTaskBeingMoved];
+                task = [self existingTaskFromDBForModel:self.modelForTaskBeingMoved];
+                //TODO just change pathToRequest
             }
         }
     }
@@ -127,7 +171,12 @@ NSUInteger const kDefaultBatchSize = 20;
     }
 
     if(task){
-        cell.textLabel.text = [NSString stringWithFormat:@"[%d] %@", [[task index] intValue] , task.name];
+        if([self doesTaskStillExistInDB:task]){
+            cell.textLabel.text = [NSString stringWithFormat:@"[%d] %@", [[task index] intValue] , task.name];
+        } else {
+            DDLogWarn(@"Showing task which is no longer in DB");
+            cell.textLabel.text = @"Task completed";
+        }
     }
 
     TaskTableViewCell *taskCell = MakeSafeCast(cell, [TaskTableViewCell class]);
@@ -196,7 +245,7 @@ NSUInteger const kDefaultBatchSize = 20;
 //        if([changedTask.objectID isEqual:self.selectedItemModel.objectId]){
 //            if(type == NSFetchedResultsChangeDelete){
 //                DDLogInfo(@"========= SELECTED ITEM DELETED %@", self.selectedItemModel.name);
-//                if(!self.selectedItemModel.completed){
+//                if(!self.selectedItemModel.completedByUser){
 //                    self.shouldCancelSelection = true;
 //                }
 //            } else {
@@ -336,8 +385,29 @@ NSUInteger const kDefaultBatchSize = 20;
     self.currentTargetIndexPathForItemBeingMoved = nil;
 }
 
-- (NSUInteger)numberOfAllTasks {
+- (NSUInteger)numberOfAllTasksInDB {
     //we should be careful here because tableview can have shown less items
     return self.dbController.numberOfAllTasks;
 }
+
+- (NSUInteger) numberOfAllTasksInFetchedResultsController {
+    NSArray * sections = [_fetchedResultsController sections];
+    if([sections count] > 0){
+        id  sectionInfo = [sections firstObject];
+        return [sectionInfo numberOfObjects];
+    }
+
+    return 0;
+}
+
+- (void)taskCompleted {
+    [self reloadDataSourceAndTableIfPaused];
+}
+
+- (void)reloadDataSourceAndTableIfPaused {
+    if(self.paused){
+        [self reloadDataSourceAndTable];
+    }
+}
+
 @end

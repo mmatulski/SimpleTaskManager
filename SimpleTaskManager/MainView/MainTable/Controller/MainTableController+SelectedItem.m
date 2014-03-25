@@ -7,57 +7,147 @@
 #import "STMTaskModel.h"
 #import "MainTableDataSource.h"
 #import "AppMessages.h"
+#import "STMTask.h"
+#import "MainTableConsts.h"
+#import "MainViewConsts.h"
 
 
 @implementation MainTableController (SelectedItem)
 
-- (void)showOptionsForItemAtIndexPath:(NSIndexPath *)indexPath taskModel:(STMTaskModel *)taskModel animated:(BOOL)animated {
-    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-    if(cell){
-        [self.delegate showOptionsForTaskModel:taskModel representedByCell:cell animated:animated ];
+- (BOOL) isAnyTaskSelected {
+    return self.selectedTaskModel != nil;
+}
+
+- (BOOL)isSelectedTaskShownAtIndexPath:(NSIndexPath *)indexPath {
+    NSIndexPath *sel = [self indexPathForSelectedTask];
+    return [indexPath isEqual:sel];
+}
+
+/*
+    returns indexpath for item which is set as selected in this object
+    it can be different value than tableView.indexPathForSelectedRow
+    because selected item could not be refreshed yet for selected row
+ */
+- (NSIndexPath *)indexPathForSelectedTask {
+    return [self.dataSource indexPathForTaskModel:self.selectedTaskModel];
+    //return self.tableView.indexPathForSelectedRow;
+}
+
+- (BOOL)isSelectedModelStillAvailable {
+    return [self.dataSource doesTaskForModelStillExistInFetchedResultsControllerData:self.selectedTaskModel];
+}
+
+- (void)refreshSelectedItemBecauseTableHasBeenReloaded {
+    if(self.selectedTaskModel){
+        if ([self isSelectedModelStillAvailable]) {
+            NSIndexPath *selectedIndexPath = [self.dataSource indexPathForTaskModel:self.selectedTaskModel];
+            [self.tableView selectRowAtIndexPath:selectedIndexPath animated:false scrollPosition:kDefaultTableScrollPositionWhenItemSelected];
+            [self informDelegateAboutCurrentSelectedTaskFrame];
+        } else {
+            [self cancelSelectionAnimated:false];
+            [AppMessages showError:@"Task has been closed by someone else"];
+        }
+    }
+}
+
+- (void)informDelegateAboutCurrentSelectedTaskFrame {
+    CGRect selectedTaskFrame = [self selectedTaskFrame];
+    if (!CGRectIsNull(selectedTaskFrame) &&
+            !CGRectIsEmpty(selectedTaskFrame) &&
+            !CGRectIsInfinite(selectedTaskFrame)) {
+        [self.delegate selectedTaskFrameChanged:selectedTaskFrame];
     } else {
-        DDLogWarn(@"showOptionsForItemAtIndexPath no cell found");
-        self.selectedItemModel = nil;
+        DDLogWarn(@"selected frame is not valid");
     }
 }
 
-- (void)hideOptionsForItemAtIndexPath:(NSIndexPath *)indexPath taskModel:(STMTaskModel *) taskModel{
-    [self.delegate closeTaskOptionsForTaskModel:taskModel];
-}
+#pragma mark - Frames estimations
 
--(void) updateOptionsPositionForItemAtIndexPath:(NSIndexPath *)indexPath taskModel:(STMTaskModel *) taskModel{
-    [self.delegate updatePositionOfOptionsForTaskModel:taskModel becauseItWasScrolledBy:self.scrollOffsetWhenItemWasSelected - self.tableView.contentOffset.y];
-}
-
-- (NSIndexPath *)indexPathForSelectedItem {
-    if(!self.selectedItemModel){
-        return nil;
+/*
+    returns frame of selected cell (if selected, otherwise returns CGRectNull)
+    frame is related to UIWindow
+ */
+-(CGRect) selectedTaskFrame{
+    if([self isAnyTaskSelected]){
+        return [self frameForCellAtIndexPath:[self indexPathForSelectedTask]];
     }
 
-    return [self.dataSource indexPathForTaskModel:self.selectedItemModel];
+    return CGRectNull;
 }
 
-- (void)updateSelectedItemVisibility {
-    if(self.selectedItemModel){
-       self.selectedItemModel = nil;
+//- (UITableViewCell *)cellForSelectedTask {
+//    NSIndexPath *indexPath = [self indexPathForSelectedTask];
+//    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+//    return cell;
+//}
 
-       [AppMessages showMessage:@"Tasks has been synced."];
-    }
-}
+//- (void)showOptionsForItemAtIndexPath:(NSIndexPath *)indexPath taskModel:(STMTaskModel *)taskModel animated:(BOOL)animated {
+//    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+//    if(cell){
+//        [self.delegate showOptionsForTaskModel:taskModel representedByCell:cell animated:animated ];
+//    } else {
+//        DDLogWarn(@"showOptionsForItemAtIndexPath no cell found");
+//        self.selectedItemModel = nil;
+//    }
+//}
+//
+//- (void)hideOptionsForItemAtIndexPath:(NSIndexPath *)indexPath taskModel:(STMTaskModel *) taskModel{
+//    [self.delegate closeTaskOptionsForTaskModel:taskModel];
+//}
+//
+//-(void) updateOptionsPositionForItemAtIndexPath:(NSIndexPath *)indexPath taskModel:(STMTaskModel *) taskModel{
+//    [self.delegate updatePositionOfOptionsForTaskModel:taskModel becauseItWasScrolledBy:self.scrollOffsetWhenItemWasSelected - self.tableView.contentOffset.y];
+//}
 
-- (void)emergencyCancelSelection {
-    self.selectedItemModel = nil;
+#pragma mark -
 
-    [AppMessages showMessage:@"Task was changed by someone else ..."];
-}
+- (void)selectedTaskCompletedByUser {
+    [self.dataSource taskCompleted];
 
-- (void)cancelSelection {
-    self.selectedItemModel = nil;
-    NSIndexPath * selectedIndexPath = [self.tableView indexPathForSelectedRow];
+    NSIndexPath * selectedIndexPath = [self indexPathForSelectedTask];
     if(selectedIndexPath){
-        [self.tableView deselectRowAtIndexPath:selectedIndexPath animated:false];
+        DDLogWarn(@"task has been completed but it is still available in datasource. "
+                "Possible reason is that datasrouce is paused for refreshing gui [%d].", self.dataSource.paused);
+        // we have to wait for sync end and then cell will disappear after table reload
+        self.selectedTaskModel = nil;
+        [self.tableView reloadData];
+    } else {
+        self.selectedTaskModel = nil;
     }
 }
 
+#pragma mark - Selecting and Deselecting tasks
+
+- (void)setSelectedTaskAtForIndexPath:(NSIndexPath *)indexPath {
+    if(indexPath){
+        STMTask *task = [self.dataSource taskForIndexPath:indexPath];
+        if(task){
+            self.selectedTaskModel = [[STMTaskModel alloc] initWitEntity:task];
+            self.scrollOffsetWhenItemWasSelected = self.tableView.contentOffset.y;
+            [self.delegate taskHasBeenSelected];
+        }
+    }
+}
+
+- (void)changeSelectedTaskToAnotherOneAtIndexPath:(NSIndexPath *)anotherIndexPath{
+
+    if(anotherIndexPath){
+        STMTask *task = [self.dataSource taskForIndexPath:anotherIndexPath];
+        if(task){
+            self.selectedTaskModel = [[STMTaskModel alloc] initWitEntity:task];
+            self.scrollOffsetWhenItemWasSelected = self.tableView.contentOffset.y;
+            [self.delegate anotherTaskHasBeenSelected];
+        }
+    }
+}
+
+- (void)cancelSelectionAnimated:(BOOL) animated {
+    NSIndexPath * selectedIndexPath = [self indexPathForSelectedTask];
+    if(selectedIndexPath){
+        [self.tableView deselectRowAtIndexPath:selectedIndexPath animated:animated];
+    }
+    self.selectedTaskModel = nil;
+    [self.delegate taskHasBeenUnselected];
+}
 
 @end

@@ -113,13 +113,17 @@
 - (void)generateTraffic {
     DDLogInfo(@"TRAFFIC");
     BlockWeakSelf selfWeak = self;
+
     DBController *controller = [DBAccess createBackgroundWorker];
     [controller fetchAllTasksAsModels:^(NSArray *tasks) {
 
         NSData *previousData = self.lastTimeChangedItemsJSON;
-        self.lastTimeChangedItemsJSON = [self serializedTaskModels:tasks];
+        selfWeak.lastTimeChangedItemsJSON = [self serializedTaskModels:tasks];
+
         [selfWeak generateActionsForTasks:tasks];
-        [selfWeak generateWithDelayActionsForSerializedTasksUsedPreviously:previousData];
+        [selfWeak generateActionsForSerializedTasks:previousData withDelayInSeconds:_timerInterval / 2.0];
+
+
     }                    failureBlock:^(NSError *error) {
         DDLogError(@"generateTraffic Problem with fetching all tasks %@", [error localizedDescription]);
     }];
@@ -127,119 +131,117 @@
 
 - (void)generateActionsForTasks:(NSArray *)tasks {
 
-    DDLogInfo(@"TRAFFIC generateActionsForTasks %d", (uint32_t) [tasks count]);
+    runOnBackgroundThread(^{
+
+        DDLogInfo(@"TRAFFIC generateActionsForTasks %d", (uint32_t) [tasks count]);
+
+        static NSUInteger counter = 0;
+        static NSUInteger renameCounter = 0;
+
+        NSUInteger numberOfTasks = [tasks count];
+
+        NSUInteger numberOfItemsToChange = (NSUInteger) floor((float) numberOfTasks * self.changedItemsFactor);
+        if (numberOfItemsToChange > numberOfTasks) {
+            numberOfItemsToChange = numberOfTasks;
+        }
+        NSUInteger numberOfTasksToRename = (NSUInteger) floor(0.33 * (float) numberOfItemsToChange);
+        NSUInteger numberOfTasksToReorder = (NSUInteger) floor(0.33 * (float) numberOfItemsToChange);
+        NSUInteger numberOfTasksToRemove = numberOfItemsToChange - (numberOfTasksToRename + numberOfTasksToReorder);
 
 
-    static NSUInteger counter = 0;
-    static NSUInteger renameCounter = 0;
+        CGFloat increaseF = (CGFloat) numberOfTasksToRemove * self.increaseFactor;
 
-    NSUInteger numberOfTasks = [tasks count];
-
-    NSUInteger numberOfItemsToChange = (NSUInteger) floor((float) numberOfTasks * self.changedItemsFactor);
-    if (numberOfItemsToChange > numberOfTasks) {
-        numberOfItemsToChange = numberOfTasks;
-    }
-    NSUInteger numberOfTasksToRename = (NSUInteger) floor(0.33 * (float) numberOfItemsToChange);
-    NSUInteger numberOfTasksToReorder = (NSUInteger) floor(0.33 * (float) numberOfItemsToChange);
-    NSUInteger numberOfTasksToRemove = numberOfItemsToChange - (numberOfTasksToRename + numberOfTasksToReorder);
-
-//    NSUInteger increase = (NSUInteger) floor(0.2 * (float) numberOfItemsToChange);
-//    if(increase == 0){
-//        increase = 1;
-//    }
-
-//    numberOfTasksToReorder = 0;
-//    numberOfTasksToRename = 0;
-//    numberOfTasksToRemove = 0;
-
-    CGFloat increseF = (CGFloat) numberOfTasksToRemove * self.increaseFactor;
-
-    if (increseF == 0) {
-        increseF = 1.0;
-    }
-
-    if (increseF < 1 && increseF > 0) {
-        increseF = 1;
-    }
-
-    if (increseF > -1 && increseF < 0) {
-        increseF = -1;
-    }
-
-    NSInteger increase = (NSInteger) floor(increseF) - numberOfTasksToRemove;
-
-    if (increase == 0) {
-        increase = 1;
-    }
-
-    NSUInteger numberOfTasksToAdd = numberOfTasksToRemove + increase;
-
-    NSMutableArray *tasksToChange = [self drawFromArray:tasks numberOfItems:numberOfItemsToChange];
-
-    NSMutableArray *tasksToAdd = [[NSMutableArray alloc] init];
-    NSMutableArray *tasksToRemove = [[NSMutableArray alloc] init];
-    NSMutableArray *tasksToReorder = [[NSMutableArray alloc] init];
-    NSMutableArray *tasksToRename = [[NSMutableArray alloc] init];
-
-    //Adding
-    for (int32_t i = 0; i < numberOfTasksToAdd; i++) {
-        counter++;
-        STMTaskModel *add1 = [[STMTaskModel alloc] initWithName:[NSString stringWithFormat:@"task %d_%d", (int32_t) counter, i]
-                                                            uid:nil index:nil];
-        [tasksToAdd addObject:add1];
-    }
-
-
-    for (int i = 0; i < numberOfTasksToRemove; i++) {
-        STMTaskModel *taskModel = [tasksToChange firstObject];
-        if (!taskModel) {
-            break;
+        if (increaseF == 0) {
+            increaseF = 1.0;
         }
 
-        [tasksToRemove addObject:taskModel];
-
-        [tasksToChange removeObject:taskModel];
-    }
-
-    for (int i = 0; i < numberOfTasksToRename; i++) {
-        STMTaskModel *taskModel = [tasksToChange firstObject];
-        if (!taskModel) {
-            break;
+        if (increaseF < 1 && increaseF > 0) {
+            increaseF = 1;
         }
 
-        [tasksToRename addObject:taskModel];
-        renameCounter++;
-        [taskModel setName:[NSString stringWithFormat:@"%@ ren %d", taskModel.name, (int32_t) renameCounter]];
-        [tasksToChange removeObject:taskModel];
-    }
-
-    for (int i = 0; i < numberOfTasksToReorder; i++) {
-        STMTaskModel *taskModel = [tasksToChange firstObject];
-        if (!taskModel) {
-            break;
+        if (increaseF > -1 && increaseF < 0) {
+            increaseF = -1;
         }
 
-        [self setAnotherOrderNrForTask:taskModel fromPossible:numberOfTasks];
-        [tasksToReorder addObject:taskModel];
-        [tasksToChange removeObject:taskModel];
-    }
+        NSInteger increase = (NSInteger) floor(increaseF) - numberOfTasksToRemove;
 
-    [self.remoteLeg syncAddedTasks:[NSArray arrayWithArray:tasksToAdd]
-                      removedTasks:[NSArray arrayWithArray:tasksToRemove]
-                      renamedTasks:[NSArray arrayWithArray:tasksToRename]
-                    reorderedTasks:[NSArray arrayWithArray:tasksToReorder]
-                  successFullBlock:^(id o) {
-                      DDLogInfo(@"generateActionsForTasks SUCCESS");
-                  } failureBlock:^(NSError *error) {
-        DDLogInfo(@"generateActionsForTasks FAILURE %@", [error localizedDescription]);
-    }];
+        if (increase == 0) {
+            increase = 1;
+        }
+
+        NSUInteger numberOfTasksToAdd = numberOfTasksToRemove + increase;
+
+        NSMutableArray *tasksToChange = [self drawFromArray:tasks numberOfItems:numberOfItemsToChange];
+
+        NSMutableArray *tasksToAdd = [[NSMutableArray alloc] init];
+        NSMutableArray *tasksToRemove = [[NSMutableArray alloc] init];
+        NSMutableArray *tasksToReorder = [[NSMutableArray alloc] init];
+        NSMutableArray *tasksToRename = [[NSMutableArray alloc] init];
+
+        //Adding
+        for (int32_t i = 0; i < numberOfTasksToAdd; i++) {
+            counter++;
+            STMTaskModel *add1 = [[STMTaskModel alloc] initWithName:[NSString stringWithFormat:@"task %d_%d", (int32_t) counter, i]
+                                                                uid:nil index:nil];
+            [tasksToAdd addObject:add1];
+        }
+
+
+        for (int i = 0; i < numberOfTasksToRemove; i++) {
+            STMTaskModel *taskModel = [tasksToChange firstObject];
+            if (!taskModel) {
+                break;
+            }
+
+            [tasksToRemove addObject:taskModel];
+
+            [tasksToChange removeObject:taskModel];
+        }
+
+        for (int i = 0; i < numberOfTasksToRename; i++) {
+            STMTaskModel *taskModel = [tasksToChange firstObject];
+            if (!taskModel) {
+                break;
+            }
+
+            [tasksToRename addObject:taskModel];
+            renameCounter++;
+            [taskModel setName:[NSString stringWithFormat:@"%@ ren %d", taskModel.name, (int32_t) renameCounter]];
+            [tasksToChange removeObject:taskModel];
+        }
+
+        for (int i = 0; i < numberOfTasksToReorder; i++) {
+            STMTaskModel *taskModel = [tasksToChange firstObject];
+            if (!taskModel) {
+                break;
+            }
+
+            [self setAnotherOrderNrForTask:taskModel fromPossible:numberOfTasks];
+            [tasksToReorder addObject:taskModel];
+            [tasksToChange removeObject:taskModel];
+        }
+
+        [self.remoteLeg syncAddedTasks:[NSArray arrayWithArray:tasksToAdd]
+                          removedTasks:[NSArray arrayWithArray:tasksToRemove]
+                          renamedTasks:[NSArray arrayWithArray:tasksToRename]
+                        reorderedTasks:[NSArray arrayWithArray:tasksToReorder]
+                      successFullBlock:^(id o) {
+                          DDLogInfo(@"generateActionsForTasks SUCCESS");
+                      } failureBlock:^(NSError *error) {
+            DDLogInfo(@"generateActionsForTasks FAILURE %@", [error localizedDescription]);
+        }];
+    });
 }
 
-- (void)generateWithDelayActionsForSerializedTasksUsedPreviously:(NSData *)data {
+- (void)generateActionsForSerializedTasks:(NSData *)data withDelayInSeconds:(NSTimeInterval) timeToDelayInSeconds {
     BlockWeakSelf selfWeak = self;
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t) (ceil(_timerInterval * NSEC_PER_SEC / 2.0)));
-    dispatch_after(popTime, dispatch_get_main_queue(), ^(void) {
-        [selfWeak generateActionsForSerializedTasksUsedPreviously:data];
+
+    int64_t timeToWaitInNanoSeconds =  (int64_t) (ceil(timeToDelayInSeconds * NSEC_PER_SEC));
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, timeToWaitInNanoSeconds);
+    dispatch_after(popTime, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void) {
+        if([selfWeak isConnected]){
+            [selfWeak generateActionsForSerializedTasksUsedPreviously:data];
+        }
     });
 }
 

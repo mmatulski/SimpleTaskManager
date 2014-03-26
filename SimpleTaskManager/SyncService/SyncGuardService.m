@@ -88,6 +88,10 @@
 }
 
 
+- (void)operationFinished {
 
+    DDLogInfo(@"operationFinished number of operations on queue %d", [self.operationsQueue operationCount]);
+
+}
 
 @end

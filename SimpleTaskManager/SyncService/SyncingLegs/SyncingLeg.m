@@ -108,11 +108,8 @@
 
     [operation performAdequateBlock];
 
-    //[self.operationsWaitingToSyncWidthLocalDB removeObjectAtIndex:0];
+    [self.syncGuardService operationFinished];
 
-//    if([self.operationsWaitingToSyncWidthLocalDB count] > 0){
-//        [self.syncGuardService operationIsWaitingForExecutionOnSide:self];
-//    }
 }
 
 

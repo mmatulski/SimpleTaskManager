@@ -20,9 +20,9 @@
 @property(nonatomic, strong) RemoteLeg *remoteSide;
 @property(nonatomic, strong) LocalUserLeg *user;
 
-@property(nonatomic) bool remoteSideOperationRequested;
+@property(nonatomic) BOOL remoteSideOperationRequested;
 
-@property(nonatomic) bool localUserSideOperationRequested;
+@property(nonatomic) BOOL localUserSideOperationRequested;
 
 -(void) connectToServer;
 
@@ -32,4 +32,5 @@
 
 -(void) operationIsWaitingForExecutionOnSide:(SyncingLeg *) side;
 
+- (void)operationFinished;
 @end

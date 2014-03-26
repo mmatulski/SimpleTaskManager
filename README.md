@@ -44,10 +44,9 @@ and change init method:
 ```
 
 ####Additional traffic generator
-There is one more generator which is being triggered in the half time between basic traffic generations.
-This additional generator changes only existing tasks - renames, reorderes, removes them but does not add newones.
-The tasks to change are serialized to JSON data.
-The most important property of them is that these data are not fresh - this is the same data which was changed in basic traffic generator in the previous cycle.
+There is one more generator which is triggered in the half time between basic traffic generations.
+This additional generator do the same actions as the basic one.
+The difference is that it uses data that are not fresh. These data are the same data which was changed later in basic traffic generator but in the previous cycle. Data are passed between generator in serialized JSON form.
 
 ##Merging approach
 The simplest approach is used. In this moment no additional fields are designed for data merges handling.

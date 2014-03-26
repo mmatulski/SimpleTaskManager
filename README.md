@@ -1,4 +1,63 @@
 SimpleTaskManager
 =================
+<br>
+This is very simple TODO app.<br>
+It is written in Objective C, for iPhone only.
 
-very simple to-do list
+###Available features:
+
+* User can add new task 
+* User can change tasks order
+* User can set task as completed (it will just remove task from db)
+
+###Quick manual
+* To add new task tap on the button with '+' or use pan gesture from the right edge of the screen
+* To change tasks order use long-press gesture on the cell and then move it to expected position
+* To mark task as complete select task cell and then the possible options will be shown.
+
+##Traffic generator
+Every 20 seconds the random traffic simulating remote sync is generated.
+This traffic contains changes for 25% of already added tasks (33.3% are renamed, 33.3% are reordered and rest are removed).
+<br>
+The traffic also contains new added tasks. The number of them is 101% of the removed items. To ensure that the number of tasks will be growing the number of added tasks is always greater than the removed ones.
+
+To turn off generator just change "Generator" switch state to off (switch is at the top of application window).
+<br> 
+To change default generator settings go to:<br>
+[SimpleTaskManager/SyncService/SyncingLegs/Remote/RemoteActionsHandlerStub.m](SimpleTaskManager/SyncService/SyncingLegs/Remote/RemoteActionsHandlerStub.m) 
+<br>
+and change init method:
+
+```
+(id)init {
+    self = [super init];
+    if (self) {
+        _timerInterval = 20.0;
+        _changedItemsShare = 0.25;
+        _increaseRate = 1.01; //no less than 1
+        _renameItemsShare = 0.33;
+        _reorderedItemsShare = 0.33;
+    }
+
+    return self;
+}
+```
+
+####Additional traffic generator
+There is one more generator which is being triggered in the half time between basic traffic generations.
+This additional generator changes only existing tasks - renames, reorderes, removes them but does not add newones.
+The tasks to change are serialized to JSON data.
+The most important property of them is that these data are not fresh - this is the same data which was changed in basic traffic generator in the previous cycle.
+
+##Merging approach
+The simplest approach is used. In this moment no additional fields are designed for data merges handling.
+That's why if Task still exists in db any request for it will be processed.
+The only limitation is that requests are processed synchronously - if user was first then his request will be performed before syncing.
+<br>
+
+
+
+
+
+
+    

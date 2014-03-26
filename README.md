@@ -12,6 +12,7 @@ It is written in Objective C, for iPhone only.
 
 ###Quick manual
 * To add new task tap on the button with '+' or use pan gesture from the right edge of the screen
+    <br>(When new task dialog will be shown type the name and then use pan gesture on dialog to the left edge to save it or to the right to close without saving)
 * To change tasks order use long-press gesture on the cell and then move it to expected position
 * To mark task as complete select task cell and then the possible options will be shown.
 

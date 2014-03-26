@@ -36,11 +36,12 @@
         NSSortDescriptor *sortByUid = [[NSSortDescriptor alloc]
                 initWithKey:@"uid" ascending:NO];
 
-        NSMutableArray *tasksSortedByUid = [[tasksSortedByIndex sortedArrayUsingDescriptors:@[sortByUid]] mutableCopy];
+        NSArray *tasksSortedByUid = [tasksSortedByIndex sortedArrayUsingDescriptors:@[sortByUid]];
         NSArray *modelsToReorderSortedByUid = [reorderedTasks sortedArrayUsingDescriptors:@[sortByUid]];
         NSArray *modelsToRemoveSortedByUid = [removedTasks sortedArrayUsingDescriptors:@[sortByUid]];
         NSArray *modelsToRenameSortedByUid = [renamedTasks sortedArrayUsingDescriptors:@[sortByUid]];
 
+        DDLogInfo(@"tasks will be changed now");
         [self reorderTasksModels:modelsToReorderSortedByUid inSortedByIndexArray:tasksSortedByIndexAndMutable usingSortedByUIDTasks:tasksSortedByUid];
         [self renameTasksModels:modelsToRenameSortedByUid usingSortedByUIDTasks:tasksSortedByUid];
         [self removeTasksModels:modelsToRemoveSortedByUid fromSortedByIndexArray:tasksSortedByIndexAndMutable usingSortedByUIDTasks:tasksSortedByUid];
@@ -265,6 +266,8 @@
 }
 
 - (NSArray *)fetchAllTasksSorted:(NSError **) error {
+    NSDate *fetchingAllTasksStartTime = [NSDate date];
+
     NSFetchRequest *fetchRequest = [self prepareTaskFetchRequest];
 
     NSSortDescriptor *sort = [[NSSortDescriptor alloc]
@@ -273,6 +276,8 @@
 
     NSError* err = nil;
     NSArray *result = [self.context executeFetchRequest:fetchRequest error:&err];
+
+    DDLogInfo(@"fetchAllTasksSorted Time: %f", -[fetchingAllTasksStartTime timeIntervalSinceNow]);
 
     if(!result){
         forwardError(err, error);

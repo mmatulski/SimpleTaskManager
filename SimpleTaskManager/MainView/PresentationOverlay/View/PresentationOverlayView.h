@@ -24,15 +24,10 @@ It contains "Add" button and handles pan gestures which allows to pill AdTaskVie
     CGRect _rectangleSensitiveForAddingTask;
     CGPoint _originalPositionOfTheNewTaskDialogBeforeMoving;
 
-    NSLayoutConstraint *_trailingConstraintForNewTaskButton;
     NSArray *_theNewTaskButtonLayoutConstraints;
 
-    NSLayoutConstraint *_leadingConstraintForSaveNewTaskButton;
-    NSLayoutConstraint *_widthConstraintForSaveNewTaskButton;
     NSArray *_saveNewTaskButtonLayoutConstraints;
 
-    NSLayoutConstraint *_trailingConstraintForCancelNewTaskButton;
-    NSLayoutConstraint *_widthConstraintForCancelNewTaskButton;
     NSArray *_cancelNewTaskButtonLayoutConstraints;
 
     NSLayoutConstraint *_taskOptionsTopLayoutConstraint;

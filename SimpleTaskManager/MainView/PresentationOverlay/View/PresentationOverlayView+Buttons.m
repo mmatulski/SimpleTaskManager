@@ -1,4 +1,5 @@
 //
+
 // Created by Marek M on 14.03.2014.
 // Copyright (c) 2014 Tomato. All rights reserved.
 //
@@ -121,7 +122,6 @@
                                                           multiplier:1.0
                                                             constant:70.0];
 
-    _trailingConstraintForNewTaskButton = H1;
     self.widthConstraintForNewTaskButton = H2;
 
     NSLayoutConstraint * V1 = [NSLayoutConstraint constraintWithItem:self.theNewTaskButton
@@ -159,9 +159,6 @@
                                                           multiplier:1.0
                                                             constant:70.0];
 
-    _leadingConstraintForSaveNewTaskButton = H1;
-    _widthConstraintForSaveNewTaskButton = H2;
-
     NSLayoutConstraint * V1 = [NSLayoutConstraint constraintWithItem:self.saveNewTaskButton
                                                            attribute:NSLayoutAttributeTop
                                                            relatedBy:NSLayoutRelationEqual
@@ -196,9 +193,6 @@
                                                            attribute:NSLayoutAttributeWidth
                                                           multiplier:1.0
                                                             constant:70.0];
-
-    _trailingConstraintForCancelNewTaskButton = H1;
-    _widthConstraintForCancelNewTaskButton = H2;
 
     NSLayoutConstraint * V1 = [NSLayoutConstraint constraintWithItem:self.cancelNewTaskButton
                                                            attribute:NSLayoutAttributeTop

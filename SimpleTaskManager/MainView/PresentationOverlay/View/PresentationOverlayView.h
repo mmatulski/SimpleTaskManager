@@ -25,7 +25,6 @@ It contains "Add" button and handles pan gestures which allows to pill AdTaskVie
     CGPoint _originalPositionOfTheNewTaskDialogBeforeMoving;
 
     NSLayoutConstraint *_trailingConstraintForNewTaskButton;
-    NSLayoutConstraint *_widthConstraintForNewTaskButton;
     NSArray *_theNewTaskButtonLayoutConstraints;
 
     NSLayoutConstraint *_leadingConstraintForSaveNewTaskButton;
@@ -59,6 +58,8 @@ It contains "Add" button and handles pan gestures which allows to pill AdTaskVie
 @property(nonatomic, strong) NSArray *theNewTaskDialogLayoutConstraintsWhenBehindTheLeftEdge;
 
 @property(nonatomic) enum PresentationOverlayState state;
+
+@property(nonatomic, strong) NSLayoutConstraint *widthConstraintForNewTaskButton;
 
 - (id)initWithDefaultFrame;
 

@@ -121,7 +121,7 @@
                                                             constant:70.0];
 
     _trailingConstraintForNewTaskButton = H1;
-    _widthConstraintForNewTaskButton = H2;
+    self.widthConstraintForNewTaskButton = H2;
 
     NSLayoutConstraint * V1 = [NSLayoutConstraint constraintWithItem:self.theNewTaskButton
                                                            attribute:NSLayoutAttributeTop
@@ -224,31 +224,56 @@
         [self showNewTaskButton];
     }
 
-    [_widthConstraintForNewTaskButton setConstant:70];
-    [self layoutSubviews];
-    [UIView animateWithDuration:0.5 animations:^{
-        [_widthConstraintForNewTaskButton setConstant:110];
-        [self layoutSubviews];
-    } completion:^(BOOL finished) {
-        [UIView animateWithDuration:0.3 animations:^{
-            [_widthConstraintForNewTaskButton setConstant:50];
-            [self layoutSubviews];
-        } completion:^(BOOL finished1) {
-            [UIView animateWithDuration:0.5 animations:^{
-                [_widthConstraintForNewTaskButton setConstant:90];
-                [self layoutSubviews];
-            } completion:^(BOOL finished2) {
-                [UIView animateWithDuration:0.5 animations:^{
-                    [_widthConstraintForNewTaskButton setConstant:70];
-                    [self layoutSubviews];
-                } completion:^(BOOL finished3) {
-                    [_widthConstraintForNewTaskButton setConstant:70];
-                    if(completion){
-                        completion();
-                    }
-                }];
-            }];
-        }];
+    [self.widthConstraintForNewTaskButton setConstant:70];
+    [self layoutIfNeeded];
+
+    size_t numberOfSteps = 4;
+
+    float widthsTable[] = {110.0, 50.0, 90.0, 70.0};
+    float timeIntervalsTable[] = {0.5, 0.3, 0.5, 0.5};
+
+    float* p_widthsTable = calloc(numberOfSteps, sizeof(float));
+    float* p_timeIntervalsTable = calloc(numberOfSteps, sizeof(float));
+
+    memcpy(p_widthsTable, widthsTable, numberOfSteps * sizeof(float));
+    memcpy(p_timeIntervalsTable, timeIntervalsTable, numberOfSteps * sizeof(float));
+
+    __block void (^animateMoveBlock)();
+    __block void (^readyToAnimateMoveBlock)();
+
+    readyToAnimateMoveBlock = ^{
+        animateMoveBlock();
+    };
+
+    __block int step = 0;
+    animateMoveBlock = ^{
+        if(step < numberOfSteps){
+            [self animateChangeOfWidthConstraintForNewTaskButtonToValue:p_widthsTable[step] duration:p_timeIntervalsTable[step] completion:readyToAnimateMoveBlock];
+            step++;
+        } else {
+            free(p_widthsTable);
+            free(p_timeIntervalsTable);
+
+            readyToAnimateMoveBlock = nil;
+
+            if(completion){
+                completion();
+            }
+        }
+    };
+
+    animateMoveBlock();
+}
+
+-(void) animateChangeOfWidthConstraintForNewTaskButtonToValue:(CGFloat) value duration:(NSTimeInterval) duration completion:(void (^)(void)) completion{
+    BlockWeakSelf selfWeak = self;
+    [UIView animateWithDuration:duration animations:^{
+        [selfWeak.widthConstraintForNewTaskButton setConstant:value];
+        [selfWeak layoutIfNeeded];
+    } completion:^(BOOL finished3) {
+        if(completion){
+            completion();
+        }
     }];
 }
 

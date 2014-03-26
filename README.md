@@ -44,7 +44,7 @@ and change init method:
 ```
 
 ####Additional traffic generator
-There is one more generator which is being triggered in the half time between basic traffic generations.
+There is one more generator which is triggered in the half time between basic traffic generations.
 This additional generator do the same actions as the basic one.
 The difference is that it uses data that are not fresh. These data are the same data which was changed later in basic traffic generator but in the previous cycle. Data are passed between generator in serialized JSON form.
 

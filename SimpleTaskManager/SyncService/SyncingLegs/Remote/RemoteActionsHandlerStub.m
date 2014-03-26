@@ -30,7 +30,6 @@
         _increaseRate = 1.01; //no less than 1
         _renameItemsShare = 0.33;
         _reorderedItemsShare = 0.33;
-
     }
 
     return self;
@@ -160,19 +159,6 @@
 
 
         CGFloat increaseF = (CGFloat) numberOfTasksToRemove * _increaseRate;
-
-        if (increaseF == 0) {
-            increaseF = 1.0;
-        }
-
-        if (increaseF < 1 && increaseF > 0) {
-            increaseF = 1;
-        }
-
-        if (increaseF > -1 && increaseF < 0) {
-            increaseF = -1;
-        }
-
         NSInteger increase = (NSInteger) floor(increaseF) - numberOfTasksToRemove;
 
         if (increase < 1) {

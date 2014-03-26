@@ -63,8 +63,6 @@
     [super viewDidAppear:animated];
 
     [self.mainView viewDidAppear];
-
-
 }
 
 - (void)prepareTableController {
@@ -97,14 +95,6 @@
     }
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-
-    [self.tableController handleMemoryWarning];
-}
-
 #pragma mark MainTableControllerDelegate methods
 
 - (UIView *)viewForTemporaryViewsPresentation {
@@ -115,8 +105,6 @@
     self.stateController.taskIsSelected = true;
     CGRect frameForSelectedTask = [self.tableController selectedTaskFrame];
     [self.presentationOverlayController showTaskOptionsForCellWithFrame:frameForSelectedTask animated:true];
-
-    //self.stateController.syncing = true;
 }
 
 - (void)taskHasBeenUnselected {

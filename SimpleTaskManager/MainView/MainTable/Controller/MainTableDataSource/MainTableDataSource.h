@@ -48,4 +48,5 @@
 - (NSUInteger)numberOfAllTasksInFetchedResultsController;
 
 - (void)taskCompleted;
+
 @end

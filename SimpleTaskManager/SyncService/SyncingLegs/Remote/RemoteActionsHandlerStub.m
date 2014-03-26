@@ -264,7 +264,7 @@
     }
 
     NSString *stringWithData = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    DDLogInfo(@"deserializeTasksFromData string %@", stringWithData);
+    DDLogTrace(@"deserializeTasksFromData string %@", stringWithData);
 
     NSError *err;
     NSArray *deserializedArrayOfSerializedTaskModels = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&err];

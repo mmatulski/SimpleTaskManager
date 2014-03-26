@@ -7,7 +7,9 @@
 #import "MainViewController.h"
 
 @interface MainViewController (OperationsForTasks)
+
 - (void)markSelectedTaskAsCompleted;
 
 - (void)saveTaskWithName:(NSString *)name;
+
 @end

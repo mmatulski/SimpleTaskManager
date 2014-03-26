@@ -110,9 +110,9 @@
 
     //[self.operationsWaitingToSyncWidthLocalDB removeObjectAtIndex:0];
 
-    if([self.operationsWaitingToSyncWidthLocalDB count] > 0){
-        [self.syncGuardService operationIsWaitingForExecutionOnSide:self];
-    }
+//    if([self.operationsWaitingToSyncWidthLocalDB count] > 0){
+//        [self.syncGuardService operationIsWaitingForExecutionOnSide:self];
+//    }
 }
 
 

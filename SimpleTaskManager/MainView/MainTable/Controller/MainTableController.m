@@ -21,8 +21,6 @@
 - (instancetype)initWithTableView:(UITableView *)tableView {
     self = [super init];
     if (self) {
-        _scrollPositionWhenSelectingItem = kDefaultTableScrollPositionWhenItemSelected;
-
         self.draggedItemModel = nil;
         self.tableView = tableView;
 
@@ -119,10 +117,6 @@
             [self refreshDraggedItemBecauseTableHasBeenReloaded];
         }
     }
-}
-
-- (void)handleMemoryWarning {
-    //TODO clean fetched cache
 }
 
 -(void) showNewTask:(STMTask *) task{

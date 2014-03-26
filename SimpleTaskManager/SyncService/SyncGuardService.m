@@ -71,6 +71,9 @@
     SingleOperation *operation = [self.user nextOperation];
     self.localUserSideOperationRequested = true;
     [self.operationsQueue addOperation:operation];
+
+    DDLogInfo(@"userOperationIsWaitingForExecution number of operations on queue %d", [self.operationsQueue operationCount]);
+
     [self.user operationPushedOnQueue:operation];
 }
 
@@ -78,6 +81,9 @@
     SingleOperation *operation = [self.remoteSide nextOperation];
     self.remoteSideOperationRequested = true;
     [self.operationsQueue addOperation:operation];
+
+    DDLogInfo(@"remoteSideOperationIsWaitingForExecution number of operations on queue %d", [self.operationsQueue operationCount]);
+
     [self.remoteSide operationPushedOnQueue:operation];
 }
 

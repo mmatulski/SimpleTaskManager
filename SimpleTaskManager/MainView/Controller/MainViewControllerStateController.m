@@ -8,8 +8,6 @@
 #import "MainTableController.h"
 #import "MainTableController+SelectedItem.h"
 #import "MainView.h"
-#import "AppMessages.h"
-
 
 @implementation MainViewControllerStateController {
 
@@ -30,6 +28,7 @@
     self.syncing = true;
 }
 
+//OVERRIDEN
 - (void)remoteSyncFinished {
     DDLogInfo(@"MainViewControllerStateController remoteSyncFinished");
     self.syncing = false;

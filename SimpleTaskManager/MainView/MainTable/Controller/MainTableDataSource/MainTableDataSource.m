@@ -72,11 +72,12 @@ NSUInteger const kDefaultBatchSize = 20;
 
         if (paused) {
             self.fetchedResultsController.delegate = nil;
-            //[NSFetchedResultsController deleteCacheWithName:kFetchedResultsControllerCacheName];
+            if(kFetchedResultsControllerCacheName){
+                [NSFetchedResultsController deleteCacheWithName:kFetchedResultsControllerCacheName];
+            }
         } else {
             self.fetchedResultsController.delegate = self;
             [self reloadDataSourceAndTable];
-            //TODO updatuj selecteditem, draggeditem, droppeditem
         }
     }
 }

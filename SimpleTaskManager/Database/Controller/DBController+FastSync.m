@@ -113,7 +113,7 @@
         }
 
         if(model){
-            DDLogWarn(@"Task to reorder %@ not found. It means task was already removed", model.uid);
+            DDLogTrace(@"Task to reorder %@ not found. It means task was already removed", model.uid);
             [modelsStillToReorder removeObject:model];
             modelsToProcess = [modelsStillToReorder mutableCopy];
 
@@ -165,7 +165,7 @@
         }
 
         if(model){
-            DDLogWarn(@"Task to rename %@ not found. It means that it has been removed before", model.uid);
+            DDLogTrace(@"Task to rename %@ not found. It means that it has been removed before", model.uid);
             [modelsStillToRename removeObject:model];
             modelsToProcess = [modelsStillToRename mutableCopy];
 
@@ -220,7 +220,7 @@
         }
 
         if(model){
-            DDLogWarn(@"Task to remove %@ not found. It means that it has been removed before", model.uid);
+            DDLogTrace(@"Task to remove %@ not found. It means that it has been removed before", model.uid);
             [modelsStillToRemove removeObject:model];
             modelsToProcess = [modelsStillToRemove mutableCopy];
 

@@ -13,9 +13,7 @@
 @class STMTask;
 @class MainTableDataSource;
 
-@interface MainTableController : NSObject <UITableViewDelegate, NSFetchedResultsControllerDelegate, UIGestureRecognizerDelegate>{
-    UITableViewScrollPosition _scrollPositionWhenSelectingItem;
-}
+@interface MainTableController : NSObject <UITableViewDelegate, NSFetchedResultsControllerDelegate, UIGestureRecognizerDelegate>
 
 @property(nonatomic, weak) id <MainTableControllerDelegate> delegate;
 @property(nonatomic, strong) UITableView *tableView;
@@ -34,9 +32,8 @@
 
 - (void)disableDataChangesListening:(BOOL)shouldStopListening;
 
-- (void)handleMemoryWarning;
-
 - (void)showNewTask:(STMTask *)task;
 
 - (void)highlightCellForTaskModel:(STMTaskModel *)model;
+
 @end

@@ -13,7 +13,7 @@ extern CGFloat const kRightMarginForHandlingPanGesture;
 extern NSTimeInterval const kLongPressReactionTimeForDragAndDrop;
 extern UITableViewScrollPosition const kDefaultTableScrollPositionWhenItemSelected;
 
-//-- animations time
+//-- animations
 extern NSTimeInterval const kShowOptionsAnimationDuration;
 extern NSTimeInterval const kMoveOptionsAnimationDuration;
 extern NSTimeInterval const kCloseOptionsAnimationDuration;

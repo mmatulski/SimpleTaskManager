@@ -510,7 +510,6 @@
 		46AE274E1592D16279894771 /* MainView */ = {
 			isa = PBXGroup;
 			children = (
-				46AE2C88549F0FE9D940BC38 /* Protocols */,
 				46AE2863362DC6A5D896C3A3 /* Controller */,
 				46AE288D513E3EE51386D63E /* Common */,
 				46AE2B50EA42F0C52CF7369F /* Resources */,
@@ -667,13 +666,6 @@
 				46AE265CA4766B920707FCCC /* DDAbstractDatabaseLogger.m */,
 			);
 			path = Lumberjack;
-			sourceTree = "<group>";
-		};
-		46AE2C88549F0FE9D940BC38 /* Protocols */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Protocols;
 			sourceTree = "<group>";
 		};
 		46AE2C941FF36BCD7698E00E /* Operations */ = {

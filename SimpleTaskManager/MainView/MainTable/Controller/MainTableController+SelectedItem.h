@@ -16,24 +16,10 @@
 
 #pragma mark - Frames estimations
 /*
-    returns frame of selected cell (if selected, otherwise returns CGRectNukk)
+    returns frame of selected cell (if selected, otherwise returns CGRectNull)
     frame is related to UIWindow
  */
 - (CGRect)selectedTaskFrame;
-
-//- (void)showOptionsForItemAtIndexPath:(NSIndexPath *)indexPath taskModel:(STMTaskModel *)taskModel animated:(BOOL)animated;
-//
-//- (void)hideOptionsForItemAtIndexPath:(NSIndexPath *)indexPath taskModel:(STMTaskModel *)taskModel;
-//
-//- (void)updateOptionsPositionForItemAtIndexPath:(NSIndexPath *)indexPath taskModel:(STMTaskModel *)taskModel;
-//
-//- (NSIndexPath *)indexPathForSelectedTask;
-//
-//- (void)updateSelectedItemVisibility;
-//
-//- (void)emergencyCancelSelection;
-//
-//- (void)cancelSelection;
 
 #pragma mark -
 
@@ -52,4 +38,5 @@
 - (void)refreshSelectedItemBecauseTableHasBeenReloaded;
 
 - (void)informDelegateAboutCurrentSelectedTaskFrame;
+
 @end

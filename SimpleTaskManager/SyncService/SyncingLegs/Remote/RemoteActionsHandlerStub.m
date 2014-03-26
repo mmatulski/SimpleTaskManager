@@ -311,7 +311,7 @@
     STMTaskModel *model = [sortedTasksEnumerator nextObject];
     while (model) {
         //NSData *serializedModel = [model serializeToJSON];
-        NSDictionary *serializedModel = [model serializeToDctionary];
+        NSDictionary *serializedModel = [model serializeToDictionary];
         if (serializedModel) {
             [result addObject:serializedModel];
         }

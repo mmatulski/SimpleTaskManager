@@ -7,6 +7,7 @@
 #import "DBController.h"
 
 @interface DBController (Undo)
+
 - (void)beginUndo;
 
 - (void)endUndo;
@@ -14,4 +15,5 @@
 - (void)undo;
 
 - (void)addUndoManager;
+
 @end

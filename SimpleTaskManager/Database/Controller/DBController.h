@@ -10,7 +10,7 @@
 extern NSString * const kSTMTaskEntityName;
 
 @interface DBController : NSObject {
-    NSInteger _numberOfAllTasksForUndo;
+    NSUInteger _numberOfAllTasksForUndo;
     BOOL _numberOfAllTasksEstimated;
 }
 
@@ -33,4 +33,5 @@ extern NSString * const kSTMTaskEntityName;
 - (void)decreaseNumberOfAllTasks;
 
 - (void)reloadNumberOfAllTasks;
+
 @end

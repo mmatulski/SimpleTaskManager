@@ -24,7 +24,7 @@ NSString * kJsonNoUIDValue= @"nouid";
 }
 
 -(NSData *) serializeToJSON{
-    NSDictionary *dictionary = [self serializeToDctionary];
+    NSDictionary *dictionary = [self serializeToDictionary];
     if(![NSJSONSerialization isValidJSONObject:dictionary]){
         DDLogError(@"serializeToJSON dictionary %@ is not valid for json serialization", self.uid);
         return nil;
@@ -40,7 +40,7 @@ NSString * kJsonNoUIDValue= @"nouid";
     return result;
 }
 
--(NSDictionary *) serializeToDctionary {
+-(NSDictionary *)serializeToDictionary {
     NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
     if(self.uid){
         [dictionary setObject:self.uid forKey:kJsonUIDKey];
@@ -61,7 +61,7 @@ NSString * kJsonNoUIDValue= @"nouid";
 
 - (void)deserializeFromDictionary:(NSDictionary *)dictionary {
     if(!dictionary){
-        DDLogWarn(@"deserializeFromDictionary but dictionary is nill");
+        DDLogWarn(@"deserializeFromDictionary but dictionary is nil");
         return;
     }
 

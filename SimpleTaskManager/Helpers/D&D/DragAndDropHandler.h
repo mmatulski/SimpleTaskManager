@@ -15,10 +15,10 @@
 
 - (instancetype)initWithDraggingSpace:(UIView *)draggingSpace;
 
-
 - (void)dragView:(UIView *)viewToDrag fromPoint:(CGPoint)point;
 
 - (void)moveDraggedViewToPoint:(CGPoint)point;
 
 - (void)stopDragging;
+
 @end

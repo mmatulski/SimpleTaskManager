@@ -23,7 +23,6 @@
     if(taskModel){
         [AppMessages showActivity];
 
-        taskModel.completedByUser = true;
         BlockWeakSelf selfWeak = self;
         [[SyncGuardService singleUser] markAsCompletedTaskWithId:taskModel.uid successFullBlock:^(id o) {
             [AppMessages closeActivity];
@@ -39,7 +38,6 @@
             [AppMessages closeActivity];
             DDLogError(@"markSelectedTaskAsCompleted failed");
             [error log];
-            taskModel.completedByUser = false;
             [AppMessages showError:[NSString stringWithFormat:@"Task could not be set as completed %@", [error localizedDescription]]];
         }];
     }

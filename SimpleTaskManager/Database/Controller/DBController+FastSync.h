@@ -7,5 +7,7 @@
 #import "DBController.h"
 
 @interface DBController (FastSync)
+
 - (void)fast_sync_AddedTasks:(NSArray *)addedTasks removedTasks:(NSArray *)removedTasks renamedTasks:(NSArray *)renamedTasks reorderedTasks:(NSArray *)reorderedTasks successFullBlock:(void (^)(id))successFullBlock failureBlock:(void (^)(NSError *))failureBlock;
+
 @end

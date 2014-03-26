@@ -29,13 +29,6 @@
          successFullBlock:(void (^)())successFullBlock
              failureBlock:(void (^)(NSError *))failureBlock;
 
-- (void)syncAddedTasks:(NSArray *)addedTasks
-          removedTasks:(NSArray *)removedTasks
-          renamedTasks:(NSArray *)renamedTasks
-        reorderedTasks:(NSArray *)reorderedTasks
-      successFullBlock:(void (^)(id))successFullBlock
-          failureBlock:(void (^)(NSError *))failureBlock;
-
 #pragma mark -
 
 - (void)fetchAllTasks:(void (^)(NSArray *tasks))successFullBlock
@@ -43,13 +36,13 @@
 
 - (void)fetchAllTasksAsModels:(void (^)(NSArray *tasks))successFullBlock failureBlock:(void (^)(NSError *))failureBlock;
 
-- (STMTask *)existingTaskWithObjectID:(NSManagedObjectID *)id;
+- (NSFetchRequest *)createFetchingTasksRequestWithBatchSize:(NSUInteger) batchSize;
 
 #pragma mark -
 
-- (STMTask *)taskWithObjectID:(NSManagedObjectID *)objectId;
+- (STMTask *)existingTaskWithObjectID:(NSManagedObjectID *)id;
 
-- (NSFetchRequest *)createFetchingTasksRequestWithBatchSize:(NSUInteger) batchSize;
+- (STMTask *)taskWithObjectID:(NSManagedObjectID *)objectId;
 
 
 

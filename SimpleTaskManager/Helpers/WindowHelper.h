@@ -5,12 +5,12 @@
 
 #import <Foundation/Foundation.h>
 
-
 @interface WindowHelper : NSObject
 
-+(BOOL) isRetinaDisplay;
++ (BOOL) isRetinaDisplay;
 
 + (UIWindow *)mainWindow;
 
 + (CGRect)mainWindowBoundsIOnCurrentOrientation;
+
 @end

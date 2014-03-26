@@ -18,5 +18,4 @@
     return sqrtf(point.x * point.x + point.y * point.y);
 }
 
-
 @end

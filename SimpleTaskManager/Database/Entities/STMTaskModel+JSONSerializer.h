@@ -7,9 +7,11 @@
 #import "STMTaskModel.h"
 
 @interface STMTaskModel (JSONSerializer)
+
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 
 - (NSData *)serializeToJSON;
 
-- (NSDictionary *)serializeToDctionary;
+- (NSDictionary *)serializeToDictionary;
+
 @end

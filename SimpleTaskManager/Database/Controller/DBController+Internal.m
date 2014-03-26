@@ -177,13 +177,11 @@
     NSUInteger theNewIndex = index + change;
 
     if(theNewIndex < 1){
-        //TODO
         //it is only index so maybe there is no need to do anything
         //one solution can be setting flag . i.e. needsOrdersRework which will cause estimating orders again
         DDLogWarn(@"changeIndexBy error: the new index for task %@ is not valid %td less than 0", task.uid, theNewIndex);
         theNewIndex = 1;
     } else if(theNewIndex > self.numberOfAllTasks){
-        //TODO
         //it is only index so maybe there is no need to do anything
         //one solution can be setting flag . i.e. needsOrdersRework which will cause estimating orders again
         DDLogWarn(@"changeIndexBy error: the new index for task %@ is not valid %td greater than %td", task.uid, theNewIndex, self.numberOfAllTasks);

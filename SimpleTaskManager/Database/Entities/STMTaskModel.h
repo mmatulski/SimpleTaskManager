@@ -15,9 +15,6 @@
 @property (nonatomic, strong) NSNumber * index;
 @property (nonatomic, strong) NSManagedObjectID * objectId;
 
-@property(nonatomic) BOOL completedByUser; //it means "to remove"
-@property (nonatomic) STMTaskModificationType modificationType;
-
 - (instancetype)initWithName:(NSString *)name uid:(NSString *)uid index:(NSNumber *)index;
 - (instancetype)initWitTask:(STMTask *) task;
 

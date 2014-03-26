@@ -33,26 +33,29 @@
 - (void)moveOptionsViewToTopPosition:(CGFloat)y animated:(BOOL)animated {
     if(animated){
         _taskOptionsHeightLayoutConstraint.constant = kOptionsViewHeight;
-        [self layoutSubviews];
+        [self layoutIfNeeded];
+
+        BlockWeakSelf selfWeak = self;
         [UIView animateWithDuration:kMoveOptionsAnimationDuration animations:^{
             [_taskOptionsTopLayoutConstraint setConstant:y];
-            [self layoutSubviews];
+            [selfWeak layoutIfNeeded];
         }                completion:^(BOOL finished) {
 
         }];
     } else {
         [_taskOptionsTopLayoutConstraint setConstant:y];
-        [self layoutSubviews];
+        [self layoutIfNeeded];
     }
 }
 
 - (void)closeTaskOptionsAnimated:(BOOL)animated {
     if(animated){
+        BlockWeakSelf selfWeak = self;
         [UIView animateWithDuration:kCloseOptionsAnimationDuration delay:0 options:UIViewAnimationOptionLayoutSubviews animations:^{
             [_taskOptionsHeightLayoutConstraint setConstant:0.0];
-            [self layoutSubviews];
+            [selfWeak layoutIfNeeded];
         }                completion:^(BOOL finished) {
-            [self removeTaskOptionsView];
+            [selfWeak removeTaskOptionsView];
         }];
     } else {
         [self removeTaskOptionsView];
@@ -114,16 +117,6 @@
     self.taskOptionsView = nil;
     _taskOptionsLayoutConstraints = nil;
 }
-
-//- (void)updateTaskOptionsForTaskBecauseItWasScrolledBy:(CGFloat)change {
-//    [self moveTaskOptionsViewToTop:_taskOptionsViewFirstTopY + change];
-//}
-//
-
-//
-//
-//
-
 
 - (void)addTaskOptionsViewConstraints {
     if(_taskOptionsLayoutConstraints){

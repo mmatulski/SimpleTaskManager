@@ -10,7 +10,6 @@
 #import "SyncGuardService.h"
 #import "LocalUserLeg.h"
 #import "MainTableDataSource.h"
-#import "TaskTableViewCell.h"
 #import "MainViewConsts.h"
 #import "AppMessages.h"
 

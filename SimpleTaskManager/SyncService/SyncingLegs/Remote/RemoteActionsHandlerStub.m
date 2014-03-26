@@ -253,6 +253,7 @@
 
     }
 
+    DDLogInfo(@"generateActionsForSerializedTasksUsedPreviously");
     [self generateActionsForTasks:taskModels];
 }
 

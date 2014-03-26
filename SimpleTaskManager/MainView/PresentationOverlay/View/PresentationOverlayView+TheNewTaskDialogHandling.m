@@ -95,7 +95,7 @@
 - (void)moveTheNewTaskDialogBehindTheRightEdge {
     [self removeConstraints:self.theNewTaskDialogLayoutConstraintsWhenOpened];
     [self addConstraints:self.theNewTaskDialogLayoutConstraintsWhenBehindTheRightEdge];
-    [self layoutSubviews];
+    [self layoutIfNeeded];
 }
 
 - (void)userMovesTheNewTaskDialogByX:(CGFloat)x{
@@ -149,13 +149,14 @@
     self.saveNewTaskButton.alpha = 0.0;
     self.cancelNewTaskButton.alpha = 0.0;
 
+    BlockWeakSelf selfWeak = self;
     [UIView animateWithDuration:animationDuration animations:^{
-        [self removeConstraints:self.theNewTaskDialogLayoutConstraintsWhenBehindTheRightEdge];
-        [self addConstraints:self.theNewTaskDialogLayoutConstraintsWhenOpened];
-        [self layoutSubviews];
+        [selfWeak removeConstraints:self.theNewTaskDialogLayoutConstraintsWhenBehindTheRightEdge];
+        [selfWeak addConstraints:self.theNewTaskDialogLayoutConstraintsWhenOpened];
+        [selfWeak layoutIfNeeded];
 
-        self.saveNewTaskButton.alpha = 1.0;
-        self.cancelNewTaskButton.alpha = 1.0;
+        selfWeak.saveNewTaskButton.alpha = 1.0;
+        selfWeak.cancelNewTaskButton.alpha = 1.0;
 
     } completion:^(BOOL finished) {
         [self theNewTaskViewNowIsOpenedAndReady];
@@ -179,15 +180,16 @@
 
     self.state = PresentationOverlayStateNewTaskDialogClosingAnimating;
 
+    BlockWeakSelf selfWeak = self;
     [UIView animateWithDuration:0.7 animations:^{
-        [self removeConstraints:self.theNewTaskDialogLayoutConstraintsWhenOpened];
-        [self addConstraints:self.theNewTaskDialogLayoutConstraintsWhenBehindTheRightEdge];
-        self.saveNewTaskButton.alpha = 0.0;
-        self.cancelNewTaskButton.alpha = 0.0;
+        [selfWeak removeConstraints:self.theNewTaskDialogLayoutConstraintsWhenOpened];
+        [selfWeak addConstraints:self.theNewTaskDialogLayoutConstraintsWhenBehindTheRightEdge];
+        selfWeak.saveNewTaskButton.alpha = 0.0;
+        selfWeak.cancelNewTaskButton.alpha = 0.0;
 
-        [self layoutSubviews];
+        [selfWeak layoutIfNeeded];
     } completion:^(BOOL finished) {
-        [self removeTheNewTaskView];
+        [selfWeak removeTheNewTaskView];
     }];
 }
 
@@ -282,15 +284,16 @@
 - (void)animateClosingTheNewTaskDialogToTheLeftEdge {
     self.state = PresentationOverlayStateNewTaskDialogClosingAnimating;
 
+    BlockWeakSelf selfWeak = self;
     [UIView animateWithDuration:0.7 animations:^{
-        [self removeConstraints:self.theNewTaskDialogLayoutConstraintsWhenOpened];
-        [self addConstraints:self.theNewTaskDialogLayoutConstraintsWhenBehindTheLeftEdge];
-        self.saveNewTaskButton.alpha = 0.0;
-        self.cancelNewTaskButton.alpha = 0.0;
+        [selfWeak removeConstraints:self.theNewTaskDialogLayoutConstraintsWhenOpened];
+        [selfWeak addConstraints:self.theNewTaskDialogLayoutConstraintsWhenBehindTheLeftEdge];
+        selfWeak.saveNewTaskButton.alpha = 0.0;
+        selfWeak.cancelNewTaskButton.alpha = 0.0;
 
-        [self layoutSubviews];
+        [selfWeak layoutIfNeeded];
     } completion:^(BOOL finished) {
-        [self removeTheNewTaskView];
+        [selfWeak removeTheNewTaskView];
     }];
 }
 
@@ -331,8 +334,9 @@
         warningMessage = @"The task can not be empty";
     }
 
+    BlockWeakSelf selfWeak = self;
     [self animatedMovingNewTaskDialogToOpenedStatePosition:0.0 completion:^{
-        [self showWarningForTheNewTask:warningMessage];
+        [selfWeak showWarningForTheNewTask:warningMessage];
     }];
 }
 

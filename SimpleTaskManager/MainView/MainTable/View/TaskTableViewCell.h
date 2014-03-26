@@ -10,7 +10,6 @@
 
 @property(nonatomic) BOOL dropped;
 
-@property(nonatomic, strong) CALayer *blinkingLayer;
-
 - (void)blinkCell;
+
 @end

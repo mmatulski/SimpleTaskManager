@@ -9,22 +9,15 @@
 
 @class PresentationOverlayView;
 @class STMTask;
-@protocol PresentationOverlayControllerDelegate;
 @class STMTaskModel;
+@protocol PresentationOverlayControllerDelegate;
 
 @interface PresentationOverlayController : NSObject <TaskOptionsDelegate, PresentationOverlayViewDelegate>
 
 @property(nonatomic, weak) id <PresentationOverlayControllerDelegate> delegate;
 @property(nonatomic, strong) PresentationOverlayView *presentationOverlayView;
-//@property(nonatomic, strong) STMTaskModel *currentTaskWithOptionsShown;
 
 - (instancetype)initWithView:(PresentationOverlayView *)view;
-
-//- (void)showOptionsForTaskModel:(STMTaskModel *)taskModel representedByCell:(UITableViewCell *)cell animated:(BOOL)animated;
-//- (void)closeTaskOptionsForTaskModel:(STMTaskModel *)taskModel;
-//- (void)updateTaskOptionsForTaskModel:(STMTaskModel *)taskModel becauseItWasScrolledBy:(CGFloat)offsetChange;
-
-
 
 #pragma mark - Task Options
 
@@ -35,4 +28,5 @@
 - (void)closeTaskOptionsAnimated:(BOOL) animated;
 
 - (void)theNewTaskSaved;
+
 @end

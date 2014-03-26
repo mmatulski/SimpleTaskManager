@@ -17,10 +17,4 @@
 
 - (void)closeTaskOptionsAnimated:(BOOL)animated;
 
-//- (void)updateTaskOptionsForTaskBecauseItWasScrolledBy:(CGFloat)change;
-//
-
-
-
-
 @end

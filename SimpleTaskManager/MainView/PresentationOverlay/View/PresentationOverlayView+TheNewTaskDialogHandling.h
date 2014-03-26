@@ -29,4 +29,5 @@
 - (BOOL)canShowNewTaskDialog;
 
 - (void)animateNewTaskViewBackToOpenedPositionWithWarning;
+
 @end

@@ -1,9 +1,10 @@
-#import "MainViewControllerStateController.h"//
+//
 // Created by Marek M on 25.03.2014.
 // Copyright (c) 2014 Tomato. All rights reserved.
 //
 
 #import "MainViewController+OperationsForTasks.h"
+#import "MainViewControllerStateController.h"
 #import "STMTaskModel.h"
 #import "SyncGuardService.h"
 #import "LocalUserLeg.h"

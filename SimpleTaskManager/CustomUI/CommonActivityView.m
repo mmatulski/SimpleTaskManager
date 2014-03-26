@@ -163,8 +163,6 @@
     self.cancelButton.frame = [self frameForCancelButton];
     self.mainLabel.frame = [self frameForMainLabel];
     self.activityIndicatorView.center = [self positionForActivityIndicatorView];
-    
-  // [self updateBlur];
 }
 
 -(void) estimateInitialSize{

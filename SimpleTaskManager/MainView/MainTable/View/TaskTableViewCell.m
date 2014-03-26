@@ -60,7 +60,7 @@
     blinkingView.backgroundColor = [AppColors cellBlinkingColor];
     blinkingView.alpha = 0.0;
     [self.contentView addSubview:blinkingView];
-    [UIView animateWithDuration:0.5 delay:0.0 options:0 animations:^{
+    [UIView animateWithDuration:0.5 animations:^{
         blinkingView.alpha = 0.6;
     } completion:^(BOOL finished) {
         [blinkingView removeFromSuperview];

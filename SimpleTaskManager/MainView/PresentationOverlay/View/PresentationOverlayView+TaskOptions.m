@@ -85,7 +85,7 @@
 - (CGFloat)estimateTopPositionForOptionsViewUsingCellFrame:(CGRect)cellFrame {
     CGRect localCellFrame = [self convertRect:cellFrame fromView:nil];
 
-    return localCellFrame.origin.y + localCellFrame.size.height - 4.0;
+    return localCellFrame.origin.y + localCellFrame.size.height;
 }
 
 - (void)makeOptionsViewVisibleAnimated:(BOOL)animated {

@@ -25,7 +25,7 @@
 }
 
 + (UIColor *)messageDialogsBackgroundColor {
-    return [UIColor colorWithRed:0.3 green:0.5 blue:0.7 alpha:0.8];
+    return RGBA(240, 240, 240, 0.8);
 }
 
 + (UIColor *)cellDraggingTargetBackgroundColor {

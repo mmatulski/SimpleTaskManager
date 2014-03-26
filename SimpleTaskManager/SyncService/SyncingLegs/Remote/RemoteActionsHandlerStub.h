@@ -7,11 +7,7 @@
 #import "RemoteActionsHandler.h"
 
 
-@interface MockedRemoteActionsHandler : RemoteActionsHandler
-
-@property NSTimeInterval timerInterval;
-@property CGFloat changedItemsFactor;
-@property CGFloat increaseFactor;
+@interface RemoteActionsHandlerStub : RemoteActionsHandler
 
 
 @property(nonatomic, strong) NSTimer *timer;

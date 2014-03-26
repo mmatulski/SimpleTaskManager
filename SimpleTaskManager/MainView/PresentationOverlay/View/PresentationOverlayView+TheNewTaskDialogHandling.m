@@ -148,7 +148,6 @@
 
     self.saveNewTaskButton.alpha = 0.0;
     self.cancelNewTaskButton.alpha = 0.0;
-    [self.theNewTaskDialog setEditing];
 
     [UIView animateWithDuration:animationDuration animations:^{
         [self removeConstraints:self.theNewTaskDialogLayoutConstraintsWhenBehindTheRightEdge];
@@ -169,7 +168,7 @@
 
 - (void)theNewTaskViewNowIsOpenedAndReady {
     self.state = PresentationOverlayStateNewTaskDialogOpened;
-    [self.theNewTaskDialog setEditing];
+    [self.theNewTaskDialog setEditing:YES ];
     [self moveGestureRecognizerToThewNewTaskDialog];
 
     [self showSaveNewTaskButton];
@@ -242,6 +241,7 @@
     } else if([self shouldCloseAndSaveTheNewTaskDialogForTranslation:translation andVelocity:velocity]){
 
         if([self.theNewTaskDialog isNameValid]){
+            [self.theNewTaskDialog setEditing:NO];
             [self.delegate userWantsToSaveTheNewTask:[self.theNewTaskDialog taskName]];
         } else {
             NSString *warningMessage = nil;

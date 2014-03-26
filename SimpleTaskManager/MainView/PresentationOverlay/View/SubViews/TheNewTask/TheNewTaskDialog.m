@@ -105,8 +105,12 @@
     [self addConstraints:@[H1,H2,V1,V2]];
 }
 
-- (void)setEditing {
-    [self.textView becomeFirstResponder];
+- (void)setEditing:(BOOL)editing {
+    if(editing){
+        [self.textView becomeFirstResponder];
+    } else {
+        [self.textView resignFirstResponder];
+    }
 }
 
 - (BOOL)isNameValid {

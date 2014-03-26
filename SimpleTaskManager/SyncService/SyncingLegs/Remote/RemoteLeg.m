@@ -6,7 +6,7 @@
 #import "RemoteLeg.h"
 #import "SingleOperation.h"
 #import "RemoteActionsHandler.h"
-#import "MockedRemoteActionsHandler.h"
+#import "RemoteActionsHandlerStub.h"
 #import "SyncGuardService.h"
 
 
@@ -15,7 +15,7 @@
 }
 
 - (void)connect {
-    self.remoteActionsHandler = [[MockedRemoteActionsHandler alloc] init];
+    self.remoteActionsHandler = [[RemoteActionsHandlerStub alloc] init];
     self.remoteActionsHandler.remoteLeg = self;
     [self.remoteActionsHandler connect];
 }

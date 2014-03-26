@@ -3,7 +3,7 @@
 // Copyright (c) 2014 Tomato. All rights reserved.
 //
 
-#import "MockedRemoteActionsHandler.h"
+#import "RemoteActionsHandlerStub.h"
 #import "DBAccess.h"
 #import "DBController.h"
 #import "RemoteLeg.h"
@@ -11,7 +11,14 @@
 #import "STMTaskModel+JSONSerializer.h"
 #import "NSError+Log.h"
 
-@implementation MockedRemoteActionsHandler {
+@implementation RemoteActionsHandlerStub {
+
+@private
+    NSTimeInterval _timerInterval;
+    CGFloat _changedItemsShare;
+    CGFloat _increaseRate;
+    CGFloat _renameItemsShare;
+    CGFloat _reorderedItemsShare;
 
 }
 
@@ -19,8 +26,11 @@
     self = [super init];
     if (self) {
         _timerInterval = 20.0;
-        _changedItemsFactor = 0.25;
-        _increaseFactor = 1.01;//no less than 1
+        _changedItemsShare = 0.25;
+        _increaseRate = 1.01; //no less than 1
+        _renameItemsShare = 0.33;
+        _reorderedItemsShare = 0.33;
+
     }
 
     return self;
@@ -41,7 +51,7 @@
 
 
 - (void)startTrafficGenerator {
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:self.timerInterval target:self selector:@selector(generateTraffic) userInfo:nil repeats:YES];
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:_timerInterval target:self selector:@selector(generateTraffic) userInfo:nil repeats:YES];
     //self.timer = [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(addCommonTasks) userInfo:nil repeats:NO];
 }
 
@@ -140,16 +150,16 @@
 
         NSUInteger numberOfTasks = [tasks count];
 
-        NSUInteger numberOfItemsToChange = (NSUInteger) floor((float) numberOfTasks * self.changedItemsFactor);
+        NSUInteger numberOfItemsToChange = (NSUInteger) floor((float) numberOfTasks * _changedItemsShare);
         if (numberOfItemsToChange > numberOfTasks) {
             numberOfItemsToChange = numberOfTasks;
         }
-        NSUInteger numberOfTasksToRename = (NSUInteger) floor(0.33 * (float) numberOfItemsToChange);
-        NSUInteger numberOfTasksToReorder = (NSUInteger) floor(0.33 * (float) numberOfItemsToChange);
+        NSUInteger numberOfTasksToRename = (NSUInteger) floor(_renameItemsShare * (float) numberOfItemsToChange);
+        NSUInteger numberOfTasksToReorder = (NSUInteger) floor(_reorderedItemsShare * (float) numberOfItemsToChange);
         NSUInteger numberOfTasksToRemove = numberOfItemsToChange - (numberOfTasksToRename + numberOfTasksToReorder);
 
 
-        CGFloat increaseF = (CGFloat) numberOfTasksToRemove * self.increaseFactor;
+        CGFloat increaseF = (CGFloat) numberOfTasksToRemove * _increaseRate;
 
         if (increaseF == 0) {
             increaseF = 1.0;
@@ -165,7 +175,7 @@
 
         NSInteger increase = (NSInteger) floor(increaseF) - numberOfTasksToRemove;
 
-        if (increase == 0) {
+        if (increase < 1) {
             increase = 1;
         }
 

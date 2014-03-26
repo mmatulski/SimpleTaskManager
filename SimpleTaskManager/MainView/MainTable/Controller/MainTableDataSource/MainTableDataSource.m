@@ -178,7 +178,8 @@ NSUInteger const kDefaultBatchSize = 20;
 
     if(task){
         if([self doesTaskStillExistInDB:task]){
-            cell.textLabel.text = [NSString stringWithFormat:@"[%d] %@", [[task index] intValue] , task.name];
+            //cell.textLabel.text = [NSString stringWithFormat:@"[%d] %@", [[task index] intValue] , task.name];
+            cell.textLabel.text = task.name;
         } else {
             DDLogWarn(@"Showing task which is no longer in DB");
             cell.textLabel.text = @"Task completed";

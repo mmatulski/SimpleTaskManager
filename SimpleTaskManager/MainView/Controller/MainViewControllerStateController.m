@@ -8,6 +8,7 @@
 #import "MainTableController.h"
 #import "MainTableController+SelectedItem.h"
 #import "MainView.h"
+#import "AppMessages.h"
 
 
 @implementation MainViewControllerStateController {
@@ -50,6 +51,13 @@
 
         [self.tableController disableDataChangesListening:syncing];
         [self.mainViewController.mainView showSyncing:_syncing];
+
+        //we will not block user interaction during the sync operation
+//        if(syncing){
+//            [AppMessages showActivity];
+//        } else {
+//            [AppMessages closeActivity];
+//        }
     }
 }
 

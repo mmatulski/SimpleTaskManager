@@ -12,6 +12,7 @@
 #import "PresentationOverlayController.h"
 #import "MainTableController+SelectedItem.h"
 #import "AppMessages.h"
+#import "STMTask.h"
 
 
 @implementation MainViewController (OperationsForTasks)
@@ -20,9 +21,12 @@
     STMTaskModel * taskModel = self.tableController.selectedTaskModel;
 
     if(taskModel){
+        [AppMessages showActivity];
+
         taskModel.completedByUser = true;
         BlockWeakSelf selfWeak = self;
         [[SyncGuardService singleUser] markAsCompletedTaskWithId:taskModel.uid successFullBlock:^(id o) {
+            [AppMessages closeActivity];
             DDLogInfo(@"markSelectedTaskAsCompleted finished with success");
             runOnMainThread(^{
                 [selfWeak.presentationOverlayController closeTaskOptionsAnimated:true];
@@ -32,12 +36,33 @@
                 self.stateController.taskIsSelected = false;
             });
         } failureBlock:^(NSError *error) {
+            [AppMessages closeActivity];
             DDLogError(@"markSelectedTaskAsCompleted failed");
             [error log];
             taskModel.completedByUser = false;
             [AppMessages showError:[NSString stringWithFormat:@"Task could not be set as completed %@", [error localizedDescription]]];
         }];
     }
+}
+
+- (void)saveTaskWithName:(NSString *)taskName {
+    BlockWeakSelf selfWeak = self;
+    [AppMessages showActivity];
+    [[SyncGuardService singleUser] addTaskWithName:taskName successFullBlock:^(id obj) {
+        [AppMessages closeActivity];
+        DDLogInfo(@"SUCCESS");
+        runOnMainThread(^{
+            STMTask *addedTask = MakeSafeCast(obj, [STMTask class]);
+            [selfWeak.presentationOverlayController theNewTaskSaved];
+            selfWeak.stateController.taskAdding = false;
+            [selfWeak.tableController showNewTask:addedTask];
+        });
+    } failureBlock:^(NSError *err) {
+        [AppMessages closeActivity];
+        DDLogError(@"FAILED");
+        [AppMessages showMessage:[NSString stringWithFormat:@"Problem with adding new task %@", [err localizedDescription]]];
+        [err log];
+    }];
 }
 
 @end

@@ -39,7 +39,7 @@
         
         self.labelFont = [UIFont fontWithName:@"HelveticaNeue" size:20.0];
         self.labelColor = [UIColor blackColor];
-        self.labelText = __(@"PleaseWait");
+        self.labelText = __(@"Please wait");
         
         [self addMainLabel];
         

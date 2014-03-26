@@ -91,6 +91,7 @@
 
 - (void)userDidTapOnSaveNewTaskButton {
     if([self.theNewTaskDialog isNameValid]){
+        [self.theNewTaskDialog setEditing:NO ];
         [self.delegate userWantsToSaveTheNewTask:[self.theNewTaskDialog taskName]];
     } else {
         [self animateNewTaskViewBackToOpenedPositionWithWarning];

@@ -10,7 +10,7 @@
 
 @property(nonatomic, strong) UITextView *textView;;
 
-- (void)setEditing;
+- (void)setEditing:(BOOL)editing;
 
 - (BOOL)isNameValid;
 

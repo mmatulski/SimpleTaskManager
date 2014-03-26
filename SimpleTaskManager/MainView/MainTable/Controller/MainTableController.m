@@ -121,35 +121,6 @@
     }
 }
 
-//- (void)scrollToShowTaskModel:(STMTaskModel *)model {
-//    if(model){
-//        if ([self.dataSource doesTaskForModelStillExistInFetchedResultsControllerData:model]) {
-//            NSIndexPath *indexPath = [self.dataSource indexPathForTaskModel:model];
-//            [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:kDefaultTableScrollPositionWhenItemSelected animated:false];
-//        }
-//    }
-//}
-//
-//- (STMTaskModel *)modelForCellAtMiddleScrollPosition {
-//
-//    NSIndexPath *indexPathAtCenter= [self indexPathForCellAtMiddlePoint];
-//
-//    if(indexPathAtCenter){
-//        STMTask*  task = [self.dataSource taskForIndexPath:indexPathAtCenter];
-//        STMTaskModel* modelAtMiddlePoint = [[STMTaskModel alloc] initWitEntity:task];
-//        return modelAtMiddlePoint;
-//    }
-//
-//    return nil;
-//}
-//
-//- (NSIndexPath *)indexPathForCellAtMiddlePoint {
-//    CGFloat middleY = self.tableView.contentOffset.y + self.tableView.frame.size.height / 2.0;
-//    CGFloat middleX = self.tableView.frame.size.width / 2.0;
-//    NSIndexPath *indexPathAtCenter = [self.tableView indexPathForRowAtPoint:CGPointMake(middleX, middleY)];
-//    return indexPathAtCenter;
-//}
-
 - (void)handleMemoryWarning {
     //TODO clean fetched cache
 }

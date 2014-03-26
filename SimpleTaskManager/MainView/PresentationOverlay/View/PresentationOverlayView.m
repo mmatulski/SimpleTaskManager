@@ -15,6 +15,7 @@
 #import "CancelNewTaskButton.h"
 #import "MainViewConsts.h"
 #import "PresentationOverlayViewDelegate.h"
+#import "TheNewTaskDialog.h"
 
 @implementation PresentationOverlayView
 
@@ -110,6 +111,20 @@
 - (void)setState:(enum PresentationOverlayState)state {
     if(_state != state){
         _state = state;
+
+//        switch (state){
+//            case PresentationOverlayStateNewTaskDialogOpened:
+//            case PresentationOverlayStateNewTaskDialogOpeningStarted:
+//            case PresentationOverlayStateNewTaskDialogOpeningAnimating:
+//                [self.theNewTaskDialog setEditing:YES ];
+//                break;
+//
+//            case PresentationOverlayStateNormal:
+//            case PresentationOverlayStateNewTaskDialogClosingBegan:
+//            case PresentationOverlayStateNewTaskDialogClosingAnimating:
+//                [self.theNewTaskDialog setEditing:YES ];
+//                break;
+//        }
 
         if(state == PresentationOverlayStateNormal){
             [self.delegate theNewTaskDialogClosed];

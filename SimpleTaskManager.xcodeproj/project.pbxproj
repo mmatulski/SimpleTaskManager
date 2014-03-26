@@ -70,7 +70,7 @@
 		46AE2C6E29A61028A98292D6 /* ContextFilterLogFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE22ECD2D1C47A1FD3CD1E /* ContextFilterLogFormatter.m */; };
 		46AE2C8578F4C46CEE6095B3 /* PresentationOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE2EC25700C25DA2D79904 /* PresentationOverlayView.m */; };
 		46AE2CD0DE25667724420D3F /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 46AE2EAA806AAC6671007634 /* LICENSE.txt */; };
-		46AE2D06B482CFAA3E94E87F /* MockedRemoteActionsHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE2BD6C918267E0C06F612 /* MockedRemoteActionsHandler.m */; };
+		46AE2D06B482CFAA3E94E87F /* RemoteActionsHandlerStub.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE2BD6C918267E0C06F612 /* RemoteActionsHandlerStub.m */; };
 		46AE2DD6B6147E651DA20928 /* WindowHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE2E08FC8F8130C452D6B0 /* WindowHelper.m */; };
 		46AE2E172E1236C75C9E9045 /* DeselectTaskButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE2181CA44ACD28EEA7214 /* DeselectTaskButton.m */; };
 		46AE2E1BCCE8DB068A01FE02 /* AddTaskOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE255ADD79A2ACDDFE08E5 /* AddTaskOperation.m */; };
@@ -150,7 +150,7 @@
 		46AE247999C7ABCB39C52F84 /* MainTableController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainTableController.h; sourceTree = "<group>"; };
 		46AE249B31D48B5865720977 /* CancelNewTaskButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CancelNewTaskButton.h; sourceTree = "<group>"; };
 		46AE24AE2E21F3D4C8E71BB5 /* CompleteTaskButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompleteTaskButton.h; sourceTree = "<group>"; };
-		46AE24CC8ED1A00E4EDA8696 /* MockedRemoteActionsHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MockedRemoteActionsHandler.h; sourceTree = "<group>"; };
+		46AE24CC8ED1A00E4EDA8696 /* RemoteActionsHandlerStub.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemoteActionsHandlerStub.h; sourceTree = "<group>"; };
 		46AE24E0C1AD33FC4634E090 /* SyncNotificationsObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyncNotificationsObserver.h; sourceTree = "<group>"; };
 		46AE24F94DD51897D87D4744 /* MainTableController+SelectedItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MainTableController+SelectedItem.h"; sourceTree = "<group>"; };
 		46AE24FEE7E06BB54039C52F /* STMTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STMTask.m; sourceTree = "<group>"; };
@@ -216,7 +216,7 @@
 		46AE2B618183543F473A461F /* DragAndDropHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DragAndDropHandler.m; sourceTree = "<group>"; };
 		46AE2B775F92F72409F93566 /* MainViewController+OperationsForTasks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MainViewController+OperationsForTasks.h"; sourceTree = "<group>"; };
 		46AE2BAA399E8958492369A3 /* CommonActivityView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonActivityView.h; sourceTree = "<group>"; };
-		46AE2BD6C918267E0C06F612 /* MockedRemoteActionsHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MockedRemoteActionsHandler.m; sourceTree = "<group>"; };
+		46AE2BD6C918267E0C06F612 /* RemoteActionsHandlerStub.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RemoteActionsHandlerStub.m; sourceTree = "<group>"; };
 		46AE2BE3B00AC3763189619E /* PresentationOverlayView+TaskOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PresentationOverlayView+TaskOptions.h"; sourceTree = "<group>"; };
 		46AE2BE7D371E23F667CDF8B /* UIView+ScreenshootExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+ScreenshootExtension.m"; sourceTree = "<group>"; };
 		46AE2BF1DF56BE1F935C1B3E /* STMTaskModel+JSONSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "STMTaskModel+JSONSerializer.m"; sourceTree = "<group>"; };
@@ -360,8 +360,8 @@
 				46AE23B50794EBFC6601358F /* RemoteConnection.h */,
 				46AE21A4D93ACDA7AB35E469 /* RemoteActionsHandler.m */,
 				46AE291EC07BE733D802E1A6 /* RemoteActionsHandler.h */,
-				46AE2BD6C918267E0C06F612 /* MockedRemoteActionsHandler.m */,
-				46AE24CC8ED1A00E4EDA8696 /* MockedRemoteActionsHandler.h */,
+				46AE2BD6C918267E0C06F612 /* RemoteActionsHandlerStub.m */,
+				46AE24CC8ED1A00E4EDA8696 /* RemoteActionsHandlerStub.h */,
 			);
 			path = Remote;
 			sourceTree = "<group>";
@@ -989,7 +989,7 @@
 				46AE2E390CF0891859C0A2AD /* LocalUserLeg.m in Sources */,
 				46AE22B08BB9D9DA976ED30F /* RemoteConnection.m in Sources */,
 				46AE2A276D0A4C485AE36132 /* RemoteActionsHandler.m in Sources */,
-				46AE2D06B482CFAA3E94E87F /* MockedRemoteActionsHandler.m in Sources */,
+				46AE2D06B482CFAA3E94E87F /* RemoteActionsHandlerStub.m in Sources */,
 				46AE26453D38E0DF09CEF5E4 /* SyncOperation.m in Sources */,
 				46AE2A53886622C3825E125D /* RenameOperation.m in Sources */,
 				46AE20B46371F8858AFE3223 /* DBController+Undo.m in Sources */,

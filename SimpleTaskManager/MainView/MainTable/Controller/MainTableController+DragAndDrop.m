@@ -183,9 +183,6 @@
 }
 
 - (void)cancelDraggingAnimate:(BOOL) animate {
-    NSIndexPath *indexPathSource = [self indexPathForDraggedItem];
-    NSIndexPath *indexPathTarget = self.lastTargetForDraggedIndexPath;
-
     self.draggedItemModel = nil;
     self.lastTargetForDraggedIndexPath = nil;
 
@@ -214,13 +211,16 @@
     NSUInteger theNewOrder = [self.dataSource estimatedTaskIndexForTargetIndexPath:targetPath];
     if(self.draggedItemModel){
         STMTaskModel *taskModel = self.draggedItemModel;
+        [AppMessages showActivity];
         BlockWeakSelf selfWeak = self;
         [[SyncGuardService singleUser] reorderTaskWithId:taskModel.uid toIndex:theNewOrder successFullBlock:^(id obj) {
+            [AppMessages closeActivity];
             runOnMainThread(^{
                 [self.tableView reloadData];
                 [selfWeak highlightCellForTaskModel:taskModel];
             });
         } failureBlock:^(NSError *error) {
+            [AppMessages closeActivity];
             runOnMainThread(^{
                 [self.tableView reloadData];
                 [selfWeak highlightCellForTaskModel:taskModel];

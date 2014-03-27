@@ -14,7 +14,9 @@
 
 @property(nonatomic, strong) NSData *lastTimeChangedItemsJSON;
 
-- (void)generateActionsForTasks:(NSArray *)array;
+- (void)generateActionsForTasks:(NSArray *)array addNewTasks:(BOOL)addNewTasks numberOfAllTasks:(NSUInteger)numberOfAllTasks;
 
 - (void)generateActionsForSerializedTasksUsedPreviously:(NSData *)data;
+
+- (NSMutableArray *)drawTaskToChangeFromArray:(NSArray *)array;
 @end

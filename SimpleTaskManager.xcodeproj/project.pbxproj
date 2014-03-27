@@ -76,6 +76,7 @@
 		46AE2E1BCCE8DB068A01FE02 /* AddTaskOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE255ADD79A2ACDDFE08E5 /* AddTaskOperation.m */; };
 		46AE2E390CF0891859C0A2AD /* LocalUserLeg.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE2A4623A8E17D88150A60 /* LocalUserLeg.m */; };
 		46AE2E414CC8F193EA7B4707 /* MainTableController+DragAndDrop.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE23C9F40E6BE7FB4E26E8 /* MainTableController+DragAndDrop.m */; };
+		46AE2E6EEF1D426F3D9092E6 /* RemoteActionsHandlerStub+SerializedData.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE20F44C8F30F5C0253588 /* RemoteActionsHandlerStub+SerializedData.m */; };
 		46AE2E9CB59C9D0F60522C54 /* DBController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE2B4F013E18A60B809BE6 /* DBController.m */; };
 		46AE2ECC06D616F491387B63 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE22D87A98C0287A2AFEFC /* MainViewController.m */; };
 		46AE2EDFE5374BB27A6A2CD4 /* STMTaskModel+JSONSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AE2BF1DF56BE1F935C1B3E /* STMTaskModel+JSONSerializer.m */; };
@@ -120,6 +121,7 @@
 		46AE208889623F546496B628 /* MainViewControllerStateController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewControllerStateController.h; sourceTree = "<group>"; };
 		46AE20A67A3FBD648624AE71 /* NotificationsSender.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotificationsSender.m; sourceTree = "<group>"; };
 		46AE20A9055962495CAAC61F /* CGEstimations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGEstimations.h; sourceTree = "<group>"; };
+		46AE20F44C8F30F5C0253588 /* RemoteActionsHandlerStub+SerializedData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RemoteActionsHandlerStub+SerializedData.m"; sourceTree = "<group>"; };
 		46AE21153B5888DDB97B88E1 /* PresentationOverlayView+Constraints.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "PresentationOverlayView+Constraints.m"; sourceTree = "<group>"; };
 		46AE2121B748D6CB8159610B /* PresentationOverlayView+Buttons.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "PresentationOverlayView+Buttons.m"; sourceTree = "<group>"; };
 		46AE213846FBC49661E8DD72 /* DDTTYLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDTTYLogger.h; sourceTree = "<group>"; };
@@ -209,6 +211,7 @@
 		46AE2A74D6FF53F7B3DB4525 /* AppErrors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppErrors.h; sourceTree = "<group>"; };
 		46AE2A9377B157ACE5F35AD1 /* AppMessages.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppMessages.m; sourceTree = "<group>"; };
 		46AE2AA7E85BC6C84484A095 /* DBController+Undo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DBController+Undo.m"; sourceTree = "<group>"; };
+		46AE2AC84F0D6AB635468AE3 /* RemoteActionsHandlerStub+SerializedData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RemoteActionsHandlerStub+SerializedData.h"; sourceTree = "<group>"; };
 		46AE2AE1F2F4373B717CCAB6 /* CommonActivityView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommonActivityView.m; sourceTree = "<group>"; };
 		46AE2B3CB6E830576263866D /* STMTaskModifcationType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STMTaskModifcationType.h; sourceTree = "<group>"; };
 		46AE2B4F013E18A60B809BE6 /* DBController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBController.m; sourceTree = "<group>"; };
@@ -362,6 +365,8 @@
 				46AE291EC07BE733D802E1A6 /* RemoteActionsHandler.h */,
 				46AE2BD6C918267E0C06F612 /* RemoteActionsHandlerStub.m */,
 				46AE24CC8ED1A00E4EDA8696 /* RemoteActionsHandlerStub.h */,
+				46AE20F44C8F30F5C0253588 /* RemoteActionsHandlerStub+SerializedData.m */,
+				46AE2AC84F0D6AB635468AE3 /* RemoteActionsHandlerStub+SerializedData.h */,
 			);
 			path = Remote;
 			sourceTree = "<group>";
@@ -1029,6 +1034,7 @@
 				46AE2546ED20173CEF7842B4 /* PresentationOverlayController.m in Sources */,
 				46AE2EDFE5374BB27A6A2CD4 /* STMTaskModel+JSONSerializer.m in Sources */,
 				46AE27388310F9ACCFEE7B84 /* MainViewController+OperationsForTasks.m in Sources */,
+				46AE2E6EEF1D426F3D9092E6 /* RemoteActionsHandlerStub+SerializedData.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
